@@ -1,0 +1,4 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: riscv32-decoder
+Upstream-Contact: Serdar Sayın <serdarsayin@pm.me>
+Source: https://github.com/ssayin/riscv32-decoder
