@@ -2,7 +2,7 @@
 module test (
     input reg clk
 );
-  import "DPI-C" function void decode(
+  import "DPI-C" function void decodesv(
     input  logic [31:0] word,
     output logic [31:0] out
   );
@@ -18,7 +18,7 @@ module test (
     init();
     for (integer i = 0; i < 12; ++i) begin
       in = $urandom;
-      decode(in, res);
+      decodesv(in, res);
       $display("%d - %d", in, res);
     end
     $finish;
