@@ -1,19 +1,23 @@
 #VIVADO_INC := /opt/Xilinx/Vivado/2022.2/data/xsim/include/
 BUILD_DIR     := ./build/
 
-DECODER_SRC   := src/decoder/decoder/src/
+DECODER_SRC   := ./src/decoder/decoder/src/
 DECODER_INC   := -Isrc/decoder/decoder/include/
 COMMON_INC    := -Isrc/common/include/
+
+TOOLS_DIR     := ./tools/
 
 EXPORTER_SRC  := ./src/exporter/
 
 DESIGN_DIR    := ./design/
 
+TESTBENCH_DIR := ./testbench/
+
 CXX           := g++
 CXX_FLAGS     := -std=c++20 -O2
 
 LIB           := libdpi.so
-SV_TOP        := $(DESIGN_DIR)test.sv
+SV_TOP        := $(TESTBENCH_DIR)tb_decoder.sv
 
 DECODER_SRCS  := $(wildcard $(DECODER_SRC)*.cpp)
 EXPORTER_SRCS := $(wildcard $(EXPORTER_SRC)*.cpp)
@@ -23,7 +27,14 @@ EXPORTER_OBJS := $(patsubst $(EXPORTER_SRC)%.cpp,$(BUILD_DIR)%.o,$(EXPORTER_SRCS
 
 OBJS          := $(DECODER_OBJS) $(EXPORTER_OBJS)
 
-all: $(LIB)
+all: synth sv_dpi
+
+synth: $(TOOLS_DIR)run.tcl
+	vivado -mode batch -source $(TOOLS_DIR)run.tcl
+
+sv_dpi: $(LIB)
+	xvlog -sv $(DESIGN_DIR)decoder.sv
+	xvlog -sv $(DESIGN_DIR)sign_extend_imm.sv
 	LD_LIBRARY_PATH=. xelab -svlog $(SV_TOP) -sv_lib $(basename $(notdir $(LIB))) -R
 
 $(LIB): $(OBJS)
