@@ -1,6 +1,6 @@
-[submodule "decoder"]
-	path = decoder
+[submodule "src/decoder"]
+	path = src/decoder
 	url = https://github.com/ssayin/riscv32-decoder.git
-[submodule "common"]
-	path = common
+[submodule "src/common"]
+	path = src/common
 	url = https://github.com/ssayin/riscv32-sim-common.git

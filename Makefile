@@ -1,32 +1,46 @@
 #VIVADO_INC := /opt/Xilinx/Vivado/2022.2/data/xsim/include/
+BUILD_DIR     := ./build/
 
-DECODER_SRC := decoder/decoder/src
-DECODER_INC := -Idecoder/decoder/include
-COMMON_INC  := -Icommon/include
+DECODER_SRC   := src/decoder/decoder/src/
+DECODER_INC   := -Isrc/decoder/decoder/include/
+COMMON_INC    := -Isrc/common/include/
 
-CXX := g++
-CXX_FLAGS := -std=c++20 -O2
+EXPORTER_SRC  := ./src/exporter/
 
-all: libdpi.so
-	#ln -sf libdpi.so xsim.dir/work.test/libdpi.so
-	#LD_LIBRARY_PATH=. xelab -svlog test.sv -sv_lib libdpi -R
+DESIGN_DIR    := ./design/
 
-	#xsc  -compile decoder.c -work work 
-	#xsc -shared xsim.dir/work/xsc/decoder.lnx64.o -work work 
+CXX           := g++
+CXX_FLAGS     := -std=c++20 -O2
 
-	#xsc decoder.cpp
-	LD_LIBRARY_PATH=. xelab -svlog test.sv -sv_lib libdpi -R
+LIB           := libdpi.so
+SV_TOP        := $(DESIGN_DIR)test.sv
 
-#decoder.o:
-#	g++ -c -fPIC decoder.cpp -I. #-I${VIVADO_INC}
+DECODER_SRCS  := $(wildcard $(DECODER_SRC)*.cpp)
+EXPORTER_SRCS := $(wildcard $(EXPORTER_SRC)*.cpp)
 
-decoder.o:
-	${CXX} -fPIC ${CXX_FLAGS} ${COMMON_INC} ${DECODER_INC} -I. -c ${DECODER_SRC}/decoder.cpp  ${DECODER_SRC}/decoder16.cpp decodesv.cpp
+DECODER_OBJS  := $(patsubst $(DECODER_SRC)%.cpp,$(BUILD_DIR)%.o,$(DECODER_SRCS))
+EXPORTER_OBJS := $(patsubst $(EXPORTER_SRC)%.cpp,$(BUILD_DIR)%.o,$(EXPORTER_SRCS))
 
-libdpi.so: decoder.o
-	${CXX} ${CXX_FLAGS} -shared -Wl,-soname,libdpi.so -o libdpi.so decoder.o decoder16.o decodesv.o
+OBJS          := $(DECODER_OBJS) $(EXPORTER_OBJS)
 
+all: $(LIB)
+	LD_LIBRARY_PATH=. xelab -svlog $(SV_TOP) -sv_lib $(basename $(notdir $(LIB))) -R
+
+$(LIB): $(OBJS)
+	$(CXX) $(CXX_FLAGS) -shared -Wl,-soname,$@ -o $@ $^
+
+$(BUILD_DIR)%.o: $(DECODER_SRC)%.cpp | $(BUILD_DIR)
+	$(CXX) -fPIC $(CXX_FLAGS) $(COMMON_INC) $(DECODER_INC) -I. -c $< -o $@
+
+$(BUILD_DIR)%.o: $(EXPORTER_SRC)%.cpp | $(BUILD_DIR)
+	$(CXX) -fPIC $(CXX_FLAGS) $(COMMON_INC) $(DECODER_INC) -I. -c $< -o $@
+
+$(BUILD_DIR):
+	mkdir -p $@
 
 .PHONY clean:
-	${RM} libdpi.so
-	${RM} decoder.o
+	${RM} -rf $(BUILD_DIR) 
+	${RM} $(LIB)
+	${RM} *.jou
+	${RM} *.log
+	${RM} *.pb
