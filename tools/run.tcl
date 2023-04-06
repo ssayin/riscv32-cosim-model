@@ -11,7 +11,7 @@ read_verilog [ glob ./design/*.sv ]
 # STEP#3: run synthesis, write design checkpoint, report timing,
 # and utilization estimates
 #
-synth_design -top decoder -part xc7k70tfbg676-2
+synth_design -top dec_decode -part xc7k70tfbg676-2
 write_checkpoint -force $outputDir/post_synth.dcp
 report_timing_summary -file $outputDir/post_synth_timing_summary.rpt
 report_utilization -file $outputDir/post_synth_util.rpt
