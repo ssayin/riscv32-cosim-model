@@ -33,7 +33,7 @@ synth: $(TOOLS_DIR)run.tcl
 	vivado -mode batch -source $(TOOLS_DIR)run.tcl
 
 sv_dpi: $(LIB)
-	xvlog -sv -f sv_compile_list.f -L uvm
+	xvlog -sv -f sv_compile_list.txt -L uvm
 	xelab $(SV_TOP) -relax -s top -sv_lib $(basename $(notdir $(LIB)))
 
 	LD_LIBRARY_PATH=. xsim top -testplusarg UVM_TESTNAME=dec_decode_basic_test -testplusarg UVM_VERBOSITY=UVM_LOW -R
