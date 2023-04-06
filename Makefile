@@ -17,7 +17,7 @@ CXX           := g++
 CXX_FLAGS     := -std=c++20 -O2
 
 LIB           := libdpi.so
-SV_TOP        := $(TESTBENCH_DIR)tb_dec_decode.sv
+SV_TOP        := tb_dec_decode
 
 DECODER_SRCS  := $(wildcard $(DECODER_SRC)*.cpp)
 EXPORTER_SRCS := $(wildcard $(EXPORTER_SRC)*.cpp)
@@ -33,9 +33,10 @@ synth: $(TOOLS_DIR)run.tcl
 	vivado -mode batch -source $(TOOLS_DIR)run.tcl
 
 sv_dpi: $(LIB)
-	xvlog -sv $(DESIGN_DIR)defs.sv
-	xvlog -sv $(DESIGN_DIR)dec_decode.sv
-	LD_LIBRARY_PATH=. xelab -svlog $(SV_TOP) -L uvm -sv_lib $(basename $(notdir $(LIB))) -R
+	xvlog -sv -f sv_compile_list.f -L uvm
+	xelab $(SV_TOP) -relax -s top -sv_lib $(basename $(notdir $(LIB)))
+
+	LD_LIBRARY_PATH=. xsim top -testplusarg UVM_TESTNAME=dec_decode_basic_test -testplusarg UVM_VERBOSITY=UVM_LOW -R
 
 $(LIB): $(OBJS)
 	$(CXX) $(CXX_FLAGS) -shared -Wl,-soname,$@ -o $@ $^
@@ -56,4 +57,5 @@ $(BUILD_DIR):
 	${RM} *.log
 	${RM} *.pb
 	${RM} -rf ./xsim.dir
+	${RM} -rf ./xsim.covdb
 	${RM} -rf ./out

@@ -35,11 +35,13 @@ void dpi_decoder_process(const decoder_in_t *in, decoder_out_t *out) {
   op dec;
 
   // uncompress
-  if (!(instr & 2)) {
-    dec = decode16((instr << 16) >> 16);
-  } else {
-    dec = decode(instr);
-  }
+  //if (!(instr & 2)) {
+  //  dec = decode16((instr << 16) >> 16);
+  //} else {
+  //  dec = decode(instr);
+  //}
+
+  dec = decode(instr);
 
   out->use_imm = dec.has_imm;
 
@@ -52,7 +54,7 @@ void dpi_decoder_process(const decoder_in_t *in, decoder_out_t *out) {
   out->lsu = 0;
   out->alu = 0;
   out->br = 0;
-  out->illegal = 0;
+  out->illegal = 1;
 
   switch (dec.tgt) {
   case target::load:

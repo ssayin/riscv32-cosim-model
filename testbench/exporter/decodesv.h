@@ -12,15 +12,13 @@ extern "C" {
 typedef struct {
   svLogicVecVal instr;
   svLogicVecVal pc_in;
-  svLogic clk;
-  svLogic rst_n;
 } decoder_in_t;
 
 typedef struct {
+  svLogicVecVal imm;
   svLogicVecVal rs1_addr;
   svLogicVecVal rs2_addr;
   svLogicVecVal rd_addr;
-  svLogicVecVal imm;
   svLogic alu;
   svLogic lsu;
   svLogic br;
