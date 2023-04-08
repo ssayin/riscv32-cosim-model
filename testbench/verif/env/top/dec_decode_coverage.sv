@@ -13,7 +13,7 @@ class dec_decode_coverage #(
     option.per_instance = 1;
     option.goal = 100;
 
-    dec_decode_instr: coverpoint cov_trans.dec_in.instr {bins instr_values[] = {[0 : $]};}
+    dec_decode_instr: coverpoint cov_trans.dec_in.instr {bins instr_values[] = {[0 : 31]};}
 
     // dec_decode_alu: coverpoint cov_trans.dec_out.alu {bins low = {0}; bins high = {1};}
 

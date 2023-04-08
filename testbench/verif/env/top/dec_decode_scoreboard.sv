@@ -1,6 +1,9 @@
 `ifndef DEC_DECODE_SCOREBOARD
 `define DEC_DECODE_SCOREBOARD
 
+import dec_decode_agent_pkg::decoder_in_t;
+import "DPI-C" function void disas(decoder_in_t dec_in);
+
 class dec_decode_scoreboard extends uvm_scoreboard;
 
   `uvm_component_utils(dec_decode_scoreboard)
@@ -55,6 +58,8 @@ class dec_decode_scoreboard extends uvm_scoreboard;
         if (exp_trans.dec_out.illegal == act_trans.dec_out.illegal) begin
           `uvm_info(get_full_name(), $sformatf("ILLEGAL MATCHES"), UVM_LOW);
         end else begin
+          disas(act_trans.dec_in);
+          disas(exp_trans.dec_in);
           `uvm_error(get_full_name(), $sformatf("ILLEGAL MIS-MATCHES"));
           error = 1;
         end

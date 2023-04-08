@@ -1,31 +1,32 @@
 #VIVADO_INC := /opt/Xilinx/Vivado/2022.2/data/xsim/include/
-BUILD_DIR     := ./build/
-
-DECODER_SRC   := ./src/decoder/decoder/src/
-DECODER_INC   := -Isrc/decoder/decoder/include/
-COMMON_INC    := -Isrc/common/include/
-
-TOOLS_DIR     := ./tools/
-
-EXPORTER_SRC  := ./testbench/exporter/
-
-DESIGN_DIR    := ./design/
-
-TESTBENCH_DIR := ./testbench/
-
 CXX           := g++
 CXX_FLAGS     := -std=c++20 -O2
+
+BUILD_DIR     := ./build/
+TOOLS_DIR     := ./tools/
+DESIGN_DIR    := ./design/
+TESTBENCH_DIR := ./testbench/
 
 LIB           := libdpi.so
 SV_TOP        := tb_dec_decode
 
+DECODER_INC   := -Isrc/decoder/decoder/include/
+COMMON_INC    := -Isrc/common/include/
+DISAS_INC     := -Ithird_party/riscv-disas/
+
+DECODER_SRC   := ./src/decoder/decoder/src/
+EXPORTER_SRC  := ./testbench/exporter/
+DISAS_SRC     := ./third_party/riscv-disas/
+
 DECODER_SRCS  := $(wildcard $(DECODER_SRC)*.cpp)
 EXPORTER_SRCS := $(wildcard $(EXPORTER_SRC)*.cpp)
+DISAS_SRCS    := $(DISAS_SRC)/riscv-disas.c
 
 DECODER_OBJS  := $(patsubst $(DECODER_SRC)%.cpp,$(BUILD_DIR)%.o,$(DECODER_SRCS))
 EXPORTER_OBJS := $(patsubst $(EXPORTER_SRC)%.cpp,$(BUILD_DIR)%.o,$(EXPORTER_SRCS))
+DISAS_OBJ     := $(BUILD_DIR)riscv-disas.o
 
-OBJS          := $(DECODER_OBJS) $(EXPORTER_OBJS)
+OBJS          := $(DECODER_OBJS) $(EXPORTER_OBJS) $(DISAS_OBJ)
 
 all: synth sv_dpi
 
@@ -36,7 +37,7 @@ sv_dpi: $(LIB)
 	xvlog -sv -f sv_compile_list.txt -L uvm
 	xelab $(SV_TOP) -relax -s top -sv_lib $(basename $(notdir $(LIB)))
 
-	LD_LIBRARY_PATH=. xsim top -testplusarg UVM_TESTNAME=dec_decode_basic_test -testplusarg UVM_VERBOSITY=UVM_LOW -R
+	LD_LIBRARY_PATH=. xsim top -testplusarg UVM_TESTNAME=dec_decode_basic_test -testplusarg UVM_VERBOSITY=UVM_NONE -R
 
 $(LIB): $(OBJS)
 	$(CXX) $(CXX_FLAGS) -shared -Wl,-soname,$@ -o $@ $^
@@ -45,7 +46,10 @@ $(BUILD_DIR)%.o: $(DECODER_SRC)%.cpp | $(BUILD_DIR)
 	$(CXX) -fPIC $(CXX_FLAGS) $(COMMON_INC) $(DECODER_INC) -I. -c $< -o $@
 
 $(BUILD_DIR)%.o: $(EXPORTER_SRC)%.cpp | $(BUILD_DIR)
-	$(CXX) -fPIC $(CXX_FLAGS) $(COMMON_INC) $(DECODER_INC) -I. -c $< -o $@
+	$(CXX) -fPIC $(CXX_FLAGS) $(COMMON_INC) $(DECODER_INC) $(DISAS_INC) -I. -c $< -o $@
+
+$(DISAS_OBJ): $(DISAS_SRCS) | $(BUILD_DIR)
+	$(CXX) -fPIC $(CXX_FLAGS) $(DISAS_INC) -I. -c $< -o $@
 
 $(BUILD_DIR):
 	mkdir -p $@

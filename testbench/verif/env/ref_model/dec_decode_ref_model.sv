@@ -54,7 +54,7 @@ class dec_decode_ref_model extends uvm_component;
 
     `uvm_info(get_full_name(), $sformatf("EXPECTED TRANSACTION FROM REF MODEL"), UVM_LOW);
 
-    exp_trans.print();
+    // exp_trans.print();
 
     rm2sb_port.write(exp_trans);
 

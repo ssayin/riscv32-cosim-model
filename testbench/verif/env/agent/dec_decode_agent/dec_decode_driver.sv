@@ -33,7 +33,7 @@ class dec_decode_driver extends uvm_driver #(dec_decode_transaction);
       drive();
       `uvm_info(get_full_name(), $sformatf("TRANSACTION FROM DRIVER"), UVM_LOW);
 
-      req.print();
+      // req.print();
       @(vif.dr_cb);
       $cast(rsp, req.clone());
       rsp.set_id_info(req);
@@ -51,8 +51,8 @@ class dec_decode_driver extends uvm_driver #(dec_decode_transaction);
   endtask : drive
 
   task reset();
-    decoder_in_t tmp;
-    vif.dr_cb.dec_in <= tmp;
+    vif.dr_cb.dec_in.pc_in <= 0;
+    vif.dr_cb.dec_in.instr <= 0;
   endtask : reset
 
 endclass : dec_decode_driver

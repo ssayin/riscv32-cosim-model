@@ -37,9 +37,10 @@ class dec_decode_monitor extends uvm_monitor;
     wait (!vif.reset);
     @(vif.rc_cb);
     @(vif.rc_cb);
+    act_trans.dec_in  = vif.rc_cb.dec_in;
     act_trans.dec_out = vif.rc_cb.dec_out;
     `uvm_info(get_full_name(), $sformatf("TRANSACTION FROM MONITOR"), UVM_LOW);
-    act_trans.print();
+    // act_trans.print();
 
   endtask : collect_trans
 

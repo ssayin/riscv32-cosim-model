@@ -5,6 +5,12 @@
 
 #include "svdpi.h"
 
+#define EXPORTER_VECVAL_SET(x, val)                                            \
+  do {                                                                         \
+    x.aval = val;                                                              \
+    x.bval = 0;                                                                \
+  } while (0)
+
 #ifdef __cplusplus
 extern "C" {
 #endif

@@ -4,12 +4,6 @@
 #include <cstring>
 #include <iostream>
 
-#define EXPORTER_VECVAL_SET(x, val)                                            \
-  do {                                                                         \
-    x.aval = val;                                                              \
-    x.bval = 0;                                                                \
-  } while (0)
-
 /*
 extern "C" void decodesv(const svLogicVecVal *word, svLogicVecVal *out) {
   op dec = decode(word->aval);
@@ -35,7 +29,7 @@ void dpi_decoder_process(const decoder_in_t *in, decoder_out_t *out) {
   op dec;
 
   // uncompress
-  //if (!(instr & 2)) {
+  // if (!(instr & 2)) {
   //  dec = decode16((instr << 16) >> 16);
   //} else {
   //  dec = decode(instr);

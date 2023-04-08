@@ -171,6 +171,10 @@ module dec_decode
       end
       `XOR:    alu_op = ALU_XOR;
       `XORI:   alu_op = ALU_XOR;
+      `C_J: begin
+      end
+      `JAL: begin
+      end
       default: illegal = 1'b1;
 
     endcase
