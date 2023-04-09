@@ -5,7 +5,7 @@ file mkdir $outputDir
 #
 # STEP#2: setup design sources and constraints
 #
-read_verilog [ glob ./design/*.sv ]
+read_verilog [ glob ./src/rtl/*.sv ]
 # read_xdc ./design/top_full.xdc
 #
 # STEP#3: run synthesis, write design checkpoint, report timing,

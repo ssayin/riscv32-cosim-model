@@ -1,0 +1,17 @@
+-i ./src/tb
+-i ./src/tb/agents
+-i ./src/tb/agents/dec_decode_agent
+-i ./src/tb/env
+-i ./src/tb/tests
+-i ./src/tb/sequences
+-i ./src/rtl
+./src/rtl/inst.svh
+./src/rtl/defs.sv
+./src/rtl/dec_decode.sv
+./src/tb/agents/dec_decode_agent/dec_decode_agent_pkg.sv 
+./src/tb/env/dec_decode_ref_model_pkg.sv 
+./src/tb/env/dec_decode_env_pkg.sv
+./src/tb/sequences/dec_decode_seq_list.sv 
+./src/tb/tests/dec_decode_test_list.sv 
+./src/tb/dec_decode_if.sv
+./src/tb/tb_dec_decode.sv

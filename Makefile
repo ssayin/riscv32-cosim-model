@@ -4,7 +4,7 @@ CXX_FLAGS     := -std=c++20 -O2
 
 BUILD_DIR     := ./build/
 TOOLS_DIR     := ./tools/
-DESIGN_DIR    := ./design/
+DESIGN_DIR    := ./rtl/
 TESTBENCH_DIR := ./testbench/
 
 LIB           := libdpi.so
@@ -15,7 +15,7 @@ COMMON_INC    := -Isrc/common/include/
 DISAS_INC     := -Ithird_party/riscv-disas/
 
 DECODER_SRC   := ./src/decoder/decoder/src/
-EXPORTER_SRC  := ./testbench/exporter/
+EXPORTER_SRC  := ./src/svdpi/
 DISAS_SRC     := ./third_party/riscv-disas/
 
 DECODER_SRCS  := $(wildcard $(DECODER_SRC)*.cpp)
@@ -34,7 +34,7 @@ synth: $(TOOLS_DIR)run.tcl
 	vivado -mode batch -source $(TOOLS_DIR)run.tcl
 
 sv_dpi: $(LIB)
-	xvlog -sv -f sv_compile_list.txt -L uvm
+	xvlog -sv -f $(TOOLS_DIR)sv_compile_list.txt -L uvm
 	xelab $(SV_TOP) -relax -s top -sv_lib $(basename $(notdir $(LIB)))
 
 	LD_LIBRARY_PATH=. xsim top -testplusarg UVM_TESTNAME=dec_decode_basic_test -testplusarg UVM_VERBOSITY=UVM_NONE -R
