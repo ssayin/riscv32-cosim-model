@@ -2,8 +2,8 @@
 `define DEC_DECODE_IF
 
 interface dec_decode_if
-  import dec_decode_agent_pkg::decoder_in_t;
-  import dec_decode_agent_pkg::decoder_out_t;
+  import svdpi_pkg::decoder_in_t;
+  import svdpi_pkg::decoder_out_t;
 (
     input logic clk,
     reset

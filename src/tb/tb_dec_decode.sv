@@ -4,11 +4,10 @@
 module tb_dec_decode
   import uvm_pkg::*;
   import dec_decode_test_list::*;
-  import dec_decode_agent_pkg::decoder_in_t;
-  import dec_decode_agent_pkg::decoder_out_t;
+  import svdpi_pkg::decoder_in_t;
+  import svdpi_pkg::decoder_out_t;
 #(
     `include "uvm_macros.svh"
-    `include "dec_decode_def.sv"
     `include "dec_decode_if.sv"
 );
 

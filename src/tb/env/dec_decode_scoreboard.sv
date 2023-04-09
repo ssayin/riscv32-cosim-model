@@ -1,8 +1,7 @@
 `ifndef DEC_DECODE_SCOREBOARD
 `define DEC_DECODE_SCOREBOARD
 
-import dec_decode_agent_pkg::decoder_in_t;
-import "DPI-C" function void disas(decoder_in_t dec_in);
+import svdpi_pkg::*;
 
 class dec_decode_scoreboard extends uvm_scoreboard;
 
@@ -47,27 +46,31 @@ class dec_decode_scoreboard extends uvm_scoreboard;
 
   task compare_trans();
     dec_decode_transaction exp_trans, act_trans;
-    if (exp_trans_fifo.size != 0) begin
-      exp_trans = exp_trans_fifo.pop_front();
-      if (act_trans_fifo.size != 0) begin
-        act_trans = act_trans_fifo.pop_front();
-        `uvm_info(get_full_name(), $sformatf("expected ILLEGAL =%d , actual  ILLEGAL =%d ",
-                                             exp_trans.dec_out.illegal, act_trans.dec_out.illegal),
-                  UVM_LOW);
 
-        if (exp_trans.dec_out.illegal == act_trans.dec_out.illegal) begin
-          `uvm_info(get_full_name(), $sformatf("ILLEGAL MATCHES"), UVM_LOW);
-        end else begin
-          disas(act_trans.dec_in);
-          disas(exp_trans.dec_in);
-          `uvm_error(get_full_name(), $sformatf("ILLEGAL MIS-MATCHES"));
-          error = 1;
-        end
-      end
+    if ((exp_trans_fifo.size == 0) || (act_trans_fifo.size == 0)) return;
+
+    exp_trans = exp_trans_fifo.pop_front();
+    act_trans = act_trans_fifo.pop_front();
+
+    `uvm_info(get_full_name(), $sformatf("expected ILLEGAL = %d, actual ILLEGAL = %d",
+                                         exp_trans.dec_out.illegal, act_trans.dec_out.illegal),
+              UVM_LOW);
+
+    if (exp_trans.dec_out.illegal == act_trans.dec_out.illegal) begin
+      `uvm_info(get_full_name(), $sformatf("ILLEGAL MATCHES"), UVM_LOW);
+    end else begin
+      disas(act_trans.dec_in);
+      disas(exp_trans.dec_in);
+      act_trans.print();
+      exp_trans.print();
+      `uvm_error(get_full_name(), $sformatf("ILLEGAL MIS-MATCHES"));
+      error = 1;
     end
+
   endtask : compare_trans
 
   function void report_phase(uvm_phase phase);
+    super.report_phase(phase);
     if (error == 0) begin
       $write("%c[7;32m", 27);
       $display("PASS");

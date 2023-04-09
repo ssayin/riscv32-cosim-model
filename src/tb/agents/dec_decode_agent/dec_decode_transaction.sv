@@ -1,9 +1,8 @@
 `ifndef DEC_DECODE_TRANSACTION
 `define DEC_DECODE_TRANSACTION
 
-`include "dec_decode_def.sv"
-
 class dec_decode_transaction extends uvm_sequence_item;
+  import svdpi_pkg::*;
 
   decoder_out_t dec_out;
   rand decoder_in_t dec_in;
@@ -26,9 +25,8 @@ class dec_decode_transaction extends uvm_sequence_item;
     super.new(name);
   endfunction : new
 
-  // constraints ..
-
-  // constraint instr_c {instr inside {[32'h0 : 32'hFFFFFFFF]};}
+  constraint instr_c {dec_in.instr inside {[32'h0 : 32'hFFFFFFFF]};}
+  constraint pc_in_c {dec_in.pc_in inside {[32'h0 : 32'hFFFFFFFF]};}
 
   function void post_randomize();
   endfunction : post_randomize

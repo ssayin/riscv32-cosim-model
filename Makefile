@@ -37,7 +37,7 @@ sv_dpi: $(LIB)
 	xvlog -sv -f $(TOOLS_DIR)sv_compile_list.txt -L uvm
 	xelab $(SV_TOP) -relax -s top -sv_lib $(basename $(notdir $(LIB)))
 
-	LD_LIBRARY_PATH=. xsim top -testplusarg UVM_TESTNAME=dec_decode_basic_test -testplusarg UVM_VERBOSITY=UVM_NONE -R
+	LD_LIBRARY_PATH=. xsim top -testplusarg UVM_TESTNAME=dec_decode_basic_test -testplusarg UVM_VERBOSITY=UVM_LOW -R
 
 $(LIB): $(OBJS)
 	$(CXX) $(CXX_FLAGS) -shared -Wl,-soname,$@ -o $@ $^

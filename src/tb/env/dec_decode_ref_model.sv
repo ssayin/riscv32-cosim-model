@@ -1,19 +1,9 @@
 `ifndef DEC_DECODE_REF_MODEL
 `define DEC_DECODE_REF_MODEL
 
-`include "dec_decode_def.sv"
-
-import "DPI-C" function void init();
-import "DPI-C" function void dpi_decoder_input(decoder_in_t io);
-import "DPI-C" function void dpi_decoder_output(decoder_out_t io);
-
-import "DPI-C" function void dpi_decoder_process(
-  input  decoder_in_t  in,
-  output decoder_out_t out
-);
-
-
 class dec_decode_ref_model extends uvm_component;
+  import svdpi_pkg::*;
+
   `uvm_component_utils(dec_decode_ref_model)
 
   uvm_analysis_export #(dec_decode_transaction) rm_export;

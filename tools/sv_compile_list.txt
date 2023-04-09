@@ -8,6 +8,7 @@
 ./src/rtl/inst.svh
 ./src/rtl/defs.sv
 ./src/rtl/dec_decode.sv
+./src/svdpi/svdpi_pkg.sv
 ./src/tb/agents/dec_decode_agent/dec_decode_agent_pkg.sv 
 ./src/tb/env/dec_decode_ref_model_pkg.sv 
 ./src/tb/env/dec_decode_env_pkg.sv

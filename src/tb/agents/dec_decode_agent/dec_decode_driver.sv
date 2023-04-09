@@ -1,8 +1,6 @@
 `ifndef DEC_DECODE_DRIVER
 `define DEC_DECODE_DRIVER
 
-`include "dec_decode_def.sv"
-
 class dec_decode_driver extends uvm_driver #(dec_decode_transaction);
 
   dec_decode_transaction trans;

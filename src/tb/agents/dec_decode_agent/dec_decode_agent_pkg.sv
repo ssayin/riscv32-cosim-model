@@ -7,7 +7,6 @@ package dec_decode_agent_pkg;
 
   `include "uvm_macros.svh"
 
-  `include "dec_decode_def.sv"
   `include "dec_decode_transaction.sv"
   `include "dec_decode_sequencer.sv"
   `include "dec_decode_driver.sv"
