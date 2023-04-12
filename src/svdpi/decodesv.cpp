@@ -1,6 +1,7 @@
 #include "decodesv.h"
 #include "decoder/decoder.hpp"
 #include "svdpi.h"
+#include <bitset>
 #include <cstring>
 #include <iostream>
 
@@ -25,17 +26,15 @@ void dpi_decoder_process(const decoder_in_t *in, decoder_out_t *out) {
   memset(out, 0, sizeof(decoder_out_t));
 
   uint32_t instr = in->instr.aval;
-
+  bool is_compressed = !(instr & 2);
+  std::cout << "sv_dpi: " << (is_compressed ? "compressed " : "") << std::hex
+            << instr << std::endl;
   op dec;
-
-  // uncompress
-  // if (!(instr & 2)) {
-  //  dec = decode16((instr << 16) >> 16);
-  //} else {
-  //  dec = decode(instr);
-  //}
-
-  dec = decode(instr);
+  if (is_compressed) {
+    dec = decode16((instr << 16) >> 16);
+  } else {
+    dec = decode(instr);
+  }
 
   out->use_imm = dec.has_imm;
 

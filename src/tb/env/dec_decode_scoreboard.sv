@@ -58,6 +58,12 @@ class dec_decode_scoreboard extends uvm_scoreboard;
 
     if (exp_trans.dec_out.illegal == act_trans.dec_out.illegal) begin
       `uvm_info(get_full_name(), $sformatf("ILLEGAL MATCHES"), UVM_LOW);
+      if (exp_trans.dec_out.illegal != 1'b1) begin
+        if (exp_trans.dec_out.imm != act_trans.dec_out.imm) begin
+          `uvm_error(get_full_name(), $sformatf("IMM MIS-MATCHES"));
+          error = 1;
+        end
+      end
     end else begin
       disas(act_trans.dec_in);
       disas(exp_trans.dec_in);

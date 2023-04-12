@@ -50,26 +50,37 @@ module dec_decode
 
   always_comb begin
     casez (opcode)
+      7'b0010011: begin
+        use_imm = 1'b1;
+        imm = imm_I;
+      end
+      7'b1100011: begin
+        imm = imm_B;
+      end
+      7'b0000011: begin
+        imm = imm_I;
+      end
+      7'b0100011: begin
+        imm = imm_S;
+      end
       default: begin
+        use_imm = 0;
       end
     endcase
   end
 
-  always_comb begin
-    casez (instr)
-      default: begin
-        rd_addr  = rd;
-        rs1_addr = rs1;
-        rs2_addr = rs2;
-      end
-    endcase
-  end
+  //always_comb begin
+  // casez (instr)
+  //  default: begin
+  //   rd_addr  = rd;
+  //  rs1_addr = rs1;
+  // rs2_addr = rs2;
+  // end
+  // endcase
+  // end
 
   always_comb begin
-    alu = 1'b0;
-    br = 1'b0;
-    lsu = 1'b0;
-    illegal = 1'b0;
+    $display("rtl: %x", instr);
 
     casez (instr)
       `ADD, `ADDI:         alu_op = ALU_ADD;

@@ -11,7 +11,7 @@ class dec_decode_basic_seq extends uvm_sequence #(dec_decode_transaction);
 
   virtual task body();
 
-    for (int i = 0; i < 1000; i++) begin
+    for (int i = 0; i < 100000; i++) begin
 
       req = dec_decode_transaction::type_id::create("req");
 
