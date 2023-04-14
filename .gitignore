@@ -1,6 +1,7 @@
 xsim.dir/
 xsim.covdb/
 out/
+build/
 *.jou
 *.log
 *.pb

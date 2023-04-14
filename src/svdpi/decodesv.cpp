@@ -26,7 +26,7 @@ void dpi_decoder_process(const decoder_in_t *in, decoder_out_t *out) {
   memset(out, 0, sizeof(decoder_out_t));
 
   uint32_t instr = in->instr.aval;
-  bool is_compressed = !(instr & 2);
+  bool is_compressed = ((instr & 2) != 2);
   std::cout << "sv_dpi: " << (is_compressed ? "compressed " : "") << std::hex
             << instr << std::endl;
   op dec;
@@ -47,7 +47,7 @@ void dpi_decoder_process(const decoder_in_t *in, decoder_out_t *out) {
   out->lsu = 0;
   out->alu = 0;
   out->br = 0;
-  out->illegal = 1;
+  out->illegal = 0;
 
   switch (dec.tgt) {
   case target::load:
