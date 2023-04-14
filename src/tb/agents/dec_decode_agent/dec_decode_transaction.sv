@@ -25,9 +25,6 @@ class dec_decode_transaction extends uvm_sequence_item;
     super.new(name);
   endfunction : new
 
-  constraint instr_c {dec_in.instr inside {[32'h0 : 32'hFFFFFFFF]};}
-  constraint pc_in_c {dec_in.pc_in inside {[32'h0 : 32'hFFFFFFFF]};}
-
   function void post_randomize();
   endfunction : post_randomize
 

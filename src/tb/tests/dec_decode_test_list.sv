@@ -10,6 +10,7 @@ package dec_decode_test_list;
   import dec_decode_seq_list::*;
 
   `include "dec_decode_basic_test.sv"
+  `include "dec_decode_from_file_test.sv"
 
 endpackage : dec_decode_test_list
 

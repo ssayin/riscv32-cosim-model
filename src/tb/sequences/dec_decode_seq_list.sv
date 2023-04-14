@@ -12,6 +12,7 @@ package dec_decode_seq_list;
   import dec_decode_env_pkg::*;
 
   `include "dec_decode_basic_seq.sv"
+  `include "dec_decode_instr_seq_from_file.sv"
 
 endpackage : dec_decode_seq_list
 

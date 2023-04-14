@@ -7,6 +7,7 @@ TOOLS_DIR     := ./tools/
 DESIGN_DIR    := ./rtl/
 TESTBENCH_DIR := ./testbench/
 
+DATA_DIR      := $(BUILD_DIR)/data
 LIB           := libdpi.so
 SV_TOP        := tb_dec_decode
 
@@ -28,16 +29,23 @@ DISAS_OBJ     := $(BUILD_DIR)riscv-disas.o
 
 OBJS          := $(DECODER_OBJS) $(EXPORTER_OBJS) $(DISAS_OBJ)
 
-all: synth sv_dpi
+
+all: synth sim 
 
 synth: $(TOOLS_DIR)run.tcl
 	vivado -mode batch -source $(TOOLS_DIR)run.tcl
 
-sv_dpi: $(LIB)
-	xvlog -sv -f $(TOOLS_DIR)sv_compile_list.txt -L uvm
+extract: $(DATA_DIR)
+	7z e ./data/*.zip -ir!*.json -so | jq -r '.[].instr' | sort | uniq > $(DATA_DIR)/amalgamated.txt
+
+sim: $(LIB) extract
+	xvlog -sv -f $(TOOLS_DIR)sv_compile_list.txt -L uvm \
+		-define INSTR_SEQ_FILENAME='"$(DATA_DIR)/amalgamated.txt"' \
+		-define INSTR_SEQ_LINECOUNT=$(shell cat $(DATA_DIR)/amalgamated.txt | wc -l)
+
 	xelab $(SV_TOP) -relax -s top -sv_lib $(basename $(notdir $(LIB)))
 
-	LD_LIBRARY_PATH=. xsim top -testplusarg UVM_TESTNAME=dec_decode_basic_test -testplusarg UVM_VERBOSITY=UVM_LOW -R
+	LD_LIBRARY_PATH=. xsim top -testplusarg UVM_TESTNAME=dec_decode_from_file_test -testplusarg UVM_VERBOSITY=UVM_LOW -R
 
 $(LIB): $(OBJS)
 	$(CXX) $(CXX_FLAGS) -shared -Wl,-soname,$@ -o $@ $^
@@ -52,6 +60,9 @@ $(DISAS_OBJ): $(DISAS_SRCS) | $(BUILD_DIR)
 	$(CXX) -fPIC $(CXX_FLAGS) $(DISAS_INC) -I. -c $< -o $@
 
 $(BUILD_DIR):
+	mkdir -p $@
+
+$(DATA_DIR):
 	mkdir -p $@
 
 .PHONY clean:
