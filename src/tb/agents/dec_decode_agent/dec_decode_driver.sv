@@ -29,7 +29,7 @@ class dec_decode_driver extends uvm_driver #(dec_decode_transaction);
     forever begin
       seq_item_port.get_next_item(req);
       drive();
-      `uvm_info(get_full_name(), $sformatf("TRANSACTION FROM DRIVER"), UVM_LOW);
+      `uvm_info(get_full_name(), $sformatf("TRANSACTION FROM DRIVER"), UVM_HIGH);
 
       // req.print();
       @(vif.dr_cb);

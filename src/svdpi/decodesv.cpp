@@ -1,5 +1,6 @@
 #include "decodesv.h"
 #include "decoder/decoder.hpp"
+#include "decoder/rv32_isn.hpp"
 #include "svdpi.h"
 #include <bitset>
 #include <cstring>
@@ -26,12 +27,10 @@ void dpi_decoder_process(const decoder_in_t *in, decoder_out_t *out) {
   memset(out, 0, sizeof(decoder_out_t));
 
   uint32_t instr = in->instr.aval;
-  bool is_compressed = ((instr & 2) != 2);
-  std::cout << "sv_dpi: " << (is_compressed ? "compressed " : "") << std::hex
-            << instr << std::endl;
+  bool is_compressed = (instr & 0x3) != 0x3;
   op dec;
   if (is_compressed) {
-    dec = decode16((instr << 16) >> 16);
+    dec = decode16(instr & 0x0000FFFF);
   } else {
     dec = decode(instr);
   }
@@ -57,6 +56,19 @@ void dpi_decoder_process(const decoder_in_t *in, decoder_out_t *out) {
     out->lsu = 1;
     break;
   case target::alu:
+    /*switch (std::get<alu>(dec.opt)) {
+    case alu::_sll:
+    case alu::_srl:
+    case alu::_sra:
+      if (dec.has_imm && !dec.is_compressed) {
+        out->imm.aval = 0;
+        out->imm.bval = 0;
+        out->rs2_addr.aval = dec.imm;
+      }
+      break;
+    default:
+      break;
+    }*/
     out->alu = 1;
     break;
   case target::branch:
@@ -72,8 +84,4 @@ void dpi_decoder_process(const decoder_in_t *in, decoder_out_t *out) {
   case target::ecall:
     break;
   }
-}
-
-extern "C" void init() {
-  std::cout << "DPI_VERSION: " << svDpiVersion() << std::endl;
 }

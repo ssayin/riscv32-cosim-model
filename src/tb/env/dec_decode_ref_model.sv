@@ -42,7 +42,7 @@ class dec_decode_ref_model extends uvm_component;
     // from the riscv32-decoder
     dpi_decoder_process(exp_trans.dec_in, exp_trans.dec_out);
 
-    `uvm_info(get_full_name(), $sformatf("EXPECTED TRANSACTION FROM REF MODEL"), UVM_LOW);
+    `uvm_info(get_full_name(), $sformatf("EXPECTED TRANSACTION FROM REF MODEL"), UVM_HIGH);
 
     // exp_trans.print();
 

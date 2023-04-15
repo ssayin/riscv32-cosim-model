@@ -28,6 +28,34 @@ class dec_decode_transaction extends uvm_sequence_item;
   function void post_randomize();
   endfunction : post_randomize
 
+
+  function bit compare(uvm_object rhs);
+
+    dec_decode_transaction rhs_trans;
+
+    if (!$cast(rhs_trans, rhs)) begin
+      `uvm_error(get_full_name(), "Failed to cast rhs to dec_decode_transaction");
+      return 0;
+    end
+    if (dec_out.illegal != rhs_trans.dec_out.illegal) begin
+      return 0;
+    end
+    if (dec_out.imm != rhs_trans.dec_out.imm) begin
+      return 0;
+    end
+    //if (dec_out.rs1_addr != rhs_trans.dec_out.rs1_addr) begin
+    //  return 0;
+    //end
+    //if (dec_out.rs2_addr != rhs_trans.dec_out.rs2_addr) begin
+    //  return 0;
+    //end
+    //if (dec_out.rd_addr != rhs_trans.dec_out.rd_addr) begin
+    //  return 0;
+    //end
+    return 1;
+
+  endfunction : compare
+
 endclass : dec_decode_transaction
 
 `endif

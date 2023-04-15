@@ -52,24 +52,14 @@ class dec_decode_scoreboard extends uvm_scoreboard;
     exp_trans = exp_trans_fifo.pop_front();
     act_trans = act_trans_fifo.pop_front();
 
-    `uvm_info(get_full_name(), $sformatf("expected ILLEGAL = %d, actual ILLEGAL = %d",
-                                         exp_trans.dec_out.illegal, act_trans.dec_out.illegal),
-              UVM_LOW);
-
-    if (exp_trans.dec_out.illegal == act_trans.dec_out.illegal) begin
-      `uvm_info(get_full_name(), $sformatf("ILLEGAL MATCHES"), UVM_LOW);
-      if (exp_trans.dec_out.illegal != 1'b1) begin
-        if (exp_trans.dec_out.imm != act_trans.dec_out.imm) begin
-          `uvm_error(get_full_name(), $sformatf("IMM MIS-MATCHES"));
-          error = 1;
-        end
-      end
+    if (exp_trans.compare(act_trans))
+    begin
+      `uvm_info(get_full_name(), $sformatf("MATCH SUCCEEDED"), UVM_LOW);
     end else begin
-      disas(act_trans.dec_in);
       disas(exp_trans.dec_in);
+      `uvm_error(get_full_name(), $sformatf("MISMATCH"));
       act_trans.print();
       exp_trans.print();
-      `uvm_error(get_full_name(), $sformatf("ILLEGAL MIS-MATCHES"));
       error = 1;
     end
 
