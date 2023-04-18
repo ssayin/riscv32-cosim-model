@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2023 Serdar Sayın <https://serdarsayin.com>
+#
+# SPDX-License-Identifier: MIT
+
 #VIVADO_INC := /opt/Xilinx/Vivado/2022.2/data/xsim/include/
 CXX           := g++
 CXX_FLAGS     := -std=c++20 -O2
@@ -29,6 +33,7 @@ DISAS_OBJ     := $(BUILD_DIR)riscv-disas.o
 
 OBJS          := $(DECODER_OBJS) $(EXPORTER_OBJS) $(DISAS_OBJ)
 
+INSTR_FEED    := $(DATA_DIR)/amalgamated.txt
 
 all: synth sim 
 
@@ -36,12 +41,14 @@ synth: $(TOOLS_DIR)run.tcl
 	vivado -mode batch -source $(TOOLS_DIR)run.tcl
 
 extract: $(DATA_DIR)
-	7z e ./data/*.zip -ir!*.json -so | jq -r '.[].instr' | sort | uniq > $(DATA_DIR)/amalgamated.txt
 
-sim: $(LIB) extract
+$(INSTR_FEED): $(DATA_DIR)
+	7z e ./data/*.zip -ir!*.json -so | jq -r '.[].instr' | sort | uniq > $@
+
+sim: $(LIB) $(INSTR_FEED)
 	xvlog -sv -f $(TOOLS_DIR)sv_compile_list.txt -L uvm \
-		-define INSTR_SEQ_FILENAME='"$(DATA_DIR)/amalgamated.txt"' \
-		-define INSTR_SEQ_LINECOUNT=$(shell cat $(DATA_DIR)/amalgamated.txt | wc -l)
+		-define INSTR_SEQ_FILENAME='"$(INSTR_FEED)"' \
+		-define INSTR_SEQ_LINECOUNT=$(shell cat $(INSTR_FEED) | wc -l)
 
 	xelab $(SV_TOP) -relax -s top -sv_lib $(basename $(notdir $(LIB)))
 

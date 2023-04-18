@@ -11,8 +11,11 @@ typedef struct {
 typedef struct {
   logic [31:0] imm;
   logic [4:0]  rs1_addr;
+  logic        rs1_en;
   logic [4:0]  rs2_addr;
+  logic        rs2_en;
   logic [4:0]  rd_addr;
+  logic        rd_en;
   logic        alu;
   logic        lsu;
   logic        br;

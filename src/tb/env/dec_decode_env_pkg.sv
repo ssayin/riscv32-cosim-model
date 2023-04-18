@@ -2,8 +2,8 @@
 `define DEC_DECODE_ENV_PKG
 
 package dec_decode_env_pkg;
-
   import uvm_pkg::*;
+
   `include "uvm_macros.svh"
 
   import dec_decode_agent_pkg::*;

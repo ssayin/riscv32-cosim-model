@@ -23,8 +23,11 @@ typedef struct {
 typedef struct {
   svLogicVecVal imm;
   svLogicVecVal rs1_addr;
+  svLogic       rs1_en;
   svLogicVecVal rs2_addr;
+  svLogic       rs2_en;
   svLogicVecVal rd_addr;
+  svLogic       rd_en;
   svLogic alu;
   svLogic lsu;
   svLogic br;

@@ -1,14 +1,11 @@
 `ifndef DEC_DECODE_INSTR_SEQ_FROM_FILE
 `define DEC_DECODE_INSTR_SEQ_FROM_FILE
 
-//`define INSTR_SEQ_FILENAME
-
 class dec_decode_instr_seq_from_file extends uvm_sequence #(dec_decode_transaction);
 
   `uvm_object_utils(dec_decode_instr_seq_from_file)
 
   int fd;
-  // string filename = `INSTR_SEQ_FILENAME;
 
   function new(string name = "dec_decode_instr_seq_from_file");
     super.new(name);

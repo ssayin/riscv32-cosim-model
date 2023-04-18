@@ -1,0 +1,10 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: riscv32-cosim-model
+Upstream-Contact: Serdar Sayın <serdarsayin@pm.me>
+Source: https://github.com/ssayin/riscv32-cosim-model
+
+# Sample paragraph, commented out:
+#
+# Files: src/*
+# Copyright: $YEAR $NAME <$CONTACT>
+# License: ...

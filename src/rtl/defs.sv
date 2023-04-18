@@ -1,4 +1,36 @@
+// SPDX-FileCopyrightText: 2023 Serdar Sayın <https://serdarsayin.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 package defs;
+
+  localparam logic [2:0] AluAddFunct3 = 3'b000;
+
+  localparam logic [2:0] AluSubFunct3 = 3'b000;
+  localparam logic [2:0] AluSltFunct3 = 3'b010;
+  localparam logic [2:0] AluSltuFunct3 = 3'b011;
+  localparam logic [2:0] AluXorFunct3 = 3'b100;
+  localparam logic [2:0] AluOrFunct3 = 3'b110;
+  localparam logic [2:0] AluAndFunct3 = 3'b111;
+
+  localparam logic [2:0] AluSllFunct3 = 3'b001;
+
+  localparam logic [2:0] AluSrlFunct3 = 3'b101;
+  localparam logic [2:0] AluSraFunct3 = 3'b101;
+
+  localparam logic [2:0] AluMulFunct3 = 3'b000;
+  localparam logic [2:0] AluMulhFunct3 = 3'b001;
+  localparam logic [2:0] AluMulhsuFunct3 = 3'b010;
+  localparam logic [2:0] AluMulhuFunct3 = 3'b011;
+  localparam logic [2:0] AluDivFunct3 = 3'b100;
+  localparam logic [2:0] AluDivuFunct3 = 3'b101;
+  localparam logic [2:0] AluRemFunct3 = 3'b110;
+  localparam logic [2:0] AluRemuFunct3 = 3'b111;
+
+  localparam logic [2:0] AluBasePrepend = 2'b00;
+  localparam logic [2:0] AluSubSraPrepend = 2'b01;
+  localparam logic [2:0] AluMPrepend = 2'b11;
+
   // typedef enum logic [4:0] {
   //   LOAD    = 5'b00000,
   //   MISCMEM = 5'b00011,
@@ -13,32 +45,25 @@ package defs;
   //  SYSTEM  = 5'b11100
   // } opc_t;
 
-  typedef struct packed {
-    logic alu;
-    logic lsu;
-    logic br;
-    logic illegal;
-  } pipeline_t;
-
   typedef enum logic [4:0] {
-    ALU_ADD    = 5'b00000,
-    ALU_SUB    = 5'b01000,
-    ALU_SLT    = 5'b00010,
-    ALU_SLTU   = 5'b00011,
-    ALU_XOR    = 5'b00100,
-    ALU_OR     = 5'b00110,
-    ALU_AND    = 5'b00111,
-    ALU_SLL    = 5'b00001,
-    ALU_SRL    = 5'b00101,
-    ALU_SRA    = 5'b01101,
-    ALU_MUL    = 5'b11000,
-    ALU_MULH   = 5'b11001,
-    ALU_MULHSU = 5'b11010,
-    ALU_MULHU  = 5'b11011,
-    ALU_DIV    = 5'b11100,
-    ALU_DIVU   = 5'b11101,
-    ALU_REM    = 5'b11110,
-    ALU_REMU   = 5'b11111
+    ALU_ADD    = {{AluBasePrepend, AluAddFunct3}},
+    ALU_SUB    = {{AluSubSraPrepend, AluSubFunct3}},
+    ALU_SLT    = {{AluBasePrepend, AluSltFunct3}},
+    ALU_SLTU   = {{AluBasePrepend, AluSltuFunct3}},
+    ALU_XOR    = {{AluBasePrepend, AluXorFunct3}},
+    ALU_OR     = {{AluBasePrepend, AluOrFunct3}},
+    ALU_AND    = {{AluBasePrepend, AluAndFunct3}},
+    ALU_SLL    = {{AluBasePrepend, AluSllFunct3}},
+    ALU_SRL    = {{AluBasePrepend, AluSrlFunct3}},
+    ALU_SRA    = {{AluSubSraPrepend, AluSraFunct3}},
+    ALU_MUL    = {{AluMPrepend, AluMulFunct3}},
+    ALU_MULH   = {{AluMPrepend, AluMulhFunct3}},
+    ALU_MULHSU = {{AluMPrepend, AluMulhsuFunct3}},
+    ALU_MULHU  = {{AluMPrepend, AluMulhuFunct3}},
+    ALU_DIV    = {{AluMPrepend, AluDivFunct3}},
+    ALU_DIVU   = {{AluMPrepend, AluDivuFunct3}},
+    ALU_REM    = {{AluMPrepend, AluRemFunct3}},
+    ALU_REMU   = {{AluMPrepend, AluRemuFunct3}}
   } alu_op_t;
 
   typedef enum logic [3:0] {

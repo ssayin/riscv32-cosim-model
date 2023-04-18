@@ -1,15 +1,15 @@
 module ddr_ram #(
-    parameter int ADDR_WIDTH = 32,
-    parameter int DATA_WIDTH = 32,
-    parameter string INIT_FILE = "boot.hex"
+  parameter int    ADDR_WIDTH = 32,
+  parameter int    DATA_WIDTH = 32,
+  parameter string INIT_FILE  = "boot.hex"
 ) (
-    input  logic                  clk,
-    input  logic                  rst_n,
-    input  logic [ADDR_WIDTH-1:0] addr,
-    input  logic [DATA_WIDTH-1:0] wr_data,
-    input  logic                  wr_en,
-    input  logic                  rd_en,
-    output logic [DATA_WIDTH-1:0] rd_data
+  input  logic                  clk,
+  input  logic                  rst_n,
+  input  logic [ADDR_WIDTH-1:0] addr,
+  input  logic [DATA_WIDTH-1:0] wr_data,
+  input  logic                  wr_en,
+  input  logic                  rd_en,
+  output logic [DATA_WIDTH-1:0] rd_data
 );
 
   logic [DATA_WIDTH-1:0] mem_array[0:2**ADDR_WIDTH - 1];

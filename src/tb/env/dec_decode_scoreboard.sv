@@ -1,9 +1,10 @@
 `ifndef DEC_DECODE_SCOREBOARD
 `define DEC_DECODE_SCOREBOARD
 
-import svdpi_pkg::*;
 
 class dec_decode_scoreboard extends uvm_scoreboard;
+
+  import svdpi_pkg::*;
 
   `uvm_component_utils(dec_decode_scoreboard)
 
@@ -52,8 +53,7 @@ class dec_decode_scoreboard extends uvm_scoreboard;
     exp_trans = exp_trans_fifo.pop_front();
     act_trans = act_trans_fifo.pop_front();
 
-    if (exp_trans.compare(act_trans))
-    begin
+    if (exp_trans.compare(act_trans)) begin
       `uvm_info(get_full_name(), $sformatf("MATCH SUCCEEDED"), UVM_LOW);
     end else begin
       disas(exp_trans.dec_in);

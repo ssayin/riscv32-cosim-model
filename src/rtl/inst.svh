@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 Serdar Sayın <https://serdarsayin.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 `ifndef INST_OPCODES
 `define INST_OPCODES
 
@@ -84,35 +88,9 @@
 `define C_ILLEGAL           32'b????????????????0000000000000000
 `define C_SLLI              32'b????????????????000???????????10
 
-`define C_SRAI              32'b????????????????100???????????01
+`define C_SRAI              32'b????????????????100?01????????01
+`define C_SRLI              32'b????????????????100?00????????01
 
 `define FENCEI              32'b00000000000000000001000000001111
-
-`define ALU_ADD_FUNCT3          3'b000
-
-`define ALU_SUB_FUNCT3          3'b000
-`define ALU_SLT_FUNCT3          3'b010
-`define ALU_SLTU_FUNCT3         3'b011
-`define ALU_XOR_FUNCT3          3'b100
-`define ALU_OR_FUNCT3           3'b110
-`define ALU_AND_FUNCT3          3'b111
-
-`define ALU_SLL_FUNCT3          3'b001
-
-`define ALU_SRL_FUNCT3          3'b101
-`define ALU_SRA_FUNCT3          3'b101
-
-`define ALU_MUL_FUNCT3          3'b000
-`define ALU_MULH_FUNCT3         3'b001
-`define ALU_MULHSU_FUNCT3       3'b010
-`define ALU_MULHU_FUNCT3        3'b011
-`define ALU_DIV_FUNCT3          3'b100
-`define ALU_DIVU_FUNCT3         3'b101
-`define ALU_REM_FUNCT3          3'b110
-`define ALU_REMU_FUNCT3         3'b111
-
-`define ALU_BASE_PREPEND        2'b00
-`define ALU_SUB_SRA_PREPEND     2'b01
-`define ALU_M_PREPEND           2'b11
 
 `endif

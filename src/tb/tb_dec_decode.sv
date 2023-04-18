@@ -31,19 +31,20 @@ module tb_dec_decode
   );
 
   dec_decode decoder_inst (
-      .clk(clk),
-      .rst_n(reset),
-      .instr(dec_decode_intf.dec_in.instr),
-      .pc_in(dec_decode_intf.dec_in.pc_in),
-      .rs1_addr(dec_decode_intf.dec_out.rs1_addr),
-      .rs2_addr(dec_decode_intf.dec_out.rs2_addr),
-      .rd_addr(dec_decode_intf.dec_out.rd_addr),
-      .rd_data(),
-      .imm(dec_decode_intf.dec_out.imm),
-      .rd_en(),
-      .mem_rd_en(),
-      .mem_wr_en(),
-      .use_imm(dec_decode_intf.dec_out.use_imm),
+      .i_clk(clk),
+      .i_rst_n(reset),
+      .i_instr(dec_decode_intf.dec_in.instr),
+      .i_pc(dec_decode_intf.dec_in.pc_in),
+      .o_rs1_addr(dec_decode_intf.dec_out.rs1_addr),
+      .o_rs2_addr(dec_decode_intf.dec_out.rs2_addr),
+      .o_rd_addr(dec_decode_intf.dec_out.rd_addr),
+      .o_imm(dec_decode_intf.dec_out.imm),
+      .o_rd_en(dec_decode_intf.dec_out.rd_en),
+      .o_rs1_en(dec_decode_intf.dec_out.rs1_en),
+      .o_rs2_en(dec_decode_intf.dec_out.rs2_en),
+      .o_mem_rd_en(),
+      .o_mem_wr_en(),
+      .o_use_imm(dec_decode_intf.dec_out.use_imm),
       .alu(dec_decode_intf.dec_out.alu),
       .lsu(dec_decode_intf.dec_out.lsu),
       .br(dec_decode_intf.dec_out.br),
@@ -58,23 +59,6 @@ module tb_dec_decode
     uvm_config_db#(virtual dec_decode_if)::set(uvm_root::get(), "*", "intf", dec_decode_intf);
   end
 
-  // initial begin
-  // init();
-  ///  clk = 0;
-  //  for (integer i = 0; i < 160; ++i) begin
-  //   in.instr = $urandom;
-  //dpi_decoder_process(in, out_2);
-  //  #100 in.clk = 1;
-  //  if (!out_2.illegal) begin
-  //    $display("------------------");
-  //   $display("%p", out);
-  //  $display("%p", out_2);
-  // $display("------------------");
-  //  end
-  //  #100 in.clk = 0;
-  // end
-  // $finish;
-  // end
 endmodule : tb_dec_decode
 
 

@@ -1,6 +1,5 @@
 #include "decodesv.h"
 #include "decoder/decoder.hpp"
-#include "decoder/rv32_isn.hpp"
 #include "svdpi.h"
 #include <bitset>
 #include <cstring>
@@ -56,19 +55,6 @@ void dpi_decoder_process(const decoder_in_t *in, decoder_out_t *out) {
     out->lsu = 1;
     break;
   case target::alu:
-    /*switch (std::get<alu>(dec.opt)) {
-    case alu::_sll:
-    case alu::_srl:
-    case alu::_sra:
-      if (dec.has_imm && !dec.is_compressed) {
-        out->imm.aval = 0;
-        out->imm.bval = 0;
-        out->rs2_addr.aval = dec.imm;
-      }
-      break;
-    default:
-      break;
-    }*/
     out->alu = 1;
     break;
   case target::branch:
