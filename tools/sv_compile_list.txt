@@ -1,18 +1,38 @@
--i ./src/tb
--i ./src/tb/agents
--i ./src/tb/agents/dec_decode_agent
--i ./src/tb/env
--i ./src/tb/tests
--i ./src/tb/sequences
+-i ./src/testbench
+-i ./src/testbench/agents
+-i ./src/testbench/agents/dec_decode_agent
+-i ./src/testbench/env
+-i ./src/testbench/tests
+-i ./src/testbench/sequences
 -i ./src/rtl
-./src/rtl/inst.svh
-./src/rtl/defs.sv
-./src/rtl/dec_decode.sv
-./src/svdpi/svdpi_pkg.sv
-./src/tb/agents/dec_decode_agent/dec_decode_agent_pkg.sv 
-./src/tb/env/dec_decode_ref_model_pkg.sv 
-./src/tb/env/dec_decode_env_pkg.sv
-./src/tb/sequences/dec_decode_seq_list.sv 
-./src/tb/tests/dec_decode_test_list.sv 
-./src/tb/dec_decode_if.sv
-./src/tb/tb_dec_decode.sv
+-i ./src/rtl/include
+-i ./src/rtl/core
+-i ./src/rtl/core/arith
+-i ./src/rtl/core/pipeline
+-i ./src/rtl/core/zicsr
+-i ./src/rtl/core/ifc
+-i ./src/rtl/core/mem_hier
+-i ./src/rtl/core/mem_hier/cache
+./src/rtl/include/riscv_opcodes.svh
+./src/rtl/include/instr_defs.sv
+./src/rtl/include/param_defs.sv
+./src/rtl/core/dec_decode.sv
+./src/rtl/core/reg_file.sv
+./src/rtl/core/riscv_core.sv
+./src/rtl/core/arith/alu.sv
+./src/rtl/core/pipeline/_0_if_stage.sv
+./src/rtl/core/pipeline/_1_id_stage.sv
+./src/rtl/core/pipeline/_2_ex_stage.sv
+./src/rtl/core/pipeline/_3_mem_stage.sv
+./src/rtl/core/pipeline/_4_wb_stage.sv
+./src/rtl/mem_shared/memory_model.sv
+./src/rtl/top_level.sv
+./src/dpi/svdpi_pkg.sv
+./src/testbench/agents/dec_decode_agent/dec_decode_agent_pkg.sv 
+./src/testbench/env/dec_decode_ref_model_pkg.sv 
+./src/testbench/env/dec_decode_env_pkg.sv
+./src/testbench/sequences/dec_decode_seq_list.sv 
+./src/testbench/tests/dec_decode_test_list.sv 
+./src/testbench/dec_decode_if.sv
+./src/testbench/tb_dec_decode.sv
+./src/testbench/tb_top_level.sv

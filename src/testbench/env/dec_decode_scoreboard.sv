@@ -2,17 +2,17 @@
 `define DEC_DECODE_SCOREBOARD
 
 
-class dec_decode_scoreboard extends uvm_scoreboard;
+import svdpi_pkg::*;
 
-  import svdpi_pkg::*;
+class dec_decode_scoreboard extends uvm_scoreboard;
 
   `uvm_component_utils(dec_decode_scoreboard)
 
-  uvm_analysis_export #(dec_decode_transaction) rm2sb_export, mon2sb_export;
-  uvm_tlm_analysis_fifo #(dec_decode_transaction) rm2sb_export_fifo, mon2sb_export_fifo;
-  dec_decode_transaction exp_trans, act_trans;
-  dec_decode_transaction exp_trans_fifo[$], act_trans_fifo[$];
-  bit error;
+  uvm_analysis_export #(dec_decode_transaction)   rm2sb_export,          mon2sb_export;
+  uvm_tlm_analysis_fifo #(dec_decode_transaction) rm2sb_export_fifo,     mon2sb_export_fifo;
+  dec_decode_transaction                          exp_trans,             act_trans;
+  dec_decode_transaction                          exp_trans_fifo    [$], act_trans_fifo     [$];
+  bit                                             error;
 
   function new(string name, uvm_component parent);
     super.new(name, parent);
@@ -20,9 +20,9 @@ class dec_decode_scoreboard extends uvm_scoreboard;
 
   function void build_phase(uvm_phase phase);
     super.build_phase(phase);
-    rm2sb_export = new("rm2sb_export", this);
-    mon2sb_export = new("mon2sb_export", this);
-    rm2sb_export_fifo = new("rm2sb_export_fifo", this);
+    rm2sb_export       = new("rm2sb_export", this);
+    mon2sb_export      = new("mon2sb_export", this);
+    rm2sb_export_fifo  = new("rm2sb_export_fifo", this);
     mon2sb_export_fifo = new("mon2sb_export_fifo", this);
   endfunction : build_phase
 

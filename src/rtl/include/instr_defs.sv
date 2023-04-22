@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-package defs;
+package instr_defs;
 
   localparam logic [2:0] AluAddFunct3 = 3'b000;
 
@@ -27,9 +27,9 @@ package defs;
   localparam logic [2:0] AluRemFunct3 = 3'b110;
   localparam logic [2:0] AluRemuFunct3 = 3'b111;
 
-  localparam logic [2:0] AluBasePrepend = 2'b00;
-  localparam logic [2:0] AluSubSraPrepend = 2'b01;
-  localparam logic [2:0] AluMPrepend = 2'b11;
+  localparam logic [1:0] AluBasePrepend = 2'b00;
+  localparam logic [1:0] AluSubSraPrepend = 2'b01;
+  localparam logic [1:0] AluMPrepend = 2'b11;
 
   // typedef enum logic [4:0] {
   //   LOAD    = 5'b00000,
@@ -66,14 +66,19 @@ package defs;
     ALU_REMU   = {{AluMPrepend, AluRemuFunct3}}
   } alu_op_t;
 
+  /*
+   * Logic[3]: 0 -> Load, 1 -> Store
+   * Logic[2]: 0 -> Signed, 1 -> Unsigned (LBU and LHU only)
+   * Logic[1-0]: 00 -> Byte,  ?1 -> Half, 10 -> Word
+   */
   typedef enum logic [3:0] {
     LSU_LB  = 4'b0000,
-    LSU_LH  = 4'b0001,
+    LSU_LH  = 4'b00?1,
     LSU_LW  = 4'b0010,
     LSU_LBU = 4'b0100,
-    LSU_LHU = 4'b0101,
+    LSU_LHU = 4'b01?1,
     LSU_SB  = 4'b1000,
-    LSU_SH  = 4'b1001,
+    LSU_SH  = 4'b10?1,
     LSU_SW  = 4'b1010
   } lsu_op_t;
 

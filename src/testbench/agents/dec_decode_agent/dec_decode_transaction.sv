@@ -1,8 +1,8 @@
 `ifndef DEC_DECODE_TRANSACTION
 `define DEC_DECODE_TRANSACTION
 
+import svdpi_pkg::*;
 class dec_decode_transaction extends uvm_sequence_item;
-  import svdpi_pkg::*;
 
   decoder_out_t     dec_out;
   rand decoder_in_t dec_in;
@@ -43,15 +43,17 @@ class dec_decode_transaction extends uvm_sequence_item;
     if (dec_out.imm != rhs_trans.dec_out.imm) begin
       return 0;
     end
-    if (rhs_trans.dec_out.rs1_en && (dec_out.rs1_addr != rhs_trans.dec_out.rs1_addr)) begin
+    if (dec_out.rs1_addr != rhs_trans.dec_out.rs1_addr) begin
       return 0;
     end
-    if (rhs_trans.dec_out.rs2_en && (dec_out.rs2_addr != rhs_trans.dec_out.rs2_addr)) begin
+    if (dec_out.rs2_addr != rhs_trans.dec_out.rs2_addr) begin
       return 0;
     end
-    if (rhs_trans.dec_out.rd_en && (dec_out.rd_addr != rhs_trans.dec_out.rd_addr)) begin
+    if (dec_out.rd_addr != rhs_trans.dec_out.rd_addr) begin
       return 0;
     end
+    if (rhs_trans.dec_out.alu != dec_out.alu) return 0;
+    if (rhs_trans.dec_out.lsu != dec_out.lsu) return 0;
     return 1;
 
   endfunction : compare
