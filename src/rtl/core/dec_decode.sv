@@ -2,23 +2,16 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-module dec_decode
-  import param_defs::*;
-  import instr_defs::*;
-#(
-  `include "riscv_opcodes.svh"
-) (
-  input  logic                    i_clk,        // unused
-  input  logic                    i_rst_n,      // unused
-  input  logic [   WordWidth-1:0] i_instr,
+module dec_decode (
+  input  logic                    clk,       // unused
+  input  logic                    rst_n,     // unused
+  input  logic [            31:0] i_instr,
   input  logic [   DataWidth-1:0] i_pc,
   output logic [   DataWidth-1:0] o_imm,
-  output logic [RegAddrWidth-1:0] o_rd_addr,    // DO NOT ASSIGN
-  output logic [RegAddrWidth-1:0] o_rs1_addr,   // DO NOT ASSIGN
-  output logic [RegAddrWidth-1:0] o_rs2_addr,   // DO NOT ASSIGN
+  output logic [RegAddrWidth-1:0] o_rd_addr,   // DO NOT ASSIGN
+  output logic [RegAddrWidth-1:0] o_rs1_addr,  // DO NOT ASSIGN
+  output logic [RegAddrWidth-1:0] o_rs2_addr,  // DO NOT ASSIGN
   output logic                    o_rd_en,
-  output logic                    o_mem_rd_en,
-  output logic                    o_mem_wr_en,
   output logic                    o_use_imm,
   output logic                    o_alu,
   output logic                    o_lsu,
@@ -29,9 +22,16 @@ module dec_decode
   output logic [   DataWidth-1:0] o_exp_code
 );
 
+  `include "riscv_opcodes.svh"
+
+  import param_defs::*;
+  import instr_defs::*;
+
   localparam logic [RegAddrWidth-1:0] X0 = 5'b00000;
   localparam logic [RegAddrWidth-1:0] X1 = 5'b00001;
   localparam logic [RegAddrWidth-1:0] X2 = 5'b00010;
+
+  logic [            31:0] i;
 
   logic [RegAddrWidth-1:0] rd_addr;
   logic [RegAddrWidth-1:0] rs1_addr;
@@ -50,7 +50,7 @@ module dec_decode
   logic [   DataWidth-1:0] imm_U;
   logic [   DataWidth-1:0] imm_J;
 
-  logic [            12:0] csr;
+  logic [            11:0] csr;
 
   // For extracting various C_* fields
   logic [   DataWidth-1:0] c_imm_addi4spn;
@@ -69,67 +69,54 @@ module dec_decode
   logic [             4:0] c_62;
   logic [             4:0] c_97;
 
+  assign i[31:0]        = i_instr[31:0];
+
   // TODO: Remove
-  assign ze_rs2 = {27'b0, i_instr[24:20]};
+  assign ze_rs2         = {27'b0, i[24:20]};
 
-  // Extract o_imm values from the i_instruction
-  assign imm_I = {{20{i_instr[31]}}, i_instr[31:20]};
-  assign imm_S = {{20{i_instr[31]}}, i_instr[31:25], i_instr[11:7]};
-  assign imm_B = {{20{i_instr[31]}}, i_instr[7], i_instr[30:25], i_instr[11:8], 1'b0};
-  assign imm_U = {i_instr[31:12], 12'b0};
-  assign imm_J = {{12{i_instr[31]}}, i_instr[19:12], i_instr[20], i_instr[30:21], 1'b0};
+  assign imm_I          = {{20{i[31]}}, i[31:20]};
+  assign imm_S          = {{20{i[31]}}, i[31:25], i[11:7]};
+  assign imm_B          = {{20{i[31]}}, i[7], i[30:25], i[11:8], 1'b0};
+  assign imm_U          = {i[31:12], 12'b0};
+  assign imm_J          = {{12{i[31]}}, i[19:12], i[20], i[30:21], 1'b0};
 
-  assign csr = i_instr[31:20];
+  assign csr            = i[31:20];
 
-  assign c_imm_addi4spn = {22'b0, i_instr[10:7], i_instr[12:11], i_instr[5], i_instr[6], 2'b00};
+  assign c_imm_addi4spn = {22'b0, i[10:7], i[12:11], i[5], i[6], 2'b00};
 
-  assign c_uimm5 = {25'b0, i_instr[6:5], i_instr[12:10], 2'b00};
+  assign c_uimm5        = {25'b0, i[6:5], i[12:10], 2'b00};
 
-  assign c_imm6 = {{27{i_instr[12]}}, i_instr[6:2]};
+  assign c_imm6         = {{27{i[12]}}, i[6:2]};
 
   // imm[5] must be zero
-  assign c_uimm6 = {27'b0, i_instr[6:2]};
+  assign c_uimm6        = {27'b0, i[6:2]};
 
-  assign c_imm_j = {
-    {21{i_instr[12]}},
-    i_instr[8],
-    i_instr[10:9],
-    i_instr[6],
-    i_instr[7],
-    i_instr[2],
-    i_instr[10],
-    i_instr[5:3],
-    1'b0
-  };
+  assign c_imm_j        = {{21{i[12]}}, i[8], i[10:9], i[6], i[7], i[2], i[10], i[5:3], 1'b0};
 
 
-  assign c_imm_b = {
-    {24{i_instr[12]}}, i_instr[6:5], i_instr[2], i_instr[11:10], i_instr[4:3], 1'b0
-  };
+  assign c_imm_b        = {{24{i[12]}}, i[6:5], i[2], i[11:10], i[4:3], 1'b0};
 
-  assign c_imm_addi16sp = {
-    {27{i_instr[12]}}, i_instr[4:3], i_instr[5], i_instr[2], i_instr[6], 4'b0
-  };
+  assign c_imm_addi16sp = {{27{i[12]}}, i[4:3], i[5], i[2], i[6], 4'b0};
 
-  assign c_imm_lui = {{15{i_instr[12]}}, i_instr[6:2], 12'b0};
+  assign c_imm_lui      = {{15{i[12]}}, i[6:2], 12'b0};
 
 
-  assign c_imm_lwsw = {21'b0, i_instr[5], i_instr[12:10], i_instr[6], 2'b00};
-  assign c_imm_lwsp = {24'b0, i_instr[3:2], i_instr[12], i_instr[6:4], 2'b00};
-  assign c_imm_swsp = {24'b0, i_instr[8:7], i_instr[12:9], 2'b0};
+  assign c_imm_lwsw     = {21'b0, i[5], i[12:10], i[6], 2'b00};
+  assign c_imm_lwsp     = {24'b0, i[3:2], i[12], i[6:4], 2'b00};
+  assign c_imm_swsp     = {24'b0, i[8:7], i[12:9], 2'b0};
 
-  assign c_42 = {2'b01, i_instr[9:7]};
-  assign c_62 = i_instr[6:2];
-  assign c_97 = {2'b01, i_instr[4:2]};
+  assign c_42           = {2'b01, i[9:7]};
+  assign c_62           = i[6:2];
+  assign c_97           = {2'b01, i[4:2]};
 
   always_comb begin
     o_illegal = 1'b0;
     o_imm     = 32'b0;
     o_use_imm = 1'b0;
 
-    rs1_addr  = i_instr[19:15];
-    rs2_addr  = i_instr[24:20];
-    rd_addr   = i_instr[11:7];
+    rs1_addr  = i[19:15];
+    rs2_addr  = i[24:20];
+    rd_addr   = i[11:7];
 
     o_rd_en   = 1'b0;
 
@@ -140,7 +127,7 @@ module dec_decode
     o_lsu     = 1'b0;
     o_lsu_op  = 4'bXXXX;
 
-    casez (i_instr)
+    casez (i)
 
       //  ╔═╗ ╔╗ ╦═╗╔═╗╔╗╔╔═╗╦ ╦
       //  ║───╠╩╗╠╦╝╠═╣║║║║  ╠═╣
@@ -192,12 +179,12 @@ module dec_decode
         o_rd_en   = 1'b1;
       end
 
-      `BEQ:  o_imm = imm_B;
-      `BGE:  o_imm = imm_B;
-      `BGEU: o_imm = imm_B;
-      `BLT:  o_imm = imm_B;
-      `BLTU: o_imm = imm_B;
-      `BNE:  o_imm = imm_B;
+      `BEQ:  {o_use_imm, o_imm} = {1'b1, imm_B};
+      `BGE:  {o_use_imm, o_imm} = {1'b1, imm_B};
+      `BGEU: {o_use_imm, o_imm} = {1'b1, imm_B};
+      `BLT:  {o_use_imm, o_imm} = {1'b1, imm_B};
+      `BLTU: {o_use_imm, o_imm} = {1'b1, imm_B};
+      `BNE:  {o_use_imm, o_imm} = {1'b1, imm_B};
 
       //  ╦   ╔═╗╦═╗╔═╗  ╔╗ ╦═╗╔═╗╔╗╔╔═╗╦ ╦
       //  ║───╠═╝╠╦╝║╣───╠╩╗╠╦╝╠═╣║║║║  ╠═╣

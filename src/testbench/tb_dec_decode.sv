@@ -31,8 +31,8 @@ module tb_dec_decode
   );
 
   dec_decode decoder_inst (
-    .i_clk      (clk),
-    .i_rst_n    (reset),
+    .clk      (clk),
+    .rst_n    (reset),
     .i_instr    (dec_decode_intf.dec_in.instr),
     .i_pc       (dec_decode_intf.dec_in.pc_in),
     .o_rs1_addr (dec_decode_intf.dec_out.rs1_addr),

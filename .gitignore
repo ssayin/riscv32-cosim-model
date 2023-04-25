@@ -1,3 +1,4 @@
+# Vivado
 xsim.dir/
 xsim.covdb/
 out/
@@ -7,3 +8,20 @@ build/
 *.pb
 *.o
 *.so
+
+# Quartus II
+db/
+incremental_db/
+*.rpt
+*.summary
+*.qpf
+*.qsf
+*.bak
+*.txt
+*.done
+*.jdi
+*.pin
+*.sld
+*.sof
+*.smsg
+*.qws

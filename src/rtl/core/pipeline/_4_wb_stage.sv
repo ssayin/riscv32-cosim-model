@@ -3,8 +3,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 module _4_wb_stage (
-  input  logic        i_clk,
-  input  logic        i_rst_n,
+  input  logic        clk,
+  input  logic        rst_n,
   input  logic [31:0] i_mem_wb_data,
   input  logic [31:0] i_mem_wb_alu_res,
   input  logic [31:0] i_mem_wb_rd,
@@ -12,8 +12,8 @@ module _4_wb_stage (
 );
   logic reg_write;
   logic mem_read;
-  always_ff @(posedge i_clk or negedge i_rst_n) begin
-    if (!i_rst_n) begin
+  always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
       o_wb_data <= 32'b0;
     end else begin
       if (reg_write) begin

@@ -5,12 +5,12 @@
 module _0_if_stage
   import param_defs::*;
 (
-  input  logic                   i_clk,
-  input  logic                   i_rst_n,
+  input  logic                   clk,
+  input  logic                   rst_n,
   input  logic [            2:0] i_pc_incr,
   input  logic [MemBusWidth-1:0] i_mem_rd,
   output logic [  DataWidth-1:0] o_pc,
-  output logic [  WordWidth-1:0] o_instr
+  output logic [           31:0] o_instr
 );
 
   logic [DataWidth-1:0] pc_next;
@@ -18,8 +18,8 @@ module _0_if_stage
     pc_next = o_pc + i_pc_incr;
   end
 
-  always_ff @(posedge i_clk or negedge i_rst_n) begin
-    if (!i_rst_n) begin
+  always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
       o_pc <= 'h0;
     end else begin
       o_pc <= pc_next;

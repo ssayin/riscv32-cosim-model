@@ -10,7 +10,7 @@ module top_level
 );
   // Sink
   logic [MemBusWidth-1:0] mem_data_out;
-  logic [  WordWidth-1:0] mem_addr;
+  logic [           31:0] mem_addr;
   logic [            3:0] mem_wr_en;  // TODO: Change this after cache impl.
   logic                   mem_rd_en;
   logic                   mem_valid;
@@ -34,8 +34,8 @@ module top_level
   assign mem_ready    = 'b1;
 
   memory_model memory_model_O (
-    .i_clk    (clk),
-    .i_rst_n  (rst_n),
+    .clk      (clk),
+    .rst_n    (rst_n),
     .i_addr   (mem_addr),
     .i_wr_data(mem_data_out),
     .i_wr_en  (mem_wr_en),
@@ -44,8 +44,8 @@ module top_level
   );
 
   riscv_core core_0 (
-    .i_clk         (clk),
-    .i_rst_n       (rst_n),
+    .clk           (clk),
+    .rst_n         (rst_n),
     .o_mem_addr    (mem_addr),
     .i_mem_data    (mem_data_in),
     .o_mem_data    (mem_data_out),
@@ -56,6 +56,24 @@ module top_level
     .i_irq_external(irq_external),
     .i_irq_timer   (irq_timer),
     .i_irq_software(irq_software)
+  );
+
+  logic [63:0] testA;
+  logic [63:0] testB;
+
+  intel_ocram_drw_sedge intel_ocram_drw_sedge_inst (
+    .address_a('h2),
+    .address_b('h2),
+    .clock    (clk),
+    .data_a   (1),
+    .data_b   (1),
+    .enable   (1),
+    .rden_a   (1),
+    .rden_b   (1),
+    .wren_a   (1),
+    .wren_b   (1),
+    .q_a      (testA),
+    .q_b      (testB)
   );
 
 endmodule : top_level

@@ -49,6 +49,13 @@ sim2: compile
 	xelab tb_top_level -relax -s top2
 	xsim top2 -R
 
+quartus:
+	quartus_sh -t $(TOOLS_DIR)intel_synth.tcl compile top_level rev_1
+	quartus_map top_level
+	quartus_fit top_level
+	quartus_sta -t $(TOOLS_DIR)sta.tcl top_level rev_1
+	# quartus_sim top_level
+
 compile: $(INSTR_FEED)
 	xvlog -sv -f $(TOOLS_DIR)sv_compile_list.txt -L uvm \
 		-define INSTR_SEQ_FILENAME='"$(INSTR_FEED)"' \
@@ -79,3 +86,18 @@ $(BUILD_DIR) $(DATA_DIR):
 	${RM} -rf ./xsim.dir
 	${RM} -rf ./xsim.covdb
 	${RM} -rf ./out
+	${RM} -rf ./db/
+	${RM} -rf ./incremental_db/
+	${RM} *.rpt
+	${RM} *.summary
+	${RM} *.qpf
+	${RM} *.qsf
+	${RM} *.bak
+	${RM} *.txt
+	${RM} *.done
+	${RM} *.jdi
+	${RM} *.pin
+	${RM} *.sld
+	${RM} *.sof
+	${RM} *.smsg
+	${RM} *.qws

@@ -5,8 +5,8 @@
 module _2_ex_stage
   import param_defs::*;
 (
-  input  logic                  i_clk,
-  input  logic                  i_rst_n,
+  input  logic                  clk,
+  input  logic                  rst_n,
   input  logic [AluOpWidth-1:0] i_alu_op,
   input  logic [ DataWidth-1:0] i_rs1_data,
   input  logic [ DataWidth-1:0] i_rs2_data,
@@ -16,8 +16,8 @@ module _2_ex_stage
 );
   logic [DataWidth-1:0] res;
 
-  always_ff @(posedge i_clk or negedge i_rst_n) begin
-    if (!i_rst_n) begin
+  always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
       o_res <= 'b0;
     end else begin
       o_res <= res;

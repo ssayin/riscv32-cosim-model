@@ -15,14 +15,13 @@ read_verilog [ glob ./src/rtl/core/pipeline/*.sv ]
 read_verilog [ glob ./src/rtl/mem_shared/*.sv ]
 read_verilog [ glob ./src/rtl/core/mem_hier/cache/*.sv ]
 read_verilog ./src/rtl/top_level.sv
-read_verilog ./src/testbench/tb_top_level.sv
 
-# read_xdc ./design/top_full.xdc
+#read_xdc ./tools/top_level.xdc
 #
 # STEP#3: run synthesis, write design checkpoint, report timing,
 # and utilization estimates
 #
-synth_design -top tb_top_level -part xc7k70tfbg676-2
+synth_design -top top_level -part xc7k70tfbg676-2
 write_checkpoint -force $outputDir/post_synth.dcp
 report_timing_summary -file $outputDir/post_synth_timing_summary.rpt
 report_utilization -file $outputDir/post_synth_util.rpt

@@ -3,8 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 module alu
-  import instr_defs::*;
-  import param_defs::*;
+
 (
   input  logic [ DataWidth-1:0] i_a,
   input  logic [ DataWidth-1:0] i_b,
@@ -12,7 +11,13 @@ module alu
   output logic [ DataWidth-1:0] o_res
 );
 
+  import instr_defs::*;
+  import param_defs::*;
+  
+  logic [DataWidth*2-1:0] mul_res;
+
   always_comb begin
+  mul_res = 'h0;
     case (i_alu_op)
       ALU_ADD:  o_res = i_a + i_b;
       ALU_SUB:  o_res = i_a - i_b;
@@ -25,16 +30,39 @@ module alu
       ALU_OR:   o_res = i_a | i_b;
       ALU_AND:  o_res = i_a & i_b;
 
-      // TODO
-      ALU_MUL:    o_res = i_a * i_b;
-      ALU_MULH:   o_res = i_a * i_b;
-      ALU_MULHSU: o_res = i_a * i_b;
-      ALU_MULHU:  o_res = i_a * i_b;
-      ALU_DIV:    o_res = i_a * i_b;
-      ALU_DIVU:   o_res = i_a * i_b;
-      ALU_REM:    o_res = i_a * i_b;
-      ALU_REMU:   o_res = i_a * i_b;
-      default:    o_res = 'h0;
+      // TODO: check if mult. result is already available
+      // H first, L second
+      ALU_MUL: begin
+        mul_res = ($signed(i_a) * $signed(i_b));
+        o_res   = mul_res[DataWidth-1:0];
+      end
+      ALU_MULH: begin
+        mul_res = ($signed(i_a) * $signed(i_b));
+        o_res   = mul_res[DataWidth*2-1:DataWidth];
+      end
+      ALU_MULHSU: begin
+        mul_res = $signed(i_a) * i_b;
+        o_res   = mul_res[DataWidth*2-1:DataWidth];
+      end
+      ALU_MULHU: begin
+        mul_res = i_a * i_b;
+        o_res   = mul_res[DataWidth*2-1:DataWidth];
+      end
+      ALU_DIV: begin
+        o_res = $signed(i_a) / $signed(i_b);
+      end
+      ALU_DIVU: begin
+        o_res = i_a / i_b;
+      end
+      ALU_REM: begin
+        o_res = $signed(i_a) % $signed(i_b);
+      end
+      ALU_REMU: begin
+        o_res = i_a % i_b;
+      end
+      default: begin
+			o_res = 'h0;
+		end
     endcase
   end
 

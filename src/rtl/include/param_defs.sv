@@ -7,7 +7,6 @@ package param_defs;
   // Do not change these values.
   localparam int AddrWidth = 32;
   localparam int DataWidth = 32;
-  localparam int WordWidth = DataWidth;
   localparam int RegCount = 32;
   localparam int RegAddrWidth = (RegCount > 1) ? $clog2(RegCount) : 0;
   localparam int AluOpWidth = 5;

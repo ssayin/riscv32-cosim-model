@@ -2,13 +2,9 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-module memory_model #(
-`ifdef DEBUG_INIT_FILE
-  string INIT_FILE = `DEBUG_INIT_FILE
-`endif
-) (
-  input  logic        i_clk,
-  input  logic        i_rst_n,
+module memory_model(
+  input  logic        clk,
+  input  logic        rst_n,
   input  logic [31:0] i_addr,
   input  logic [31:0] i_wr_data,
   input  logic [ 3:0] i_wr_en,
@@ -19,8 +15,8 @@ module memory_model #(
   logic   [7:0] mem_array[128];
   integer       i;
 
-  always_ff @(posedge i_clk or negedge i_rst_n) begin
-    if (!i_rst_n) begin
+  always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
       o_rd_data <= 'h0;
     end else begin
       if (|i_wr_en) begin  // Perform a write operation if at least one byte is enabled
@@ -43,7 +39,7 @@ module memory_model #(
 
 `ifdef DEBUG_INIT_FILE
   initial begin
-    $display("Booting from file %s", INIT_FILE);
+    $display("Booting from file %s", `DEBUG_INIT_FILE);
     $readmemh(INIT_FILE, mem_array);
   end
 `endif

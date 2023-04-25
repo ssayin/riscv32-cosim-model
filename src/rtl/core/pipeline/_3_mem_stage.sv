@@ -3,11 +3,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 module _3_mem_stage
-  import param_defs::*;
-  import instr_defs::*;
 (
-  input  logic                    i_clk,
-  input  logic                    i_rst_n,
+  input  logic                    clk,
+  input  logic                    rst_n,
   input  logic [   DataWidth-1:0] i_ex_mem_alu_res,  // Result from the previous stage
   input  logic [RegAddrWidth-1:0] i_ex_mem_rd,       // Destination register address (RD)
   input  logic [  LsuOpWidth-1:0] i_lsu_op,          // Memory access operation
@@ -16,12 +14,20 @@ module _3_mem_stage
   output logic [RegAddrWidth-1:0] o_mem_wb_rd        // Carried from the EX-stage
 );
 
+  import param_defs::*;
+  import instr_defs::*;
+
   // Memory interface signals
   logic [ DataWidth-1:0] mem_data;
   logic [ DataWidth-1:0] mem_addr;
   logic                  mem_wr_en;
   logic [LsuOpWidth-1:0] lsu_op;
 
+  /*
+   * Logic[3]: 0 -> Load, 1 -> Store
+   * Logic[2]: 0 -> Signed, 1 -> Unsigned (LBU and LHU only)
+   * Logic[1-0]: 00 -> Byte,  ?1 -> Half, 10 -> Word
+   */
   always_comb begin
     casez (i_lsu_op)
       LSU_LB: begin
@@ -45,12 +51,13 @@ module _3_mem_stage
     endcase
   end
 
-  always_ff @(posedge i_clk or negedge i_rst_n) begin
-    if (!i_rst_n) begin
+  always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
       o_mem_wb_data    <= 'b0;
       o_mem_wb_alu_res <= 'b0;
       o_mem_wb_rd      <= 'b0;
     end else begin
+	   o_mem_wb_data    <= 'b0; // TODO: impl mem read
       o_mem_wb_alu_res <= i_ex_mem_alu_res;
       o_mem_wb_rd      <= i_ex_mem_rd;
     end
