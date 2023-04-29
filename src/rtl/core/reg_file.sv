@@ -53,7 +53,6 @@ module reg_file #(
               reg_file[i_rd_addr[i]] <= i_rd_data[i];
             end
           end
-          $display("%p", reg_file);
         end
       end
     end : g_wr_ports

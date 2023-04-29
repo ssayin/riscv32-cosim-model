@@ -21,7 +21,10 @@ module riscv_decoder
   output logic                    o_use_imm,
   output logic                    o_alu,
   output logic                    o_lsu,
+  output logic                    o_lui,
+  output logic                    o_auipc,
   output logic                    o_br,
+  output logic                    o_csr,
   output logic [  AluOpWidth-1:0] o_alu_op,
   output logic [  LsuOpWidth-1:0] o_lsu_op,
   output logic                    o_illegal,
@@ -122,11 +125,14 @@ module riscv_decoder
     o_rd_en   = 1'b0;
 
     // Default for branches and jumps
-    o_alu     = 1'b1;
-    o_alu_op  = ALU_ADD;
+    o_alu     = 1'b0;
 
     o_lsu     = 1'b0;
     o_lsu_op  = 4'bXXXX;
+
+    o_csr     = 1'b0;
+    o_lui     = 1'b0;
+    o_auipc   = 1'b0;
 
     casez (i)
 
@@ -138,21 +144,31 @@ module riscv_decoder
         o_imm     = c_imm_j;
         rd_addr   = X0;
         o_rd_en   = 1'b1;
+        o_alu_op  = ALU_ADD;
+        o_alu     = 1'b1;
       end
       `C_JAL: begin
         o_use_imm = 1'b1;
         o_imm     = c_imm_j;
         o_rd_en   = 1'b1;
         rd_addr   = X1;
+        o_alu_op  = ALU_ADD;
+        o_alu     = 1'b1;
+
       end
       `C_JALR: begin
         rs1_addr = rd_addr;
         rd_addr  = X1;
         o_rd_en  = 1'b1;
+        o_alu_op = ALU_ADD;
+        o_alu    = 1'b1;
+
       end
       `C_JR: begin
         rs1_addr = rd_addr;
         rd_addr  = X0;
+        o_alu_op = ALU_ADD;
+        o_alu    = 1'b1;
       end
 
       `C_BEQZ: begin
@@ -173,11 +189,15 @@ module riscv_decoder
         o_imm     = imm_J;
         o_rd_en   = 1'b1;
         o_use_imm = 1'b1;
+        o_alu_op  = ALU_ADD;
+        o_alu     = 1'b1;
       end
       `JALR: begin
         o_use_imm = 1'b1;
         o_imm     = imm_I;
         o_rd_en   = 1'b1;
+        o_alu_op  = ALU_ADD;
+        o_alu     = 1'b1;
       end
 
       `BEQ:  {o_use_imm, o_imm} = {1'b1, imm_B};
@@ -190,68 +210,74 @@ module riscv_decoder
       //  ╦   ╔═╗╦═╗╔═╗  ╔╗ ╦═╗╔═╗╔╗╔╔═╗╦ ╦
       //  ║───╠═╝╠╦╝║╣───╠╩╗╠╦╝╠═╣║║║║  ╠═╣
       //  ╩   ╩  ╩╚═╚═╝  ╚═╝╩╚═╩ ╩╝╚╝╚═╝╩ ╩
-      `AUIPC: {o_use_imm, o_imm, o_alu_op, o_rd_en} = {1'b1, imm_U, ALU_ADD, 1'b1};
-      `LUI:   {o_use_imm, o_imm, o_alu_op, o_rd_en} = {1'b1, imm_U, ALU_ADD, 1'b1};
+      `AUIPC:
+      {o_use_imm, o_imm, o_alu_op, o_alu, o_auipc, o_rd_en} = {
+        1'b1, imm_U, ALU_ADD, 1'b1, 1'b1, 1'b1
+      };
+      `LUI:
+      {o_use_imm, o_imm, o_alu_op, o_alu, o_lui, o_rd_en} = {
+        1'b1, imm_U, ALU_ADD, 1'b1, 1'b1, 1'b1
+      };
 
       //  ╦  ╔═╗╔═╗╔╦╗
       //  ║  ║ ║╠═╣ ║║
       //  ╩═╝╚═╝╩ ╩═╩╝
-      `LW: {o_imm, o_lsu_op, o_rd_en} = {imm_I, LSU_LW, 1'b1};
-      `LH: {o_imm, o_lsu_op, o_rd_en} = {imm_I, LSU_LH, 1'b1};
-      `LB: {o_imm, o_lsu_op, o_rd_en} = {imm_I, LSU_LB, 1'b1};
+      `LW: {o_imm, o_lsu_op, o_rd_en, o_lsu} = {imm_I, LSU_LW, 1'b1, 1'b1};
+      `LH: {o_imm, o_lsu_op, o_rd_en, o_lsu} = {imm_I, LSU_LH, 1'b1, 1'b1};
+      `LB: {o_imm, o_lsu_op, o_rd_en, o_lsu} = {imm_I, LSU_LB, 1'b1, 1'b1};
 
-      `LHU: {o_imm, o_lsu_op, o_rd_en} = {imm_I, LSU_LHU, 1'b1};
-      `LBU: {o_imm, o_lsu_op, o_rd_en} = {imm_I, LSU_LBU, 1'b1};
+      `LHU: {o_imm, o_lsu_op, o_rd_en, o_lsu} = {imm_I, LSU_LHU, 1'b1, 1'b1};
+      `LBU: {o_imm, o_lsu_op, o_rd_en, o_lsu} = {imm_I, LSU_LBU, 1'b1, 1'b1};
 
       //  ╔═╗╔╦╗╔═╗╦═╗╔═╗
       //  ╚═╗ ║ ║ ║╠╦╝║╣
       //  ╚═╝ ╩ ╚═╝╩╚═╚═╝
-      `SB: {o_imm, o_lsu_op} = {imm_S, LSU_SB};
-      `SH: {o_imm, o_lsu_op} = {imm_S, LSU_SH};
-      `SW: {o_imm, o_lsu_op} = {imm_S, LSU_SW};
+      `SB: {o_imm, o_lsu_op, o_lsu} = {imm_S, LSU_SB, 1'b1};
+      `SH: {o_imm, o_lsu_op, o_lsu} = {imm_S, LSU_SH, 1'b1};
+      `SW: {o_imm, o_lsu_op, o_lsu} = {imm_S, LSU_SW, 1'b1};
 
       //  ╦╔╗╔╔╦╗╔═╗╔═╗╔═╗╦═╗
       //  ║║║║ ║ ║╣ ║ ╦║╣ ╠╦╝
       //  ╩╝╚╝ ╩ ╚═╝╚═╝╚═╝╩╚═
-      `ADD: {o_alu_op, o_rd_en} = {ALU_ADD, 1'b1};
-      `AND: {o_alu_op, o_rd_en} = {ALU_AND, 1'b1};
+      `ADD: {o_alu_op, o_rd_en, o_alu} = {ALU_ADD, 1'b1, 1'b1};
+      `AND: {o_alu_op, o_rd_en, o_alu} = {ALU_AND, 1'b1, 1'b1};
 
-      `OR: {o_alu_op, o_rd_en} = {ALU_OR, 1'b1};
+      `OR: {o_alu_op, o_rd_en, o_alu} = {ALU_OR, 1'b1, 1'b1};
 
-      `XOR: {o_alu_op, o_rd_en} = {ALU_XOR, 1'b1};
-      `SUB: {o_alu_op, o_rd_en} = {ALU_SUB, 1'b1};
+      `XOR: {o_alu_op, o_rd_en, o_alu} = {ALU_XOR, 1'b1, 1'b1};
+      `SUB: {o_alu_op, o_rd_en, o_alu} = {ALU_SUB, 1'b1, 1'b1};
 
-      `ADDI: {o_use_imm, o_imm, o_alu_op, o_rd_en} = {1'b1, imm_I, ALU_ADD, 1'b1};
-      `ANDI: {o_use_imm, o_imm, o_alu_op, o_rd_en} = {1'b1, imm_I, ALU_AND, 1'b1};
-      `ORI:  {o_use_imm, o_imm, o_alu_op, o_rd_en} = {1'b1, imm_I, ALU_OR, 1'b1};
-      `XORI: {o_use_imm, o_imm, o_alu_op, o_rd_en} = {1'b1, imm_I, ALU_XOR, 1'b1};
+      `ADDI: {o_use_imm, o_imm, o_alu_op, o_rd_en, o_alu} = {1'b1, imm_I, ALU_ADD, 1'b1, 1'b1};
+      `ANDI: {o_use_imm, o_imm, o_alu_op, o_rd_en, o_alu} = {1'b1, imm_I, ALU_AND, 1'b1, 1'b1};
+      `ORI:  {o_use_imm, o_imm, o_alu_op, o_rd_en, o_alu} = {1'b1, imm_I, ALU_OR, 1'b1, 1'b1};
+      `XORI: {o_use_imm, o_imm, o_alu_op, o_rd_en, o_alu} = {1'b1, imm_I, ALU_XOR, 1'b1, 1'b1};
 
-      `SLL:  {o_alu_op, o_rd_en} = {ALU_SLL, 1'b1};
-      `SLT:  {o_alu_op, o_rd_en} = {ALU_SLT, 1'b1};
-      `SLTU: {o_alu_op, o_rd_en} = {ALU_SLTU, 1'b1};
+      `SLL:  {o_alu_op, o_rd_en, o_alu} = {ALU_SLL, 1'b1, 1'b1};
+      `SLT:  {o_alu_op, o_rd_en, o_alu} = {ALU_SLT, 1'b1, 1'b1};
+      `SLTU: {o_alu_op, o_rd_en, o_alu} = {ALU_SLTU, 1'b1, 1'b1};
 
-      `SRA: {o_alu_op, o_rd_en} = {ALU_SRA, 1'b1};
-      `SRL: {o_alu_op, o_rd_en} = {ALU_SRL, 1'b1};
+      `SRA: {o_alu_op, o_rd_en, o_alu} = {ALU_SRA, 1'b1, 1'b1};
+      `SRL: {o_alu_op, o_rd_en, o_alu} = {ALU_SRL, 1'b1, 1'b1};
 
-      `SLLI:  {o_use_imm, o_imm, o_alu_op, o_rd_en} = {1'b1, ze_rs2, ALU_SLL, 1'b1};
-      `SLTI:  {o_use_imm, o_imm, o_alu_op, o_rd_en} = {1'b1, imm_I, ALU_SLT, 1'b1};
-      `SLTIU: {o_use_imm, o_imm, o_alu_op, o_rd_en} = {1'b1, imm_I, ALU_SLTU, 1'b1};
+      `SLLI:  {o_use_imm, o_imm, o_alu_op, o_rd_en, o_alu} = {1'b1, ze_rs2, ALU_SLL, 1'b1, 1'b1};
+      `SLTI:  {o_use_imm, o_imm, o_alu_op, o_rd_en, o_alu} = {1'b1, imm_I, ALU_SLT, 1'b1, 1'b1};
+      `SLTIU: {o_use_imm, o_imm, o_alu_op, o_rd_en, o_alu} = {1'b1, imm_I, ALU_SLTU, 1'b1, 1'b1};
 
-      `SRAI: {o_use_imm, o_imm, o_alu_op, o_rd_en} = {1'b1, ze_rs2, ALU_SRA, 1'b1};
-      `SRLI: {o_use_imm, o_imm, o_alu_op, o_rd_en} = {1'b1, ze_rs2, ALU_SRL, 1'b1};
+      `SRAI: {o_use_imm, o_imm, o_alu_op, o_rd_en, o_alu} = {1'b1, ze_rs2, ALU_SRA, 1'b1, 1'b1};
+      `SRLI: {o_use_imm, o_imm, o_alu_op, o_rd_en, o_alu} = {1'b1, ze_rs2, ALU_SRL, 1'b1, 1'b1};
 
 
       //  ╔╦╗╦ ╦╦ ╔╦╗╦╔═╗╦  ╦╔═╗╔═╗╔╦╗╦╔═╗╔╗╔
       //  ║║║║ ║║  ║ ║╠═╝║  ║║  ╠═╣ ║ ║║ ║║║║
       //  ╩ ╩╚═╝╩═╝╩ ╩╩  ╩═╝╩╚═╝╩ ╩ ╩ ╩╚═╝╝╚╝
-      `MUL:    {o_alu_op, o_rd_en} = {ALU_MUL, 1'b1};
-      `MULH:   {o_alu_op, o_rd_en} = {ALU_MULH, 1'b1};
-      `MULHSU: {o_alu_op, o_rd_en} = {ALU_MULHSU, 1'b1};
-      `MULHU:  {o_alu_op, o_rd_en} = {ALU_MULHU, 1'b1};
-      `DIV:    {o_alu_op, o_rd_en} = {ALU_DIV, 1'b1};
-      `DIVU:   {o_alu_op, o_rd_en} = {ALU_DIVU, 1'b1};
-      `REM:    {o_alu_op, o_rd_en} = {ALU_REM, 1'b1};
-      `REMU:   {o_alu_op, o_rd_en} = {ALU_REMU, 1'b1};
+      `MUL:    {o_alu_op, o_rd_en, o_alu} = {ALU_MUL, 1'b1, 1'b1};
+      `MULH:   {o_alu_op, o_rd_en, o_alu} = {ALU_MULH, 1'b1, 1'b1};
+      `MULHSU: {o_alu_op, o_rd_en, o_alu} = {ALU_MULHSU, 1'b1, 1'b1};
+      `MULHU:  {o_alu_op, o_rd_en, o_alu} = {ALU_MULHU, 1'b1, 1'b1};
+      `DIV:    {o_alu_op, o_rd_en, o_alu} = {ALU_DIV, 1'b1, 1'b1};
+      `DIVU:   {o_alu_op, o_rd_en, o_alu} = {ALU_DIVU, 1'b1, 1'b1};
+      `REM:    {o_alu_op, o_rd_en, o_alu} = {ALU_REM, 1'b1, 1'b1};
+      `REMU:   {o_alu_op, o_rd_en, o_alu} = {ALU_REMU, 1'b1, 1'b1};
 
       //  ╔═╗╔═╗╔╦╗╔═╗╦═╗╔═╗╔═╗╔═╗╔═╗╔╦╗
       //  ║  ║ ║║║║╠═╝╠╦╝║╣ ╚═╗╚═╗║╣  ║║
@@ -265,6 +291,7 @@ module riscv_decoder
         rd_addr   = c_97;
         rs1_addr  = X2;
         o_rd_en   = 1'b1;
+        o_alu     = 1'b1;
       end
 
       `C_LW: begin
@@ -273,6 +300,7 @@ module riscv_decoder
         rd_addr  = c_42;
         rs1_addr = c_97;
         o_rd_en  = 1'b1;
+        o_lsu    = 1'b1;
       end
 
       `C_SW: begin
@@ -280,10 +308,11 @@ module riscv_decoder
         rs1_addr = c_42;
         rs2_addr = c_97;
         o_lsu_op = LSU_LW;
+        o_lsu    = 1'b1;
       end
 
 
-      `C_NOP: {o_use_imm, o_imm, o_alu_op, o_rd_en} = {1'b1, c_imm6, ALU_ADD, 1'b1};
+      `C_NOP: {o_use_imm, o_imm, o_alu_op, o_rd_en, o_alu} = {1'b1, c_imm6, ALU_ADD, 1'b1, 1'b1};
 
       `C_ADDI: begin
         o_use_imm = 1'b1;
@@ -291,9 +320,10 @@ module riscv_decoder
         rs1_addr  = rd_addr;
         o_alu_op  = ALU_ADD;
         o_rd_en   = 1'b1;
+        o_alu     = 1'b1;
       end
 
-      `C_LI: {o_use_imm, o_imm, o_alu_op, o_rd_en} = {1'b0, c_imm6, ALU_ADD, 1'b1};
+      `C_LI: {o_use_imm, o_imm, o_alu_op, o_rd_en, o_alu} = {1'b1, c_imm6, ALU_ADD, 1'b1, 1'b1};
 
       `C_ADDI16SP: begin
         o_use_imm = 1'b1;
@@ -302,32 +332,44 @@ module riscv_decoder
         rs1_addr  = X2;
         o_alu_op  = ALU_ADD;
         o_rd_en   = 1'b1;
+        o_alu     = 1'b1;
       end
 
-      `C_LUI: {o_use_imm, o_imm, o_alu_op, o_rd_en} = {1'b1, c_imm_lui, ALU_ADD, 1'b1};
+      `C_LUI:
+      {o_use_imm, o_imm, o_alu_op, o_rd_en, o_alu, o_lui} = {
+        1'b1, c_imm_lui, ALU_ADD, 1'b1, 1'b1, 1'b1
+      };
 
       `C_SRLI:
-      {o_use_imm, o_imm, rd_addr, rs1_addr, o_alu_op, o_rd_en} = {
-        1'b1, c_uimm6, c_42, c_42, ALU_SRL, 1'b1
+      {o_use_imm, o_imm, rd_addr, rs1_addr, o_alu_op, o_rd_en, o_alu} = {
+        1'b1, c_uimm6, c_42, c_42, ALU_SRL, 1'b1, 1'b1
       };
       `C_SRAI:
-      {o_use_imm, o_imm, rd_addr, rs1_addr, o_alu_op, o_rd_en} = {
-        1'b1, c_uimm6, c_42, c_42, ALU_SRA, 1'b1
+      {o_use_imm, o_imm, rd_addr, rs1_addr, o_alu_op, o_rd_en, o_alu} = {
+        1'b1, c_uimm6, c_42, c_42, ALU_SRA, 1'b1, 1'b1
       };
 
       `C_ANDI:
-      {o_use_imm, o_imm, rd_addr, rs1_addr, o_alu_op, o_rd_en} = {
-        1'b1, c_imm6, c_42, c_42, ALU_AND, 1'b1
+      {o_use_imm, o_imm, rd_addr, rs1_addr, o_alu_op, o_rd_en, o_alu} = {
+        1'b1, c_imm6, c_42, c_42, ALU_AND, 1'b1, 1'b1
       };
 
       `C_SUB:
-      {rd_addr, rs1_addr, rs2_addr, o_alu_op, o_rd_en} = {c_42, c_42, c_97, ALU_SUB, 1'b1, 1'b1};
+      {rd_addr, rs1_addr, rs2_addr, o_alu_op, o_rd_en, o_alu} = {
+        c_42, c_42, c_97, ALU_SUB, 1'b1, 1'b1
+      };
       `C_XOR:
-      {rd_addr, rs1_addr, rs2_addr, o_alu_op, o_rd_en} = {c_42, c_42, c_97, ALU_XOR, 1'b1, 1'b1};
+      {rd_addr, rs1_addr, rs2_addr, o_alu_op, o_rd_en, o_alu} = {
+        c_42, c_42, c_97, ALU_XOR, 1'b1, 1'b1
+      };
       `C_OR:
-      {rd_addr, rs1_addr, rs2_addr, o_alu_op, o_rd_en} = {c_42, c_42, c_97, ALU_OR, 1'b1, 1'b1};
+      {rd_addr, rs1_addr, rs2_addr, o_alu_op, o_rd_en, o_alu} = {
+        c_42, c_42, c_97, ALU_OR, 1'b1, 1'b1
+      };
       `C_AND:
-      {rd_addr, rs1_addr, rs2_addr, o_alu_op, o_rd_en} = {c_42, c_42, c_97, ALU_ADD, 1'b1, 1'b1};
+      {rd_addr, rs1_addr, rs2_addr, o_alu_op, o_rd_en, o_alu} = {
+        c_42, c_42, c_97, ALU_ADD, 1'b1, 1'b1
+      };
 
       `C_SLLI: begin
         o_use_imm = 1'b1;
@@ -337,6 +379,7 @@ module riscv_decoder
         rs1_addr  = rd_addr;
 
         o_rd_en   = 1'b1;
+        o_alu     = 1'b1;
       end
 
       `C_LWSP: begin
@@ -347,23 +390,25 @@ module riscv_decoder
         rs1_addr = X2;
 
         o_rd_en  = 1'b1;
+        o_lsu    = 1'b1;
       end
 
       `C_MV: begin
         rs2_addr = c_62;
         o_alu_op = ALU_ADD;
         o_rd_en  = 1'b1;
+        o_alu    = 1'b1;
       end
       `C_EBREAK: begin
       end
       `C_ADD: begin
-
         rs1_addr = rd_addr;
         rs2_addr = c_62;
 
         o_alu_op = ALU_ADD;
 
         o_rd_en  = 1'b1;
+        o_alu    = 1'b1;
       end
 
       `C_SWSP: begin
@@ -372,6 +417,7 @@ module riscv_decoder
         rs2_addr = c_62;
 
         o_lsu_op = LSU_SW;
+        o_lsu    = 1'b1;
       end
 
       //  ╔═╗╔═╗╦═╗
@@ -379,21 +425,27 @@ module riscv_decoder
       //  ╚═╝╚═╝╩╚═
       `CSRRC: begin
         o_imm = csr;
+        o_csr = 1'b1;
       end
       `CSRRCI: begin
         o_imm = csr;
+        o_csr = 1'b1;
       end
       `CSRRS: begin
         o_imm = csr;
+        o_csr = 1'b1;
       end
       `CSRRSI: begin
         o_imm = csr;
+        o_csr = 1'b1;
       end
       `CSRRW: begin
         o_imm = csr;
+        o_csr = 1'b1;
       end
       `CSRRWI: begin
         o_imm = csr;
+        o_csr = 1'b1;
       end
 
       //  ╔═╗╦ ╦╔═╗

@@ -20,15 +20,15 @@ module riscv_core
   input  logic                   i_irq_software   // unused
 );
 
-  logic [             2:0] pc_incr;  // Assigned 'b011 for now
+  logic [             2:0] pc_incr;
 
-  logic [RegAddrWidth-1:0] rd_addr                            [1];
+  logic [RegAddrWidth-1:0] rd_addr       [1];
   logic [   DataWidth-1:0] rd_data;
 
   logic [   DataWidth-1:0] exp_code;
 
-  logic [   DataWidth-1:0] write_data                         [1];
-  logic                    write_en                           [1];
+  logic [   DataWidth-1:0] write_data    [1];
+  logic                    write_en      [1];
   // IF -> ID
   logic [   DataWidth-1:0] p_if_id_instr;
   logic [            31:0] p_if_id_pc;
@@ -147,24 +147,14 @@ module riscv_core
     .o_wb_data       ()
   );
 
-
-  initial begin
-    pc_incr = 3'b100;
-  end
-
   always_ff @(posedge clk or negedge rst_n) begin
-
-    $display("pc: %d mem_rd_data: %h instr: %h illegal: %d alu_op: %d res: %d, rs_data %d %d",
-             p_if_id_pc, i_mem_data, p_if_id_instr, p_id_ex_illegal, p_id_ex_alu_op,
-             p_ex_mem_alu_res, p_id_ex_rs_data[0], p_id_ex_rs_data[1]);
-
-
     if (!rst_n) begin
       p_id_ex_rs_data[0] <= 5'bXXXXX;
       p_id_ex_rs_data[1] <= 5'bXXXXX;
       p_ex_mem_lsu       <= 1'b0;
       p_ex_mem_lsu_op    <= 5'bXXXXX;
       p_ex_mem_br        <= 1'b0;
+      pc_incr            <= 3'b100;
 
     end else begin
       p_id_ex_rs_data[0] <= rs_data[0];  // Pipe combinatorial from reg_file to pipeline register

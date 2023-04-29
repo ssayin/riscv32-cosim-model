@@ -11,6 +11,7 @@ TOOLS_DIR     := ./tools/
 
 DATA_DIR      := $(BUILD_DIR)/data
 LIB           := libdpi.so
+
 SV_TOP        := tb_riscv_decoder
 
 DECODER_INC   := -Isrc/decoder/decoder/include/
@@ -35,27 +36,34 @@ INSTR_FEED    := $(DATA_DIR)/amalgamated.txt
 
 all: synth sim 
 
+# Vivado FPGA flow
+# I do not own a Xilinx board, so I am moving from Vivado.
+# Vivado XSIM support will be continued.
 synth: $(TOOLS_DIR)run.tcl
 	vivado -mode batch -source $(TOOLS_DIR)run.tcl
 
 $(INSTR_FEED): $(DATA_DIR)
 	7z e ./data/*.zip -ir!*.json -so | jq -r '.[].instr' | sort | uniq > $@
 
-sim: $(LIB) compile 
-		xelab $(SV_TOP) -relax -s top -sv_lib $(basename $(notdir $(LIB)))
-		LD_LIBRARY_PATH=. xsim top -testplusarg UVM_TESTNAME=riscv_decoder_from_file_test -testplusarg UVM_VERBOSITY=UVM_LOW -R
+sim.riscv_decoder: $(LIB) compile 
+		xelab tb_riscv_decoder -relax -s decoder -sv_lib $(basename $(notdir $(LIB)))
+		LD_LIBRARY_PATH=. xsim decoder -testplusarg UVM_TESTNAME=riscv_decoder_from_file_test -testplusarg UVM_VERBOSITY=UVM_LOW -R
 
-#sim2: compile 
-#	xelab tb_top_level -relax -s top2
-#	xsim top2 -R
+sim.top_level: compile 
+	xelab tb_top_level -relax -s top
+	xsim top -R
 
-quartus:
+# For synthesizing on Quartus Lite Software
+# Quartus Lite does not support incremental flow,
+# thus I had to run these programs in succession.
+quartus_flow:
 	quartus_sh -t $(TOOLS_DIR)intel_synth.tcl compile top_level rev_1
 	quartus_map top_level
 	quartus_fit top_level
 	quartus_sta -t $(TOOLS_DIR)sta.tcl top_level rev_1
 	# quartus_sim top_level
 
+# Compile SystemVerilog files on Xilinx Vivado Suite
 compile: $(INSTR_FEED)
 	xvlog -sv -f $(TOOLS_DIR)sv_compile_list.txt -L uvm \
 		-define INSTR_SEQ_FILENAME='"$(INSTR_FEED)"' \
@@ -79,6 +87,7 @@ $(BUILD_DIR) $(DATA_DIR):
 
 .PHONY clean:
 	${RM} -rf $(BUILD_DIR) 
+	${RM} -rf greybox_tmp/
 	${RM} $(LIB)
 	${RM} *.jou
 	${RM} *.log

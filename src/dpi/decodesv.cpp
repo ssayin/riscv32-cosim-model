@@ -54,17 +54,31 @@ void dpi_decoder_process(const decoder_in_t *in, decoder_out_t *out) {
   case target::store:
     out->lsu = 1;
     break;
-  case target::alu:
-    out->alu = 1;
-    break;
   case target::branch:
     out->br = 1;
     break;
   case target::illegal:
     out->illegal = 1;
     break;
-
   case target::csr:
+    out->csr = 1;
+    break;
+  case target::alu:
+    out->alu = 1;
+    if ((!is_compressed) &&
+        ((instr & static_cast<uint32_t>(masks::opcode::auipc)) ==
+         static_cast<uint32_t>(masks::opcode::auipc))) {
+      out->auipc = 1;
+    }
+
+    if ((instr & static_cast<uint32_t>(masks::opcode::lui)) ==
+            static_cast<uint32_t>(masks::opcode::lui) ||
+        (is_compressed && (instr & 0b0110000000000001) == 0b0110000000000001)) {
+      out->lui = 1;
+      // 32'b????????????????011???????????01
+    }
+
+    break;
   case target::mret:
   case target::ebreak:
   case target::ecall:
