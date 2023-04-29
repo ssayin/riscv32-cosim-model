@@ -42,7 +42,7 @@ module _1_id_stage
   logic [  AluOpWidth-1:0] alu_op_next;
   logic [  LsuOpWidth-1:0] lsu_op_next;
 
-  dec_decode dec_decode_0 (
+  riscv_decoder riscv_decoder_0 (
     .clk     (clk),
     .rst_n   (rst_n),
     .i_instr   (i_instr),

@@ -1,15 +1,15 @@
-`ifndef DEC_DECODE_DRIVER
-`define DEC_DECODE_DRIVER
+`ifndef RISCV_DECODER_DRIVER
+`define RISCV_DECODER_DRIVER
 
-class dec_decode_driver extends uvm_driver #(dec_decode_transaction);
+class riscv_decoder_driver extends uvm_driver #(riscv_decoder_transaction);
 
-  dec_decode_transaction trans;
+  riscv_decoder_transaction trans;
 
-  virtual dec_decode_if  vif;
+  virtual riscv_decoder_if  vif;
 
-  `uvm_component_utils(dec_decode_driver)
+  `uvm_component_utils(riscv_decoder_driver)
 
-  uvm_analysis_port #(dec_decode_transaction) drv2rm_port;
+  uvm_analysis_port #(riscv_decoder_transaction) drv2rm_port;
 
   function new(string name, uvm_component parent);
     super.new(name, parent);
@@ -18,7 +18,7 @@ class dec_decode_driver extends uvm_driver #(dec_decode_transaction);
   function void build_phase(uvm_phase phase);
     super.build_phase(phase);
 
-    if (!uvm_config_db#(virtual dec_decode_if)::get(this, "", "intf", vif))
+    if (!uvm_config_db#(virtual riscv_decoder_if)::get(this, "", "intf", vif))
       `uvm_fatal("NO_VIF", {"virtual interface must be set for: ", get_full_name(), ".vif"});
 
     drv2rm_port = new("drv2rm_port", this);
@@ -53,6 +53,6 @@ class dec_decode_driver extends uvm_driver #(dec_decode_transaction);
     vif.dr_cb.dec_in.instr <= 0;
   endtask : reset
 
-endclass : dec_decode_driver
+endclass : riscv_decoder_driver
 
 `endif

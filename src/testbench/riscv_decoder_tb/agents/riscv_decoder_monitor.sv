@@ -1,16 +1,16 @@
-`ifndef DEC_DECODE_MONITOR
-`define DEC_DECODE_MONITOR
+`ifndef RISCV_DECODER_MONITOR
+`define RISCV_DECODER_MONITOR
 
-class dec_decode_monitor extends uvm_monitor;
+class riscv_decoder_monitor extends uvm_monitor;
 
-  virtual dec_decode_if vif;
+  virtual riscv_decoder_if vif;
 
-  uvm_analysis_port #(dec_decode_transaction) mon2sb_port;
+  uvm_analysis_port #(riscv_decoder_transaction) mon2sb_port;
 
-  dec_decode_transaction act_trans;
+  riscv_decoder_transaction act_trans;
 
 
-  `uvm_component_utils(dec_decode_monitor)
+  `uvm_component_utils(riscv_decoder_monitor)
 
   function new(string name, uvm_component parent);
     super.new(name, parent);
@@ -21,7 +21,7 @@ class dec_decode_monitor extends uvm_monitor;
 
   function void build_phase(uvm_phase phase);
     super.build_phase(phase);
-    if (!uvm_config_db#(virtual dec_decode_if)::get(this, "", "intf", vif))
+    if (!uvm_config_db#(virtual riscv_decoder_if)::get(this, "", "intf", vif))
       `uvm_fatal("NOVIF", {"virtual interface must be set for: ", get_full_name(), ".vif"});
   endfunction : build_phase
 
@@ -44,6 +44,6 @@ class dec_decode_monitor extends uvm_monitor;
 
   endtask : collect_trans
 
-endclass : dec_decode_monitor
+endclass : riscv_decoder_monitor
 
 `endif

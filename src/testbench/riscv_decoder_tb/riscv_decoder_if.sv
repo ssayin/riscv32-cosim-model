@@ -1,7 +1,7 @@
-`ifndef DEC_DECODE_IF
-`define DEC_DECODE_IF
+`ifndef RISCV_DECODER_IF
+`define RISCV_DECODER_IF
 
-interface dec_decode_if
+interface riscv_decoder_if
   import svdpi_pkg::decoder_in_t;
   import svdpi_pkg::decoder_out_t;
 (
@@ -28,6 +28,6 @@ interface dec_decode_if
 
   modport RCV(clocking rc_cb, input clk, reset);
 
-endinterface : dec_decode_if
+endinterface : riscv_decoder_if
 
 `endif

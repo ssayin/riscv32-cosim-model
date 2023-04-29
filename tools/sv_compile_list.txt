@@ -1,9 +1,9 @@
 -i ./src/testbench
--i ./src/testbench/agents
--i ./src/testbench/agents/dec_decode_agent
--i ./src/testbench/env
--i ./src/testbench/tests
--i ./src/testbench/sequences
+-i ./src/testbench/riscv_decoder_tb/agents
+-i ./src/testbench/riscv_decoder_tb/agents/riscv_decoder_agent
+-i ./src/testbench/riscv_decoder_tb/env
+-i ./src/testbench/riscv_decoder_tb/tests
+-i ./src/testbench/riscv_decoder_tb/sequences
 -i ./src/rtl
 -i ./src/rtl/include
 -i ./src/rtl/core
@@ -16,7 +16,7 @@
 ./src/rtl/include/riscv_opcodes.svh
 ./src/rtl/include/instr_defs.sv
 ./src/rtl/include/param_defs.sv
-./src/rtl/core/dec_decode.sv
+./src/rtl/core/riscv_decoder.sv
 ./src/rtl/core/reg_file.sv
 ./src/rtl/core/riscv_core.sv
 ./src/rtl/core/arith/alu.sv
@@ -25,14 +25,12 @@
 ./src/rtl/core/pipeline/_2_ex_stage.sv
 ./src/rtl/core/pipeline/_3_mem_stage.sv
 ./src/rtl/core/pipeline/_4_wb_stage.sv
-./src/rtl/mem_shared/memory_model.sv
-./src/rtl/top_level.sv
 ./src/dpi/svdpi_pkg.sv
-./src/testbench/agents/dec_decode_agent/dec_decode_agent_pkg.sv 
-./src/testbench/env/dec_decode_ref_model_pkg.sv 
-./src/testbench/env/dec_decode_env_pkg.sv
-./src/testbench/sequences/dec_decode_seq_list.sv 
-./src/testbench/tests/dec_decode_test_list.sv 
-./src/testbench/dec_decode_if.sv
-./src/testbench/tb_dec_decode.sv
-./src/testbench/tb_top_level.sv
+./src/testbench/riscv_decoder_tb/agents/riscv_decoder_agent_pkg.sv 
+./src/testbench/riscv_decoder_tb/env/riscv_decoder_ref_model_pkg.sv 
+./src/testbench/riscv_decoder_tb/env/riscv_decoder_env_pkg.sv
+./src/testbench/riscv_decoder_tb/sequences/riscv_decoder_seq_list.sv 
+./src/testbench/riscv_decoder_tb/tests/riscv_decoder_test_list.sv 
+./src/testbench/riscv_decoder_tb/riscv_decoder_if.sv
+./src/testbench/riscv_decoder_tb/tb_riscv_decoder.sv
+./src/testbench/riscv_core_tb/tb_riscv_core.sv

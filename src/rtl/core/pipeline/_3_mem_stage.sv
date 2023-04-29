@@ -3,6 +3,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 module _3_mem_stage
+  import param_defs::*;
+  import instr_defs::*;
 (
   input  logic                    clk,
   input  logic                    rst_n,
@@ -14,8 +16,6 @@ module _3_mem_stage
   output logic [RegAddrWidth-1:0] o_mem_wb_rd        // Carried from the EX-stage
 );
 
-  import param_defs::*;
-  import instr_defs::*;
 
   // Memory interface signals
   logic [ DataWidth-1:0] mem_data;
@@ -57,7 +57,7 @@ module _3_mem_stage
       o_mem_wb_alu_res <= 'b0;
       o_mem_wb_rd      <= 'b0;
     end else begin
-	   o_mem_wb_data    <= 'b0; // TODO: impl mem read
+      o_mem_wb_data    <= 'b0;  // TODO: impl mem read
       o_mem_wb_alu_res <= i_ex_mem_alu_res;
       o_mem_wb_rd      <= i_ex_mem_rd;
     end

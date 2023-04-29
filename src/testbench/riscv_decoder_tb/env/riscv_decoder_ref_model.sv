@@ -1,17 +1,17 @@
-`ifndef DEC_DECODE_REF_MODEL
-`define DEC_DECODE_REF_MODEL
+`ifndef RISCV_DECODER_REF_MODEL
+`define RISCV_DECODER_REF_MODEL
 
-class dec_decode_ref_model extends uvm_component;
+class riscv_decoder_ref_model extends uvm_component;
   import svdpi_pkg::*;
 
-  `uvm_component_utils(dec_decode_ref_model)
+  `uvm_component_utils(riscv_decoder_ref_model)
 
-  uvm_analysis_export #(dec_decode_transaction) rm_export;
-  uvm_analysis_port #(dec_decode_transaction) rm2sb_port;
-  dec_decode_transaction exp_trans, rm_trans;
-  uvm_tlm_analysis_fifo #(dec_decode_transaction) rm_exp_fifo;
+  uvm_analysis_export #(riscv_decoder_transaction) rm_export;
+  uvm_analysis_port #(riscv_decoder_transaction) rm2sb_port;
+  riscv_decoder_transaction exp_trans, rm_trans;
+  uvm_tlm_analysis_fifo #(riscv_decoder_transaction) rm_exp_fifo;
 
-  function new(string name = "dec_decode_ref_model", uvm_component parent);
+  function new(string name = "riscv_decoder_ref_model", uvm_component parent);
     super.new(name, parent);
   endfunction : new
 
@@ -35,7 +35,7 @@ class dec_decode_ref_model extends uvm_component;
     end
   endtask : run_phase
 
-  task get_expected_transaction(dec_decode_transaction rm_trans);
+  task get_expected_transaction(riscv_decoder_transaction rm_trans);
     this.exp_trans = rm_trans;
 
     // Get decoded instruction
@@ -51,6 +51,6 @@ class dec_decode_ref_model extends uvm_component;
   endtask : get_expected_transaction
 
 
-endclass : dec_decode_ref_model
+endclass : riscv_decoder_ref_model
 
 `endif

@@ -3,6 +3,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 module riscv_core
+  import param_defs::*;
+  import instr_defs::*;
 (
   input  logic                   clk,
   input  logic                   rst_n,
@@ -18,12 +20,9 @@ module riscv_core
   input  logic                   i_irq_software   // unused
 );
 
-  import param_defs::*;
-  import instr_defs::*;
-
   logic [             2:0] pc_incr;  // Assigned 'b011 for now
 
-  logic [RegAddrWidth-1:0] rd_addr [1];
+  logic [RegAddrWidth-1:0] rd_addr                            [1];
   logic [   DataWidth-1:0] rd_data;
 
   logic [   DataWidth-1:0] exp_code;
@@ -39,8 +38,8 @@ module riscv_core
   assign o_mem_addr  = p_if_id_pc;
 
   _0_if_stage if_stage_0 (
-    .clk    (clk),
-    .rst_n  (rst_n),
+    .clk      (clk),
+    .rst_n    (rst_n),
     .i_pc_incr(pc_incr),
     .i_mem_rd (i_mem_data),
     .o_instr  (p_if_id_instr),
@@ -48,7 +47,7 @@ module riscv_core
   );
 
   // Wires
-  logic [RegAddrWidth-1:0] p_id_rs_addr[2];
+  logic [RegAddrWidth-1:0] p_id_rs_addr    [2];
 
   // ID -> EX
   logic [   DataWidth-1:0] p_id_ex_rs_data [2];
@@ -72,8 +71,8 @@ module riscv_core
   logic                    p_id_ex_br;
 
   _1_id_stage id_stage_0 (
-    .clk     (clk),
-    .rst_n   (rst_n),
+    .clk       (clk),
+    .rst_n     (rst_n),
     .i_instr   (p_if_id_instr),
     .i_pc      (p_if_id_pc),
     .o_imm     (p_id_ex_imm),
@@ -99,8 +98,8 @@ module riscv_core
     .ENABLE_HALF_WRITES(0),
     .ENABLE_REG_LOCK   (0)
   ) register_file_inst (
-    .clk    (clk),
-    .rst_n  (rst_n),
+    .clk      (clk),
+    .rst_n    (rst_n),
     .i_rd_addr(rd_addr),
     .i_rs_addr(p_id_rs_addr),
     .i_rd_data(write_data),
@@ -118,8 +117,8 @@ module riscv_core
   logic                  p_ex_mem_br;
 
   _2_ex_stage ex_stage_0 (
-    .clk     (clk),
-    .rst_n   (rst_n),
+    .clk       (clk),
+    .rst_n     (rst_n),
     .i_alu_op  (p_id_ex_alu_op),
     .i_rs1_data(p_id_ex_rs_data[0]),
     .i_rs2_data(p_id_ex_rs_data[1]),
@@ -129,8 +128,8 @@ module riscv_core
   );
 
   _3_mem_stage mem_stage_0 (
-    .clk           (clk),
-    .rst_n         (rst_n),
+    .clk             (clk),
+    .rst_n           (rst_n),
     .i_ex_mem_alu_res(p_ex_mem_alu_res),
     .i_ex_mem_rd     (),
     .i_lsu_op        (p_ex_mem_lsu_op),
@@ -140,8 +139,8 @@ module riscv_core
   );
 
   _4_wb_stage wb_stage_0 (
-    .clk           (clk),
-    .rst_n         (rst_n),
+    .clk             (clk),
+    .rst_n           (rst_n),
     .i_mem_wb_data   (3),
     .i_mem_wb_alu_res(12),
     .i_mem_wb_rd     (2),

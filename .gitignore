@@ -12,6 +12,7 @@ build/
 # Quartus II
 db/
 incremental_db/
+greybox_tmp/
 *.rpt
 *.summary
 *.qpf

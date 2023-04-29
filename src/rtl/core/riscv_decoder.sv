@@ -2,9 +2,15 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-module dec_decode (
-  input  logic                    clk,       // unused
-  input  logic                    rst_n,     // unused
+
+module riscv_decoder
+  import param_defs::*;
+  import instr_defs::*;
+#(
+  `include "riscv_opcodes.svh"
+) (
+  input  logic                    clk,         // unused
+  input  logic                    rst_n,       // unused
   input  logic [            31:0] i_instr,
   input  logic [   DataWidth-1:0] i_pc,
   output logic [   DataWidth-1:0] o_imm,
@@ -21,11 +27,6 @@ module dec_decode (
   output logic                    o_illegal,
   output logic [   DataWidth-1:0] o_exp_code
 );
-
-  `include "riscv_opcodes.svh"
-
-  import param_defs::*;
-  import instr_defs::*;
 
   localparam logic [RegAddrWidth-1:0] X0 = 5'b00000;
   localparam logic [RegAddrWidth-1:0] X1 = 5'b00001;
@@ -421,4 +422,3 @@ module dec_decode (
   assign o_rs2_addr = rs2_addr;
 
 endmodule
-

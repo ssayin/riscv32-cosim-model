@@ -1,11 +1,11 @@
-`ifndef DEC_DECODE_BASIC_SEQ
-`define DEC_DECODE_BASIC_SEQ
+`ifndef RISCV_DECODER_BASIC_SEQ
+`define RISCV_DECODER_BASIC_SEQ
 
-class dec_decode_basic_seq extends uvm_sequence #(dec_decode_transaction);
+class riscv_decoder_basic_seq extends uvm_sequence #(riscv_decoder_transaction);
 
-  `uvm_object_utils(dec_decode_basic_seq)
+  `uvm_object_utils(riscv_decoder_basic_seq)
 
-  function new(string name = "dec_decode_basic_seq");
+  function new(string name = "riscv_decoder_basic_seq");
     super.new(name);
   endfunction : new
 
@@ -13,7 +13,7 @@ class dec_decode_basic_seq extends uvm_sequence #(dec_decode_transaction);
 
     for (int i = 0; i < 100; i++) begin
 
-      req = dec_decode_transaction::type_id::create("req");
+      req = riscv_decoder_transaction::type_id::create("req");
 
       start_item(req);
 
@@ -28,7 +28,7 @@ class dec_decode_basic_seq extends uvm_sequence #(dec_decode_transaction);
 
   endtask : body
 
-endclass : dec_decode_basic_seq
+endclass : riscv_decoder_basic_seq
 
 
 `endif

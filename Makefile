@@ -11,7 +11,7 @@ TOOLS_DIR     := ./tools/
 
 DATA_DIR      := $(BUILD_DIR)/data
 LIB           := libdpi.so
-SV_TOP        := tb_dec_decode
+SV_TOP        := tb_riscv_decoder
 
 DECODER_INC   := -Isrc/decoder/decoder/include/
 COMMON_INC    := -Isrc/common/include/
@@ -43,11 +43,11 @@ $(INSTR_FEED): $(DATA_DIR)
 
 sim: $(LIB) compile 
 		xelab $(SV_TOP) -relax -s top -sv_lib $(basename $(notdir $(LIB)))
-		LD_LIBRARY_PATH=. xsim top -testplusarg UVM_TESTNAME=dec_decode_from_file_test -testplusarg UVM_VERBOSITY=UVM_LOW -R
+		LD_LIBRARY_PATH=. xsim top -testplusarg UVM_TESTNAME=riscv_decoder_from_file_test -testplusarg UVM_VERBOSITY=UVM_LOW -R
 
-sim2: compile 
-	xelab tb_top_level -relax -s top2
-	xsim top2 -R
+#sim2: compile 
+#	xelab tb_top_level -relax -s top2
+#	xsim top2 -R
 
 quartus:
 	quartus_sh -t $(TOOLS_DIR)intel_synth.tcl compile top_level rev_1

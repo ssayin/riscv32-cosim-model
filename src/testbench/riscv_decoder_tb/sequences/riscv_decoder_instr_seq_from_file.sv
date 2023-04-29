@@ -1,13 +1,13 @@
-`ifndef DEC_DECODE_INSTR_SEQ_FROM_FILE
-`define DEC_DECODE_INSTR_SEQ_FROM_FILE
+`ifndef RISCV_DECODER_INSTR_SEQ_FROM_FILE
+`define RISCV_DECODER_INSTR_SEQ_FROM_FILE
 
-class dec_decode_instr_seq_from_file extends uvm_sequence #(dec_decode_transaction);
+class riscv_decoder_instr_seq_from_file extends uvm_sequence #(riscv_decoder_transaction);
 
-  `uvm_object_utils(dec_decode_instr_seq_from_file)
+  `uvm_object_utils(riscv_decoder_instr_seq_from_file)
 
   int fd;
 
-  function new(string name = "dec_decode_instr_seq_from_file");
+  function new(string name = "riscv_decoder_instr_seq_from_file");
     super.new(name);
     fd = $fopen(`INSTR_SEQ_FILENAME, "r");
   endfunction : new
@@ -16,7 +16,7 @@ class dec_decode_instr_seq_from_file extends uvm_sequence #(dec_decode_transacti
     for (int i = 0; i < `INSTR_SEQ_LINECOUNT; ++i) begin
       logic [31:0] instr;
       $fscanf(fd, "%d", instr);
-      req = dec_decode_transaction::type_id::create("req");
+      req = riscv_decoder_transaction::type_id::create("req");
       start_item(req);
       req.dec_in.instr = instr;
       req.dec_in.pc_in = 0;  // set 0 for this seq

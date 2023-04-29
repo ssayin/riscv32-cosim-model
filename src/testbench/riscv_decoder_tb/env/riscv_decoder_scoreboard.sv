@@ -1,17 +1,17 @@
-`ifndef DEC_DECODE_SCOREBOARD
-`define DEC_DECODE_SCOREBOARD
+`ifndef RISCV_DECODER_SCOREBOARD
+`define RISCV_DECODER_SCOREBOARD
 
 
 import svdpi_pkg::*;
 
-class dec_decode_scoreboard extends uvm_scoreboard;
+class riscv_decoder_scoreboard extends uvm_scoreboard;
 
-  `uvm_component_utils(dec_decode_scoreboard)
+  `uvm_component_utils(riscv_decoder_scoreboard)
 
-  uvm_analysis_export #(dec_decode_transaction)   rm2sb_export,          mon2sb_export;
-  uvm_tlm_analysis_fifo #(dec_decode_transaction) rm2sb_export_fifo,     mon2sb_export_fifo;
-  dec_decode_transaction                          exp_trans,             act_trans;
-  dec_decode_transaction                          exp_trans_fifo    [$], act_trans_fifo     [$];
+  uvm_analysis_export #(riscv_decoder_transaction)   rm2sb_export,          mon2sb_export;
+  uvm_tlm_analysis_fifo #(riscv_decoder_transaction) rm2sb_export_fifo,     mon2sb_export_fifo;
+  riscv_decoder_transaction                          exp_trans,             act_trans;
+  riscv_decoder_transaction                          exp_trans_fifo    [$], act_trans_fifo     [$];
   bit                                             error;
 
   function new(string name, uvm_component parent);
@@ -46,7 +46,7 @@ class dec_decode_scoreboard extends uvm_scoreboard;
   endtask : run_phase
 
   task compare_trans();
-    dec_decode_transaction exp_trans, act_trans;
+    riscv_decoder_transaction exp_trans, act_trans;
 
     if ((exp_trans_fifo.size == 0) || (act_trans_fifo.size == 0)) return;
 
@@ -77,6 +77,6 @@ class dec_decode_scoreboard extends uvm_scoreboard;
       $write("%c[0m", 27);
     end
   endfunction : report_phase
-endclass : dec_decode_scoreboard
+endclass : riscv_decoder_scoreboard
 
 `endif

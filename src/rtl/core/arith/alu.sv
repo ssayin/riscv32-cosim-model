@@ -3,7 +3,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 module alu
-
+  import instr_defs::*;
+  import param_defs::*;
 (
   input  logic [ DataWidth-1:0] i_a,
   input  logic [ DataWidth-1:0] i_b,
@@ -11,13 +12,10 @@ module alu
   output logic [ DataWidth-1:0] o_res
 );
 
-  import instr_defs::*;
-  import param_defs::*;
-  
   logic [DataWidth*2-1:0] mul_res;
 
   always_comb begin
-  mul_res = 'h0;
+    mul_res = 'h0;
     case (i_alu_op)
       ALU_ADD:  o_res = i_a + i_b;
       ALU_SUB:  o_res = i_a - i_b;
@@ -61,8 +59,8 @@ module alu
         o_res = i_a % i_b;
       end
       default: begin
-			o_res = 'h0;
-		end
+        o_res = 'h0;
+      end
     endcase
   end
 

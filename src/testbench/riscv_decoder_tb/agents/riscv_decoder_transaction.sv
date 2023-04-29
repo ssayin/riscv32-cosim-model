@@ -1,13 +1,13 @@
-`ifndef DEC_DECODE_TRANSACTION
-`define DEC_DECODE_TRANSACTION
+`ifndef RISCV_DECODER_TRANSACTION
+`define RISCV_DECODER_TRANSACTION
 
 import svdpi_pkg::*;
-class dec_decode_transaction extends uvm_sequence_item;
+class riscv_decoder_transaction extends uvm_sequence_item;
 
   decoder_out_t     dec_out;
   rand decoder_in_t dec_in;
 
-  `uvm_object_utils_begin(dec_decode_transaction)
+  `uvm_object_utils_begin(riscv_decoder_transaction)
     `uvm_field_int(dec_in.instr, UVM_ALL_ON)
     `uvm_field_int(dec_in.pc_in, UVM_ALL_ON)
     `uvm_field_int(dec_out.imm, UVM_ALL_ON)
@@ -21,7 +21,7 @@ class dec_decode_transaction extends uvm_sequence_item;
     `uvm_field_int(dec_out.use_imm, UVM_ALL_ON)
   `uvm_object_utils_end
 
-  function new(string name = "dec_decode_transaction");
+  function new(string name = "riscv_decoder_transaction");
     super.new(name);
   endfunction : new
 
@@ -31,10 +31,10 @@ class dec_decode_transaction extends uvm_sequence_item;
 
   function bit compare(uvm_object rhs);
 
-    dec_decode_transaction rhs_trans;
+    riscv_decoder_transaction rhs_trans;
 
     if (!$cast(rhs_trans, rhs)) begin
-      `uvm_error(get_full_name(), "Failed to cast rhs to dec_decode_transaction");
+      `uvm_error(get_full_name(), "Failed to cast rhs to riscv_decoder_transaction");
       return 0;
     end
     if (dec_out.illegal != rhs_trans.dec_out.illegal) begin
@@ -58,6 +58,6 @@ class dec_decode_transaction extends uvm_sequence_item;
 
   endfunction : compare
 
-endclass : dec_decode_transaction
+endclass : riscv_decoder_transaction
 
 `endif
