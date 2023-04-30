@@ -34,6 +34,9 @@ typedef struct {
   svLogic csr;
   svLogic lui;
   svLogic auipc;
+  svLogic jal;
+  svLogic fencei;
+  svLogic fence;
   svLogic illegal;
   svLogic use_imm;
 } decoder_out_t;

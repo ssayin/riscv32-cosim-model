@@ -50,6 +50,9 @@ module tb_riscv_decoder
     .o_lui     (riscv_decoder_intf.dec_out.lui),
     .o_auipc   (riscv_decoder_intf.dec_out.auipc),
     .o_illegal (riscv_decoder_intf.dec_out.illegal),
+    .o_jal     (riscv_decoder_intf.dec_out.jal),
+    .o_fencei  (riscv_decoder_intf.dec_out.fencei),
+    .o_fence   (riscv_decoder_intf.dec_out.fence),
     .o_exp_code()
   );
 

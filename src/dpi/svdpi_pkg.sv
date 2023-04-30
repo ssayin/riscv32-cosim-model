@@ -22,6 +22,9 @@ typedef struct {
   logic        csr;
   logic        lui;
   logic        auipc;
+  logic        jal;
+  logic        fence;
+  logic        fencei;
   logic        illegal;
   logic        use_imm;
 } decoder_out_t;

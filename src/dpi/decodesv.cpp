@@ -75,9 +75,12 @@ void dpi_decoder_process(const decoder_in_t *in, decoder_out_t *out) {
             static_cast<uint32_t>(masks::opcode::lui) ||
         (is_compressed && (instr & 0b0110000000000001) == 0b0110000000000001)) {
       out->lui = 1;
+    }
+    if ((instr & static_cast<uint32_t>(masks::opcode::jal)) ==
+        static_cast<uint32_t>(masks::opcode::jal)) {
+      out->jal = 1;
       // 32'b????????????????011???????????01
     }
-
     break;
   case target::mret:
   case target::ebreak:

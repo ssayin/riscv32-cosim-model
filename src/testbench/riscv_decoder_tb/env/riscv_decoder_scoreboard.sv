@@ -60,6 +60,7 @@ class riscv_decoder_scoreboard extends uvm_scoreboard;
       act_trans.print();
       exp_trans.print();
       error = 1;
+      $finish;
     end
 
   endtask : compare_trans

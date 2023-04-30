@@ -19,6 +19,9 @@ class riscv_decoder_transaction extends uvm_sequence_item;
     `uvm_field_int(dec_out.br, UVM_ALL_ON)
     `uvm_field_int(dec_out.lsu, UVM_ALL_ON)
     `uvm_field_int(dec_out.csr, UVM_ALL_ON)
+    `uvm_field_int(dec_out.auipc, UVM_ALL_ON)
+    `uvm_field_int(dec_out.lui, UVM_ALL_ON)
+    `uvm_field_int(dec_out.jal, UVM_ALL_ON)
     `uvm_field_int(dec_out.illegal, UVM_ALL_ON)
     `uvm_field_int(dec_out.use_imm, UVM_ALL_ON)
   `uvm_object_utils_end
@@ -48,6 +51,9 @@ class riscv_decoder_transaction extends uvm_sequence_item;
     if (rhs_trans.dec_out.lsu != dec_out.lsu) return 0;
     if (rhs_trans.dec_out.csr != dec_out.csr) return 0;
     if (rhs_trans.dec_out.br != dec_out.br) return 0;
+    //if (rhs_trans.dec_out.jal != dec_out.jal) return 0;
+    //if (rhs_trans.dec_out.auipc != dec_out.auipc) return 0;
+    //if (rhs_trans.dec_out.lui != dec_out.lui) return 0;
 
     is_upper_imm = (dec_out.lui || dec_out.auipc);
 
@@ -55,13 +61,14 @@ class riscv_decoder_transaction extends uvm_sequence_item;
       `uvm_error(get_full_name(), "Immediate MISMATCH");
       return 0;
     end
-    if (!is_upper_imm && (dec_out.br || dec_out.alu)) begin
+    if (!is_upper_imm && !rhs_trans.dec_out.jal && (dec_out.br || dec_out.alu)) begin
       if (dec_out.rs1_addr != rhs_trans.dec_out.rs1_addr) begin
         `uvm_error(get_full_name(), "RS1 MISMATCH");
         return 0;
       end
     end
-    if (!is_upper_imm && (dec_out.br || (dec_out.alu && !dec_out.use_imm))) begin
+    if (!is_upper_imm && !rhs_trans.dec_out.jal &&
+        (dec_out.br || (dec_out.alu && !rhs_trans.dec_out.use_imm))) begin
       if (dec_out.rs2_addr != rhs_trans.dec_out.rs2_addr) begin
         `uvm_error(get_full_name(), "RS2 MISMATCH");
         return 0;

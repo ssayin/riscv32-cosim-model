@@ -24,7 +24,10 @@ module riscv_decoder
   output logic                    o_lui,
   output logic                    o_auipc,
   output logic                    o_br,
+  output logic                    o_jal,
   output logic                    o_csr,
+  output logic                    o_fencei,
+  output logic                    o_fence,
   output logic [  AluOpWidth-1:0] o_alu_op,
   output logic [  LsuOpWidth-1:0] o_lsu_op,
   output logic                    o_illegal,
@@ -133,6 +136,11 @@ module riscv_decoder
     o_csr     = 1'b0;
     o_lui     = 1'b0;
     o_auipc   = 1'b0;
+    o_br      = 1'b0;
+    o_jal     = 1'b0;
+
+    o_fencei  = 1'b0;
+    o_fence   = 1'b0;
 
     casez (i)
 
@@ -146,6 +154,7 @@ module riscv_decoder
         o_rd_en   = 1'b1;
         o_alu_op  = ALU_ADD;
         o_alu     = 1'b1;
+        o_jal     = 1'b1;
       end
       `C_JAL: begin
         o_use_imm = 1'b1;
@@ -154,32 +163,39 @@ module riscv_decoder
         rd_addr   = X1;
         o_alu_op  = ALU_ADD;
         o_alu     = 1'b1;
-
+        o_jal     = 1'b1;
       end
       `C_JALR: begin
-        rs1_addr = rd_addr;
-        rd_addr  = X1;
-        o_rd_en  = 1'b1;
-        o_alu_op = ALU_ADD;
-        o_alu    = 1'b1;
-
+        o_use_imm = 1'b1;
+        o_imm     = 'h0;
+        rs1_addr  = rd_addr;
+        rd_addr   = X1;
+        o_rd_en   = 1'b1;
+        o_alu_op  = ALU_ADD;
+        o_alu     = 1'b1;
       end
       `C_JR: begin
-        rs1_addr = rd_addr;
-        rd_addr  = X0;
-        o_alu_op = ALU_ADD;
-        o_alu    = 1'b1;
+        o_use_imm = 1'b1;
+        o_imm     = 'h0;
+        rs1_addr  = rd_addr;
+        rd_addr   = X0;
+        o_alu_op  = ALU_ADD;
+        o_alu     = 1'b1;
       end
 
       `C_BEQZ: begin
         o_use_imm = 1'b1;
         rs1_addr  = c_42;
+        rs2_addr  = X0;
         o_imm     = c_imm_b;
+        o_br      = 1'b1;
       end
       `C_BNEZ: begin
         o_use_imm = 1'b1;
         rs1_addr  = c_42;
+        rs2_addr  = X0;
         o_imm     = c_imm_b;
+        o_br      = 1'b1;
       end
 
       //  ╦   ╔╗ ╦═╗╔═╗╔╗╔╔═╗╦ ╦
@@ -191,6 +207,7 @@ module riscv_decoder
         o_use_imm = 1'b1;
         o_alu_op  = ALU_ADD;
         o_alu     = 1'b1;
+        o_jal     = 1'b1;
       end
       `JALR: begin
         o_use_imm = 1'b1;
@@ -200,12 +217,12 @@ module riscv_decoder
         o_alu     = 1'b1;
       end
 
-      `BEQ:  {o_use_imm, o_imm} = {1'b1, imm_B};
-      `BGE:  {o_use_imm, o_imm} = {1'b1, imm_B};
-      `BGEU: {o_use_imm, o_imm} = {1'b1, imm_B};
-      `BLT:  {o_use_imm, o_imm} = {1'b1, imm_B};
-      `BLTU: {o_use_imm, o_imm} = {1'b1, imm_B};
-      `BNE:  {o_use_imm, o_imm} = {1'b1, imm_B};
+      `BEQ:  {o_use_imm, o_imm, o_br} = {1'b1, imm_B, 1'b1};
+      `BGE:  {o_use_imm, o_imm, o_br} = {1'b1, imm_B, 1'b1};
+      `BGEU: {o_use_imm, o_imm, o_br} = {1'b1, imm_B, 1'b1};
+      `BLT:  {o_use_imm, o_imm, o_br} = {1'b1, imm_B, 1'b1};
+      `BLTU: {o_use_imm, o_imm, o_br} = {1'b1, imm_B, 1'b1};
+      `BNE:  {o_use_imm, o_imm, o_br} = {1'b1, imm_B, 1'b1};
 
       //  ╦   ╔═╗╦═╗╔═╗  ╔╗ ╦═╗╔═╗╔╗╔╔═╗╦ ╦
       //  ║───╠═╝╠╦╝║╣───╠╩╗╠╦╝╠═╣║║║║  ╠═╣
@@ -312,7 +329,10 @@ module riscv_decoder
       end
 
 
-      `C_NOP: {o_use_imm, o_imm, o_alu_op, o_rd_en, o_alu} = {1'b1, c_imm6, ALU_ADD, 1'b1, 1'b1};
+      `C_NOP:
+      {o_use_imm, o_imm, rd_addr, rs1_addr, o_alu_op, o_rd_en, o_alu} = {
+        1'b1, c_imm6, X0, X0, ALU_ADD, 1'b1, 1'b1
+      };
 
       `C_ADDI: begin
         o_use_imm = 1'b1;
@@ -323,7 +343,10 @@ module riscv_decoder
         o_alu     = 1'b1;
       end
 
-      `C_LI: {o_use_imm, o_imm, o_alu_op, o_rd_en, o_alu} = {1'b1, c_imm6, ALU_ADD, 1'b1, 1'b1};
+      `C_LI:
+      {o_use_imm, o_imm, rs1_addr, o_alu_op, o_rd_en, o_alu} = {
+        1'b1, c_imm6, X0, ALU_ADD, 1'b1, 1'b1
+      };
 
       `C_ADDI16SP: begin
         o_use_imm = 1'b1;
@@ -394,6 +417,7 @@ module riscv_decoder
       end
 
       `C_MV: begin
+        rs1_addr = X0;
         rs2_addr = c_62;
         o_alu_op = ALU_ADD;
         o_rd_en  = 1'b1;
@@ -457,9 +481,12 @@ module riscv_decoder
       end
       `MRET: begin
       end
-      `FENCE: begin
-      end
-      `FENCEI: begin
+      `FENCE, `FENCEI: begin  // insert NOP
+        o_alu_op  = ALU_ADD;
+        o_use_imm = 1'b1;
+        rd_addr   = X0;
+        rs1_addr  = X0;
+        o_alu     = 1'b1;
       end
       `WFI: begin
       end
