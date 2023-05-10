@@ -14,11 +14,11 @@ LIB           := libdpi.so
 
 SV_TOP        := tb_riscv_decoder
 
-DECODER_INC   := -Isrc/decoder/decoder/include/
-COMMON_INC    := -Isrc/common/include/
+DECODER_INC   := -Isrc/decoder/include/
+COMMON_INC    := -Isrc/decoder/include/
 DISAS_INC     := -Ithird_party/riscv-disas/
 
-DECODER_SRC   := ./src/decoder/decoder/src/
+DECODER_SRC   := ./src/decoder/src/
 EXPORTER_SRC  := ./src/dpi/
 DISAS_SRC     := ./third_party/riscv-disas/
 
