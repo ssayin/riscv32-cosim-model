@@ -82,4 +82,18 @@ package instr_defs;
     LSU_SW  = 4'b1010
   } lsu_op_t;
 
+
+  typedef struct {
+    logic alu;
+    logic lsu;
+    logic lui;
+    logic auipc;
+    logic br;
+    logic jal;
+    logic csr;
+    logic fencei;
+    logic fence;
+    logic illegal;
+  } ctl_pkt_t;
+
 endpackage

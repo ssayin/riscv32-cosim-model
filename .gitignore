@@ -26,3 +26,5 @@ greybox_tmp/
 *.sof
 *.smsg
 *.qws
+*.wdb
+*.vcd

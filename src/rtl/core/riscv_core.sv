@@ -8,16 +8,16 @@ module riscv_core
 (
   input  logic                   clk,
   input  logic                   rst_n,
-  output logic [           31:0] o_mem_addr,      // Memory offset
-  input  logic [MemBusWidth-1:0] i_mem_data,      // Cache fill port
-  output logic [MemBusWidth-1:0] o_mem_data,      // Driven by D$ controller
-  output logic [            3:0] o_mem_wr_en,     // TODO: Alter after cache impl
-  output logic                   o_mem_rd_en,     // The access is for instruction fetch
-  output logic                   o_mem_valid,
-  input  logic                   i_mem_ready,     // Stall pipeline on I$ misses
-  input  logic                   i_irq_external,  // unused
-  input  logic                   i_irq_timer,     // unused
-  input  logic                   i_irq_software   // unused
+  output logic [           31:0] mem_addr,      // Memory offset
+  input  logic [MemBusWidth-1:0] mem_data_in,   // Cache fill port
+  output logic [MemBusWidth-1:0] mem_data_out,  // Driven by D$ controller
+  output logic [            3:0] mem_wr_en,     // TODO: Alter after cache impl
+  output logic                   mem_rd_en,     // The access is for instruction fetch
+  output logic                   mem_valid,
+  input  logic                   mem_ready,     // Stall pipeline on I$ misses
+  input  logic                   irq_external,  // unused
+  input  logic                   irq_timer,     // unused
+  input  logic                   irq_software   // unused
 );
 
   logic [             2:0] pc_incr;
@@ -34,60 +34,65 @@ module riscv_core
   logic [            31:0] p_if_id_pc;
 
   // TODO: change these later
-  assign o_mem_rd_en = 'b1;
-  assign o_mem_addr  = p_if_id_pc;
+  assign mem_rd_en = 'b1;
+  assign mem_addr  = p_if_id_pc;
 
-  _0_if_stage if_stage_0 (
-    .clk      (clk),
-    .rst_n    (rst_n),
-    .i_pc_incr(pc_incr),
-    .i_mem_rd (i_mem_data),
-    .o_instr  (p_if_id_instr),
-    .o_pc     (p_if_id_pc)
+  if_stage if_stage_0 (
+    .clk    (clk),
+    .rst_n  (rst_n),
+    .pc_incr(pc_incr),
+    .mem_rd (mem_data_in),
+    .instr  (p_if_id_instr),
+    .pc     (p_if_id_pc)
   );
 
   // Wires
-  logic [RegAddrWidth-1:0] p_id_rs_addr    [2];
+  logic     [RegAddrWidth-1:0] p_id_rs1_addr;
+  logic     [RegAddrWidth-1:0] p_id_rs2_addr;
 
   // ID -> EX
-  logic [   DataWidth-1:0] p_id_ex_rs_data [2];
-  logic                    p_id_ex_use_imm;
-  logic [   DataWidth-1:0] p_id_ex_imm;
-  logic                    p_id_ex_illegal;
-  logic                    p_id_ex_alu;
-  logic [  AluOpWidth-1:0] p_id_ex_alu_op;
+  logic     [   DataWidth-1:0] p_id_ex_rs_data [2];
+  logic                        p_id_ex_use_imm;
+  logic     [   DataWidth-1:0] p_id_ex_imm;
+  logic                        p_id_ex_illegal;
+  logic                        p_id_ex_alu;
+  logic     [  AluOpWidth-1:0] p_id_ex_alu_op;
 
 
-  logic [RegAddrWidth-1:0] p_id_ex_rd_addr;
+  logic     [RegAddrWidth-1:0] p_id_ex_rd_addr;
 
   // Wires RS1/RS2 reg_file to pipeline registers
   // p_id_ex_rs_data [2]
-  logic [   DataWidth-1:0] rs_data         [2];
+  logic     [   DataWidth-1:0] rs_data         [2];
 
   // Skips EX stage
-  logic                    p_id_ex_lsu;
-  logic [  LsuOpWidth-1:0] p_id_ex_lsu_op;
+  logic                        p_id_ex_lsu;
+  logic     [  LsuOpWidth-1:0] p_id_ex_lsu_op;
 
-  logic                    p_id_ex_br;
+  logic                        p_id_ex_br;
 
-  _1_id_stage id_stage_0 (
-    .clk       (clk),
-    .rst_n     (rst_n),
-    .i_instr   (p_if_id_instr),
-    .i_pc      (p_if_id_pc),
-    .o_imm     (p_id_ex_imm),
-    .o_rd_addr (p_id_ex_rd_addr),
-    .o_rs1_addr(p_id_rs1_addr),
-    .o_rs2_addr(p_id_rs2_addr),
-    .o_rd_en   (rd_en),
-    .o_use_imm (use_imm),
-    .o_alu     (p_id_ex_alu),
-    .o_lsu     (p_id_ex_lsu),
-    .o_br      (p_id_ex_br),
-    .o_alu_op  (p_id_ex_alu_op),
-    .o_lsu_op  (p_id_ex_lsu_op),
-    .o_illegal (p_id_ex_illegal),
-    .o_exp_code(exp_code)
+  ctl_pkt_t                    ctl;
+
+  assign p_id_ex_alu     = ctl.alu;
+  assign p_id_ex_lsu     = ctl.lsu;
+  assign p_id_ex_br      = ctl.br;
+  assign p_id_ex_illegal = ctl.illegal;
+
+  id_stage id_stage_0 (
+    .clk     (clk),
+    .rst_n   (rst_n),
+    .instr   (p_if_id_instr),
+    .pc      (p_if_id_pc),
+    .imm     (p_id_ex_imm),
+    .rd_addr (p_id_ex_rd_addr),
+    .rs1_addr(p_id_rs1_addr),
+    .rs2_addr(p_id_rs2_addr),
+    .rd_en   (write_en[0]),
+    .ctl     (ctl),
+    .use_imm (p_id_ex_use_imm),
+    .alu_op  (p_id_ex_alu_op),
+    .lsu_op  (p_id_ex_lsu_op),
+    .exp_code(exp_code)
   );
 
   reg_file #(
@@ -98,13 +103,13 @@ module riscv_core
     .ENABLE_HALF_WRITES(0),
     .ENABLE_REG_LOCK   (0)
   ) register_file_inst (
-    .clk      (clk),
-    .rst_n    (rst_n),
-    .i_rd_addr(rd_addr),
-    .i_rs_addr(p_id_rs_addr),
-    .i_rd_data(write_data),
-    .i_wr_en  (write_en),
-    .o_rs_data(rs_data)
+    .clk    (clk),
+    .rst_n  (rst_n),
+    .rd_addr(rd_addr),
+    .rs_addr({p_id_rs1_addr, p_id_rs2_addr}),
+    .rd_data(write_data),
+    .wr_en  (write_en),
+    .rs_data(rs_data)
   );
 
 
@@ -116,52 +121,52 @@ module riscv_core
 
   logic                  p_ex_mem_br;
 
-  _2_ex_stage ex_stage_0 (
-    .clk       (clk),
-    .rst_n     (rst_n),
-    .i_alu_op  (p_id_ex_alu_op),
-    .i_rs1_data(p_id_ex_rs_data[0]),
-    .i_rs2_data(p_id_ex_rs_data[1]),
-    .i_imm     (p_id_ex_imm),
-    .i_use_imm (p_id_ex_use_imm),
-    .o_res     (p_ex_mem_alu_res)
+  ex_stage ex_stage_0 (
+    .clk     (clk),
+    .rst_n   (rst_n),
+    .alu_op  (p_id_ex_alu_op),
+    .rs1_data(rs_data[0]),
+    .rs2_data(rs_data[1]),
+    .imm     (p_id_ex_imm),
+    .use_imm (p_id_ex_use_imm),
+    .res     (p_ex_mem_alu_res)
   );
 
-  _3_mem_stage mem_stage_0 (
-    .clk             (clk),
-    .rst_n           (rst_n),
-    .i_ex_mem_alu_res(p_ex_mem_alu_res),
-    .i_ex_mem_rd     (),
-    .i_lsu_op        (p_ex_mem_lsu_op),
-    .o_mem_wb_data   (),
-    .o_mem_wb_alu_res(),
-    .o_mem_wb_rd     ()
+  mem_stage mem_stage_0 (
+    .clk           (clk),
+    .rst_n         (rst_n),
+    .ex_mem_alu_res(p_ex_mem_alu_res),
+    .ex_mem_rd     (p_id_ex_rd_addr),
+    .lsu_op        (p_ex_mem_lsu_op),
+    .mem_wb_data   (),
+    .mem_wb_alu_res(mem_data_out),
+    .mem_wb_rd     ()
   );
 
-  _4_wb_stage wb_stage_0 (
-    .clk             (clk),
-    .rst_n           (rst_n),
-    .i_mem_wb_data   (3),
-    .i_mem_wb_alu_res(12),
-    .i_mem_wb_rd     (2),
-    .o_wb_data       ()
+  wb_stage wb_stage_0 (
+    .clk           (clk),
+    .rst_n         (rst_n),
+    .mem_wb_data   (),
+    .mem_wb_alu_res(),
+    .mem_wb_rd     (),
+    .wb_data       ()
   );
 
   always_ff @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
-      p_id_ex_rs_data[0] <= 5'bXXXXX;
-      p_id_ex_rs_data[1] <= 5'bXXXXX;
-      p_ex_mem_lsu       <= 1'b0;
-      p_ex_mem_lsu_op    <= 5'bXXXXX;
-      p_ex_mem_br        <= 1'b0;
-      pc_incr            <= 3'b100;
-
+      p_id_ex_rs_data[0] <= 'b0;
+      p_id_ex_rs_data[1] <= 'b0;
+      p_ex_mem_lsu       <= 'b0;
+      p_ex_mem_lsu_op    <= 'b0;
+      p_ex_mem_br        <= 'b0;
+      pc_incr            <= 'b0;
     end else begin
-      p_id_ex_rs_data[0] <= rs_data[0];  // Pipe combinatorial from reg_file to pipeline register
-      p_id_ex_rs_data[1] <= rs_data[1];  // Pipe combinatorial from reg_file to pipeline register
+      p_id_ex_rs_data[0] <= rs_data[0];
+      p_id_ex_rs_data[1] <= rs_data[1];
       p_ex_mem_lsu       <= p_id_ex_lsu;
       p_ex_mem_lsu_op    <= p_id_ex_lsu_op;
       p_ex_mem_br        <= p_id_ex_br;
+      pc_incr            <= 3'b100;
     end
   end
 

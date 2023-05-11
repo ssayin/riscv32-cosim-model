@@ -36,26 +36,26 @@ module top_level
   memory_model memory_model_O (
     .clk      (clk),
     .rst_n    (rst_n),
-    .i_addr   (mem_addr),
-    .i_wr_data(mem_data_out),
-    .i_wr_en  (mem_wr_en),
-    .o_rd_data(mem_data_in),
-    .i_rd_en  (mem_rd_en)
+    .addr   (mem_addr),
+    .wr_data(mem_data_out),
+    .wr_en  (mem_wr_en),
+    .rd_data(mem_data_in),
+    .rd_en  (mem_rd_en)
   );
 
   riscv_core core_0 (
     .clk           (clk),
     .rst_n         (rst_n),
-    .o_mem_addr    (mem_addr),
-    .i_mem_data    (mem_data_in),
-    .o_mem_data    (mem_data_out),
-    .o_mem_wr_en   (mem_wr_en),
-    .o_mem_rd_en   (mem_rd_en),
-    .o_mem_valid   (mem_valid),
-    .i_mem_ready   (mem_ready),
-    .i_irq_external(irq_external),
-    .i_irq_timer   (irq_timer),
-    .i_irq_software(irq_software)
+    .mem_addr    (mem_addr),
+    .mem_data    (mem_data_in),
+    .mem_data    (mem_data_out),
+    .mem_wr_en   (mem_wr_en),
+    .mem_rd_en   (mem_rd_en),
+    .mem_valid   (mem_valid),
+    .mem_ready   (mem_ready),
+    .irq_external(irq_external),
+    .irq_timer   (irq_timer),
+    .irq_software(irq_software)
   );
 
   logic [63:0] testA;

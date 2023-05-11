@@ -12,14 +12,14 @@ module reg_file #(
 ) (
   input  logic                  clk,
   input  logic                  rst_n,
-  input  logic [           4:0] i_rd_addr   [NUM_WRITE_PORTS],
-  input  logic [           4:0] i_rs_addr   [ NUM_READ_PORTS],
-  input  logic [DATA_WIDTH-1:0] i_rd_data   [NUM_WRITE_PORTS],
-  input  logic                  i_wr_en     [NUM_WRITE_PORTS],
-  input  logic                  i_byte_wr_en[NUM_WRITE_PORTS],
-  input  logic                  i_half_wr_en[NUM_WRITE_PORTS],
-  input  logic                  i_reg_lock  [NUM_WRITE_PORTS],
-  output logic [DATA_WIDTH-1:0] o_rs_data   [ NUM_READ_PORTS]
+  input  logic [           4:0] rd_addr   [NUM_WRITE_PORTS],
+  input  logic [           4:0] rs_addr   [ NUM_READ_PORTS],
+  input  logic [DATA_WIDTH-1:0] rd_data   [NUM_WRITE_PORTS],
+  input  logic                  wr_en     [NUM_WRITE_PORTS],
+  input  logic                  byte_wr_en[NUM_WRITE_PORTS],
+  input  logic                  half_wr_en[NUM_WRITE_PORTS],
+  input  logic                  reg_lock  [NUM_WRITE_PORTS],
+  output logic [DATA_WIDTH-1:0] rs_data   [ NUM_READ_PORTS]
 );
 
   // Register File
@@ -31,7 +31,7 @@ module reg_file #(
   logic [NUM_WRITE_PORTS-1:0] gated_clk;
   generate
     for (i = 0; i < NUM_WRITE_PORTS; i++) begin : g_clock_gating
-      assign gated_clk[i] = clk & i_wr_en[i];
+      assign gated_clk[i] = clk & wr_en[i];
     end : g_clock_gating
   endgenerate
 
@@ -44,13 +44,13 @@ module reg_file #(
             reg_file[j] <= {DATA_WIDTH{1'b0}};
           end
         end else begin
-          if (i_rd_addr[i] != 5'h0 && (!ENABLE_REG_LOCK || !i_reg_lock[i])) begin
-            if (ENABLE_BYTE_WRITES && i_byte_wr_en[i]) begin
-              reg_file[i_rd_addr[i]] <= {reg_file[i_rd_addr[i]][31:8], i_rd_data[i][7:0]};
-            end else if (ENABLE_HALF_WRITES && i_half_wr_en[i]) begin
-              reg_file[i_rd_addr[i]] <= {reg_file[i_rd_addr[i]][31:16], i_rd_data[i][15:0]};
+          if (rd_addr[i] != 5'h0 && (!ENABLE_REG_LOCK || !reg_lock[i])) begin
+            if (ENABLE_BYTE_WRITES && byte_wr_en[i]) begin
+              reg_file[rd_addr[i]] <= {reg_file[rd_addr[i]][31:8], rd_data[i][7:0]};
+            end else if (ENABLE_HALF_WRITES && half_wr_en[i]) begin
+              reg_file[rd_addr[i]] <= {reg_file[rd_addr[i]][31:16], rd_data[i][15:0]};
             end else begin
-              reg_file[i_rd_addr[i]] <= i_rd_data[i];
+              reg_file[rd_addr[i]] <= rd_data[i];
             end
           end
         end
@@ -61,7 +61,7 @@ module reg_file #(
   // Read ports
   generate
     for (i = 0; i < NUM_READ_PORTS; i++) begin : g_rs_ports
-      assign o_rs_data[i] = reg_file[i_rs_addr[i]];
+      assign rs_data[i] = reg_file[rs_addr[i]];
     end : g_rs_ports
   endgenerate
 
