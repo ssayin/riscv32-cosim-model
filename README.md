@@ -28,17 +28,17 @@ Before you begin, ensure you have met the following requirements:
 git clone --recursive https://github.com/ssayin/riscv32-cosim-model.git
 ```
 
-If you have already cloned the repository, you can fetch the submodules with:
-
-```sh
-git submodule update --init --recursive
-```
-
 2. Navigate to the directory
 
 ```sh
 cd riscv32-cosim-model
 ```
+
+If you have already cloned the repository, you can fetch the submodules with:
+```sh
+git submodule update --init --recursive
+```
+
 
 ## Building and Running
 
@@ -89,7 +89,7 @@ If you would like to contribute, please fork the repository and submit a pull re
 
 ## License
 
-This project is licensed under the Apache 2.0 License - see the [LICENSE.md](LICENSE) file for details.
+This project is licensed under the Apache 2.0 License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgements
 
