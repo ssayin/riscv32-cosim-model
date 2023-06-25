@@ -48,8 +48,7 @@ module tb_riscv_decoder
     .use_imm (riscv_decoder_intf.dec_out.use_imm),
     .ctl     (ctl),
     .alu_op  (),
-    .lsu_op  (),
-    .exp_code()
+    .lsu_op  ()
   );
 
   assign riscv_decoder_intf.dec_out.alu     = ctl.alu;

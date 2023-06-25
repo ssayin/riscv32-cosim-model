@@ -3,13 +3,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 module memory_model (
-  input  logic        clk,
-  input  logic        rst_n,
-  input  logic [31:0] addr,
-  input  logic [31:0] wr_data,
-  input  logic [ 3:0] wr_en,
-  input  logic        rd_en,
-  output logic [31:0] rd_data
+    input  logic        clk,
+    input  logic        rst_n,
+    input  logic [31:0] addr,
+    input  logic [31:0] wr_data,
+    input  logic [ 3:0] wr_en,
+    input  logic        rd_en,
+    output logic [31:0] rd_data
 );
 
   logic   [7:0] mem_array[128];

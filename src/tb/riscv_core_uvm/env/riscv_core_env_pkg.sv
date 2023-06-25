@@ -7,6 +7,8 @@
 
 package riscv_core_env_pkg;
   import uvm_pkg::*;
+  import riscv_core_pkg::*;
+  import riscv_core_ref_model_pkg::*;
 
   `include "uvm_macros.svh"
   `include "riscv_core_scoreboard.sv"

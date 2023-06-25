@@ -11,7 +11,7 @@ package riscv_core_seq_list;
 
   `include "uvm_macros.svh"
 
-  import riscv_core_agent_pkg::*;
+  import riscv_core_pkg::*;
   import riscv_core_ref_model_pkg::*;
   import riscv_core_env_pkg::*;
 

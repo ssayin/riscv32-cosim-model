@@ -31,20 +31,6 @@ package instr_defs;
   localparam logic [1:0] AluSubSraPrepend = 2'b01;
   localparam logic [1:0] AluMPrepend = 2'b11;
 
-  // typedef enum logic [4:0] {
-  //   LOAD    = 5'b00000,
-  //   MISCMEM = 5'b00011,
-  //  AUIPC   = 5'b00101,
-  //  OPIMM32 = 5'b00110,
-  //  STORE   = 5'b01000,
-  //  LUI     = 5'b01101,
-  //  OP32    = 5'b01110,
-  //  BRANCH  = 5'b11000,
-  //  JALR    = 5'b11001,
-  //  JAL     = 5'b11011,
-  //  SYSTEM  = 5'b11100
-  // } opc_t;
-
   typedef enum logic [4:0] {
     ALU_ADD    = {{AluBasePrepend, AluAddFunct3}},
     ALU_SUB    = {{AluSubSraPrepend, AluSubFunct3}},

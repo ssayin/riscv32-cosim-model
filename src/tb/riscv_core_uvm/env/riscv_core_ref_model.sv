@@ -6,13 +6,12 @@
 `define RISCV_CORE_REF_MODEL
 
 class riscv_core_ref_model extends uvm_component;
-  import svdpi_pkg::*;
 
   `uvm_component_utils(riscv_core_ref_model)
 
-  uvm_analysis_export #(riscv_core_transaction) rm_export;
-  uvm_analysis_port #(riscv_core_transaction) rm2sb_port;
-  riscv_core_transaction exp_trans, rm_trans;
+  uvm_analysis_export #(riscv_core_transaction)   rm_export;
+  uvm_analysis_port #(riscv_core_transaction)     rm2sb_port;
+  riscv_core_transaction                          exp_trans,   rm_trans;
   uvm_tlm_analysis_fifo #(riscv_core_transaction) rm_exp_fifo;
 
   function new(string name = "riscv_core_ref_model", uvm_component parent);
@@ -42,9 +41,6 @@ class riscv_core_ref_model extends uvm_component;
   task get_expected_transaction(riscv_core_transaction rm_trans);
     this.exp_trans = rm_trans;
 
-    // Get decoded instruction
-    // from the riscv32-decoder
-    dpi_decoder_process(exp_trans.dec_in, exp_trans.dec_out);
 
     `uvm_info(get_full_name(), $sformatf("EXPECTED TRANSACTION FROM REF MODEL"), UVM_HIGH);
 

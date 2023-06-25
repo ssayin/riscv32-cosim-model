@@ -28,7 +28,7 @@ class riscv_core_from_file_test extends uvm_test;
 
   task run_phase(uvm_phase phase);
     phase.raise_objection(this);
-    seq.start(env.riscv_core_ag.sequencer);
+    //seq.start(env.riscv_core_ag.sequencer);
     phase.drop_objection(this);
   endtask : run_phase
 

@@ -2,14 +2,14 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-module alu
-  import instr_defs::*;
-  import param_defs::*;
-(
-  input  logic [ DataWidth-1:0] a,
-  input  logic [ DataWidth-1:0] b,
-  input  logic [AluOpWidth-1:0] alu_op,
-  output logic [ DataWidth-1:0] res
+import instr_defs::*;
+import param_defs::*;
+
+module alu (
+    input  logic [ DataWidth-1:0] a,
+    input  logic [ DataWidth-1:0] b,
+    input  logic [AluOpWidth-1:0] alu_op,
+    output logic [ DataWidth-1:0] res
 );
 
   logic [DataWidth*2-1:0] mul_res;

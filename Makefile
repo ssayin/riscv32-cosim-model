@@ -54,8 +54,8 @@ sim.top_level: compile
 	xsim top -R
 
 sim.riscv_core: compile 
-	xelab tb_riscv_core -relax -s top
-	xsim top -R
+	xelab tb_riscv_core -relax -s core
+	xsim core -testplusarg UVM_VERBOSITY=UVM_LOW -R
 
 # For synthesizing on Quartus Lite Software
 # Quartus Lite does not support incremental flow,

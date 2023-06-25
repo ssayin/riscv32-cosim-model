@@ -15,6 +15,7 @@ module tb_riscv_core
     .rst_n(rst_n)
   );
 
+
   riscv_core dut (
     .clk         (clk),
     .rst_n       (rst_n),
@@ -23,7 +24,7 @@ module tb_riscv_core
     .mem_data_out(riscv_core_intf.mem_data_out),
     .mem_wr_en   (riscv_core_intf.mem_wr_en),
     .mem_rd_en   (riscv_core_intf.mem_rd_en),
-    .mem_valid   (riscv_core_intf.mem_valid),
+    .mem_clk_en  (riscv_core_intf.mem_clk_en),
     .mem_ready   (riscv_core_intf.mem_ready),
     .irq_external(riscv_core_intf.irq_external),
     .irq_timer   (riscv_core_intf.irq_timer),

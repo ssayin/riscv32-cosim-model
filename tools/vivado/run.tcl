@@ -10,7 +10,7 @@ set include_dir ./src/rtl/include
 
 read_verilog [ glob -directory $include_dir *.sv *.svh ]
 read_verilog [ glob ./src/rtl/core/*.sv ]
-read_verilog [ glob ./src/rtl/core/arith/*.sv ]
+read_verilog [ glob ./src/rtl/core/functional/arith/*.sv ]
 read_verilog [ glob ./src/rtl/core/pipeline/*.sv ]
 read_verilog [ glob ./src/rtl/mem_shared/*.sv ]
 read_verilog [ glob ./src/rtl/core/mem_hier/cache/*.sv ]
