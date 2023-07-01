@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 #VIVADO_INC := /opt/Xilinx/Vivado/2022.2/data/xsim/include/
+
 CXX           := g++
 CXX_FLAGS     := -std=c++20 -O2
 
@@ -34,16 +35,26 @@ OBJS          := $(DECODER_OBJS) $(EXPORTER_OBJS) $(DISAS_OBJ)
 
 INSTR_FEED    := $(DATA_DIR)/amalgamated.txt
 
-all: synth sim 
+
+#ifeq ($(SIMULATOR),)
+#all:
+#	@echo "Simulator is not specified. Cannot proceed."
+#	@echo "Specify the simulator as follows:"
+#	@echo "make SIMULATOR=<sim>"
+
+#else
+all: sim synth
 
 # Vivado FPGA flow
 # I do not own a Xilinx board, so I am moving from Vivado.
 # Vivado XSIM support will be continued.
-synth: $(TOOLS_DIR)run.tcl
+synth: $(TOOLS_DIR)/vivado/run.tcl
 	vivado -mode batch -source $(TOOLS_DIR)vivado/run.tcl
 
 $(INSTR_FEED): $(DATA_DIR)
 	7z e ./data/*.zip -ir!*.json -so | jq -r '.[].instr' | sort | uniq > $@
+
+sim: sim.riscv_decoder sim.top_level
 
 sim.riscv_decoder: $(LIB) compile 
 		xelab tb_riscv_decoder -relax -s decoder -sv_lib $(basename $(notdir $(LIB)))
@@ -55,7 +66,7 @@ sim.top_level: compile
 
 sim.riscv_core: compile 
 	xelab tb_riscv_core -relax -s core
-	xsim core -testplusarg UVM_VERBOSITY=UVM_LOW -R
+	xsim core -testplusarg UVM_TESTNAME=riscv_core_from_file_test -testplusarg UVM_VERBOSITY=UVM_LOW -R
 
 # For synthesizing on Quartus Lite Software
 # Quartus Lite does not support incremental flow,
@@ -114,3 +125,5 @@ $(BUILD_DIR) $(DATA_DIR):
 	${RM} *.sof
 	${RM} *.smsg
 	${RM} *.qws
+#endif
+

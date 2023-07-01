@@ -12,8 +12,8 @@ module tb_riscv_decoder
   import svdpi_pkg::decoder_out_t;
   import instr_defs::*;
 #(
-  `include "uvm_macros.svh"
-  `include "riscv_decoder_if.sv"
+    `include "uvm_macros.svh"
+    `include "riscv_decoder_if.sv"
 );
   bit       clk;
   bit       rst_n;
@@ -31,24 +31,24 @@ module tb_riscv_decoder
   end
 
   riscv_decoder_if riscv_decoder_intf (
-    .clk  (clk),
-    .rst_n(rst_n)
+      .clk  (clk),
+      .rst_n(rst_n)
   );
 
   riscv_decoder decoder_inst (
-    .clk     (clk),
-    .rst_n   (rst_n),
-    .instr   (riscv_decoder_intf.dec_in.instr),
-    .pc      (riscv_decoder_intf.dec_in.pc_in),
-    .rs1_addr(riscv_decoder_intf.dec_out.rs1_addr),
-    .rs2_addr(riscv_decoder_intf.dec_out.rs2_addr),
-    .rd_addr (riscv_decoder_intf.dec_out.rd_addr),
-    .imm     (riscv_decoder_intf.dec_out.imm),
-    .rd_en   (riscv_decoder_intf.dec_out.rd_en),
-    .use_imm (riscv_decoder_intf.dec_out.use_imm),
-    .ctl     (ctl),
-    .alu_op  (),
-    .lsu_op  ()
+      .clk     (clk),
+      .rst_n   (rst_n),
+      .instr   (riscv_decoder_intf.dec_in.instr),
+      .pc      (riscv_decoder_intf.dec_in.pc_in),
+      .rs1_addr(riscv_decoder_intf.dec_out.rs1_addr),
+      .rs2_addr(riscv_decoder_intf.dec_out.rs2_addr),
+      .rd_addr (riscv_decoder_intf.dec_out.rd_addr),
+      .imm     (riscv_decoder_intf.dec_out.imm),
+      .rd_en   (riscv_decoder_intf.dec_out.rd_en),
+      .use_imm (riscv_decoder_intf.dec_out.use_imm),
+      .ctl     (ctl),
+      .alu_op  (),
+      .lsu_op  ()
   );
 
   assign riscv_decoder_intf.dec_out.alu     = ctl.alu;

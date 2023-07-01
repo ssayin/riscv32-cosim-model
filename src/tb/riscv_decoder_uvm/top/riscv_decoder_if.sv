@@ -9,8 +9,8 @@ interface riscv_decoder_if
   import svdpi_pkg::decoder_in_t;
   import svdpi_pkg::decoder_out_t;
 (
-  input logic clk,
-  input logic rst_n
+    input logic clk,
+    input logic rst_n
 );
 
   decoder_in_t  dec_in;

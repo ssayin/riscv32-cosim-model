@@ -3,6 +3,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 package instr_defs;
+  import param_defs::*;
+
 
   localparam logic [2:0] AluAddFunct3 = 3'b000;
 
@@ -81,5 +83,50 @@ package instr_defs;
     logic fence;
     logic illegal;
   } ctl_pkt_t;
+
+  typedef logic [RegAddrWidth-1:0] reg_addr_t;
+  typedef logic [MemBusWidth-1:0] mem_data_t;
+  typedef logic [DataWidth-1:0] reg_data_t;
+
+  typedef struct {
+    reg_data_t instr;
+    reg_data_t pc;
+    logic      compressed;
+    logic      br;
+    logic      br_taken;
+  } p_if_id_t;
+
+  typedef struct {
+    reg_data_t             pc;
+    logic                  compressed;
+    logic                  br;
+    logic                  br_taken;
+    logic                  use_imm;
+    reg_data_t             imm;
+    logic                  illegal;
+    logic                  alu;
+    logic [AluOpWidth-1:0] alu_op;
+    reg_addr_t             rd_addr;
+    logic                  lsu;
+    logic [LsuOpWidth-1:0] lsu_op;
+    logic                  rd_en;
+  } p_id_ex_t;
+
+  typedef struct {
+    logic                  compressed;
+    logic                  rd_en;
+    reg_data_t             alu_res;
+    logic                  lsu;
+    logic [LsuOpWidth-1:0] lsu_op;
+    logic                  br_taken;
+    logic                  br;
+    reg_addr_t             rd_addr;
+  } p_ex_mem_t;
+
+  typedef struct {
+    logic      rd_en;
+    reg_addr_t rd_addr;
+    reg_data_t rd_data;
+  } p_mem_wb_t;
 
 endpackage

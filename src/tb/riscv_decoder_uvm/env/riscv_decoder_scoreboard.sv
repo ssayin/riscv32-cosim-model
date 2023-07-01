@@ -16,7 +16,7 @@ class riscv_decoder_scoreboard extends uvm_scoreboard;
   uvm_tlm_analysis_fifo #(riscv_decoder_transaction) rm2sb_export_fifo,     mon2sb_export_fifo;
   riscv_decoder_transaction                          exp_trans,             act_trans;
   riscv_decoder_transaction                          exp_trans_fifo    [$], act_trans_fifo     [$];
-  bit                                             error;
+  bit                                                error;
 
   function new(string name, uvm_component parent);
     super.new(name, parent);

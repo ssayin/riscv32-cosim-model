@@ -66,12 +66,10 @@ To build and run the project, follow these steps:
 make
 ```
 
-3. To run the simulation, make these targets in succession:
+3. To run the simulation:
 
 ```sh
-make sim.riscv_decoder
-make sim.riscv_core
-make sim.top_level
+make sim
 ```
 
 4. To clean the project (remove all generated files), enter the following command:
