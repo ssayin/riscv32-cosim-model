@@ -37,15 +37,24 @@ module riscv_core (
   reg_addr_t                 rs1_addr;
   reg_addr_t                 rs2_addr;
 
+  logic      [DataWidth-1:0] pc_in;
+  logic      [DataWidth-1:0] pc_out;
+  logic                      pc_update;
+
+  reg_data_t                 rs1_data;
+  reg_data_t                 rs2_data;
 
   assign mem_rd_en[0] = 'b1;
-  assign mem_addr[0]  = p_if_id_0.pc;
+  assign mem_addr[0]  = pc_out;
 
   if_stage if_stage_0 (
-    .clk    (clk),
-    .rst_n  (rst_n),
-    .mem_rd (mem_data_in[0]),
-    .p_if_id(p_if_id_0)
+    .clk      (clk),
+    .rst_n    (rst_n),
+    .mem_rd   (mem_data_in[0]),
+    .pc_in    (pc_in),
+    .pc_update(pc_update),
+    .pc_out   (pc_out),
+    .p_if_id  (p_if_id_0)
   );
 
   reg_file #(
