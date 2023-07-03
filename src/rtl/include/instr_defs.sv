@@ -70,6 +70,16 @@ package instr_defs;
     LSU_SW  = 4'b1010
   } lsu_op_t;
 
+  typedef enum logic [2:0] {
+    BR_BEQ  = 3'b000,
+    BR_BGE  = 3'b101,
+    BR_BGEU = 3'b111,
+    BR_BNEZ = 3'b011,
+    BR_BLT  = 3'b100,
+    BR_BLTU = 3'b110,
+    BR_BEQZ = 3'b010,
+    BR_BNE  = 3'b001
+  } br_op_t;
 
   typedef struct {
     logic alu;
@@ -97,19 +107,20 @@ package instr_defs;
   } p_if_id_t;
 
   typedef struct {
-    reg_data_t             pc;
-    logic                  compressed;
-    logic                  br;
-    logic                  br_taken;
-    logic                  use_imm;
-    reg_data_t             imm;
-    logic                  illegal;
-    logic                  alu;
-    logic [AluOpWidth-1:0] alu_op;
-    reg_addr_t             rd_addr;
-    logic                  lsu;
-    logic [LsuOpWidth-1:0] lsu_op;
-    logic                  rd_en;
+    reg_data_t                pc;
+    logic                     compressed;
+    logic                     br;
+    logic                     br_taken;
+    logic                     use_imm;
+    reg_data_t                imm;
+    logic                     illegal;
+    logic                     alu;
+    logic [AluOpWidth-1:0]    alu_op;
+    reg_addr_t                rd_addr;
+    logic                     lsu;
+    logic [LsuOpWidth-1:0]    lsu_op;
+    logic [BranchOpWidth-1:0] br_op;
+    logic                     rd_en;
   } p_id_ex_t;
 
   typedef struct {

@@ -8,6 +8,7 @@ module id_stage_0 (
   input  logic      clk,
   input  logic      rst_n,
   input  p_if_id_t  p_if_id_0,
+  input  logic      flush,
   output p_if_id_t  p_id_0_id_1,
   output reg_addr_t rd_addr,
   output reg_addr_t rs1_addr,

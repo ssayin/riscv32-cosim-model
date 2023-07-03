@@ -11,6 +11,7 @@ package param_defs;
   localparam int RegAddrWidth = (RegCount > 1) ? $clog2(RegCount) : 0;
   localparam int AluOpWidth = 5;
   localparam int LsuOpWidth = 4;
+  localparam int BranchOpWidth = 3;
 
   localparam int MemBusWidth = 32;
 

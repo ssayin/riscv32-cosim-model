@@ -7,6 +7,7 @@ import instr_defs::*;
 module if_stage (
   input  logic                       clk,
   input  logic                       rst_n,
+  input  logic                       flush,
   input  logic     [MemBusWidth-1:0] mem_rd,
   input  logic     [  DataWidth-1:0] pc_in,
   input  logic                       pc_update,

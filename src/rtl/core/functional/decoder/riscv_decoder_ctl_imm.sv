@@ -7,16 +7,17 @@ import param_defs::*;
 import instr_defs::*;
 
 module riscv_decoder_ctl_imm (
-    input  logic                      clk,         // unused
-    input  logic                      rst_n,       // unused
-    input  logic     [          31:0] instr,
-    input  logic                      compressed,
-    output logic     [ DataWidth-1:0] imm,
-    output logic                      rd_en,
-    output ctl_pkt_t                  ctl,
-    output logic                      use_imm,
-    output logic     [AluOpWidth-1:0] alu_op,
-    output logic     [LsuOpWidth-1:0] lsu_op
+  input  logic                         clk,         // unused
+  input  logic                         rst_n,       // unused
+  input  logic     [             31:0] instr,
+  input  logic                         compressed,
+  output logic     [    DataWidth-1:0] imm,
+  output logic                         rd_en,
+  output ctl_pkt_t                     ctl,
+  output logic                         use_imm,
+  output logic     [   AluOpWidth-1:0] alu_op,
+  output logic     [   LsuOpWidth-1:0] lsu_op,
+  output logic     [BranchOpWidth-1:0] br_op
 );
 
   logic [31:0] i;
@@ -108,6 +109,7 @@ module riscv_decoder_ctl_imm (
     alu_op      = ALU_ADD;
 
     imm         = 'bX;
+    br_op       = 'h0;
 
     if (compressed) begin
       casez (i)
@@ -148,12 +150,13 @@ module riscv_decoder_ctl_imm (
         `C_BEQZ: begin
           use_imm = 1'b1;
           imm     = c_imm_b;
+          br_op   = BR_BEQZ;
 
         end
         `C_BNEZ: begin
           use_imm = 1'b1;
           imm     = c_imm_b;
-
+          br_op   = BR_BNEZ;
         end
 
         //  ╔═╗╔═╗╔╦╗╔═╗╦═╗╔═╗╔═╗╔═╗╔═╗╔╦╗
@@ -294,12 +297,12 @@ module riscv_decoder_ctl_imm (
 
         end
 
-        `BEQ:  {use_imm, imm} = {1'b1, imm_B};
-        `BGE:  {use_imm, imm} = {1'b1, imm_B};
-        `BGEU: {use_imm, imm} = {1'b1, imm_B};
-        `BLT:  {use_imm, imm} = {1'b1, imm_B};
-        `BLTU: {use_imm, imm} = {1'b1, imm_B};
-        `BNE:  {use_imm, imm} = {1'b1, imm_B};
+        `BEQ:  {br_op, imm} = {BR_BEQ, imm_B};
+        `BGE:  {br_op, imm} = {BR_BGE, imm_B};
+        `BGEU: {br_op, imm} = {BR_BGEU, imm_B};
+        `BLT:  {br_op, imm} = {BR_BLT, imm_B};
+        `BLTU: {br_op, imm} = {BR_BLTU, imm_B};
+        `BNE:  {br_op, imm} = {BR_BNE, imm_B};
 
         //  ╦   ╔═╗╦═╗╔═╗  ╔╗ ╦═╗╔═╗╔╗╔╔═╗╦ ╦
         //  ║───╠═╝╠╦╝║╣───╠╩╗╠╦╝╠═╣║║║║  ╠═╣
@@ -429,12 +432,12 @@ module riscv_decoder_ctl_imm (
   end
 
   riscv_decoder_br comb_br (
-      .instr(in16),
-      .br(ctl.br)
+    .instr(in16),
+    .br   (ctl.br)
   );
   riscv_decoder_j comb_j (
-      .instr(in16),
-      .j(ctl.jal)
+    .instr(in16),
+    .j    (ctl.jal)
   );
 
 endmodule

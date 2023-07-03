@@ -26,6 +26,8 @@ module riscv_core (
   logic                      write_en;
   logic      [         31:0] mem_rd;
 
+  logic                      flush;
+
   p_if_id_t                  p_if_id_0;
   p_if_id_t                  p_id_0_id_1;
   p_id_ex_t                  p_id_ex;
@@ -44,14 +46,23 @@ module riscv_core (
   reg_data_t                 rs1_data;
   reg_data_t                 rs2_data;
 
+  logic                      should_br;
+  logic                      br_mispredictd;
+  logic      [DataWidth-1:0] br_target;
+
   assign mem_rd_en[0] = 'b1;
   assign mem_addr[0]  = pc_out;
+
+  assign pc_update    = should_br || br_mispredictd;
+
+  assign flush        = br_mispredictd;
 
   if_stage if_stage_0 (
     .clk      (clk),
     .rst_n    (rst_n),
     .mem_rd   (mem_data_in[0]),
-    .pc_in    (pc_in),
+    .flush    (flush),
+    .pc_in    (br_target),
     .pc_update(pc_update),
     .pc_out   (pc_out),
     .p_if_id  (p_if_id_0)
@@ -72,17 +83,21 @@ module riscv_core (
   );
 
   ex_stage ex_stage_0 (
-    .clk     (clk),
-    .rst_n   (rst_n),
-    .rs1_data(rs1_data),
-    .rs2_data(rs2_data),
-    .p_id_ex (p_id_ex),
-    .p_ex_mem(p_ex_mem)
+    .clk           (clk),
+    .rst_n         (rst_n),
+    .rs1_data      (rs1_data),
+    .rs2_data      (rs2_data),
+    .p_id_ex       (p_id_ex),
+    .p_ex_mem      (p_ex_mem),
+    .should_br     (should_br),
+    .br_target     (br_target),
+    .br_mispredictd(br_mispredictd)
   );
 
   id_stage_0 _id_stage_0 (
     .clk        (clk),
     .rst_n      (rst_n),
+    .flush      (flush),
     .p_if_id_0  (p_if_id_0),
     .p_id_0_id_1(p_id_0_id_1),
     .rd_addr    (rd_addr),
@@ -93,6 +108,7 @@ module riscv_core (
   id_stage_1 _id_stage_1 (
     .clk    (clk),
     .rst_n  (rst_n),
+    .flush  (flush),
     .rd_addr(rd_addr),
     .p_if_id(p_id_0_id_1),
     .p_id_ex(p_id_ex)
