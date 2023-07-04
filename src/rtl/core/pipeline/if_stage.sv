@@ -15,11 +15,11 @@ module if_stage (
   output p_if_id_t                   p_if_id
 );
 
-
   logic [DataWidth-1:0] pc;
-
   logic                 compressed;
-  assign compressed = ~(mem_rd[0] & mem_rd[1]);
+  logic                 j;
+  logic [         31:0] jimm;
+  logic                 br;
 
   always_ff @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
@@ -42,10 +42,21 @@ module if_stage (
 
   riscv_decoder_br dec_br (
     .instr(mem_rd[15:0]),
-    .br   (p_if_id.br)
+    .br   (br)
+  );
+
+  riscv_decoder_j_no_rr dec_j_no_rr (
+    .instr(mem_rd[15:0]),
+    .j    (j)
+  );
+
+  riscv_decoder_j_no_rr_imm dec_j_no_rr_imm (
+    .instr(mem_rd),
+    .imm  (jimm)
   );
 
   assign p_if_id.br_taken = 'b0;
   assign pc_out           = pc;
-
+  assign compressed       = ~(mem_rd[0] & mem_rd[1]);
+  assign p_if_id.br       = br;
 endmodule : if_stage
