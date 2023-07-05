@@ -56,8 +56,8 @@ module ex_stage
   );
 
   alu alu_0 (
-    .a     (p_id_ex.use_imm ? p_id_ex.imm : rs1_data),
-    .b     (p_id_ex.br ? p_id_ex.pc : rs2_data),
+    .a     (p_id_ex.use_pc ? p_id_ex.pc : rs1_data),
+    .b     (p_id_ex.use_imm ? p_id_ex.imm : rs2_data),
     .alu_op(p_id_ex.alu_op),
     .res   (alu_out)
   );
@@ -81,6 +81,7 @@ module ex_stage
       p_ex_mem.lsu        <= 'b0;
       p_ex_mem.rd_addr    <= 'h0;
       p_ex_mem.rd_en      <= 'b0;
+      p_ex_mem.store_data <= 'h0;
     end else begin
       p_ex_mem.alu_res    <= res_next;
       should_br           <= should_br_next;
@@ -91,6 +92,7 @@ module ex_stage
       p_ex_mem.lsu        <= p_id_ex.lsu;
       p_ex_mem.rd_addr    <= p_id_ex.rd_addr;
       p_ex_mem.rd_en      <= p_id_ex.rd_en;
+      p_ex_mem.store_data <= rs2_data;
     end
   end
 

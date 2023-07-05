@@ -5,6 +5,14 @@
 import param_defs::*;
 import instr_defs::*;
 
+
+module lsu (
+  input logic clk,
+  input logic rst_n
+);
+
+endmodule
+
 module riscv_core (
   input  logic                   clk,
   input  logic                   rst_n,
@@ -22,8 +30,6 @@ module riscv_core (
   output logic [           31:0] mem_addr    [2]   // Memory offset
 );
 
-  logic      [DataWidth-1:0] write_data;
-  logic                      write_en;
   logic      [         31:0] mem_rd;
 
   logic                      flush;
@@ -59,22 +65,6 @@ module riscv_core (
 
   logic                      stall;
 
-  assign stall             = 'b0;
-
-  assign if_stage_clk_en   = !stall;
-  assign id_stage_0_clk_en = !stall;
-  assign id_stage_1_clk_en = !stall;
-  assign mem_stage_clk_en  = !stall;
-  assign wb_stage_clk_en   = !stall;
-  assign reg_file_clk_en   = !stall;
-
-
-  assign mem_rd_en[0]      = 'b1;
-  assign mem_addr[0]       = pc_out;
-
-  assign pc_update         = should_br || br_mispredictd;
-
-  assign flush             = br_mispredictd;
 
   if_stage if_stage_0 (
     .clk      (clk & if_stage_clk_en),
@@ -132,12 +122,33 @@ module riscv_core (
     .p_id_ex(p_id_ex)
   );
 
-  assign mem_data_out[1] = p_ex_mem.alu_res;
-  assign write_data[0]   = mem_data_in[1];
+  wb_stage wb_stage_0 (
+    .clk     (clk & wb_stage_clk_en),
+    .rst_n   (rst_n),
+    .p_mem_wb(p_mem_wb)
+  );
 
-  assign mem_wr_en[1]    = p_ex_mem.lsu_op[3];
-  assign mem_rd_en[1]    = ~p_ex_mem.lsu_op[3];
+  assign mem_wr_en[1]      = p_ex_mem.lsu_op[3] & p_ex_mem.lsu;  // Store
+  assign mem_rd_en[1]      = ~p_ex_mem.lsu_op[3] & p_ex_mem.lsu;  // Load
+  assign mem_data_out[1]   = p_ex_mem.store_data;  // loaded from reg_file in stage ID1
+  assign mem_addr[1]       = p_ex_mem.alu_res;  // load store
 
-  assign write_en        = ~p_ex_mem.lsu_op[3];
+  assign stall             = 'b0;
+
+  assign if_stage_clk_en   = !stall;
+  assign id_stage_0_clk_en = !stall;
+  assign id_stage_1_clk_en = !stall;
+  assign mem_stage_clk_en  = !stall;
+  assign wb_stage_clk_en   = !stall;
+  assign reg_file_clk_en   = !stall;
+
+  assign mem_rd_en[0]      = 'b1;  // always fetch
+  assign mem_addr[0]       = pc_out;  //  mem offset for fetch
+
+  assign pc_update         = should_br || br_mispredictd;
+
+  assign flush             = br_mispredictd;
+  // need to pipe ex stage alu result for wb when its not lsu
+  assign p_mem_wb.rd_data  = mem_data_in[1];
 
 endmodule : riscv_core

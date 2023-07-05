@@ -15,6 +15,7 @@ module riscv_decoder_ctl_imm (
   output logic                         rd_en,
   output ctl_pkt_t                     ctl,
   output logic                         use_imm,
+  output logic                         use_pc,
   output logic     [   AluOpWidth-1:0] alu_op,
   output logic     [   LsuOpWidth-1:0] lsu_op,
   output logic     [BranchOpWidth-1:0] br_op
@@ -92,6 +93,7 @@ module riscv_decoder_ctl_imm (
 
   always_comb begin
     use_imm     = 1'b0;
+    use_pc      = 1'b0;
 
     rd_en       = 1'b0;
 
@@ -297,19 +299,19 @@ module riscv_decoder_ctl_imm (
 
         end
 
-        `BEQ:  {br_op, imm} = {BR_BEQ, imm_B};
-        `BGE:  {br_op, imm} = {BR_BGE, imm_B};
-        `BGEU: {br_op, imm} = {BR_BGEU, imm_B};
-        `BLT:  {br_op, imm} = {BR_BLT, imm_B};
-        `BLTU: {br_op, imm} = {BR_BLTU, imm_B};
-        `BNE:  {br_op, imm} = {BR_BNE, imm_B};
+        `BEQ:  {br_op, imm, use_pc, use_imm} = {BR_BEQ, imm_B, 1'b1, 1'b1};
+        `BGE:  {br_op, imm, use_pc, use_imm} = {BR_BGE, imm_B, 1'b1, 1'b1};
+        `BGEU: {br_op, imm, use_pc, use_imm} = {BR_BGEU, imm_B, 1'b1, 1'b1};
+        `BLT:  {br_op, imm, use_pc, use_imm} = {BR_BLT, imm_B, 1'b1, 1'b1};
+        `BLTU: {br_op, imm, use_pc, use_imm} = {BR_BLTU, imm_B, 1'b1, 1'b1};
+        `BNE:  {br_op, imm, use_pc, use_imm} = {BR_BNE, imm_B, 1'b1, 1'b1};
 
         //  ╦   ╔═╗╦═╗╔═╗  ╔╗ ╦═╗╔═╗╔╗╔╔═╗╦ ╦
         //  ║───╠═╝╠╦╝║╣───╠╩╗╠╦╝╠═╣║║║║  ╠═╣
         //  ╩   ╩  ╩╚═╚═╝  ╚═╝╩╚═╩ ╩╝╚╝╚═╝╩ ╩
         `AUIPC:
-        {use_imm, alu_op, ctl.alu, ctl.auipc, rd_en, imm} = {
-          1'b1, ALU_ADD, 1'b1, 1'b1, 1'b1, imm_U
+        {use_imm, use_pc, alu_op, ctl.alu, ctl.auipc, rd_en, imm} = {
+          1'b1, 1'b1, ALU_ADD, 1'b1, 1'b1, 1'b1, imm_U
         };
         `LUI:
         {use_imm, alu_op, ctl.alu, ctl.lui, rd_en, imm} = {1'b1, ALU_ADD, 1'b1, 1'b1, 1'b1, imm_U};
@@ -317,19 +319,19 @@ module riscv_decoder_ctl_imm (
         //  ╦  ╔═╗╔═╗╔╦╗
         //  ║  ║ ║╠═╣ ║║
         //  ╩═╝╚═╝╩ ╩═╩╝
-        `LW: {lsu_op, rd_en, ctl.lsu, imm} = {LSU_LW, 1'b1, 1'b1, imm_I};
-        `LH: {lsu_op, rd_en, ctl.lsu, imm} = {LSU_LH, 1'b1, 1'b1, imm_I};
-        `LB: {lsu_op, rd_en, ctl.lsu, imm} = {LSU_LB, 1'b1, 1'b1, imm_I};
+        `LW: {lsu_op, rd_en, ctl.lsu, imm, use_imm} = {LSU_LW, 1'b1, 1'b1, imm_I, 1'b1};
+        `LH: {lsu_op, rd_en, ctl.lsu, imm, use_imm} = {LSU_LH, 1'b1, 1'b1, imm_I, 1'b1};
+        `LB: {lsu_op, rd_en, ctl.lsu, imm, use_imm} = {LSU_LB, 1'b1, 1'b1, imm_I, 1'b1};
 
-        `LHU: {lsu_op, rd_en, ctl.lsu, imm} = {LSU_LHU, 1'b1, 1'b1, imm_I};
-        `LBU: {lsu_op, rd_en, ctl.lsu, imm} = {LSU_LBU, 1'b1, 1'b1, imm_I};
+        `LHU: {lsu_op, rd_en, ctl.lsu, imm, use_imm} = {LSU_LHU, 1'b1, 1'b1, imm_I, 1'b1};
+        `LBU: {lsu_op, rd_en, ctl.lsu, imm, use_imm} = {LSU_LBU, 1'b1, 1'b1, imm_I, 1'b1};
 
         //  ╔═╗╔╦╗╔═╗╦═╗╔═╗
         //  ╚═╗ ║ ║ ║╠╦╝║╣
         //  ╚═╝ ╩ ╚═╝╩╚═╚═╝
-        `SB: {lsu_op, ctl.lsu, imm} = {LSU_SB, 1'b1, imm_S};
-        `SH: {lsu_op, ctl.lsu, imm} = {LSU_SH, 1'b1, imm_S};
-        `SW: {lsu_op, ctl.lsu, imm} = {LSU_SW, 1'b1, imm_S};
+        `SB: {lsu_op, ctl.lsu, imm, use_imm} = {LSU_SB, 1'b1, imm_S, 1'b1};
+        `SH: {lsu_op, ctl.lsu, imm, use_imm} = {LSU_SH, 1'b1, imm_S, 1'b1};
+        `SW: {lsu_op, ctl.lsu, imm, use_imm} = {LSU_SW, 1'b1, imm_S, 1'b1};
 
         //  ╦╔╗╔╔╦╗╔═╗╔═╗╔═╗╦═╗
         //  ║║║║ ║ ║╣ ║ ╦║╣ ╠╦╝

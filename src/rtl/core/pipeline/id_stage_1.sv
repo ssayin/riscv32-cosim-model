@@ -18,6 +18,7 @@ module id_stage_1 (
   logic                         use_imm_next;
   ctl_pkt_t                     ctl_next;
   logic                         rd_en_next;
+  logic                         use_pc_next;
 
   logic     [   AluOpWidth-1:0] alu_op_next;
   logic     [   LsuOpWidth-1:0] lsu_op_next;
@@ -32,6 +33,7 @@ module id_stage_1 (
     .rd_en     (rd_en_next),
     .ctl       (ctl_next),
     .use_imm   (use_imm_next),
+    .use_pc    (use_pc_next),
     .alu_op    (alu_op_next),
     .lsu_op    (lsu_op_next),
     .br_op     (br_op_next)
@@ -41,6 +43,7 @@ module id_stage_1 (
     if (!rst_n) begin
       p_id_ex.imm      <= 'h0;
       p_id_ex.use_imm  <= 'b0;
+      p_id_ex.use_pc   <= 'b0;
       p_id_ex.alu_op   <= 'h0;
       p_id_ex.lsu_op   <= 'h0;
       p_id_ex.rd_addr  <= 'h0;
@@ -52,6 +55,7 @@ module id_stage_1 (
     end else begin
       p_id_ex.imm      <= imm_next;
       p_id_ex.use_imm  <= use_imm_next;
+      p_id_ex.use_pc   <= use_pc_next;
       p_id_ex.alu_op   <= alu_op_next;
       p_id_ex.lsu_op   <= lsu_op_next;
       p_id_ex.rd_addr  <= rd_addr;
