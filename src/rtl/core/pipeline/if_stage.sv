@@ -7,7 +7,7 @@ import instr_defs::*;
 module if_stage (
   input  logic                       clk,
   input  logic                       rst_n,
-  input  logic                       flush,
+  input  logic                       flush,      // TODO: decide if this is really needed
   input  logic     [MemBusWidth-1:0] mem_rd,
   input  logic     [  DataWidth-1:0] pc_in,
   input  logic                       pc_update,
@@ -20,25 +20,45 @@ module if_stage (
   logic                 j;
   logic [         31:0] jimm;
   logic                 br;
+  logic                 br_taken;
+  logic                 take_jump;
+
+  localparam logic [31:0] Nop = 'h13;
 
   always_ff @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
+      pc                 <= 'h0;  // boot sector
       p_if_id.pc         <= 'h0;
       p_if_id.compressed <= 'b0;
-      p_if_id.instr      <= 'h0;
+      p_if_id.instr      <= 'h0;  // maybe nop?
+      p_if_id.br_taken   <= 'b0;
+      //end else if (flush) begin  // TODO: decide what to do here
+      //  p_if_id.pc         <= 'h0;
+      //  p_if_id.compressed <= 'b0;
+      //  p_if_id.instr      <= 'h0;
+      //  p_if_id.br_taken   <= 'b0;
     end else begin
       if (pc_update) begin
-        pc                 <= pc_in;
         p_if_id.pc         <= pc;
-        p_if_id.compressed <= compressed;
+        p_if_id.compressed <= 'b0;
+        pc                 <= pc_in;
+        p_if_id.instr      <= Nop;
+      end else if (take_jump) begin
+        p_if_id.pc         <= pc;
+        p_if_id.compressed <= 'b0;
+        pc                 <= jimm;
+        p_if_id.instr      <= Nop;
       end else begin
         p_if_id.pc         <= pc;
         p_if_id.compressed <= compressed;
         pc                 <= pc + (compressed ? 'h2 : 'h4);
+        p_if_id.instr      <= {{mem_rd[31:24], mem_rd[23:16], mem_rd[15:8], mem_rd[7:0]}};
+        p_if_id.br_taken   <= br_taken;
       end
-      p_if_id.instr <= {{mem_rd[31:24], mem_rd[23:16], mem_rd[15:8], mem_rd[7:0]}};
     end
   end
+
+  assign take_jump = j && !pc_update;  // always prioritize mispredicted branches and exceptions
 
   riscv_decoder_br dec_br (
     .instr(mem_rd[15:0]),
@@ -55,8 +75,9 @@ module if_stage (
     .imm  (jimm)
   );
 
-  assign p_if_id.br_taken = 'b0;
-  assign pc_out           = pc;
-  assign compressed       = ~(mem_rd[0] & mem_rd[1]);
-  assign p_if_id.br       = br;
+  assign br_taken   = 'b0;
+  assign pc_out     = pc;
+  assign compressed = ~(mem_rd[0] & mem_rd[1]);
+  assign p_if_id.br = br;
+
 endmodule : if_stage

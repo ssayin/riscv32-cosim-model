@@ -49,15 +49,35 @@ module riscv_core (
   logic                      should_br;
   logic                      br_mispredictd;
 
-  assign mem_rd_en[0] = 'b1;
-  assign mem_addr[0]  = pc_out;
+  logic                      if_stage_clk_en;
+  logic                      id_stage_0_clk_en;
+  logic                      id_stage_1_clk_en;
+  logic                      ex_stage_clk_en;
+  logic                      mem_stage_clk_en;
+  logic                      wb_stage_clk_en;
+  logic                      reg_file_clk_en;
 
-  assign pc_update    = should_br || br_mispredictd;
+  logic                      stall;
 
-  assign flush        = br_mispredictd;
+  assign stall             = 'b0;
+
+  assign if_stage_clk_en   = !stall;
+  assign id_stage_0_clk_en = !stall;
+  assign id_stage_1_clk_en = !stall;
+  assign mem_stage_clk_en  = !stall;
+  assign wb_stage_clk_en   = !stall;
+  assign reg_file_clk_en   = !stall;
+
+
+  assign mem_rd_en[0]      = 'b1;
+  assign mem_addr[0]       = pc_out;
+
+  assign pc_update         = should_br || br_mispredictd;
+
+  assign flush             = br_mispredictd;
 
   if_stage if_stage_0 (
-    .clk      (clk),
+    .clk      (clk & if_stage_clk_en),
     .rst_n    (rst_n),
     .mem_rd   (mem_data_in[0]),
     .flush    (flush),
@@ -70,7 +90,7 @@ module riscv_core (
   reg_file #(
     .DATA_WIDTH(DataWidth)
   ) register_file_inst (
-    .clk     (clk),
+    .clk     (clk & reg_file_clk_en),
     .rst_n   (rst_n),
     .rd_addr (p_mem_wb.rd_addr),
     .rs1_addr(rs1_addr),
@@ -82,7 +102,7 @@ module riscv_core (
   );
 
   ex_stage ex_stage_0 (
-    .clk           (clk),
+    .clk           (clk & ex_stage_clk_en),
     .rst_n         (rst_n),
     .rs1_data      (rs1_data),
     .rs2_data      (rs2_data),
@@ -93,7 +113,7 @@ module riscv_core (
   );
 
   id_stage_0 _id_stage_0 (
-    .clk        (clk),
+    .clk        (clk & id_stage_0_clk_en),
     .rst_n      (rst_n),
     .flush      (flush),
     .p_if_id_0  (p_if_id_0),
@@ -104,7 +124,7 @@ module riscv_core (
   );
 
   id_stage_1 _id_stage_1 (
-    .clk    (clk),
+    .clk    (clk & id_stage_1_clk_en),
     .rst_n  (rst_n),
     .flush  (flush),
     .rd_addr(rd_addr),
