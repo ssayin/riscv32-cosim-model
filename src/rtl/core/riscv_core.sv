@@ -122,9 +122,11 @@ module riscv_core (
     .p_id_ex(p_id_ex)
   );
 
-  wb_stage wb_stage_0 (
-    .clk     (clk & wb_stage_clk_en),
+  mem_stage mem_stage_0 (
+    .clk     (clk & mem_stage_clk_en),
     .rst_n   (rst_n),
+    .p_ex_mem(p_ex_mem),
+    .mem_in  (mem_data_in[1]),
     .p_mem_wb(p_mem_wb)
   );
 
@@ -148,7 +150,5 @@ module riscv_core (
   assign pc_update         = should_br || br_mispredictd;
 
   assign flush             = br_mispredictd;
-  // need to pipe ex stage alu result for wb when its not lsu
-  assign p_mem_wb.rd_data  = mem_data_in[1];
 
 endmodule : riscv_core
