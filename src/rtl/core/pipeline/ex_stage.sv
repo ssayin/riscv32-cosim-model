@@ -35,8 +35,8 @@ module ex_stage
 (
   input  logic      clk,
   input  logic      rst_n,
-  input  logic      rs1_data,
-  input  logic      rs2_data,
+  input  reg_data_t rs1_data,
+  input  reg_data_t rs2_data,
   input  p_id_ex_t  p_id_ex,
   output p_ex_mem_t p_ex_mem,
   output logic      should_br,

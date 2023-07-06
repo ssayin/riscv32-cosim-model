@@ -15,7 +15,7 @@ module if_stage (
   output p_if_id_t                   p_if_id
 );
 
-  logic [DataWidth-1:0] pc;
+  logic [31:1] pc;
   logic                 compressed;
   logic                 j;
   logic [         31:0] jimm;

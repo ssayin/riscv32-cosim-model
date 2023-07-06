@@ -17,12 +17,12 @@ module reg_file #(
 );
 
   // Register File
-  reg [DATA_WIDTH-1:0] reg_file[32];
+  reg [DATA_WIDTH-1:0] reg_file[1:31];
 
   // Write ports
   always_ff @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
-      for (int j = 0; j < 32; j++) begin
+      for (int j = 1; j < 32; j++) begin
         reg_file[j] <= {DATA_WIDTH{1'b0}};
       end
     end else begin

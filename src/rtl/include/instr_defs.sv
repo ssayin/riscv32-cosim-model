@@ -100,14 +100,14 @@ package instr_defs;
 
   typedef struct {
     reg_data_t instr;
-    reg_data_t pc;
+    logic [31:1] pc;
     logic      compressed;
     logic      br;
     logic      br_taken;
   } p_if_id_t;
 
   typedef struct {
-    reg_data_t                pc;
+    logic [31:1]                pc;
     logic                     compressed;
     logic                     br;
     logic                     br_taken;
