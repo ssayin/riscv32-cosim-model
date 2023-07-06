@@ -48,8 +48,8 @@ all: sim synth
 # Vivado FPGA flow
 # I do not own a Xilinx board, so I am moving from Vivado.
 # Vivado XSIM support will be continued.
-synth: $(TOOLS_DIR)/vivado/run.tcl
-	vivado -mode batch -source $(TOOLS_DIR)vivado/run.tcl
+synth: sim/vivado/run.tcl
+	vivado -mode batch -source sim/vivado/run.tcl
 
 $(INSTR_FEED): $(DATA_DIR)
 	7z e ./data/*.zip -ir!*.json -so | jq -r '.[].instr' | sort | uniq > $@
@@ -64,6 +64,10 @@ sim.top_level: compile
 	xelab tb_top_level -relax -s top
 	xsim top -R
 
+sim.gentb: compile
+	xelab top_tb -relax -s top_tb
+	xsim top_tb -testplusarg UVM_TESTNAME=top_test -testplusarg UVM_VERBOSITY=UVM_LOW -R
+
 sim.riscv_core: compile 
 	xelab tb_riscv_core -relax -s core
 	xsim core -testplusarg UVM_TESTNAME=riscv_core_from_file_test -testplusarg UVM_VERBOSITY=UVM_LOW -R
@@ -72,15 +76,15 @@ sim.riscv_core: compile
 # Quartus Lite does not support incremental flow,
 # thus I had to run these programs in succession.
 quartus_flow:
-	quartus_sh -t $(TOOLS_DIR)quartus/intel_synth.tcl compile top_level rev_1
+	quartus_sh -t sim/quartus/intel_synth.tcl compile top_level rev_1
 	quartus_map top_level
 	quartus_fit top_level
-	quartus_sta -t $(TOOLS_DIR)quartus/sta.tcl top_level rev_1
+	quartus_sta -t $ sim/quartus/sta.tcl top_level rev_1
 	# quartus_sim top_level
 
 # Compile SystemVerilog files on Xilinx Vivado Suite
 compile: $(INSTR_FEED)
-	xvlog -sv -f $(TOOLS_DIR)vivado/sv_compile_list.txt -L uvm \
+	xvlog -sv -f sim/vivado/sv_compile_list.txt -L uvm \
 		-define INSTR_SEQ_FILENAME='"$(INSTR_FEED)"' \
 		-define INSTR_SEQ_LINECOUNT=$(shell cat $(INSTR_FEED) | wc -l) \
 		-define DEBUG_INIT_FILE='"$(shell readlink -f "./src/firmware/boot.hex")"'
