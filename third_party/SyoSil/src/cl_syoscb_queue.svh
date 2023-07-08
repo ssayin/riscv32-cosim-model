@@ -93,7 +93,7 @@ endfunction
 function void cl_syoscb_queue::check_phase(uvm_phase phase);
   // Check that this queue is empty. If not then issue an error
   if(!this.empty()) begin
-    `uvm_error("QUEUE_ERROR", $psprintf("Queue %s not empty, entries: %0d", this.get_name(), this.get_size()));
+    `uvm_error("QUEUE_ERROR", $sformatf("Queue %s not empty, entries: %0d", this.get_name(), this.get_size()));
   end
 endfunction
 

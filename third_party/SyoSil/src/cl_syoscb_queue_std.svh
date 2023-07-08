@@ -80,7 +80,7 @@ function bit cl_syoscb_queue_std::add_item(string producer, uvm_sequence_item it
   // *NOTE*: Create it once with a default name to be able to retrieve the unique
   //         instance id and then rename the object with a uniqueue name
   new_item = new(.name("default-item"));
-  new_item.set_name({producer,"-item-", $psprintf("%0d", new_item.get_inst_id())});
+  new_item.set_name({producer,"-item-", $sformatf("%0d", new_item.get_inst_id())});
 
   // Transfer the producer to the item
   // *NOTE*: No need to check the producer since this is checked by the parent component
@@ -154,7 +154,7 @@ function bit cl_syoscb_queue_std::insert_item(string producer, uvm_sequence_item
   // *NOTE*: Create it once with a default name to be able to retrieve the unique
   //         instance id and then rename the object with a uniqueue name
   new_item = new(.name("default-item"));
-  new_item.set_name({producer,"-item-", $psprintf("%0d", new_item.get_inst_id())});
+  new_item.set_name({producer,"-item-", $sformatf("%0d", new_item.get_inst_id())});
 
   // Transfer the producer to the item
   // *NOTE*: No need to check the producer since this is checked by the parent component
