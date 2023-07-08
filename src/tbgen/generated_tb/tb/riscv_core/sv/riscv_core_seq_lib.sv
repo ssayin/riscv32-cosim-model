@@ -8,7 +8,7 @@
 //
 // Version:   1.0
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Thu Jul  6 15:14:09 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Sun Jul  9 00:04:34 2023
 //=============================================================================
 // Description: Sequence for agent riscv_core
 //=============================================================================
@@ -77,11 +77,6 @@ class my_riscv_core_seq extends riscv_core_default_seq;
   logic        irq_external;
   logic        irq_timer;
   logic        irq_software;
-  logic [31:0] mem_data_out [2];
-  logic        mem_wr_en    [2];
-  logic        mem_rd_en    [2];
-  logic        mem_clk_en;
-  logic [31:0] mem_addr     [2];
 
   function new(string name = "");
     super.new(name);

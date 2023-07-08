@@ -24,6 +24,9 @@ foreach  ele $agent_list {
   }
 }
 
+# Compile the Syosil scoreboard
+append cmd  " +incdir+../../../../third_party/SyoSil/src ../../../../third_party/SyoSil/src/pk_syoscb.sv"
+
 # Compile the test and the modules
 append cmd " +incdir+../tb/" $tb_name "/sv"
 append cmd " ../tb/" $tb_name "/sv/" $tb_name "_pkg.sv"

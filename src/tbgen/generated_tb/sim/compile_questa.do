@@ -19,6 +19,9 @@ foreach  ele $agent_list {
   }
 }
 
+set cmd  "vlog -sv +incdir+../../../../third_party/SyoSil/src ../../../../third_party/SyoSil/src/pk_syoscb.sv"
+eval $cmd
+
 set cmd  "vlog -sv +incdir+../tb/include +incdir+../tb/"
 append cmd $tb_name "/sv ../tb/" $tb_name "/sv/" $tb_name "_pkg.sv"
 eval $cmd

@@ -1,4 +1,5 @@
 agent_name = riscv_core
+
 trans_item = riscv_core_tx
 trans_var = logic [31:0] mem_data_in [2]; 
 trans_var = logic mem_ready;

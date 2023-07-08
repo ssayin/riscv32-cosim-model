@@ -8,7 +8,7 @@
 //
 // Version:   1.0
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Thu Jul  6 15:14:09 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Sun Jul  9 00:04:34 2023
 //=============================================================================
 // Description: Environment for top
 //=============================================================================
@@ -16,10 +16,9 @@
 `ifndef TOP_ENV_SV
 `define TOP_ENV_SV
 
-// Start of inlined include file generated_tb/tb/include/top_env_inc_before_class.sv
-import param_defs::*;
-import instr_defs::*;
-// End of inlined include file
+// You can insert code here by setting top_env_inc_before_class in file common.tpl
+
+import pk_syoscb::*;
 
 class top_env extends uvm_env;
 
@@ -27,6 +26,12 @@ class top_env extends uvm_env;
 
   extern function new(string name, uvm_component parent);
 
+  // Reference model and Syosil scoreboard
+
+
+  reference     m_reference;           
+  cl_syoscb     m_reference_scoreboard;
+  cl_syoscb_cfg m_reference_config;    
 
   // Child agents
   riscv_core_config    m_riscv_core_config;  
@@ -62,11 +67,7 @@ function void top_env::build_phase(uvm_phase phase);
   if (!uvm_config_db #(top_config)::get(this, "", "config", m_config)) 
     `uvm_error(get_type_name(), "Unable to get top_config")
 
-  m_riscv_core_config                 = new("m_riscv_core_config");         
-  m_riscv_core_config.vif             = m_config.riscv_core_vif;            
-  m_riscv_core_config.is_active       = m_config.is_active_riscv_core;      
-  m_riscv_core_config.checks_enable   = m_config.checks_enable_riscv_core;  
-  m_riscv_core_config.coverage_enable = m_config.coverage_enable_riscv_core;
+  m_riscv_core_config = m_config.m_riscv_core_config;
 
   // You can insert code here by setting agent_copy_config_vars in file riscv_core.tpl
 
@@ -74,6 +75,29 @@ function void top_env::build_phase(uvm_phase phase);
   if (m_riscv_core_config.is_active == UVM_ACTIVE )
     uvm_config_db #(riscv_core_config)::set(this, "m_riscv_core_agent.m_sequencer", "config", m_riscv_core_config);
   uvm_config_db #(riscv_core_config)::set(this, "m_riscv_core_coverage", "config", m_riscv_core_config);
+
+  // Default factory overrides for Syosil scoreboard
+  cl_syoscb_queue::type_id::set_type_override(cl_syoscb_queue_std::type_id::get());
+
+  begin
+    bit ok;
+    uvm_factory factory = uvm_factory::get();
+
+    if (factory.find_override_by_type(cl_syoscb_compare_base::type_id::get(), "*") == cl_syoscb_compare_base::type_id::get())
+      cl_syoscb_compare_base::type_id::set_inst_override(cl_syoscb_compare_iop::type_id::get(), "m_reference_scoreboard.*", this);
+
+    // Configuration object for Syosil scoreboard
+    m_reference_config = cl_syoscb_cfg::type_id::create("m_reference_config");
+    m_reference_config.set_queues( {"DUT", "REF"} );
+    ok = m_reference_config.set_primary_queue("DUT");
+    assert(ok);
+
+    uvm_config_db#(cl_syoscb_cfg)::set(this, "m_reference_scoreboard", "cfg", m_reference_config);
+
+    // Instantiate reference model and Syosil scoreboard
+    m_reference            = reference::type_id::create("m_reference", this);
+    m_reference_scoreboard = cl_syoscb::type_id::create("m_reference_scoreboard", this);
+  end
 
 
   m_riscv_core_agent    = riscv_core_agent   ::type_id::create("m_riscv_core_agent", this);
@@ -89,6 +113,12 @@ function void top_env::connect_phase(uvm_phase phase);
 
   m_riscv_core_agent.analysis_port.connect(m_riscv_core_coverage.analysis_export);
 
+  begin
+    // Connect reference model and Syosil scoreboard
+    cl_syoscb_subscriber subscriber;
+
+    m_riscv_core_agent.analysis_port.connect(m_reference.analysis_export_0);
+  end
 
   // You can insert code here by setting top_env_append_to_connect_phase in file common.tpl
 

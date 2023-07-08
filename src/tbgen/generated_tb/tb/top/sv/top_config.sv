@@ -8,7 +8,7 @@
 //
 // Version:   1.0
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Thu Jul  6 15:14:09 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Sun Jul  9 00:04:34 2023
 //=============================================================================
 // Description: Configuration for top
 //=============================================================================
@@ -22,11 +22,7 @@ class top_config extends uvm_object;
 
   // Do not register config class with the factory
 
-  virtual riscv_core_if    riscv_core_vif;            
-
-  uvm_active_passive_enum  is_active_riscv_core       = UVM_ACTIVE;
-  bit                      checks_enable_riscv_core;  
-  bit                      coverage_enable_riscv_core;
+  rand riscv_core_config  m_riscv_core_config;
 
   // You can insert variables here by setting config_var in file common.tpl
 
@@ -43,6 +39,11 @@ endclass : top_config
 
 function top_config::new(string name = "");
   super.new(name);
+
+  m_riscv_core_config                 = new("m_riscv_core_config");
+  m_riscv_core_config.is_active       = UVM_ACTIVE;                
+  m_riscv_core_config.checks_enable   = 1;                         
+  m_riscv_core_config.coverage_enable = 1;                         
 
   // You can insert code here by setting top_env_config_append_to_new in file common.tpl
 

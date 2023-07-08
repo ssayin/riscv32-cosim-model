@@ -8,7 +8,7 @@
 //
 // Version:   1.0
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Thu Jul  6 15:14:09 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Sun Jul  9 00:04:34 2023
 //=============================================================================
 // Description: Driver for riscv_core
 //=============================================================================
@@ -57,18 +57,11 @@ endtask : run_phase
 
 // Start of inlined include file generated_tb/tb/include/riscv_core_do_drive.sv
 task riscv_core_driver::do_drive();
-  vif.mem_data_in[0]  = req.mem_data_in[0];
-  vif.mem_ready       = req.mem_ready;
-  vif.irq_external    = req.irq_external;
-  vif.irq_timer       = req.irq_timer;
-  vif.irq_software    = req.irq_software;
-  // vif.mem_data_out[1] = req.mem_data_out[1];
-  // vif.mem_wr_en[1]    = req.mem_wr_en[1];
-  // vif.mem_rd_en[0]    = req.mem_rd_en[0];
-  // vif.mem_rd_en[1]    = req.mem_rd_en[1];
-  // vif.mem_clk_en      = req.mem_clk_en;
-  // vif.mem_addr[0]     = req.mem_addr[0];
-  // vif.mem_addr[1]     = req.mem_addr[1];
+  vif.mem_data_in[0] <= req.mem_data_in[0];
+  vif.mem_ready      <= req.mem_ready;
+  vif.irq_external   <= req.irq_external;
+  vif.irq_timer      <= req.irq_timer;
+  vif.irq_software   <= req.irq_software;
   @(posedge vif.clk);
 endtask
 // End of inlined include file
