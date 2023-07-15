@@ -98,48 +98,6 @@ package instr_defs;
   typedef logic [MemBusWidth-1:0] mem_data_t;
   typedef logic [DataWidth-1:0] reg_data_t;
 
-  typedef struct {
-    reg_data_t instr;
-    logic [31:1] pc;
-    logic      compressed;
-    logic      br;
-    logic      br_taken;
-  } p_if_id_t;
 
-  typedef struct {
-    logic [31:1]                pc;
-    logic                     compressed;
-    logic                     br;
-    logic                     br_taken;
-    logic                     use_imm;
-    logic                     use_pc;
-    reg_data_t                imm;
-    logic                     illegal;
-    logic                     alu;
-    logic [AluOpWidth-1:0]    alu_op;
-    reg_addr_t                rd_addr;
-    logic                     lsu;
-    logic [LsuOpWidth-1:0]    lsu_op;
-    logic [BranchOpWidth-1:0] br_op;
-    logic                     rd_en;
-  } p_id_ex_t;
-
-  typedef struct {
-    logic                  compressed;
-    logic                  rd_en;
-    reg_data_t             alu_res;
-    reg_data_t             store_data;
-    logic                  lsu;
-    logic [LsuOpWidth-1:0] lsu_op;
-    logic                  br_taken;
-    logic                  br;
-    reg_addr_t             rd_addr;
-  } p_ex_mem_t;
-
-  typedef struct {
-    logic      rd_en;
-    reg_addr_t rd_addr;
-    reg_data_t rd_data;
-  } p_mem_wb_t;
 
 endpackage

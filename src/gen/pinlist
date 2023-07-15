@@ -1,0 +1,18 @@
+!riscv_core_if
+clk clk
+rst_n rst_n
+mem_data_in mem_data_in
+mem_ready mem_ready
+irq_external irq_external
+irq_timer irq_timer
+irq_software irq_software
+mem_data_out mem_data_out
+mem_wr_en mem_wr_en
+mem_rd_en mem_rd_en 
+mem_clk_en mem_clk_en
+mem_addr mem_addr
+#trace_p_if_id_0 trace_p_if_id_0
+#trace_p_if_id_1 trace_p_if_id_1
+#trace_p_id_ex trace_p_id_ex
+#trace_p_ex_mem trace_p_ex_mem
+#trace_p_mem_wb trace_p_mem_wb

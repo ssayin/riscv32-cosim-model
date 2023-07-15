@@ -43,13 +43,13 @@ INSTR_FEED    := $(DATA_DIR)/amalgamated.txt
 #	@echo "make SIMULATOR=<sim>"
 
 #else
-all: sim synth
+all: sim
 
 # Vivado FPGA flow
 # I do not own a Xilinx board, so I am moving from Vivado.
 # Vivado XSIM support will be continued.
-synth: sim/vivado/run.tcl
-	vivado -mode batch -source sim/vivado/run.tcl
+#synth: sim/vivado/run.tcl
+#	vivado -mode batch -source sim/vivado/run.tcl
 
 $(INSTR_FEED): $(DATA_DIR)
 	7z e ./data/*.zip -ir!*.json -so | jq -r '.[].instr' | sort | uniq > $@
@@ -66,7 +66,7 @@ sim.top_level: compile
 
 sim.gentb: compile
 	xelab top_tb -relax -s top_tb
-	xsim top_tb -testplusarg UVM_TESTNAME=top_test -testplusarg UVM_VERBOSITY=UVM_LOW -R
+	xsim top_tb -testplusarg UVM_TESTNAME=top_test -testplusarg UVM_VERBOSITY=UVM_HIGH -R
 
 sim.riscv_core: compile 
 	xelab tb_riscv_core -relax -s core
@@ -84,7 +84,7 @@ quartus_flow:
 
 # Compile SystemVerilog files on Xilinx Vivado Suite
 compile: $(INSTR_FEED)
-	xvlog -sv -f sim/vivado/sv_compile_list.txt -L uvm \
+	xvlog -sv -f xsim_sv_compile_list -L uvm \
 		-define INSTR_SEQ_FILENAME='"$(INSTR_FEED)"' \
 		-define INSTR_SEQ_LINECOUNT=$(shell cat $(INSTR_FEED) | wc -l) \
 		-define DEBUG_INIT_FILE='"$(shell readlink -f "./src/firmware/boot.hex")"'
