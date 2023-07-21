@@ -19,7 +19,7 @@ trans_var = logic mem_ready;
 
 # Outputs
 trans_var = logic [31:0] mem_data_out[2];
-trans_var = logic mem_wr_en [2];
+trans_var = logic [3:0] mem_wr_en [2];
 trans_var = logic mem_rd_en [2];
 trans_var = logic mem_clk_en;
 trans_var = logic [31:0] mem_addr [2];
@@ -39,7 +39,7 @@ if_port = logic irq_external;
 if_port = logic irq_timer;
 if_port = logic irq_software;
 if_port = logic [31:0] mem_data_out[2];
-if_port = logic mem_wr_en [2];
+if_port = logic [3:0] mem_wr_en [2];
 if_port = logic mem_rd_en [2];
 if_port = logic mem_clk_en;
 if_port = logic [31:0] mem_addr [2];

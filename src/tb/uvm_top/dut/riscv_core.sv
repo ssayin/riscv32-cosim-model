@@ -14,23 +14,59 @@ module lsu (
 endmodule
 
 module riscv_core (
-  input  logic                   clk,
-  input  logic                   rst_n,
-  input  logic [MemBusWidth-1:0] mem_data_in [2],
-  input  logic                   mem_ready,        // Stall pipeline on I$ misses
-  input  logic                   irq_external,     // unused
-  input  logic                   irq_timer,        // unused
-  input  logic                   irq_software,     // unused
-  output logic [MemBusWidth-1:0] mem_data_out[2],  // Driven by D$ controller
-  //output logic [            3:0] mem_wr_en,     // TODO: Alter after cache impl
-  output logic                   mem_wr_en   [2],
-  output logic                   mem_rd_en   [2],  // The access is for instruction fetch
-  //output logic                   mem_valid[2],
-  output logic                   mem_clk_en,
-  output logic [           31:0] mem_addr    [2]   // Memory offset
+  input logic clk,
+  input logic rst_n,
+
+  // WA Channel
+  output logic        axi_awid,
+  output logic [31:0] axi_awaddr,
+  output logic [ 7:0] axi_awlen,
+  output logic [ 2:0] axi_awsize,
+  output logic [ 1:0] axi_awburst,
+  output logic        axi_awlock,
+  output logic [ 3:0] axi_awcache,
+  output logic [ 2:0] axi_awprot,
+  output logic        axi_awvalid,
+  output logic [ 3:0] axi_awregion,
+  output logic [ 3:0] axi_awqos,
+  input  logic        axi_awready,
+
+  // WD Channel
+  output logic [63:0] axi_wdata,
+  output logic [ 7:0] axi_wstrb,
+  output logic        axi_wlast,
+  output logic        axi_wvalid,
+  input  logic        axi_wready,
+
+  // Write Response Channel
+  input  logic       axi_bid,
+  input  logic [1:0] axi_bresp,
+  input  logic       axi_bvalid,
+  output logic       axi_bready,
+
+  // RA Channel
+  output logic        axi_arid,
+  output logic [31:0] axi_araddr,
+  output logic [ 7:0] axi_arlen,
+  output logic [ 2:0] axi_arsize,
+  output logic [ 1:0] axi_arburst,
+  output logic        axi_arlock,
+  output logic [ 3:0] axi_arcache,
+  output logic [ 2:0] axi_arprot,
+  output logic        axi_arvalid,
+  output logic [ 3:0] axi_arqos,
+  output logic [ 3:0] axi_arregion,
+  input  logic        axi_arready,
+
+  // RD Channel
+  input  logic        axi_rid,
+  input  logic [63:0] axi_rdata,
+  input  logic [ 1:0] axi_rresp,
+  input  logic        axi_rlast,
+  input  logic        axi_rvalid,
+  output logic        axi_rready
 );
 
-  logic      [             31:0] mem_rd;
   logic                          flush;
 
   logic                          flush_d0;
@@ -85,8 +121,8 @@ module riscv_core (
   reg_addr_t                     rs1_addr_r;
   reg_addr_t                     rs2_addr_r;
 
-  logic      [    DataWidth-1:0] pc_in;
-  logic      [    DataWidth-1:0] pc_out;
+  logic      [             31:1] pc_in;
+  logic      [             31:1] pc_out;
   logic                          pc_update;
 
   reg_data_t                     rs1_data_e;
@@ -95,44 +131,36 @@ module riscv_core (
   logic                          should_br;
   logic                          br_mispredictd;
 
-  logic                          if_stage_clk_en;
-  logic                          id_stage_0_clk_en;
-  logic                          id_stage_1_clk_en;
-  logic                          ex_stage_clk_en;
-  logic                          mem_stage_clk_en;
-  logic                          wb_stage_clk_en;
-  logic                          reg_file_clk_en;
-
   logic                          stall;
 
-
+  /*
   if_stage if_stage_0 (
-    .clk          (clk & if_stage_clk_en),
-    .rst_n        (rst_n),
-    .mem_rd       (mem_data_in[0]),
-    .flush_f      (flush),
-    .pc_in        (alu_res_m),
-    .pc_update    (pc_update),
-    .pc_out       (pc_out),
-    .instr_d0     (instr_d0),
-    .pc_d0        (pc_d0),
-    .compressed_d0(compressed_d0),
-    .br_d0        (br_d0),
-    .br_taken_d0  (br_taken_d0)
+      .clk          (clk),
+      .rst_n        (rst_n),
+      .mem_rd       (mem_data_in[0]),
+      .flush_f      (flush),
+      .pc_in        (alu_res_m),
+      .pc_update    (pc_update),
+      .pc_out       (pc_out),
+      .instr_d0     (instr_d0),
+      .pc_d0        (pc_d0),
+      .compressed_d0(compressed_d0),
+      .br_d0        (br_d0),
+      .br_taken_d0  (br_taken_d0)
   );
 
   reg_file #(
-    .DATA_WIDTH(DataWidth)
+      .DATA_WIDTH(DataWidth)
   ) register_file_inst (
-    .clk     (clk & reg_file_clk_en),
-    .rst_n   (rst_n),
-    .rd_addr (rd_addr_wb),
-    .rs1_addr(rs1_addr_r),
-    .rs2_addr(rs2_addr_r),
-    .rd_data (rd_data_wb),
-    .wr_en   (rd_en_wb),
-    .rs1_data(rs1_data_e),
-    .rs2_data(rs2_data_e)
+      .clk     (clk),
+      .rst_n   (rst_n),
+      .rd_addr (rd_addr_wb),
+      .rs1_addr(rs1_addr_r),
+      .rs2_addr(rs2_addr_r),
+      .rd_data (rd_data_wb),
+      .wr_en   (rd_en_wb),
+      .rs1_data(rs1_data_e),
+      .rs2_data(rs2_data_e)
   );
 
   ex_stage ex_stage_0 (.*);
@@ -142,13 +170,14 @@ module riscv_core (
   id_stage_1 _id_stage_1 (.*);
 
   mem_stage mem_stage_0 (
-    .clk   (clk & mem_stage_clk_en),
-    .rst_n (rst_n),
-    .mem_in(mem_data_in[1]),
-    .*
+      .clk   (clk),
+      .rst_n (rst_n),
+      .mem_in(mem_data_in[1]),
+      .*
   );
 
-  assign mem_wr_en[1]      = lsu_op_m[3] & lsu_m;  // Store
+  // TODO: Impl LSU and change wr_en signals
+  assign mem_wr_en[1][0]   = lsu_op_m[3] & lsu_m;  // Store
   assign mem_rd_en[1]      = ~lsu_op_m[3] & lsu_m;  // Load
   assign mem_data_out[1]   = store_data_m;  // loaded from reg_file in stage ID1
   assign mem_addr[1]       = alu_res_m;  // load store
@@ -163,10 +192,12 @@ module riscv_core (
   assign reg_file_clk_en   = !stall;
 
   assign mem_rd_en[0]      = 'b1;  // always fetch
-  assign mem_addr[0]       = pc_out;  //  mem offset for fetch
 
   assign pc_update         = should_br || br_mispredictd;
 
   assign flush             = br_mispredictd;
+
+  assign mem_clk_en        = 1;
+  */
 
 endmodule : riscv_core

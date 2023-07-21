@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Sat Jul 15 22:09:49 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Fri Jul 21 13:05:27 2023
 //=============================================================================
 // Description: Sequence item for riscv_core_sequencer
 //=============================================================================
@@ -40,7 +40,7 @@ class riscv_core_tx extends uvm_sequence_item;
   logic [31:0] mem_data_in [2];
   logic mem_ready;
   logic [31:0] mem_data_out[2];
-  logic mem_wr_en [2];
+  logic [3:0] mem_wr_en [2];
   logic mem_rd_en [2];
   logic mem_clk_en;
   logic [31:0] mem_addr [2];

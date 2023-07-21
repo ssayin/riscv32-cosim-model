@@ -7,32 +7,29 @@
 -i ./src/rtl
 -i ./src/rtl/include
 -i ./src/rtl/core
--i ./src/rtl/core/functional
--i ./src/rtl/core/functional/arith
--i ./src/rtl/core/functional/decoder
--i ./src/rtl/core/pipeline
--i ./src/rtl/core/zicsr
--i ./src/rtl/core/ifc
--i ./src/rtl/core/mem_hier
--i ./src/rtl/core/mem_hier/cache
+-i ./src/rtl/core/
+-i ./src/rtl/core/arith
+-i ./src/rtl/core/decoder
 ./src/rtl/include/riscv_opcodes.svh
 ./src/rtl/include/param_defs.sv
 ./src/rtl/include/instr_defs.sv
-./src/rtl/core/functional/decoder/riscv_decoder.sv
-./src/rtl/core/functional/decoder/riscv_decoder_j.sv
-./src/rtl/core/functional/decoder/riscv_decoder_gpr.sv
-./src/rtl/core/functional/decoder/riscv_decoder_ctl_imm.sv
-./src/rtl/core/functional/decoder/riscv_decoder_br.sv
-./src/rtl/core/functional/decoder/riscv_decoder_j_no_rr.sv
-./src/rtl/core/functional/decoder/riscv_decoder_j_no_rr_imm.sv
+./src/rtl/core/decoder/riscv_decoder.sv
+./src/rtl/core/decoder/riscv_decoder_j.sv
+./src/rtl/core/decoder/riscv_decoder_gpr.sv
+./src/rtl/core/decoder/riscv_decoder_ctl_imm.sv
+./src/rtl/core/decoder/riscv_decoder_br.sv
+./src/rtl/core/decoder/riscv_decoder_j_no_rr.sv
+./src/rtl/core/decoder/riscv_decoder_j_no_rr_imm.sv
 ./src/rtl/core/reg_file.sv
 ./src/rtl/core/riscv_core.sv
-./src/rtl/core/functional/arith/alu.sv
-./src/rtl/core/pipeline/if_stage.sv
-./src/rtl/core/pipeline/id_stage_0.sv
-./src/rtl/core/pipeline/id_stage_1.sv
-./src/rtl/core/pipeline/ex_stage.sv
-./src/rtl/core/pipeline/mem_stage.sv
+./src/rtl/core/arith/alu.sv
+./src/rtl/core/ifu/if_stage.sv
+./src/rtl/core/id_stage_0.sv
+./src/rtl/core/id_stage_1.sv
+./src/rtl/core/ex_stage.sv
+./src/rtl/core/mem_stage.sv
+./src/rtl/top_level.sv
+./src/rtl/tb_top_level.sv
 ./src/dpi/svdpi_pkg.sv
 ./src/tb/riscv_decoder_uvm/uvc/riscv_decoder_pkg.sv 
 ./src/tb/riscv_decoder_uvm/env/riscv_decoder_ref_model_pkg.sv 
@@ -41,11 +38,11 @@
 ./src/tb/riscv_decoder_uvm/tests/riscv_decoder_test_list.sv 
 ./src/tb/riscv_decoder_uvm/top/riscv_decoder_if.sv
 ./src/tb/riscv_decoder_uvm/top/tb_riscv_decoder.sv
--i ./src//tb/uvm_top/tb/include/
--i ./src//tb/uvm_top/tb/riscv_core/sv
--i ./src//tb/uvm_top/tb/top/sv
--i ./src//tb/uvm_top/tb/top_test/sv
--i ./src//tb/uvm_top/tb/top_tb/sv
+-i ./src/tb/uvm_top/tb/include/
+-i ./src/tb/uvm_top/tb/riscv_core/sv
+-i ./src/tb/uvm_top/tb/top/sv
+-i ./src/tb/uvm_top/tb/top_test/sv
+-i ./src/tb/uvm_top/tb/top_tb/sv
 -i ./third_party/syoscb-1.0.2.4/src
 ./src/tb/uvm_top/tb/riscv_core/sv/riscv_core_pkg.sv
 ./src/tb/uvm_top/tb/riscv_core/sv/riscv_core_if.sv
