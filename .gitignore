@@ -28,3 +28,4 @@ greybox_tmp/
 *.qws
 *.wdb
 *.vcd
+.qsys_edit/

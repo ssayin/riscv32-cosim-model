@@ -162,13 +162,14 @@ module riscv_core (
       .rs1_data(rs1_data_e),
       .rs2_data(rs2_data_e)
   );
+  */
 
   ex_stage ex_stage_0 (.*);
 
   id_stage_0 _id_stage_0 (.*);
 
   id_stage_1 _id_stage_1 (.*);
-
+  /*
   mem_stage mem_stage_0 (
       .clk   (clk),
       .rst_n (rst_n),
