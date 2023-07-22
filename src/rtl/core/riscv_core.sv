@@ -64,7 +64,9 @@ module riscv_core (
   input  logic [ 1:0] axi_rresp,
   input  logic        axi_rlast,
   input  logic        axi_rvalid,
-  output logic        axi_rready
+  output logic        axi_rready,
+
+  output logic [31:1] pc_out_trace
 );
 
   logic                          flush;
@@ -133,72 +135,147 @@ module riscv_core (
 
   logic                          stall;
 
-  /*
+  logic      [             31:0] fetch_addr;
+  logic      [             63:0] fetch_data;
+  logic      [             31:0] load_addr;
+  logic      [             63:0] load_data;
+
+
+  assign data_in  = 0;
+  assign flush_d0 = 0;
+  assign flush_d1 = 0;
+
+
+  typedef enum logic [1:0] {
+    IDLE    = 2'b00,
+    ADDRESS = 2'b01,
+    DATA    = 2'b10
+  } axi_state_t;
+
+  axi_state_t axi_read_state;
+  axi_state_t axi_read_state_next;
+
+  // TODO: move FSM logic somewhere else
+  // impl. separate master axi4 interface for LSU to avoid port contention and stalling
+  always_comb begin
+    axi_read_state_next = IDLE;
+    axi_arvalid         = 0;
+    axi_araddr[31:0]    = 0;
+    axi_arlen[7:0]      = 0;
+    axi_arburst[1:0]    = 0;
+    axi_rready          = 0;
+
+    case (axi_read_state)
+      IDLE: begin
+        axi_arvalid         = 1'b1;
+        axi_araddr[31:0]    = fetch_addr;
+        axi_arlen[7:0]      = 'b1;  // TODO: probably not gonan impl icc/dcc very soon
+        axi_arburst[1:0]    = 'b01;  // AVN supports INCR only
+        axi_read_state_next = ADDRESS;
+      end
+      ADDRESS: begin
+        if (axi_arready) axi_read_state_next = DATA;
+      end
+      DATA: begin
+        axi_rready = 1'b1;
+        if (axi_rvalid) begin
+          fetch_data          = axi_rdata;
+          axi_read_state_next = IDLE;
+        end
+      end
+    endcase
+  end
+
+  always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+      axi_read_state <= IDLE;
+    end else begin
+      axi_read_state <= axi_read_state_next;
+    end
+  end
+
+  assign fetch_addr = {pc_d0, 1'b0};
+
+
+
   if_stage if_stage_0 (
-      .clk          (clk),
-      .rst_n        (rst_n),
-      .mem_rd       (mem_data_in[0]),
-      .flush_f      (flush),
-      .pc_in        (alu_res_m),
-      .pc_update    (pc_update),
-      .pc_out       (pc_out),
-      .instr_d0     (instr_d0),
-      .pc_d0        (pc_d0),
-      .compressed_d0(compressed_d0),
-      .br_d0        (br_d0),
-      .br_taken_d0  (br_taken_d0)
+    .clk          (clk),
+    .rst_n        (rst_n),
+    .mem_rd       (fetch_addr),
+    .flush_f      (flush),
+    .pc_in        (alu_res_m),
+    .pc_update    (pc_update),
+    .pc_out       (pc_out),
+    .instr_d0     (instr_d0),
+    .pc_d0        (pc_d0),
+    .compressed_d0(compressed_d0),
+    .br_d0        (br_d0),
+    .br_taken_d0  (br_taken_d0)
   );
 
   reg_file #(
       .DATA_WIDTH(DataWidth)
   ) register_file_inst (
-      .clk     (clk),
-      .rst_n   (rst_n),
-      .rd_addr (rd_addr_wb),
-      .rs1_addr(rs1_addr_r),
-      .rs2_addr(rs2_addr_r),
-      .rd_data (rd_data_wb),
-      .wr_en   (rd_en_wb),
-      .rs1_data(rs1_data_e),
-      .rs2_data(rs2_data_e)
+    .clk     (clk),
+    .rst_n   (rst_n),
+    .rd_addr (rd_addr_wb),
+    .rs1_addr(rs1_addr_r),
+    .rs2_addr(rs2_addr_r),
+    .rd_data (rd_data_wb),
+    .wr_en   (rd_en_wb),
+    .rs1_data(rs1_data_e),
+    .rs2_data(rs2_data_e)
   );
-  */
 
   ex_stage ex_stage_0 (.*);
 
   id_stage_0 _id_stage_0 (.*);
 
   id_stage_1 _id_stage_1 (.*);
-  /*
+
   mem_stage mem_stage_0 (
-      .clk   (clk),
-      .rst_n (rst_n),
-      .mem_in(mem_data_in[1]),
-      .*
+    .clk   (clk),
+    .rst_n (rst_n),
+    .mem_in(data_in),
+    .*
   );
 
+  assign pc_out_trace      = pc_out;
+
   // TODO: Impl LSU and change wr_en signals
-  assign mem_wr_en[1][0]   = lsu_op_m[3] & lsu_m;  // Store
-  assign mem_rd_en[1]      = ~lsu_op_m[3] & lsu_m;  // Load
-  assign mem_data_out[1]   = store_data_m;  // loaded from reg_file in stage ID1
-  assign mem_addr[1]       = alu_res_m;  // load store
+  // assign mem_wr_en[1][0]   = lsu_op_m[3] & lsu_m;  // Store
+  // assign mem_rd_en[1]      = ~lsu_op_m[3] & lsu_m;  // Load
+  // assign mem_data_out[1]   = store_data_m;  // loaded from reg_file in stage ID1
+  // assign mem_addr[1]       = alu_res_m;  // load store
 
   assign stall             = 'b0;
-
-  assign if_stage_clk_en   = !stall;
-  assign id_stage_0_clk_en = !stall;
-  assign id_stage_1_clk_en = !stall;
-  assign mem_stage_clk_en  = !stall;
-  assign wb_stage_clk_en   = !stall;
-  assign reg_file_clk_en   = !stall;
-
-  assign mem_rd_en[0]      = 'b1;  // always fetch
-
   assign pc_update         = should_br || br_mispredictd;
-
   assign flush             = br_mispredictd;
 
-  assign mem_clk_en        = 1;
-  */
 
+  assign axi_awid          = 0;
+  assign axi_awaddr[31:0]  = 0;
+  assign axi_awlen[7:0]    = 0;
+  assign axi_awsize[2:0]   = 0;
+  assign axi_awburst[1:0]  = 2'b01;
+  assign axi_awlock        = 0;
+  assign axi_awcache[3:0]  = 0;
+  assign axi_awprot[2:0]   = 0;
+  assign axi_awvalid       = 0;
+  assign axi_awregion[3:0] = 0;
+  assign axi_awqos[3:0]    = 0;
+
+  assign axi_wdata[63:0]   = 0;
+  assign axi_wstrb[7:0]    = 0;
+  assign axi_arsize[2:0]   = 0;
+  assign axi_arcache[3:0]  = 0;
+  assign axi_arprot[2:0]   = 0;
+  assign axi_arqos[3:0]    = 0;
+  assign axi_arregion[3:0] = 0;
+  assign axi_wlast         = 0;
+  assign axi_wvalid        = 0;
+
+  assign axi_bready        = 0;
+  assign axi_arid          = 0;
+  assign axi_arlock        = 0;
 endmodule : riscv_core

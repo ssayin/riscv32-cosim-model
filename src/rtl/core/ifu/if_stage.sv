@@ -53,7 +53,7 @@ module if_stage (
         pc_d0 <= pc;
         $display("pc = %d", pc);
         compressed_d0 <= compressed;
-        pc[31:1]      <= pc[31:1] + (compressed ? 'h2 : 'h4);
+        pc[31:1]      <= pc[31:1] + (compressed ? 31'h1 : 31'h2);
         instr_d0      <= {{mem_rd[31:24], mem_rd[23:16], mem_rd[15:8], mem_rd[7:0]}};
         br_taken_d0   <= br_taken;
       end

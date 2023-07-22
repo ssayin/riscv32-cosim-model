@@ -4,8 +4,15 @@
 
 `timescale 1 ps / 1 ps
 module platform (
-		input  wire  clk_clk,       //   clk.clk
-		input  wire  rst_n_reset_n  // rst_n.reset_n
+		input  wire        clk_clk,                                 //                        clk.clk
+		input  wire        rst_n_reset_n,                           //                      rst_n.reset_n
+		output wire [3:0]  ssram_0_external_interface_ssram_be_n,   // ssram_0_external_interface.ssram_be_n
+		output wire [0:0]  ssram_0_external_interface_ssram_we_n,   //                           .ssram_we_n
+		inout  wire [31:0] ssram_0_external_interface_fs_dq,        //                           .fs_dq
+		output wire [0:0]  ssram_0_external_interface_ssram_adsc_n, //                           .ssram_adsc_n
+		output wire [0:0]  ssram_0_external_interface_ssram_oe_n,   //                           .ssram_oe_n
+		output wire [19:0] ssram_0_external_interface_fs_addr,      //                           .fs_addr
+		output wire [0:0]  ssram_0_external_interface_ssram_cs_n    //                           .ssram_cs_n
 	);
 
 	wire   [1:0] riscv_core_0_altera_axi4_master_1_awburst;                  // riscv_core_0:axi_awburst -> mm_interconnect_0:riscv_core_0_altera_axi4_master_1_awburst
@@ -117,13 +124,13 @@ module platform (
 		.avalon_ssram_slave_writedata     (mm_interconnect_0_ssram_0_avalon_ssram_slave_writedata),     //                   .writedata
 		.avalon_ssram_slave_lock          (mm_interconnect_0_ssram_0_avalon_ssram_slave_lock),          //                   .lock
 		.avalon_ssram_slave_debugaccess   (mm_interconnect_0_ssram_0_avalon_ssram_slave_debugaccess),   //                   .debugaccess
-		.external_interface_ssram_be_n    (),                                                           // external_interface.ssram_be_n
-		.external_interface_ssram_we_n    (),                                                           //                   .ssram_we_n
-		.external_interface_fs_dq         (),                                                           //                   .fs_dq
-		.external_interface_ssram_adsc_n  (),                                                           //                   .ssram_adsc_n
-		.external_interface_ssram_oe_n    (),                                                           //                   .ssram_oe_n
-		.external_interface_fs_addr       (),                                                           //                   .fs_addr
-		.external_interface_ssram_cs_n    ()                                                            //                   .ssram_cs_n
+		.external_interface_ssram_be_n    (ssram_0_external_interface_ssram_be_n),                      // external_interface.ssram_be_n
+		.external_interface_ssram_we_n    (ssram_0_external_interface_ssram_we_n),                      //                   .ssram_we_n
+		.external_interface_fs_dq         (ssram_0_external_interface_fs_dq),                           //                   .fs_dq
+		.external_interface_ssram_adsc_n  (ssram_0_external_interface_ssram_adsc_n),                    //                   .ssram_adsc_n
+		.external_interface_ssram_oe_n    (ssram_0_external_interface_ssram_oe_n),                      //                   .ssram_oe_n
+		.external_interface_fs_addr       (ssram_0_external_interface_fs_addr),                         //                   .fs_addr
+		.external_interface_ssram_cs_n    (ssram_0_external_interface_ssram_cs_n)                       //                   .ssram_cs_n
 	);
 
 	platform_mm_interconnect_0 mm_interconnect_0 (

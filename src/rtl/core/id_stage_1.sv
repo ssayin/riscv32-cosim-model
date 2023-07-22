@@ -70,6 +70,7 @@ module id_stage_1 (
       br_e       <= 'h0;
       br_taken_e <= 'h0;
       br_op_e    <= 'b0;
+      pc_e       <= 'b0;
     end else begin
       imm_e      <= imm_next;
       use_imm_e  <= use_imm_next;
@@ -83,6 +84,7 @@ module id_stage_1 (
       alu_e      <= ctl_next.alu;
       br_e       <= br_d1;
       br_taken_e <= br_taken_d1;
+      pc_e       <= pc_d1;
     end
   end
 

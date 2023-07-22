@@ -40,6 +40,11 @@
    }
    element ssram_0.avalon_ssram_slave
    {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
       datum _tags
       {
          value = "";
@@ -74,6 +79,11 @@
  <instanceScript></instanceScript>
  <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
  <interface name="rst_n" internal="clk_0.clk_in_reset" type="reset" dir="end" />
+ <interface
+   name="ssram_0_external_interface"
+   internal="ssram_0.external_interface"
+   type="conduit"
+   dir="end" />
  <module name="clk_0" kind="clock_source" version="22.1" enabled="1">
   <parameter name="clockFrequency" value="50000000" />
   <parameter name="clockFrequencyKnown" value="true" />

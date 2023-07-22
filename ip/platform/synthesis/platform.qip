@@ -2,7 +2,7 @@ set_global_assignment -entity "platform" -library "platform" -name IP_TOOL_NAME 
 set_global_assignment -entity "platform" -library "platform" -name IP_TOOL_VERSION "22.1"
 set_global_assignment -entity "platform" -library "platform" -name IP_TOOL_ENV "Qsys"
 set_global_assignment -library "platform" -name SOPCINFO_FILE [file join $::quartus(qip_path) "../../../platform.sopcinfo"]
-set_global_assignment -entity "platform" -library "platform" -name SLD_INFO "QSYS_NAME platform HAS_SOPCINFO 1 GENERATION_ID 1689933617"
+set_global_assignment -entity "platform" -library "platform" -name SLD_INFO "QSYS_NAME platform HAS_SOPCINFO 1 GENERATION_ID 1690040531"
 set_global_assignment -library "platform" -name MISC_FILE [file join $::quartus(qip_path) "../platform.cmp"]
 set_global_assignment -library "platform" -name SLD_FILE [file join $::quartus(qip_path) "platform.debuginfo"]
 set_global_assignment -entity "platform" -library "platform" -name IP_TARGETED_DEVICE_FAMILY "Cyclone IV E"
@@ -15,7 +15,7 @@ set_global_assignment -entity "platform" -library "platform" -name IP_COMPONENT_
 set_global_assignment -entity "platform" -library "platform" -name IP_COMPONENT_REPORT_HIERARCHY "On"
 set_global_assignment -entity "platform" -library "platform" -name IP_COMPONENT_INTERNAL "Off"
 set_global_assignment -entity "platform" -library "platform" -name IP_COMPONENT_VERSION "MS4w"
-set_global_assignment -entity "platform" -library "platform" -name IP_COMPONENT_PARAMETER "QVVUT19HRU5FUkFUSU9OX0lE::MTY4OTkzMzYxNw==::QXV0byBHRU5FUkFUSU9OX0lE"
+set_global_assignment -entity "platform" -library "platform" -name IP_COMPONENT_PARAMETER "QVVUT19HRU5FUkFUSU9OX0lE::MTY5MDA0MDUzMQ==::QXV0byBHRU5FUkFUSU9OX0lE"
 set_global_assignment -entity "platform" -library "platform" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0VfRkFNSUxZ::Q3ljbG9uZSBJViBF::QXV0byBERVZJQ0VfRkFNSUxZ"
 set_global_assignment -entity "platform" -library "platform" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0U=::RVA0Q0U2RTIyQzg=::QXV0byBERVZJQ0U="
 set_global_assignment -entity "platform" -library "platform" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0VfU1BFRURHUkFERQ==::OA==::QXV0byBERVZJQ0VfU1BFRURHUkFERQ=="

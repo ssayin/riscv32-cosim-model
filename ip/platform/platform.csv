@@ -1,12 +1,12 @@
-# system info platform on 2023.07.21.13:00:15
+# system info platform on 2023.07.22.18:42:09
 system_info:
 name,value
 DEVICE,EP4CE6E22C8
 DEVICE_FAMILY,Cyclone IV E
-GENERATION_ID,1689933614
+GENERATION_ID,1690040528
 #
 #
-# Files generated for platform on 2023.07.21.13:00:15
+# Files generated for platform on 2023.07.22.18:42:09
 files:
 filepath,kind,attributes,module,is_top
 simulation/platform.v,VERILOG,,platform,true
