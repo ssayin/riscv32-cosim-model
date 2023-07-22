@@ -28,8 +28,6 @@
 ./src/rtl/core/id_stage_1.sv
 ./src/rtl/core/ex_stage.sv
 ./src/rtl/core/mem_stage.sv
-./src/rtl/top_level.sv
-./src/rtl/tb_top_level.sv
 ./src/dpi/svdpi_pkg.sv
 ./src/tb/riscv_decoder_uvm/uvc/riscv_decoder_pkg.sv 
 ./src/tb/riscv_decoder_uvm/env/riscv_decoder_ref_model_pkg.sv 

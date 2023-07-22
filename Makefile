@@ -54,7 +54,7 @@ all: sim
 $(INSTR_FEED): $(DATA_DIR)
 	7z e ./data/*.zip -ir!*.json -so | jq -r '.[].instr' | sort | uniq > $@
 
-sim: sim.riscv_decoder sim.top_level
+sim: sim.riscv_decoder
 
 lib_vivado: $(DECODER_SRCS) $(EXPORTER_SRCS) $(DISAS_SRCS)
 	xsc $(DECODER_SRCS) $(EXPORTER_SRCS) $(DISAS_SRCS) --gcc_compile_options $(DECODER_INC) --gcc_compile_options $(COMMON_INC) --gcc_compile_options $(DISAS_INC) -cppversion 20
@@ -62,10 +62,6 @@ lib_vivado: $(DECODER_SRCS) $(EXPORTER_SRCS) $(DISAS_SRCS)
 sim.riscv_decoder: $(LIB) compile
 		xelab tb_riscv_decoder -relax -s decoder -sv_lib $(basename $(notdir $(LIB)))
 		LD_LIBRARY_PATH=. xsim decoder -testplusarg UVM_TESTNAME=riscv_decoder_from_file_test -testplusarg UVM_VERBOSITY=UVM_LOW -R
-
-sim.top_level: compile 
-	xelab tb_top_level -relax -s top
-	xsim top -R
 
 sim.gentb: compile
 	xelab top_tb -relax -s top_tb
