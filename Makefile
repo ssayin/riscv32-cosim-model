@@ -35,6 +35,18 @@ OBJS          := $(DECODER_OBJS) $(EXPORTER_OBJS) $(DISAS_OBJ)
 
 INSTR_FEED    := $(DATA_DIR)/amalgamated.txt
 
+# Set full path to the shared obj that ld links against as default.
+# I am not planning to rewrite ISS parts to support old libstdc++ versions.
+# Other solutions seemed to be convoluted.
+# You may also choose to link against the one distributed with Vivado Suite. 
+# CXX 20 is required.
+SOLIB_STDCXX  := $(shell /sbin/ldconfig -p | perl -ne 'if (/stdc\+\+/) { @columns = split; print $$columns[3]; exit }')
+
+# My version string is as follows:
+# Vivado v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 04:59:54 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Tool Version Limit: 2022.10
 
 #ifeq ($(SIMULATOR),)
 #all:
@@ -56,12 +68,12 @@ $(INSTR_FEED): $(DATA_DIR)
 
 sim: sim.riscv_decoder
 
-lib_vivado: $(DECODER_SRCS) $(EXPORTER_SRCS) $(DISAS_SRCS)
-	xsc $(DECODER_SRCS) $(EXPORTER_SRCS) $(DISAS_SRCS) --gcc_compile_options $(DECODER_INC) --gcc_compile_options $(COMMON_INC) --gcc_compile_options $(DISAS_INC) -cppversion 20
+#lib_vivado: $(DECODER_SRCS) $(EXPORTER_SRCS) $(DISAS_SRCS)
+#	xsc $(DECODER_SRCS) $(EXPORTER_SRCS) $(DISAS_SRCS) --gcc_compile_options $(DECODER_INC) --gcc_compile_options $(COMMON_INC) --gcc_compile_options $(DISAS_INC) -cppversion 20
 
 sim.riscv_decoder: $(LIB) compile
-		xelab tb_riscv_decoder -relax -s decoder -sv_lib $(basename $(notdir $(LIB)))
-		LD_LIBRARY_PATH=. xsim decoder -testplusarg UVM_TESTNAME=riscv_decoder_from_file_test -testplusarg UVM_VERBOSITY=UVM_LOW -R
+	LD_PRELOAD=$(SOLIB_STDCXX) xelab tb_riscv_decoder -relax -s decoder -sv_lib $(basename $(notdir $(LIB)))
+	LD_PRELOAD=$(SOLIB_STDCXX) LD_LIBRARY_PATH=. xsim decoder -testplusarg UVM_TESTNAME=riscv_decoder_from_file_test -testplusarg UVM_VERBOSITY=UVM_LOW -R
 
 sim.gentb: compile
 	xelab top_tb -relax -s top_tb
