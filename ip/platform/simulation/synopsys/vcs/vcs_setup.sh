@@ -12,7 +12,7 @@
 # or its authorized distributors. Please refer to the applicable 
 # agreement for further details.
 
-# ACDS 22.1 917 linux 2023.07.22.18:42:10
+# ACDS 22.1 917 linux 2023.07.23.17:08:45
 
 # ----------------------------------------
 # vcs - auto-generated simulation script
@@ -94,7 +94,7 @@
 # within the Quartus project, and generate a unified
 # script which supports all the Altera IP within the design.
 # ----------------------------------------
-# ACDS 22.1 917 linux 2023.07.22.18:42:10
+# ACDS 22.1 917 linux 2023.07.23.17:08:45
 # ----------------------------------------
 # initialize variables
 TOP_LEVEL_NAME="platform"
@@ -137,6 +137,7 @@ vcs -lca -timescale=1ps/1ps -sverilog +verilog2001ext+.v -ntb_opts dtm $ELAB_OPT
   -v $QUARTUS_INSTALL_DIR/eda/sim_lib/altera_mf.v \
   $QUARTUS_INSTALL_DIR/eda/sim_lib/altera_lnsim.sv \
   -v $QUARTUS_INSTALL_DIR/eda/sim_lib/cycloneive_atoms.v \
+  $QSYS_SIMDIR/submodules/platform_onchip_memory2_0.v \
   $QSYS_SIMDIR/platform.v \
   -top $TOP_LEVEL_NAME
 # ----------------------------------------

@@ -12,7 +12,7 @@
 # or its authorized distributors. Please refer to the applicable 
 # agreement for further details.
 
-# ACDS 22.1 917 linux 2023.07.22.18:42:10
+# ACDS 22.1 917 linux 2023.07.23.17:08:45
 
 # ----------------------------------------
 # vcsmx - auto-generated simulation script
@@ -107,7 +107,7 @@
 # within the Quartus project, and generate a unified
 # script which supports all the Altera IP within the design.
 # ----------------------------------------
-# ACDS 22.1 917 linux 2023.07.22.18:42:10
+# ACDS 22.1 917 linux 2023.07.23.17:08:45
 # ----------------------------------------
 # initialize variables
 TOP_LEVEL_NAME="platform"
@@ -147,6 +147,7 @@ fi
 # ----------------------------------------
 # create compilation libraries
 mkdir -p ./libraries/work/
+mkdir -p ./libraries/onchip_memory2_0/
 mkdir -p ./libraries/altera_ver/
 mkdir -p ./libraries/lpm_ver/
 mkdir -p ./libraries/sgate_ver/
@@ -171,7 +172,8 @@ fi
 # ----------------------------------------
 # compile design files in correct order
 if [ $SKIP_COM -eq 0 ]; then
-  vlogan +v2k $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/platform.v"
+  vlogan +v2k $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/platform_onchip_memory2_0.v" -work onchip_memory2_0
+  vlogan +v2k $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/platform.v"                                                   
 fi
 
 # ----------------------------------------

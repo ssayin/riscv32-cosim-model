@@ -5,68 +5,108 @@
 import param_defs::*;
 import instr_defs::*;
 
-
-module lsu (
-  input logic clk,
-  input logic rst_n
-);
-
-endmodule
-
 module riscv_core (
   input logic clk,
   input logic rst_n,
 
   // WA Channel
-  output logic        axi_awid,
-  output logic [31:0] axi_awaddr,
-  output logic [ 7:0] axi_awlen,
-  output logic [ 2:0] axi_awsize,
-  output logic [ 1:0] axi_awburst,
-  output logic        axi_awlock,
-  output logic [ 3:0] axi_awcache,
-  output logic [ 2:0] axi_awprot,
-  output logic        axi_awvalid,
-  output logic [ 3:0] axi_awregion,
-  output logic [ 3:0] axi_awqos,
-  input  logic        axi_awready,
+  output logic        axi_awid_f,
+  output logic [31:0] axi_awaddr_f,
+  output logic [ 7:0] axi_awlen_f,
+  output logic [ 2:0] axi_awsize_f,
+  output logic [ 1:0] axi_awburst_f,
+  output logic        axi_awlock_f,
+  output logic [ 3:0] axi_awcache_f,
+  output logic [ 2:0] axi_awprot_f,
+  output logic        axi_awvalid_f,
+  output logic [ 3:0] axi_awregion_f,
+  output logic [ 3:0] axi_awqos_f,
+  input  logic        axi_awready_f,
 
   // WD Channel
-  output logic [63:0] axi_wdata,
-  output logic [ 7:0] axi_wstrb,
-  output logic        axi_wlast,
-  output logic        axi_wvalid,
-  input  logic        axi_wready,
+  output logic [63:0] axi_wdata_f,
+  output logic [ 7:0] axi_wstrb_f,
+  output logic        axi_wlast_f,
+  output logic        axi_wvalid_f,
+  input  logic        axi_wready_f,
 
   // Write Response Channel
-  input  logic       axi_bid,
-  input  logic [1:0] axi_bresp,
-  input  logic       axi_bvalid,
-  output logic       axi_bready,
+  input  logic       axi_bid_f,
+  input  logic [1:0] axi_bresp_f,
+  input  logic       axi_bvalid_f,
+  output logic       axi_bready_f,
 
   // RA Channel
-  output logic        axi_arid,
-  output logic [31:0] axi_araddr,
-  output logic [ 7:0] axi_arlen,
-  output logic [ 2:0] axi_arsize,
-  output logic [ 1:0] axi_arburst,
-  output logic        axi_arlock,
-  output logic [ 3:0] axi_arcache,
-  output logic [ 2:0] axi_arprot,
-  output logic        axi_arvalid,
-  output logic [ 3:0] axi_arqos,
-  output logic [ 3:0] axi_arregion,
-  input  logic        axi_arready,
+  output logic        axi_arid_f,
+  output logic [31:0] axi_araddr_f,
+  output logic [ 7:0] axi_arlen_f,
+  output logic [ 2:0] axi_arsize_f,
+  output logic [ 1:0] axi_arburst_f,
+  output logic        axi_arlock_f,
+  output logic [ 3:0] axi_arcache_f,
+  output logic [ 2:0] axi_arprot_f,
+  output logic        axi_arvalid_f,
+  output logic [ 3:0] axi_arqos_f,
+  output logic [ 3:0] axi_arregion_f,
+  input  logic        axi_arready_f,
 
   // RD Channel
-  input  logic        axi_rid,
-  input  logic [63:0] axi_rdata,
-  input  logic [ 1:0] axi_rresp,
-  input  logic        axi_rlast,
-  input  logic        axi_rvalid,
-  output logic        axi_rready,
+  input  logic        axi_rid_f,
+  input  logic [63:0] axi_rdata_f,
+  input  logic [ 1:0] axi_rresp_f,
+  input  logic        axi_rlast_f,
+  input  logic        axi_rvalid_f,
+  output logic        axi_rready_f,
 
-  output logic [31:1] pc_out_trace
+
+  // WA Channel
+  output logic        axi_awid_m,
+  output logic [31:0] axi_awaddr_m,
+  output logic [ 7:0] axi_awlen_m,
+  output logic [ 2:0] axi_awsize_m,
+  output logic [ 1:0] axi_awburst_m,
+  output logic        axi_awlock_m,
+  output logic [ 3:0] axi_awcache_m,
+  output logic [ 2:0] axi_awprot_m,
+  output logic        axi_awvalid_m,
+  output logic [ 3:0] axi_awregion_m,
+  output logic [ 3:0] axi_awqos_m,
+  input  logic        axi_awready_m,
+
+  // WD Channel
+  output logic [63:0] axi_wdata_m,
+  output logic [ 7:0] axi_wstrb_m,
+  output logic        axi_wlast_m,
+  output logic        axi_wvalid_m,
+  input  logic        axi_wready_m,
+
+  // Write Response Channel
+  input  logic       axi_bid_m,
+  input  logic [1:0] axi_bresp_m,
+  input  logic       axi_bvalid_m,
+  output logic       axi_bready_m,
+
+  // RA Channel
+  output logic        axi_arid_m,
+  output logic [31:0] axi_araddr_m,
+  output logic [ 7:0] axi_arlen_m,
+  output logic [ 2:0] axi_arsize_m,
+  output logic [ 1:0] axi_arburst_m,
+  output logic        axi_arlock_m,
+  output logic [ 3:0] axi_arcache_m,
+  output logic [ 2:0] axi_arprot_m,
+  output logic        axi_arvalid_m,
+  output logic [ 3:0] axi_arqos_m,
+  output logic [ 3:0] axi_arregion_m,
+  input  logic        axi_arready_m,
+
+  // RD Channel
+  input  logic        axi_rid_m,
+  input  logic [63:0] axi_rdata_m,
+  input  logic [ 1:0] axi_rresp_m,
+  input  logic        axi_rlast_m,
+  input  logic        axi_rvalid_m,
+  output logic        axi_rready_m
 );
 
   logic                          flush;
@@ -159,29 +199,31 @@ module riscv_core (
   // impl. separate master axi4 interface for LSU to avoid port contention and stalling
   always_comb begin
     axi_read_state_next = IDLE;
-    axi_arvalid         = 0;
-    axi_araddr[31:0]    = 0;
-    axi_arlen[7:0]      = 0;
-    axi_arburst[1:0]    = 0;
-    axi_rready          = 0;
+    axi_arvalid_f       = 0;
+    axi_araddr_f[31:0]  = 0;
+    axi_arlen_f[7:0]    = 0;
+    axi_arburst_f[1:0]  = 0;
+    axi_rready_f        = 0;
 
     case (axi_read_state)
       IDLE: begin
-        axi_arvalid         = 1'b1;
-        axi_araddr[31:0]    = fetch_addr;
-        axi_arlen[7:0]      = 'b1;  // TODO: probably not gonan impl icc/dcc very soon
-        axi_arburst[1:0]    = 'b01;  // AVN supports INCR only
+        axi_arvalid_f       = 1'b1;
+        axi_araddr_f[31:0]  = fetch_addr;
+        axi_arlen_f[7:0]    = 'b1;  // TODO: probably not gonan impl icc/dcc very soon
+        axi_arburst_f[1:0]  = 'b01;  // AVN supports INCR only
         axi_read_state_next = ADDRESS;
       end
       ADDRESS: begin
-        if (axi_arready) axi_read_state_next = DATA;
+        if (axi_arready_f) axi_read_state_next = DATA;
       end
       DATA: begin
-        axi_rready = 1'b1;
-        if (axi_rvalid) begin
-          fetch_data          = axi_rdata;
+        axi_rready_f = 1'b1;
+        if (axi_rvalid_f) begin
+          fetch_data          = axi_rdata_f;
           axi_read_state_next = IDLE;
         end
+      end
+      default: begin
       end
     endcase
   end
@@ -240,42 +282,14 @@ module riscv_core (
     .*
   );
 
-  assign pc_out_trace      = pc_out;
-
   // TODO: Impl LSU and change wr_en signals
   // assign mem_wr_en[1][0]   = lsu_op_m[3] & lsu_m;  // Store
   // assign mem_rd_en[1]      = ~lsu_op_m[3] & lsu_m;  // Load
   // assign mem_data_out[1]   = store_data_m;  // loaded from reg_file in stage ID1
   // assign mem_addr[1]       = alu_res_m;  // load store
 
-  assign stall             = 'b0;
-  assign pc_update         = should_br || br_mispredictd;
-  assign flush             = br_mispredictd;
+  assign stall     = 'b0;
+  assign pc_update = should_br || br_mispredictd;
+  assign flush     = br_mispredictd;
 
-
-  assign axi_awid          = 0;
-  assign axi_awaddr[31:0]  = 0;
-  assign axi_awlen[7:0]    = 0;
-  assign axi_awsize[2:0]   = 0;
-  assign axi_awburst[1:0]  = 2'b01;
-  assign axi_awlock        = 0;
-  assign axi_awcache[3:0]  = 0;
-  assign axi_awprot[2:0]   = 0;
-  assign axi_awvalid       = 0;
-  assign axi_awregion[3:0] = 0;
-  assign axi_awqos[3:0]    = 0;
-
-  assign axi_wdata[63:0]   = 0;
-  assign axi_wstrb[7:0]    = 0;
-  assign axi_arsize[2:0]   = 0;
-  assign axi_arcache[3:0]  = 0;
-  assign axi_arprot[2:0]   = 0;
-  assign axi_arqos[3:0]    = 0;
-  assign axi_arregion[3:0] = 0;
-  assign axi_wlast         = 0;
-  assign axi_wvalid        = 0;
-
-  assign axi_bready        = 0;
-  assign axi_arid          = 0;
-  assign axi_arlock        = 0;
 endmodule : riscv_core

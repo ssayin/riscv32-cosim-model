@@ -5,3 +5,4 @@ set_global_assignment -library "lib_platform" -name SPD_FILE [file join $::quart
 set_global_assignment -library "lib_platform" -name MISC_FILE [file join $::quartus(sip_path) "../../../platform.qsys"]
 
 set_global_assignment -library "lib_platform" -name MISC_FILE [file join $::quartus(sip_path) "platform.v"]
+set_global_assignment -library "lib_platform" -name MISC_FILE [file join $::quartus(sip_path) "submodules/platform_onchip_memory2_0.v"]

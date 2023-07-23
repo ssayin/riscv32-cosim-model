@@ -2,6 +2,7 @@
 WORK > DEFAULT
 DEFAULT:          ./libraries/work/            
 work:             ./libraries/work/            
+onchip_memory2_0: ./libraries/onchip_memory2_0/
 altera_ver:       ./libraries/altera_ver/      
 lpm_ver:          ./libraries/lpm_ver/         
 sgate_ver:        ./libraries/sgate_ver/       
