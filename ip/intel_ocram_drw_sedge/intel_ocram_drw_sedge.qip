@@ -1,8 +1,0 @@
-set_global_assignment -name IP_TOOL_NAME "RAM: 2-PORT"
-set_global_assignment -name IP_TOOL_VERSION "22.1"
-set_global_assignment -name IP_GENERATED_DEVICE_FAMILY "{Cyclone IV E}"
-set_global_assignment -name VERILOG_FILE [file join $::quartus(qip_path) "intel_ocram_drw_sedge.v"]
-set_global_assignment -name MISC_FILE [file join $::quartus(qip_path) "intel_ocram_drw_sedge.bsf"]
-set_global_assignment -name MISC_FILE [file join $::quartus(qip_path) "intel_ocram_drw_sedge_inst.v"]
-set_global_assignment -name MISC_FILE [file join $::quartus(qip_path) "intel_ocram_drw_sedge_bb.v"]
-set_global_assignment -name MISC_FILE [file join $::quartus(qip_path) "intel_ocram_drw_sedge_syn.v"]

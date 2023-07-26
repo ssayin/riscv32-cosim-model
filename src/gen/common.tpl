@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2023 Serdar Sayın <https://serdarsayin.com>
+#
+# SPDX-License-Identifier: Apache-2.0
+
 dut_top = riscv_core
 
 project = ../tb/uvm_top
@@ -15,10 +19,12 @@ nested_config_objects = yes
 
 backup = no
 
-top_default_seq_count = 10
-top_env_inc_before_class = top_env_inc_before_class.sv inline
+split_transactors = yes
 
-#syosil_scoreboard_src_path = ../../third_party/syoscb-1.0.2.4/src
+top_default_seq_count = 10
+#top_env_inc_before_class = top_env_inc_before_class.sv inline
+
+syosil_scoreboard_src_path = ../../third_party/syoscb-1.0.2.4/src
 
 #ref_model_input = reference m_riscv_core_agent
 
@@ -26,3 +32,5 @@ top_env_inc_before_class = top_env_inc_before_class.sv inline
 #ref_model_inc_after_class = reference reference_inc_after_class.sv inline
 
 #ref_model_compare_method = reference io
+
+th_generate_clock_and_reset = yes

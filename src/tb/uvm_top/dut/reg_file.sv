@@ -5,15 +5,15 @@
 module reg_file #(
     parameter int DATA_WIDTH = 32
 ) (
-    input  logic                  clk,
-    input  logic                  rst_n,
-    input  logic [           4:0] rd_addr,
-    input  logic [           4:0] rs1_addr,
-    input  logic [           4:0] rs2_addr,
-    input  logic [DATA_WIDTH-1:0] rd_data,
-    input  logic                  wr_en,
-    output logic [DATA_WIDTH-1:0] rs1_data,
-    output logic [DATA_WIDTH-1:0] rs2_data
+  input  logic                  clk,
+  input  logic                  rst_n,
+  input  logic [           4:0] rd_addr,
+  input  logic [           4:0] rs1_addr,
+  input  logic [           4:0] rs2_addr,
+  input  logic [DATA_WIDTH-1:0] rd_data,
+  input  logic                  wr_en,
+  output logic [DATA_WIDTH-1:0] rs1_data,
+  output logic [DATA_WIDTH-1:0] rs2_data
 );
 
   // Register File

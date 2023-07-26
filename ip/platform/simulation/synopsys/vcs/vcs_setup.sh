@@ -12,7 +12,7 @@
 # or its authorized distributors. Please refer to the applicable 
 # agreement for further details.
 
-# ACDS 22.1 917 linux 2023.07.23.17:08:45
+# ACDS 22.1 917 linux 2023.07.26.23:16:09
 
 # ----------------------------------------
 # vcs - auto-generated simulation script
@@ -94,7 +94,7 @@
 # within the Quartus project, and generate a unified
 # script which supports all the Altera IP within the design.
 # ----------------------------------------
-# ACDS 22.1 917 linux 2023.07.23.17:08:45
+# ACDS 22.1 917 linux 2023.07.26.23:16:09
 # ----------------------------------------
 # initialize variables
 TOP_LEVEL_NAME="platform"

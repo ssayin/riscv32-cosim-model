@@ -49,21 +49,21 @@ if {$make_assignments} {
 	set_global_assignment -name LAST_QUARTUS_VERSION "22.1std.1 Lite Edition"
 	set_global_assignment -name SEARCH_PATH ./src/rtl/include
 	set_global_assignment -name QIP_FILE ./ip/platform/synthesis/platform.qip
-	set_global_assignment -name SYSTEMVERILOG_FILE ./src/rtl/core/id_stage_1.sv
 	set_global_assignment -name SYSTEMVERILOG_FILE ./src/rtl/core/reg_file.sv
-	set_global_assignment -name SYSTEMVERILOG_FILE ./src/rtl/core/mem_stage.sv
 	set_global_assignment -name SYSTEMVERILOG_FILE ./src/rtl/core/riscv_core.sv
-	set_global_assignment -name SYSTEMVERILOG_FILE ./src/rtl/core/id_stage_0.sv
-	set_global_assignment -name SYSTEMVERILOG_FILE ./src/rtl/core/ex_stage.sv
-	set_global_assignment -name SYSTEMVERILOG_FILE ./src/rtl/core/arith/alu.sv
-	set_global_assignment -name SYSTEMVERILOG_FILE ./src/rtl/core/decoder/riscv_decoder.sv
-	set_global_assignment -name SYSTEMVERILOG_FILE ./src/rtl/core/decoder/riscv_decoder_j.sv
-	set_global_assignment -name SYSTEMVERILOG_FILE ./src/rtl/core/decoder/riscv_decoder_j_no_rr.sv
-	set_global_assignment -name SYSTEMVERILOG_FILE ./src/rtl/core/decoder/riscv_decoder_ctl_imm.sv
-	set_global_assignment -name SYSTEMVERILOG_FILE ./src/rtl/core/decoder/riscv_decoder_j_no_rr_imm.sv
-	set_global_assignment -name SYSTEMVERILOG_FILE ./src/rtl/core/decoder/riscv_decoder_br.sv
-	set_global_assignment -name SYSTEMVERILOG_FILE ./src/rtl/core/decoder/riscv_decoder_gpr.sv
+	set_global_assignment -name SYSTEMVERILOG_FILE ./src/rtl/core/exu/alu.sv
+	set_global_assignment -name SYSTEMVERILOG_FILE ./src/rtl/core/exu/ex_stage.sv
+	set_global_assignment -name SYSTEMVERILOG_FILE ./src/rtl/core/dec/id_stage_0.sv
+	set_global_assignment -name SYSTEMVERILOG_FILE ./src/rtl/core/dec/id_stage_1.sv
+	set_global_assignment -name SYSTEMVERILOG_FILE ./src/rtl/core/dec/riscv_decoder.sv
+	set_global_assignment -name SYSTEMVERILOG_FILE ./src/rtl/core/dec/riscv_decoder_j.sv
+	set_global_assignment -name SYSTEMVERILOG_FILE ./src/rtl/core/dec/riscv_decoder_j_no_rr.sv
+	set_global_assignment -name SYSTEMVERILOG_FILE ./src/rtl/core/dec/riscv_decoder_ctl_imm.sv
+	set_global_assignment -name SYSTEMVERILOG_FILE ./src/rtl/core/dec/riscv_decoder_j_no_rr_imm.sv
+	set_global_assignment -name SYSTEMVERILOG_FILE ./src/rtl/core/dec/riscv_decoder_br.sv
+	set_global_assignment -name SYSTEMVERILOG_FILE ./src/rtl/core/dec/riscv_decoder_gpr.sv
 	set_global_assignment -name SYSTEMVERILOG_FILE ./src/rtl/core/ifu/if_stage.sv
+	set_global_assignment -name SYSTEMVERILOG_FILE ./src/rtl/core/mem/mem_stage.sv
 	set_global_assignment -name SYSTEMVERILOG_FILE ./src/rtl/include/param_defs.sv
 	set_global_assignment -name SYSTEMVERILOG_FILE ./src/rtl/include/instr_defs.sv
 

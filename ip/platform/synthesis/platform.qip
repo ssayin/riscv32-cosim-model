@@ -2,7 +2,7 @@ set_global_assignment -entity "platform" -library "platform" -name IP_TOOL_NAME 
 set_global_assignment -entity "platform" -library "platform" -name IP_TOOL_VERSION "22.1"
 set_global_assignment -entity "platform" -library "platform" -name IP_TOOL_ENV "Qsys"
 set_global_assignment -library "platform" -name SOPCINFO_FILE [file join $::quartus(qip_path) "../../../platform.sopcinfo"]
-set_global_assignment -entity "platform" -library "platform" -name SLD_INFO "QSYS_NAME platform HAS_SOPCINFO 1 GENERATION_ID 1690121325"
+set_global_assignment -entity "platform" -library "platform" -name SLD_INFO "QSYS_NAME platform HAS_SOPCINFO 1 GENERATION_ID 1690402569"
 set_global_assignment -library "platform" -name MISC_FILE [file join $::quartus(qip_path) "../platform.cmp"]
 set_global_assignment -library "platform" -name SLD_FILE [file join $::quartus(qip_path) "platform.debuginfo"]
 set_global_assignment -entity "platform" -library "platform" -name IP_TARGETED_DEVICE_FAMILY "Cyclone IV E"
@@ -15,7 +15,7 @@ set_global_assignment -entity "platform" -library "platform" -name IP_COMPONENT_
 set_global_assignment -entity "platform" -library "platform" -name IP_COMPONENT_REPORT_HIERARCHY "On"
 set_global_assignment -entity "platform" -library "platform" -name IP_COMPONENT_INTERNAL "Off"
 set_global_assignment -entity "platform" -library "platform" -name IP_COMPONENT_VERSION "MS4w"
-set_global_assignment -entity "platform" -library "platform" -name IP_COMPONENT_PARAMETER "QVVUT19HRU5FUkFUSU9OX0lE::MTY5MDEyMTMyNQ==::QXV0byBHRU5FUkFUSU9OX0lE"
+set_global_assignment -entity "platform" -library "platform" -name IP_COMPONENT_PARAMETER "QVVUT19HRU5FUkFUSU9OX0lE::MTY5MDQwMjU2OQ==::QXV0byBHRU5FUkFUSU9OX0lE"
 set_global_assignment -entity "platform" -library "platform" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0VfRkFNSUxZ::Q3ljbG9uZSBJViBF::QXV0byBERVZJQ0VfRkFNSUxZ"
 set_global_assignment -entity "platform" -library "platform" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0U=::RVA0Q0U2RTIyQzg=::QXV0byBERVZJQ0U="
 set_global_assignment -entity "platform" -library "platform" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0VfU1BFRURHUkFERQ==::OA==::QXV0byBERVZJQ0VfU1BFRURHUkFERQ=="
@@ -603,6 +603,20 @@ set_global_assignment -library "platform" -name VERILOG_FILE [file join $::quart
 set_global_assignment -library "platform" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/riscv_core.sv"]
 set_global_assignment -library "platform" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/instr_defs.sv"]
 set_global_assignment -library "platform" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/param_defs.sv"]
+set_global_assignment -library "platform" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/reg_file.sv"]
+set_global_assignment -library "platform" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/mem.sv"]
+set_global_assignment -library "platform" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/ifu.sv"]
+set_global_assignment -library "platform" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/alu.sv"]
+set_global_assignment -library "platform" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/exu.sv"]
+set_global_assignment -library "platform" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/id0.sv"]
+set_global_assignment -library "platform" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/id1.sv"]
+set_global_assignment -library "platform" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/riscv_decoder.sv"]
+set_global_assignment -library "platform" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/riscv_decoder_br.sv"]
+set_global_assignment -library "platform" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/riscv_decoder_ctl_imm.sv"]
+set_global_assignment -library "platform" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/riscv_decoder_gpr.sv"]
+set_global_assignment -library "platform" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/riscv_decoder_j.sv"]
+set_global_assignment -library "platform" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/riscv_decoder_j_no_rr.sv"]
+set_global_assignment -library "platform" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/riscv_decoder_j_no_rr_imm.sv"]
 set_global_assignment -library "platform" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/platform_onchip_memory2_0.v"]
 
 set_global_assignment -entity "platform_mm_interconnect_1" -library "platform" -name IP_TOOL_NAME "altera_mm_interconnect"

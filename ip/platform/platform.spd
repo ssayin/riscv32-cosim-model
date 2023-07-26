@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simPackage>
+ <file
+   path="simulation/submodules/platform_onchip_memory2_0.v"
+   type="VERILOG"
+   library="onchip_memory2_0" />
+ <file path="simulation/platform.v" type="VERILOG" />
+ <topLevel name="platform" />
+ <deviceFamily name="cycloneive" />
+ <modelMap
+   controllerPath="platform.onchip_memory2_0"
+   modelPath="platform.onchip_memory2_0" />
+</simPackage>

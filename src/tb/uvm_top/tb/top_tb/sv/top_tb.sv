@@ -13,12 +13,12 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Fri Jul 21 13:05:27 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Wed Jul 26 23:05:54 2023
 //=============================================================================
 // Description: Testbench
 //=============================================================================
 
-module top_tb;
+module top_untimed_tb;
 
   timeunit      1ns;
   timeprecision 1ps;
@@ -33,9 +33,6 @@ module top_tb;
   // Configuration object for top-level environment
   top_config top_env_config;
 
-  // Test harness
-  top_th th();
-
   // You can insert code here by setting tb_inc_inside_module in file common.tpl
 
   // You can remove the initial block below by setting tb_generate_run_test = no in file common.tpl
@@ -47,9 +44,10 @@ module top_tb;
     // Create and populate top-level configuration object
     top_env_config = new("top_env_config");
     if ( !top_env_config.randomize() )
-      `uvm_error("top_tb", "Failed to randomize top-level configuration object" )
+      `uvm_error("top_untimed_tb", "Failed to randomize top-level configuration object" )
 
-    top_env_config.m_riscv_core_config.vif = th.riscv_core_if_0;
+    top_env_config.m_busf_config.vif = top_hdl_th.busf_bfm_0;
+    top_env_config.m_busm_config.vif = top_hdl_th.busm_bfm_0;
 
     uvm_config_db #(top_config)::set(null, "uvm_test_top", "config", top_env_config);
     uvm_config_db #(top_config)::set(null, "uvm_test_top.m_env", "config", top_env_config);

@@ -76,12 +76,8 @@ sim.riscv_decoder: $(LIB) compile
 	LD_PRELOAD=$(SOLIB_STDCXX) LD_LIBRARY_PATH=. xsim decoder -testplusarg UVM_TESTNAME=riscv_decoder_from_file_test -testplusarg UVM_VERBOSITY=UVM_LOW -R
 
 sim.gentb: compile
-	xelab top_tb -relax -s top_tb
+	xelab top_untimed_tb top_hdl_th -relax -s top_tb
 	xsim top_tb -testplusarg UVM_TESTNAME=top_test -testplusarg UVM_VERBOSITY=UVM_HIGH -R
-
-sim.riscv_core: compile 
-	xelab tb_riscv_core -relax -s core
-	xsim core -testplusarg UVM_TESTNAME=riscv_core_from_file_test -testplusarg UVM_VERBOSITY=UVM_LOW -R
 
 # For synthesizing on Quartus Lite Software
 # Quartus Lite does not support incremental flow,

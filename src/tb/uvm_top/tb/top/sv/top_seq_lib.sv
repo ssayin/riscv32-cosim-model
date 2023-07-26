@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Fri Jul 21 13:05:27 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Wed Jul 26 23:05:54 2023
 //=============================================================================
 // Description: Sequence for top
 //=============================================================================
@@ -25,9 +25,10 @@ class top_default_seq extends uvm_sequence #(uvm_sequence_item);
 
   `uvm_object_utils(top_default_seq)
 
-  top_config        m_config;
-         
-  riscv_core_agent  m_riscv_core_agent;
+  top_config  m_config;
+   
+  busf_agent  m_busf_agent;
+  busm_agent  m_busm_agent;
 
   // Number of times to repeat child sequences
   int m_seq_count = 10;
@@ -58,16 +59,27 @@ task top_default_seq::body();
   repeat (m_seq_count)
   begin
     fork
-      if (m_riscv_core_agent.m_config.is_active == UVM_ACTIVE)
+      if (m_busf_agent.m_config.is_active == UVM_ACTIVE)
       begin
-        riscv_core_default_seq seq;
-        seq = riscv_core_default_seq::type_id::create("seq");
-        seq.set_item_context(this, m_riscv_core_agent.m_sequencer);
+        busf_default_seq seq;
+        seq = busf_default_seq::type_id::create("seq");
+        seq.set_item_context(this, m_busf_agent.m_sequencer);
         if ( !seq.randomize() )
           `uvm_error(get_type_name(), "Failed to randomize sequence")
-        seq.m_config = m_riscv_core_agent.m_config;
+        seq.m_config = m_busf_agent.m_config;
         seq.set_starting_phase( get_starting_phase() );
-        seq.start(m_riscv_core_agent.m_sequencer, this);
+        seq.start(m_busf_agent.m_sequencer, this);
+      end
+      if (m_busm_agent.m_config.is_active == UVM_ACTIVE)
+      begin
+        busm_default_seq seq;
+        seq = busm_default_seq::type_id::create("seq");
+        seq.set_item_context(this, m_busm_agent.m_sequencer);
+        if ( !seq.randomize() )
+          `uvm_error(get_type_name(), "Failed to randomize sequence")
+        seq.m_config = m_busm_agent.m_config;
+        seq.set_starting_phase( get_starting_phase() );
+        seq.start(m_busm_agent.m_sequencer, this);
       end
     join
   end

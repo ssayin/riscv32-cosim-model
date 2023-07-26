@@ -1,11 +1,2 @@
-ram2.sv.bak
-reg_file.sv.bak
-id_stage_1.sv
 reg_file.sv
-mem_stage.sv
 riscv_core.sv
-id_stage_0.sv
-riscv_core.sv.bak
-if_dec.sv.bak
-ex_stage.sv
-riscv_decoder.sv.bak

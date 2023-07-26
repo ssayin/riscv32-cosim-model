@@ -16,13 +16,18 @@ append cmd " +incdir+../tb/include "
 
 # Compile the agents
 set agent_list {\ 
-    riscv_core \
+    busf \
+    busm \
 }
 foreach  ele $agent_list {
   if {$ele != " "} {
     append cmd " +incdir+../tb/" $ele "/sv ../tb/" $ele "/sv/" $ele "_pkg.sv ../tb/" $ele "/sv/" $ele "_if.sv"
+    append cmd " ../tb/" $ele "/sv/" $ele "_bfm.sv"
   }
 }
+
+# Compile the Syosil scoreboard
+append cmd  " +incdir+../../../../third_party/syoscb-1.0.2.4/src ../../../../third_party/syoscb-1.0.2.4/src/pk_syoscb.sv"
 
 # Compile the test and the modules
 append cmd " +incdir+../tb/" $tb_name "/sv"
@@ -32,6 +37,6 @@ append cmd " ../tb/" $tb_name "_tb/sv/" $tb_name "_th.sv"
 append cmd " ../tb/" $tb_name "_tb/sv/" $tb_name "_tb.sv"
 eval $cmd
 
-asim top_tb +UVM_TESTNAME=top_test  -voptargs=+acc -solvefaildebug -uvmcontrol=all -classdebug
+asim top_untimed_tb top_hdl_th +UVM_TESTNAME=top_test  -voptargs=+acc -solvefaildebug -uvmcontrol=all -classdebug
 run -all
 quit

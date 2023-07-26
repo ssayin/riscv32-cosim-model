@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Fri Jul 21 13:05:27 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Wed Jul 26 23:05:54 2023
 //=============================================================================
 // Description: Package for top
 //=============================================================================
@@ -24,7 +24,8 @@ package top_pkg;
 
   import uvm_pkg::*;
 
-  import riscv_core_pkg::*;
+  import busf_pkg::*;
+  import busm_pkg::*;
 
   `include "top_config.sv"
   `include "top_seq_lib.sv"

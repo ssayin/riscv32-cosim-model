@@ -1,4 +1,4 @@
-TPLS := riscv_core.tpl
+TPLS := busf.tpl busm.tpl
 
 gen: $(TPLS)
 	@echo "Regenerating UVM_TOP"

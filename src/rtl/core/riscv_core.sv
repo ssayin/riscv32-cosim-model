@@ -174,76 +174,14 @@ module riscv_core (
   logic                          br_mispredictd;
 
   logic                          stall;
+  logic                          stall_f;
 
-  logic      [             31:0] fetch_addr;
-  logic      [             63:0] fetch_data;
-  logic      [             31:0] load_addr;
-  logic      [             63:0] load_data;
-
-
-  assign data_in  = 0;
   assign flush_d0 = 0;
   assign flush_d1 = 0;
 
-
-  typedef enum logic [1:0] {
-    IDLE    = 2'b00,
-    ADDRESS = 2'b01,
-    DATA    = 2'b10
-  } axi_state_t;
-
-  axi_state_t axi_read_state;
-  axi_state_t axi_read_state_next;
-
-  // TODO: move FSM logic somewhere else
-  // impl. separate master axi4 interface for LSU to avoid port contention and stalling
-  always_comb begin
-    axi_read_state_next = IDLE;
-    axi_arvalid_f       = 0;
-    axi_araddr_f[31:0]  = 0;
-    axi_arlen_f[7:0]    = 0;
-    axi_arburst_f[1:0]  = 0;
-    axi_rready_f        = 0;
-
-    case (axi_read_state)
-      IDLE: begin
-        axi_arvalid_f       = 1'b1;
-        axi_araddr_f[31:0]  = fetch_addr;
-        axi_arlen_f[7:0]    = 'b1;  // TODO: probably not gonan impl icc/dcc very soon
-        axi_arburst_f[1:0]  = 'b01;  // AVN supports INCR only
-        axi_read_state_next = ADDRESS;
-      end
-      ADDRESS: begin
-        if (axi_arready_f) axi_read_state_next = DATA;
-      end
-      DATA: begin
-        axi_rready_f = 1'b1;
-        if (axi_rvalid_f) begin
-          fetch_data          = axi_rdata_f;
-          axi_read_state_next = IDLE;
-        end
-      end
-      default: begin
-      end
-    endcase
-  end
-
-  always_ff @(posedge clk or negedge rst_n) begin
-    if (!rst_n) begin
-      axi_read_state <= IDLE;
-    end else begin
-      axi_read_state <= axi_read_state_next;
-    end
-  end
-
-  assign fetch_addr = {pc_d0, 1'b0};
-
-
-
-  if_stage if_stage_0 (
+  ifu ifu_0 (
     .clk          (clk),
     .rst_n        (rst_n),
-    .mem_rd       (fetch_addr),
     .flush_f      (flush),
     .pc_in        (alu_res_m),
     .pc_update    (pc_update),
@@ -252,13 +190,14 @@ module riscv_core (
     .pc_d0        (pc_d0),
     .compressed_d0(compressed_d0),
     .br_d0        (br_d0),
-    .br_taken_d0  (br_taken_d0)
+    .br_taken_d0  (br_taken_d0),
+    .*
   );
 
   reg_file #(
       .DATA_WIDTH(DataWidth)
   ) register_file_inst (
-    .clk     (clk),
+    .clk     (clk & stall_f),
     .rst_n   (rst_n),
     .rd_addr (rd_addr_wb),
     .rs1_addr(rs1_addr_r),
@@ -269,27 +208,35 @@ module riscv_core (
     .rs2_data(rs2_data_e)
   );
 
-  ex_stage ex_stage_0 (.*);
-
-  id_stage_0 _id_stage_0 (.*);
-
-  id_stage_1 _id_stage_1 (.*);
-
-  mem_stage mem_stage_0 (
-    .clk   (clk),
-    .rst_n (rst_n),
-    .mem_in(data_in),
+  exu exu_0 (
+    .clk(clk & stall_f),
     .*
   );
 
-  // TODO: Impl LSU and change wr_en signals
-  // assign mem_wr_en[1][0]   = lsu_op_m[3] & lsu_m;  // Store
-  // assign mem_rd_en[1]      = ~lsu_op_m[3] & lsu_m;  // Load
-  // assign mem_data_out[1]   = store_data_m;  // loaded from reg_file in stage ID1
-  // assign mem_addr[1]       = alu_res_m;  // load store
+  id0 id0_0 (
+    .clk(clk & stall_f),
+    .*
+  );
+
+  id1 id1_0 (
+    .clk(clk & stall_f),
+    .*
+  );
+
+  mem mem_0 (
+    .clk(clk & stall_f),
+    .*
+  );
+
 
   assign stall     = 'b0;
   assign pc_update = should_br || br_mispredictd;
   assign flush     = br_mispredictd;
+
+
+  initial begin
+    $dumpfile("top.vcd");
+    $dumpvars(0, riscv_core);
+  end
 
 endmodule : riscv_core

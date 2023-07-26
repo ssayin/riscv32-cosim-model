@@ -5,66 +5,108 @@
 import param_defs::*;
 import instr_defs::*;
 
-
-module lsu (
-  input logic clk,
-  input logic rst_n
-);
-
-endmodule
-
 module riscv_core (
   input logic clk,
   input logic rst_n,
 
   // WA Channel
-  output logic        axi_awid,
-  output logic [31:0] axi_awaddr,
-  output logic [ 7:0] axi_awlen,
-  output logic [ 2:0] axi_awsize,
-  output logic [ 1:0] axi_awburst,
-  output logic        axi_awlock,
-  output logic [ 3:0] axi_awcache,
-  output logic [ 2:0] axi_awprot,
-  output logic        axi_awvalid,
-  output logic [ 3:0] axi_awregion,
-  output logic [ 3:0] axi_awqos,
-  input  logic        axi_awready,
+  output logic        axi_awid_f,
+  output logic [31:0] axi_awaddr_f,
+  output logic [ 7:0] axi_awlen_f,
+  output logic [ 2:0] axi_awsize_f,
+  output logic [ 1:0] axi_awburst_f,
+  output logic        axi_awlock_f,
+  output logic [ 3:0] axi_awcache_f,
+  output logic [ 2:0] axi_awprot_f,
+  output logic        axi_awvalid_f,
+  output logic [ 3:0] axi_awregion_f,
+  output logic [ 3:0] axi_awqos_f,
+  input  logic        axi_awready_f,
 
   // WD Channel
-  output logic [63:0] axi_wdata,
-  output logic [ 7:0] axi_wstrb,
-  output logic        axi_wlast,
-  output logic        axi_wvalid,
-  input  logic        axi_wready,
+  output logic [63:0] axi_wdata_f,
+  output logic [ 7:0] axi_wstrb_f,
+  output logic        axi_wlast_f,
+  output logic        axi_wvalid_f,
+  input  logic        axi_wready_f,
 
   // Write Response Channel
-  input  logic       axi_bid,
-  input  logic [1:0] axi_bresp,
-  input  logic       axi_bvalid,
-  output logic       axi_bready,
+  input  logic       axi_bid_f,
+  input  logic [1:0] axi_bresp_f,
+  input  logic       axi_bvalid_f,
+  output logic       axi_bready_f,
 
   // RA Channel
-  output logic        axi_arid,
-  output logic [31:0] axi_araddr,
-  output logic [ 7:0] axi_arlen,
-  output logic [ 2:0] axi_arsize,
-  output logic [ 1:0] axi_arburst,
-  output logic        axi_arlock,
-  output logic [ 3:0] axi_arcache,
-  output logic [ 2:0] axi_arprot,
-  output logic        axi_arvalid,
-  output logic [ 3:0] axi_arqos,
-  output logic [ 3:0] axi_arregion,
-  input  logic        axi_arready,
+  output logic        axi_arid_f,
+  output logic [31:0] axi_araddr_f,
+  output logic [ 7:0] axi_arlen_f,
+  output logic [ 2:0] axi_arsize_f,
+  output logic [ 1:0] axi_arburst_f,
+  output logic        axi_arlock_f,
+  output logic [ 3:0] axi_arcache_f,
+  output logic [ 2:0] axi_arprot_f,
+  output logic        axi_arvalid_f,
+  output logic [ 3:0] axi_arqos_f,
+  output logic [ 3:0] axi_arregion_f,
+  input  logic        axi_arready_f,
 
   // RD Channel
-  input  logic        axi_rid,
-  input  logic [63:0] axi_rdata,
-  input  logic [ 1:0] axi_rresp,
-  input  logic        axi_rlast,
-  input  logic        axi_rvalid,
-  output logic        axi_rready
+  input  logic        axi_rid_f,
+  input  logic [63:0] axi_rdata_f,
+  input  logic [ 1:0] axi_rresp_f,
+  input  logic        axi_rlast_f,
+  input  logic        axi_rvalid_f,
+  output logic        axi_rready_f,
+
+
+  // WA Channel
+  output logic        axi_awid_m,
+  output logic [31:0] axi_awaddr_m,
+  output logic [ 7:0] axi_awlen_m,
+  output logic [ 2:0] axi_awsize_m,
+  output logic [ 1:0] axi_awburst_m,
+  output logic        axi_awlock_m,
+  output logic [ 3:0] axi_awcache_m,
+  output logic [ 2:0] axi_awprot_m,
+  output logic        axi_awvalid_m,
+  output logic [ 3:0] axi_awregion_m,
+  output logic [ 3:0] axi_awqos_m,
+  input  logic        axi_awready_m,
+
+  // WD Channel
+  output logic [63:0] axi_wdata_m,
+  output logic [ 7:0] axi_wstrb_m,
+  output logic        axi_wlast_m,
+  output logic        axi_wvalid_m,
+  input  logic        axi_wready_m,
+
+  // Write Response Channel
+  input  logic       axi_bid_m,
+  input  logic [1:0] axi_bresp_m,
+  input  logic       axi_bvalid_m,
+  output logic       axi_bready_m,
+
+  // RA Channel
+  output logic        axi_arid_m,
+  output logic [31:0] axi_araddr_m,
+  output logic [ 7:0] axi_arlen_m,
+  output logic [ 2:0] axi_arsize_m,
+  output logic [ 1:0] axi_arburst_m,
+  output logic        axi_arlock_m,
+  output logic [ 3:0] axi_arcache_m,
+  output logic [ 2:0] axi_arprot_m,
+  output logic        axi_arvalid_m,
+  output logic [ 3:0] axi_arqos_m,
+  output logic [ 3:0] axi_arregion_m,
+  input  logic        axi_arready_m,
+
+  // RD Channel
+  input  logic        axi_rid_m,
+  input  logic [63:0] axi_rdata_m,
+  input  logic [ 1:0] axi_rresp_m,
+  input  logic        axi_rlast_m,
+  input  logic        axi_rvalid_m,
+  output logic        axi_rready_m
 );
 
   logic                          flush;
@@ -132,72 +174,69 @@ module riscv_core (
   logic                          br_mispredictd;
 
   logic                          stall;
+  logic                          stall_f;
 
-  /*
-  if_stage if_stage_0 (
-      .clk          (clk),
-      .rst_n        (rst_n),
-      .mem_rd       (mem_data_in[0]),
-      .flush_f      (flush),
-      .pc_in        (alu_res_m),
-      .pc_update    (pc_update),
-      .pc_out       (pc_out),
-      .instr_d0     (instr_d0),
-      .pc_d0        (pc_d0),
-      .compressed_d0(compressed_d0),
-      .br_d0        (br_d0),
-      .br_taken_d0  (br_taken_d0)
+  assign flush_d0 = 0;
+  assign flush_d1 = 0;
+
+  ifu ifu_0 (
+    .clk          (clk),
+    .rst_n        (rst_n),
+    .flush_f      (flush),
+    .pc_in        (alu_res_m),
+    .pc_update    (pc_update),
+    .pc_out       (pc_out),
+    .instr_d0     (instr_d0),
+    .pc_d0        (pc_d0),
+    .compressed_d0(compressed_d0),
+    .br_d0        (br_d0),
+    .br_taken_d0  (br_taken_d0),
+    .*
   );
 
   reg_file #(
       .DATA_WIDTH(DataWidth)
   ) register_file_inst (
-      .clk     (clk),
-      .rst_n   (rst_n),
-      .rd_addr (rd_addr_wb),
-      .rs1_addr(rs1_addr_r),
-      .rs2_addr(rs2_addr_r),
-      .rd_data (rd_data_wb),
-      .wr_en   (rd_en_wb),
-      .rs1_data(rs1_data_e),
-      .rs2_data(rs2_data_e)
+    .clk     (clk & stall_f),
+    .rst_n   (rst_n),
+    .rd_addr (rd_addr_wb),
+    .rs1_addr(rs1_addr_r),
+    .rs2_addr(rs2_addr_r),
+    .rd_data (rd_data_wb),
+    .wr_en   (rd_en_wb),
+    .rs1_data(rs1_data_e),
+    .rs2_data(rs2_data_e)
   );
 
-  ex_stage ex_stage_0 (.*);
-
-  id_stage_0 _id_stage_0 (.*);
-
-  id_stage_1 _id_stage_1 (.*);
-
-  mem_stage mem_stage_0 (
-      .clk   (clk),
-      .rst_n (rst_n),
-      .mem_in(mem_data_in[1]),
-      .*
+  exu exu_0 (
+    .clk(clk & stall_f),
+    .*
   );
 
-  // TODO: Impl LSU and change wr_en signals
-  assign mem_wr_en[1][0]   = lsu_op_m[3] & lsu_m;  // Store
-  assign mem_rd_en[1]      = ~lsu_op_m[3] & lsu_m;  // Load
-  assign mem_data_out[1]   = store_data_m;  // loaded from reg_file in stage ID1
-  assign mem_addr[1]       = alu_res_m;  // load store
+  id0 id0_0 (
+    .clk(clk & stall_f),
+    .*
+  );
 
-  assign stall             = 'b0;
+  id1 id1_0 (
+    .clk(clk & stall_f),
+    .*
+  );
 
-  assign if_stage_clk_en   = !stall;
-  assign id_stage_0_clk_en = !stall;
-  assign id_stage_1_clk_en = !stall;
-  assign mem_stage_clk_en  = !stall;
-  assign wb_stage_clk_en   = !stall;
-  assign reg_file_clk_en   = !stall;
+  mem mem_0 (
+    .clk(clk & stall_f),
+    .*
+  );
 
-  assign mem_rd_en[0]      = 'b1;  // always fetch
 
-  assign pc_update         = should_br || br_mispredictd;
+  assign stall     = 'b0;
+  assign pc_update = should_br || br_mispredictd;
+  assign flush     = br_mispredictd;
 
-  assign flush             = br_mispredictd;
 
-  assign mem_clk_en        = 1;
-  */
+  initial begin
+    $dumpfile("top.vcd");
+    $dumpvars(0, riscv_core);
+  end
 
 endmodule : riscv_core

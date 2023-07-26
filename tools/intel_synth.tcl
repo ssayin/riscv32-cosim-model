@@ -34,7 +34,7 @@ set platform_qip_file $qip_path/platform/synthesis/platform.qip
 #set_global_assignment -name VERILOG_FILE $ocram_drw_path/intel_ocram_drw_sedge.v
 
 # Set the directory containing your source files
-set source_directories [list ./src/rtl/core ./src/rtl/core/arith ./src/rtl/core/decoder ./src/rtl/core/ifu ./src/rtl/include]
+set source_directories [list ./src/rtl/core ./src/rtl/core/exu ./src/rtl/core/dec ./src/rtl/core/ifu ./src/rtl/mem ./src/rtl/include]
 
 # Iterate over the source directories
 foreach src_dir $source_directories {
