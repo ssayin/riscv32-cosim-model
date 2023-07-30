@@ -29,6 +29,10 @@
 ./src/rtl/core/dec/id1.sv
 ./src/rtl/core/exu/exu.sv
 ./src/rtl/core/mem/mem.sv
+./src/rtl/ssram.sv
+./src/rtl/ssram_ctrl.sv
+./src/rtl/top_level.sv
+./src/rtl/tb_top_level.sv
 ./src/dpi/svdpi_pkg.sv
 ./src/tb/riscv_decoder_uvm/uvc/riscv_decoder_pkg.sv 
 ./src/tb/riscv_decoder_uvm/env/riscv_decoder_ref_model_pkg.sv 

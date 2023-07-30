@@ -79,6 +79,10 @@ sim.gentb: compile
 	xelab top_untimed_tb top_hdl_th -relax -s top_tb
 	xsim top_tb -testplusarg UVM_TESTNAME=top_test -testplusarg UVM_VERBOSITY=UVM_HIGH -R
 
+sim.tb_toplevel: compile
+	xelab tb_top_level -relax -s tb_toplevel
+	xsim tb_toplevel -R
+
 # For synthesizing on Quartus Lite Software
 # Quartus Lite does not support incremental flow,
 # thus I had to run these programs in succession.
