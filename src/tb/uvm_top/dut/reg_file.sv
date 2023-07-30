@@ -25,6 +25,8 @@ module reg_file #(
       for (int j = 1; j < 32; j++) begin
         reg_file[j] <= {DATA_WIDTH{1'b0}};
       end
+      rs1_data <= 0;
+      rs2_data <= 0;
     end else begin
       if ((rd_addr != 5'h0) && wr_en) begin
         reg_file[rd_addr] <= rd_data;

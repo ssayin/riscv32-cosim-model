@@ -213,10 +213,7 @@ module riscv_decoder_ctl_imm (
 
         end
 
-        `C_LUI:
-        {use_imm, alu_op, rd_en, ctl.alu, ctl.lui, imm} = {
-          1'b1, ALU_ADD, 1'b1, 1'b1, 1'b1, c_imm_lui
-        };
+        `C_LUI: {use_imm, alu_op, rd_en, ctl.alu, ctl.lui, imm} = {1'b1, ALU_ADD, 1'b1, 1'b1, 1'b1, c_imm_lui};
 
         `C_SRLI: {use_imm, alu_op, rd_en, ctl.alu, imm} = {1'b1, ALU_SRL, 1'b1, 1'b1, c_imm6};
         `C_SRAI: {use_imm, alu_op, rd_en, ctl.alu, imm} = {1'b1, ALU_SRA, 1'b1, 1'b1, c_imm6};
@@ -309,12 +306,8 @@ module riscv_decoder_ctl_imm (
         //  ╦   ╔═╗╦═╗╔═╗  ╔╗ ╦═╗╔═╗╔╗╔╔═╗╦ ╦
         //  ║───╠═╝╠╦╝║╣───╠╩╗╠╦╝╠═╣║║║║  ╠═╣
         //  ╩   ╩  ╩╚═╚═╝  ╚═╝╩╚═╩ ╩╝╚╝╚═╝╩ ╩
-        `AUIPC:
-        {use_imm, use_pc, alu_op, ctl.alu, ctl.auipc, rd_en, imm} = {
-          1'b1, 1'b1, ALU_ADD, 1'b1, 1'b1, 1'b1, imm_U
-        };
-        `LUI:
-        {use_imm, alu_op, ctl.alu, ctl.lui, rd_en, imm} = {1'b1, ALU_ADD, 1'b1, 1'b1, 1'b1, imm_U};
+        `AUIPC: {use_imm, use_pc, alu_op, ctl.alu, ctl.auipc, rd_en, imm} = {1'b1, 1'b1, ALU_ADD, 1'b1, 1'b1, 1'b1, imm_U};
+        `LUI:   {use_imm, alu_op, ctl.alu, ctl.lui, rd_en, imm} = {1'b1, ALU_ADD, 1'b1, 1'b1, 1'b1, imm_U};
 
         //  ╦  ╔═╗╔═╗╔╦╗
         //  ║  ║ ║╠═╣ ║║

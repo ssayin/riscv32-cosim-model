@@ -12,7 +12,7 @@ set device_part EP4CE6E22C8
 project_new $project_name -overwrite
 
 # Set the top-level SystemVerilog file
-set top_level_file "./src/rtl/top_level.sv"
+set top_level_file "./src/rtl/core/riscv_core.sv"
 
 # Add the SystemVerilog file to the project
 set_global_assignment -name SYSTEMVERILOG_FILE $top_level_file
@@ -23,9 +23,9 @@ set_global_assignment -name DEVICE $device_part
 
 set_global_assignment -name SEARCH_PATH ./src/rtl/include
 
-set qip_path ./ip
+#set qip_path ./ip
 #set ocram_drw_qip_file $qip_path/intel_ocram_drw_sedge/intel_ocram_drw_sedge.qip
-set platform_qip_file $qip_path/platform/synthesis/platform.qip
+#set platform_qip_file $qip_path/platform/synthesis/platform.qip
 
 # add IP block
 # set_global_assignment -name QIP_FILE $ocram_drw_qip_file

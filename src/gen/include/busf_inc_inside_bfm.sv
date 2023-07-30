@@ -40,7 +40,7 @@ task drive(axi4_tx_s req_s);
   if_port.rdata    <= req_s.rdata;
   if_port.rresp    <= req_s.rresp;
   if_port.rlast    <= req_s.rlast;
-  if_port.rvalid   <= req_s.rvalid;
+  if_port.rvalid   <= 1;  //req_s.rvalid;
   if_port.rready   <= req_s.rready;
   @(posedge if_port.clk);
 endtask

@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Wed Jul 26 23:05:54 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Sun Jul 30 15:03:49 2023
 //=============================================================================
 // Description: Synthesizable BFM for agent busf
 //=============================================================================
@@ -71,7 +71,7 @@ interface busf_bfm(busf_if if_port);
     if_port.rdata    <= req_s.rdata;
     if_port.rresp    <= req_s.rresp;
     if_port.rlast    <= req_s.rlast;
-    if_port.rvalid   <= req_s.rvalid;
+    if_port.rvalid   <= 1;  //req_s.rvalid;
     if_port.rready   <= req_s.rready;
     @(posedge if_port.clk);
   endtask

@@ -119,6 +119,7 @@ module riscv_core (
   logic                          compressed_d0;
   logic                          br_d0;
   logic                          br_taken_d0;
+  logic                          illegal_d0;
 
   logic      [             31:0] instr_d1;
   logic      [             31:1] pc_d1;
@@ -126,6 +127,7 @@ module riscv_core (
   logic                          br_d1;
   logic                          br_taken_d1;
   reg_addr_t                     rd_addr_d1;
+  logic                          illegal_d1;
 
   logic      [             31:1] pc_e;
   logic                          compressed_e;
@@ -183,7 +185,7 @@ module riscv_core (
     .clk          (clk),
     .rst_n        (rst_n),
     .flush_f      (flush),
-    .pc_in        (alu_res_m),
+    .pc_in        (alu_res_m[31:1]),
     .pc_update    (pc_update),
     .pc_out       (pc_out),
     .instr_d0     (instr_d0),
@@ -229,10 +231,29 @@ module riscv_core (
   );
 
 
-  assign stall     = 'b0;
-  assign pc_update = should_br || br_mispredictd;
-  assign flush     = br_mispredictd;
+  assign stall               = 'b0;
+  assign pc_update           = should_br || br_mispredictd;
+  assign flush               = br_mispredictd;
 
+  assign axi_awid_f          = 0;
+  assign axi_awaddr_f[31:0]  = 0;
+  assign axi_awlen_f[7:0]    = 0;
+  assign axi_awsize_f[2:0]   = 0;
+  assign axi_awburst_f[1:0]  = 2'b01;
+  assign axi_awlock_f        = 0;
+  assign axi_awcache_f[3:0]  = 0;
+  assign axi_awprot_f[2:0]   = 0;
+  assign axi_awvalid_f       = 0;
+  assign axi_awregion_f[3:0] = 0;
+  assign axi_awqos_f[3:0]    = 0;
+
+  assign axi_wdata_f[63:0]   = 0;
+  assign axi_wstrb_f[7:0]    = 0;
+
+  assign axi_wlast_f         = 0;
+  assign axi_wvalid_f        = 0;
+
+  assign axi_bready_f        = 0;
 
   initial begin
     $dumpfile("top.vcd");

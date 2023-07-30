@@ -53,9 +53,9 @@ trans_var = rand logic        rready;
 #driver_inc = riscv_core_do_drive.sv  inline
 #monitor_inc = riscv_core_do_mon.sv   inline
 #trans_inc_before_class = riscv_core_inc_before_class.sv inline
-#agent_seq_inc = my_riscv_core_seq.sv inline
+#agent_seq_inc = my_busf_seq.sv inline
 
-#agent_factory_set = riscv_core_default_seq my_riscv_core_seq
+#agent_factory_set = busf_default_seq my_busf_seq
 
 trans_inc_before_class       = bus_trans_inc_before_class.sv    inline
 driver_inc_inside_class      = bus_driver_inc_inside_class.sv   inline

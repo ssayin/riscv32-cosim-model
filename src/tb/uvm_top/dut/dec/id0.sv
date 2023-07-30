@@ -5,22 +5,24 @@
 import instr_defs::*;
 
 module id0 (
-    input  logic             clk,
-    input  logic             rst_n,
-    input  logic             flush_d0,
-    output reg_addr_t        rd_addr_d1,
-    output reg_addr_t        rs1_addr_r,
-    output reg_addr_t        rs2_addr_r,
-    input  logic      [31:0] instr_d0,
-    input  logic      [31:1] pc_d0,
-    input  logic             compressed_d0,
-    input  logic             br_d0,
-    input  logic             br_taken_d0,
-    output logic      [31:0] instr_d1,
-    output logic      [31:1] pc_d1,
-    output logic             compressed_d1,
-    output logic             br_d1,
-    output logic             br_taken_d1
+  input  logic             clk,
+  input  logic             rst_n,
+  input  logic             flush_d0,
+  output reg_addr_t        rd_addr_d1,
+  output reg_addr_t        rs1_addr_r,
+  output reg_addr_t        rs2_addr_r,
+  input  logic      [31:0] instr_d0,
+  input  logic      [31:1] pc_d0,
+  input  logic             compressed_d0,
+  input  logic             br_d0,
+  input  logic             br_taken_d0,
+  input  logic             illegal_d0,
+  output logic      [31:0] instr_d1,
+  output logic      [31:1] pc_d1,
+  output logic             compressed_d1,
+  output logic             br_d1,
+  output logic             br_taken_d1,
+  output logic             illegal_d1
 );
 
 
@@ -31,18 +33,18 @@ module id0 (
   logic [RegAddrWidth-1:0] rd_addr_next;
 
   riscv_decoder_gpr dec_gpr (
-      .clk       (clk),
-      .rst_n     (rst_n),
-      .instr     (instr_d0),
-      .compressed(compressed_d0),
-      .rd_addr   (rd_addr_next),
-      .rs1_addr  (rs1_addr_next),
-      .rs2_addr  (rs2_addr_next)
+    .clk       (clk),
+    .rst_n     (rst_n),
+    .instr     (instr_d0),
+    .compressed(compressed_d0),
+    .rd_addr   (rd_addr_next),
+    .rs1_addr  (rs1_addr_next),
+    .rs2_addr  (rs2_addr_next)
   );
 
   always_ff @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
-      instr_d1      <= 0;
+      instr_d1      <= 32'h13;
       pc_d1         <= 0;
       compressed_d1 <= 0;
       br_d1         <= 0;
@@ -50,6 +52,7 @@ module id0 (
       rd_addr_d1    <= 'h0;
       rs1_addr_r    <= 'h0;
       rs2_addr_r    <= 'h0;
+      illegal_d1    <= 0;
     end else begin
       instr_d1      <= instr_d0;
       pc_d1         <= pc_d0;
@@ -59,6 +62,7 @@ module id0 (
       rs1_addr_r    <= rs1_addr_next;
       rs2_addr_r    <= rs2_addr_next;
       rd_addr_d1    <= rd_addr_next;
+      illegal_d1    <= illegal_d0;
     end
   end
 
