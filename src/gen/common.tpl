@@ -1,7 +1,3 @@
-# SPDX-FileCopyrightText: 2023 Serdar Sayın <https://serdarsayin.com>
-#
-# SPDX-License-Identifier: Apache-2.0
-
 dut_top = riscv_core
 
 project = ../tb/uvm_top

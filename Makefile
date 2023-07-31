@@ -2,118 +2,22 @@
 #
 # SPDX-License-Identifier: MIT
 
-#VIVADO_INC := /opt/Xilinx/Vivado/2022.2/data/xsim/include/
+PROJECT_ROOT := $(CURDIR)/
+BUILD_DIR    := $(PROJECT_ROOT)build/
+TOOLS_DIR    := $(PROJECT_ROOT)tools/
+LIB_DIR      := $(PROJECT_ROOT)
+CONFIG_DIR   := $(PROJECT_ROOT)config/
 
-CXX           := g++
-CXX_FLAGS     := -std=c++20 -O2
+SIM          ?= xsim
 
-BUILD_DIR     := ./build/
-TOOLS_DIR     := ./tools/
-
-DATA_DIR      := $(BUILD_DIR)/data
-LIB           := libdpi.so
-
-SV_TOP        := tb_riscv_decoder
-
-DECODER_INC   := -Isrc/decoder/include/
-COMMON_INC    := -Isrc/decoder/include/
-DISAS_INC     := -Ithird_party/riscv-disas/
-
-DECODER_SRC   := ./src/decoder/src/
-EXPORTER_SRC  := ./src/dpi/
-DISAS_SRC     := ./third_party/riscv-disas/
-
-DECODER_SRCS  := $(wildcard $(DECODER_SRC)*.cpp)
-EXPORTER_SRCS := $(wildcard $(EXPORTER_SRC)*.cpp)
-DISAS_SRCS    := $(DISAS_SRC)/riscv-disas.c
-
-DECODER_OBJS  := $(patsubst $(DECODER_SRC)%.cpp,$(BUILD_DIR)%.o,$(DECODER_SRCS))
-EXPORTER_OBJS := $(patsubst $(EXPORTER_SRC)%.cpp,$(BUILD_DIR)%.o,$(EXPORTER_SRCS))
-DISAS_OBJ     := $(BUILD_DIR)riscv-disas.o
-
-OBJS          := $(DECODER_OBJS) $(EXPORTER_OBJS) $(DISAS_OBJ)
-
-INSTR_FEED    := $(DATA_DIR)/amalgamated.txt
-
-# Set full path to the shared obj that ld links against as default.
-# I am not planning to rewrite ISS parts to support old libstdc++ versions.
-# Other solutions seemed to be convoluted.
-# You may also choose to link against the one distributed with Vivado Suite. 
-# CXX 20 is required.
-SOLIB_STDCXX  := $(shell /sbin/ldconfig -p | perl -ne 'if (/stdc\+\+/) { @columns = split; print $$columns[3]; exit }')
-
-# My version string is as follows:
-# Vivado v2022.2 (64-bit)
-# SW Build 3671981 on Fri Oct 14 04:59:54 MDT 2022
-# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
-# Tool Version Limit: 2022.10
-
-#ifeq ($(SIMULATOR),)
-#all:
-#	@echo "Simulator is not specified. Cannot proceed."
-#	@echo "Specify the simulator as follows:"
-#	@echo "make SIMULATOR=<sim>"
-
-#else
-all: sim
-
-# Vivado FPGA flow
-# I do not own a Xilinx board, so I am moving from Vivado.
-# Vivado XSIM support will be continued.
-#synth: tools/vivado.tcl
-#	vivado -mode batch -source tools/vivado.tcl
-
-$(INSTR_FEED): $(DATA_DIR)
-	7z e ./data/*.zip -ir!*.json -so | jq -r '.[].instr' | sort | uniq > $@
-
-sim: sim.riscv_decoder
-
-#lib_vivado: $(DECODER_SRCS) $(EXPORTER_SRCS) $(DISAS_SRCS)
-#	xsc $(DECODER_SRCS) $(EXPORTER_SRCS) $(DISAS_SRCS) --gcc_compile_options $(DECODER_INC) --gcc_compile_options $(COMMON_INC) --gcc_compile_options $(DISAS_INC) -cppversion 20
-
-sim.riscv_decoder: $(LIB) compile
-	LD_PRELOAD=$(SOLIB_STDCXX) xelab tb_riscv_decoder -relax -s decoder -sv_lib $(basename $(notdir $(LIB)))
-	LD_PRELOAD=$(SOLIB_STDCXX) LD_LIBRARY_PATH=. xsim decoder -testplusarg UVM_TESTNAME=riscv_decoder_from_file_test -testplusarg UVM_VERBOSITY=UVM_LOW -R
-
-sim.gentb: compile
-	xelab top_untimed_tb top_hdl_th -relax -s top_tb
-	xsim top_tb -testplusarg UVM_TESTNAME=top_test -testplusarg UVM_VERBOSITY=UVM_HIGH -R
-
-sim.tb_toplevel: compile
-	xelab tb_top_level -relax -s tb_toplevel
-	xsim tb_toplevel -R
-
-# For synthesizing on Quartus Lite Software
-# Quartus Lite does not support incremental flow,
-# thus I had to run these programs in succession.
-quartus_flow:
-	quartus_sh -t tools/top_level.tcl compile top_level rev_1
-	quartus_map top_level
-	quartus_fit top_level
-	quartus_sta -t tools/sta.tcl top_level rev_1
-	# quartus_sim top_level
-
-# Compile SystemVerilog files on Xilinx Vivado Suite
-compile: $(INSTR_FEED)
-	xvlog -sv -f xsim_sv_compile_list -L uvm \
-		-define INSTR_SEQ_FILENAME='"$(INSTR_FEED)"' \
-		-define INSTR_SEQ_LINECOUNT=$(shell cat $(INSTR_FEED) | wc -l) \
-		-define DEBUG_INIT_FILE='"$(shell readlink -f "./src/firmware/boot.hex")"'
-
-$(LIB): $(OBJS)
-	$(CXX) $(CXX_FLAGS) -shared -Wl,-soname,$@ -o $@ $^
-
-$(BUILD_DIR)%.o: $(DECODER_SRC)%.cpp | $(BUILD_DIR)
-	$(CXX) -fPIC $(CXX_FLAGS) $(COMMON_INC) $(DECODER_INC) -I. -c $< -o $@
-
-$(BUILD_DIR)%.o: $(EXPORTER_SRC)%.cpp | $(BUILD_DIR)
-	$(CXX) -fPIC $(CXX_FLAGS) $(COMMON_INC) $(DECODER_INC) $(DISAS_INC) -I. -I$(EXPORTER_SRC)/include -c $< -o $@
-
-$(DISAS_OBJ): $(DISAS_SRCS) | $(BUILD_DIR)
-	$(CXX) -fPIC $(CXX_FLAGS) $(DISAS_INC) -I. -c $< -o $@
-
-$(BUILD_DIR) $(DATA_DIR):
-	mkdir -p $@
+ifeq ($(SIM),)
+all:
+	@echo "Simulator is not specified. Cannot proceed."
+	@echo "Specify the simulator as follows:"
+	@echo "make SIM=<sim>"
+else ifeq ($(SIM),xsim)
+	include $(CONFIG_DIR)xsim.mk
+endif
 
 .PHONY clean:
 	${RM} -rf $(BUILD_DIR) 
@@ -140,5 +44,4 @@ $(BUILD_DIR) $(DATA_DIR):
 	${RM} *.sof
 	${RM} *.smsg
 	${RM} *.qws
-#endif
-
+	${RM} *.wdb
