@@ -5,7 +5,7 @@
 //=============================================================================
 // Project  : ../tb/uvm_top
 //
-// File Name: busf_if.sv
+// File Name: axi4master_if.sv
 //
 // Author   : Name   : Serdar Sayın
 //            Email  : serdarsayin@pm.me
@@ -13,20 +13,20 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Jul 31 18:05:18 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Jul 31 20:36:58 2023
 //=============================================================================
-// Description: Signal interface for agent busf
+// Description: Signal interface for agent axi4master
 //=============================================================================
 
-`ifndef BUSF_IF_SV
-`define BUSF_IF_SV
+`ifndef AXI4MASTER_IF_SV
+`define AXI4MASTER_IF_SV
 
-interface busf_if(); 
+interface axi4master_if(); 
 
   timeunit      1ns;
   timeprecision 1ps;
 
-  import busf_pkg::*;
+  import axi4master_pkg::*;
 
   logic clk;
   logic rst_n;
@@ -72,9 +72,9 @@ interface busf_if();
 
   // You can insert properties and assertions here
 
-  // You can insert code here by setting if_inc_inside_interface in file busf.tpl
+  // You can insert code here by setting if_inc_inside_interface in file axi4master.tpl
 
-endinterface : busf_if
+endinterface : axi4master_if
 
-`endif // BUSF_IF_SV
+`endif // AXI4MASTER_IF_SV
 

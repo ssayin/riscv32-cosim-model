@@ -5,7 +5,7 @@
 //=============================================================================
 // Project  : ../tb/uvm_top
 //
-// File Name: busm_sequencer.sv
+// File Name: axi4master_sequencer.sv
 //
 // Author   : Name   : Serdar Sayın
 //            Email  : serdarsayin@pm.me
@@ -13,17 +13,17 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Jul 31 18:05:18 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Jul 31 20:36:58 2023
 //=============================================================================
-// Description: Sequencer for busm
+// Description: Sequencer for axi4master
 //=============================================================================
 
-`ifndef BUSM_SEQUENCER_SV
-`define BUSM_SEQUENCER_SV
+`ifndef AXI4MASTER_SEQUENCER_SV
+`define AXI4MASTER_SEQUENCER_SV
 
 // Sequencer class is specialization of uvm_sequencer
-typedef uvm_sequencer #(axi4_tx) busm_sequencer_t;
+typedef uvm_sequencer #(axi4_tx) axi4master_sequencer_t;
 
 
-`endif // BUSM_SEQUENCER_SV
+`endif // AXI4MASTER_SEQUENCER_SV
 

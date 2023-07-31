@@ -5,7 +5,7 @@
 //=============================================================================
 // Project  : ../tb/uvm_top
 //
-// File Name: busf_bfm.sv
+// File Name: axi4master_bfm.sv
 //
 // Author   : Name   : Serdar Sayın
 //            Email  : serdarsayin@pm.me
@@ -13,71 +13,49 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Jul 31 18:05:18 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Jul 31 20:36:58 2023
 //=============================================================================
-// Description: Synthesizable BFM for agent busf
+// Description: Synthesizable BFM for agent axi4master
 //=============================================================================
 
-`ifndef BUSF_BFM_SV
-`define BUSF_BFM_SV
+`ifndef AXI4MASTER_BFM_SV
+`define AXI4MASTER_BFM_SV
 
-interface busf_bfm(busf_if if_port); 
+interface axi4master_bfm(axi4master_if if_port); 
 
   timeunit      1ns;
   timeprecision 1ps;
 
-  import busf_pkg::*;
+  import axi4master_pkg::*;
 
-  // Start of inlined include file ../tb/uvm_top/tb/include/busf_inc_inside_bfm.sv
+  // Start of inlined include file ../tb/uvm_top/tb/include/axi4master_inc_inside_bfm.sv
   task drive(axi4_tx_s req_s);
-    if_port.awid     <= req_s.awid;
-    if_port.awaddr   <= req_s.awaddr;
-    if_port.awlen    <= req_s.awlen;
-    if_port.awsize   <= req_s.awsize;
-    if_port.awburst  <= req_s.awburst;
-    if_port.awlock   <= req_s.awlock;
-    if_port.awcache  <= req_s.awcache;
-    if_port.awprot   <= req_s.awprot;
-    if_port.awvalid  <= req_s.awvalid;
-    if_port.awregion <= req_s.awregion;
-    if_port.awqos    <= req_s.awqos;
-    if_port.awready  <= req_s.awready;
+    // only drive input ports
+    if_port.awready = req_s.awready;
+    if_port.wready  = req_s.wready;
+    if_port.bid     = req_s.bid;
+    if_port.bresp   = req_s.bresp;
+    if_port.bvalid  = req_s.bvalid;
   
-    if_port.wdata    <= req_s.wdata;
-    if_port.wstrb    <= req_s.wstrb;
-    if_port.wlast    <= req_s.wlast;
-    if_port.wvalid   <= req_s.wvalid;
-    if_port.wready   <= req_s.wready;
+    if (if_port.arvalid && if_port.arready) begin
+      if_port.rdata  = req_s.rdata;
+      if_port.rvalid = 1;
+    end else begin
+      if_port.rvalid = 0;
+    end
   
-    if_port.bid      <= req_s.bid;
-    if_port.bresp    <= req_s.bresp;
-    if_port.bvalid   <= req_s.bvalid;
-    if_port.bready   <= req_s.bready;
+    if (if_port.arvalid) if_port.arready = 1;
+    else if_port.arready = 0;
   
-    if_port.arid     <= req_s.arid;
-    if_port.araddr   <= req_s.araddr;
-    if_port.arlen    <= req_s.arlen;
-    if_port.arsize   <= req_s.arsize;
-    if_port.arburst  <= req_s.arburst;
-    if_port.arlock   <= req_s.arlock;
-    if_port.arcache  <= req_s.arcache;
-    if_port.arprot   <= req_s.arprot;
-    if_port.arvalid  <= req_s.arvalid;
-    if_port.arqos    <= req_s.arqos;
-    if_port.arregion <= req_s.arregion;
-    if_port.arready  <= req_s.arready;
+    if_port.rid   = req_s.rid;
   
-    if_port.rid      <= req_s.rid;
-    if_port.rdata    <= req_s.rdata;
-    if_port.rresp    <= req_s.rresp;
-    if_port.rlast    <= req_s.rlast;
-    if_port.rvalid   <= 1;  //req_s.rvalid;
-    if_port.rready   <= req_s.rready;
+    if_port.rresp = req_s.rresp;
+    if_port.rlast = req_s.rlast;
     @(posedge if_port.clk);
   endtask
   
-  import busf_pkg::busf_monitor;
-  busf_monitor proxy_back_ptr;
+  import axi4master_pkg::axi4master_monitor;
+  axi4master_monitor proxy_back_ptr;
   
   task run;
     forever begin
@@ -132,7 +110,7 @@ interface busf_bfm(busf_if if_port);
   endtask
   // End of inlined include file
 
-endinterface : busf_bfm
+endinterface : axi4master_bfm
 
-`endif // BUSF_BFM_SV
+`endif // AXI4MASTER_BFM_SV
 

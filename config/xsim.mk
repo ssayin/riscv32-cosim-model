@@ -28,7 +28,7 @@ SOLIB_STDCXX  := $(shell /sbin/ldconfig -p | perl -ne 'if (/stdc\+\+/) { @column
 #synth: tools/vivado.tcl
 #	vivado -mode batch -source tools/vivado.tcl
 
-sim: gentb tb_toplevel riscv_decoder
+sim: uvm_top tb_toplevel riscv_decoder
 
 #lib_vivado: $(DECODER_SRCS) $(EXPORTER_SRCS) $(DISAS_SRCS)
 #	xsc $(DECODER_SRCS) $(EXPORTER_SRCS) $(DISAS_SRCS) --gcc_compile_options $(DECODER_INC) --gcc_compile_options $(COMMON_INC) --gcc_compile_options $(DISAS_INC) -cppversion 20
@@ -37,7 +37,7 @@ riscv_decoder: $(SOLIB_STDCXX) $(LIB) compile
 	LD_PRELOAD=$(SOLIB_STDCXX) xelab tb_riscv_decoder -relax -s decoder -sv_lib $(basename $(notdir $(LIB)))
 	LD_PRELOAD=$(SOLIB_STDCXX) LD_LIBRARY_PATH=$(LIB_DIR) xsim decoder -testplusarg UVM_TESTNAME=riscv_decoder_from_file_test -testplusarg UVM_VERBOSITY=UVM_LOW -R
 
-gentb: compile
+uvm_top: compile
 	xelab top_untimed_tb top_hdl_th -relax -s top_tb
 	xsim top_tb -testplusarg UVM_TESTNAME=top_test -testplusarg UVM_VERBOSITY=UVM_HIGH -R
 

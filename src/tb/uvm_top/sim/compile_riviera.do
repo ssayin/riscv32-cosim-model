@@ -16,8 +16,7 @@ append cmd " +incdir+../tb/include "
 
 # Compile the agents
 set agent_list {\ 
-    busf \
-    busm \
+    axi4master \
 }
 foreach  ele $agent_list {
   if {$ele != " "} {

@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Jul 31 18:05:18 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Jul 31 20:36:58 2023
 //=============================================================================
 // Description: Environment for top
 //=============================================================================
@@ -31,16 +31,16 @@ class top_env extends uvm_env;
 
 
   // Child agents
-  busf_config    m_busf_config;  
-  busf_agent     m_busf_agent;   
-  busf_coverage  m_busf_coverage;
+  axi4master_config    m_axi4master_0_config;  
+  axi4master_agent     m_axi4master_0_agent;   
+  axi4master_coverage  m_axi4master_0_coverage;
 
-  busm_config    m_busm_config;  
-  busm_agent     m_busm_agent;   
-  busm_coverage  m_busm_coverage;
+  axi4master_config    m_axi4master_1_config;  
+  axi4master_agent     m_axi4master_1_agent;   
+  axi4master_coverage  m_axi4master_1_coverage;
 
-  top_config     m_config;
-      
+  top_config           m_config;
+              
   // You can remove build/connect/run_phase by setting top_env_generate_methods_inside_class = no in file common.tpl
 
   extern function void build_phase(uvm_phase phase);
@@ -68,30 +68,27 @@ function void top_env::build_phase(uvm_phase phase);
   if (!uvm_config_db #(top_config)::get(this, "", "config", m_config)) 
     `uvm_error(get_type_name(), "Unable to get top_config")
 
-  m_busf_config = m_config.m_busf_config;
+  m_axi4master_0_config = m_config.m_axi4master_0_config;
 
-  // You can insert code here by setting agent_copy_config_vars in file busf.tpl
+  m_axi4master_1_config = m_config.m_axi4master_1_config;
 
-  uvm_config_db #(busf_config)::set(this, "m_busf_agent", "config", m_busf_config);
-  if (m_busf_config.is_active == UVM_ACTIVE )
-    uvm_config_db #(busf_config)::set(this, "m_busf_agent.m_sequencer", "config", m_busf_config);
-  uvm_config_db #(busf_config)::set(this, "m_busf_coverage", "config", m_busf_config);
+  // You can insert code here by setting agent_copy_config_vars in file axi4master.tpl
 
-  m_busm_config = m_config.m_busm_config;
-
-  // You can insert code here by setting agent_copy_config_vars in file busm.tpl
-
-  uvm_config_db #(busm_config)::set(this, "m_busm_agent", "config", m_busm_config);
-  if (m_busm_config.is_active == UVM_ACTIVE )
-    uvm_config_db #(busm_config)::set(this, "m_busm_agent.m_sequencer", "config", m_busm_config);
-  uvm_config_db #(busm_config)::set(this, "m_busm_coverage", "config", m_busm_config);
+  uvm_config_db #(axi4master_config)::set(this, "m_axi4master_0_agent", "config", m_axi4master_0_config);
+  if (m_axi4master_0_config.is_active == UVM_ACTIVE )
+    uvm_config_db #(axi4master_config)::set(this, "m_axi4master_0_agent.m_sequencer", "config", m_axi4master_0_config);
+  uvm_config_db #(axi4master_config)::set(this, "m_axi4master_0_coverage", "config", m_axi4master_0_config);
+  uvm_config_db #(axi4master_config)::set(this, "m_axi4master_1_agent", "config", m_axi4master_1_config);
+  if (m_axi4master_1_config.is_active == UVM_ACTIVE )
+    uvm_config_db #(axi4master_config)::set(this, "m_axi4master_1_agent.m_sequencer", "config", m_axi4master_1_config);
+  uvm_config_db #(axi4master_config)::set(this, "m_axi4master_1_coverage", "config", m_axi4master_1_config);
 
 
-  m_busf_agent    = busf_agent   ::type_id::create("m_busf_agent", this);
-  m_busf_coverage = busf_coverage::type_id::create("m_busf_coverage", this);
+  m_axi4master_0_agent    = axi4master_agent   ::type_id::create("m_axi4master_0_agent", this);
+  m_axi4master_0_coverage = axi4master_coverage::type_id::create("m_axi4master_0_coverage", this);
 
-  m_busm_agent    = busm_agent   ::type_id::create("m_busm_agent", this);
-  m_busm_coverage = busm_coverage::type_id::create("m_busm_coverage", this);
+  m_axi4master_1_agent    = axi4master_agent   ::type_id::create("m_axi4master_1_agent", this);
+  m_axi4master_1_coverage = axi4master_coverage::type_id::create("m_axi4master_1_coverage", this);
 
   // You can insert code here by setting top_env_append_to_build_phase in file common.tpl
 
@@ -101,9 +98,9 @@ endfunction : build_phase
 function void top_env::connect_phase(uvm_phase phase);
   `uvm_info(get_type_name(), "In connect_phase", UVM_HIGH)
 
-  m_busf_agent.analysis_port.connect(m_busf_coverage.analysis_export);
+  m_axi4master_0_agent.analysis_port.connect(m_axi4master_0_coverage.analysis_export);
 
-  m_busm_agent.analysis_port.connect(m_busm_coverage.analysis_export);
+  m_axi4master_1_agent.analysis_port.connect(m_axi4master_1_coverage.analysis_export);
 
 
   // You can insert code here by setting top_env_append_to_connect_phase in file common.tpl
@@ -130,9 +127,9 @@ task top_env::run_phase(uvm_phase phase);
   vseq.set_item_context(null, null);
   if ( !vseq.randomize() )
     `uvm_fatal(get_type_name(), "Failed to randomize virtual sequence")
-  vseq.m_busf_agent = m_busf_agent;
-  vseq.m_busm_agent = m_busm_agent;
-  vseq.m_config     = m_config;    
+  vseq.m_axi4master_0_agent = m_axi4master_0_agent;
+  vseq.m_axi4master_1_agent = m_axi4master_1_agent;
+  vseq.m_config             = m_config;            
   vseq.set_starting_phase(phase);
   vseq.start(null);
 

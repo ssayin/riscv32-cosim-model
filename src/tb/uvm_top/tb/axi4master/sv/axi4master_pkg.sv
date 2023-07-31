@@ -5,7 +5,7 @@
 //=============================================================================
 // Project  : ../tb/uvm_top
 //
-// File Name: busm_pkg.sv
+// File Name: axi4master_pkg.sv
 //
 // Author   : Name   : Serdar Sayın
 //            Email  : serdarsayin@pm.me
@@ -13,25 +13,25 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Jul 31 18:05:18 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Jul 31 20:36:58 2023
 //=============================================================================
-// Description: Package for agent busm
+// Description: Package for agent axi4master
 //=============================================================================
 
-package busm_pkg;
+package axi4master_pkg;
 
   `include "uvm_macros.svh"
 
   import uvm_pkg::*;
 
 
-  `include "busm_axi4_tx.sv"
-  `include "busm_config.sv"
-  `include "busm_driver.sv"
-  `include "busm_monitor.sv"
-  `include "busm_sequencer.sv"
-  `include "busm_coverage.sv"
-  `include "busm_agent.sv"
-  `include "busm_seq_lib.sv"
+  `include "axi4master_axi4_tx.sv"
+  `include "axi4master_config.sv"
+  `include "axi4master_driver.sv"
+  `include "axi4master_monitor.sv"
+  `include "axi4master_sequencer.sv"
+  `include "axi4master_coverage.sv"
+  `include "axi4master_agent.sv"
+  `include "axi4master_seq_lib.sv"
 
-endpackage : busm_pkg
+endpackage : axi4master_pkg

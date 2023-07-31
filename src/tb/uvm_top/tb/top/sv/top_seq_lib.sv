@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Jul 31 18:05:18 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Jul 31 20:36:58 2023
 //=============================================================================
 // Description: Sequence for top
 //=============================================================================
@@ -25,13 +25,13 @@ class top_default_seq extends uvm_sequence #(uvm_sequence_item);
 
   `uvm_object_utils(top_default_seq)
 
-  top_config  m_config;
-   
-  busf_agent  m_busf_agent;
-  busm_agent  m_busm_agent;
+  top_config        m_config;
+           
+  axi4master_agent  m_axi4master_0_agent;
+  axi4master_agent  m_axi4master_1_agent;
 
   // Number of times to repeat child sequences
-  int m_seq_count = 100;
+  int m_seq_count = 15;
 
   extern function new(string name = "");
   extern task body();
@@ -59,27 +59,27 @@ task top_default_seq::body();
   repeat (m_seq_count)
   begin
     fork
-      if (m_busf_agent.m_config.is_active == UVM_ACTIVE)
+      if (m_axi4master_0_agent.m_config.is_active == UVM_ACTIVE)
       begin
-        busf_default_seq seq;
-        seq = busf_default_seq::type_id::create("seq");
-        seq.set_item_context(this, m_busf_agent.m_sequencer);
+        axi4master_default_seq seq;
+        seq = axi4master_default_seq::type_id::create("seq");
+        seq.set_item_context(this, m_axi4master_0_agent.m_sequencer);
         if ( !seq.randomize() )
           `uvm_error(get_type_name(), "Failed to randomize sequence")
-        seq.m_config = m_busf_agent.m_config;
+        seq.m_config = m_axi4master_0_agent.m_config;
         seq.set_starting_phase( get_starting_phase() );
-        seq.start(m_busf_agent.m_sequencer, this);
+        seq.start(m_axi4master_0_agent.m_sequencer, this);
       end
-      if (m_busm_agent.m_config.is_active == UVM_ACTIVE)
+      if (m_axi4master_1_agent.m_config.is_active == UVM_ACTIVE)
       begin
-        busm_default_seq seq;
-        seq = busm_default_seq::type_id::create("seq");
-        seq.set_item_context(this, m_busm_agent.m_sequencer);
+        axi4master_default_seq seq;
+        seq = axi4master_default_seq::type_id::create("seq");
+        seq.set_item_context(this, m_axi4master_1_agent.m_sequencer);
         if ( !seq.randomize() )
           `uvm_error(get_type_name(), "Failed to randomize sequence")
-        seq.m_config = m_busm_agent.m_config;
+        seq.m_config = m_axi4master_1_agent.m_config;
         seq.set_starting_phase( get_starting_phase() );
-        seq.start(m_busm_agent.m_sequencer, this);
+        seq.start(m_axi4master_1_agent.m_sequencer, this);
       end
     join
   end

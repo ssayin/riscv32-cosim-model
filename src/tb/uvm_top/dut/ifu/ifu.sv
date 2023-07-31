@@ -80,6 +80,7 @@ module ifu (
         start_fetch    = 1;
       end
       FETCH: begin
+        axi_state_next = IDLE;
         if (axi_rready_f && axi_rvalid_f) begin
           if (axi_rlast_f) axi_state_next = IDLE;
           else axi_state_next = FETCH;
@@ -124,6 +125,8 @@ module ifu (
     end else begin
       if (axi_rvalid_f && axi_rready_f) begin
         instr[63:0] <= axi_rdata_f[63:0];
+      end else begin
+        instr[63:0] <= 64'h13;
       end
     end
   end

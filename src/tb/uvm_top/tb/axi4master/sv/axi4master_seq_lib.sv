@@ -5,7 +5,7 @@
 //=============================================================================
 // Project  : ../tb/uvm_top
 //
-// File Name: busf_seq_lib.sv
+// File Name: axi4master_seq_lib.sv
 //
 // Author   : Name   : Serdar Sayın
 //            Email  : serdarsayin@pm.me
@@ -13,19 +13,19 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Jul 31 18:05:18 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Jul 31 20:36:58 2023
 //=============================================================================
-// Description: Sequence for agent busf
+// Description: Sequence for agent axi4master
 //=============================================================================
 
-`ifndef BUSF_SEQ_LIB_SV
-`define BUSF_SEQ_LIB_SV
+`ifndef AXI4MASTER_SEQ_LIB_SV
+`define AXI4MASTER_SEQ_LIB_SV
 
-class busf_default_seq extends uvm_sequence #(axi4_tx);
+class axi4master_default_seq extends uvm_sequence #(axi4_tx);
 
-  `uvm_object_utils(busf_default_seq)
+  `uvm_object_utils(axi4master_default_seq)
 
-  busf_config  m_config;
+  axi4master_config  m_config;
 
   extern function new(string name = "");
   extern task body();
@@ -36,15 +36,15 @@ class busf_default_seq extends uvm_sequence #(axi4_tx);
   extern function void set_starting_phase(uvm_phase phase);
 `endif
 
-endclass : busf_default_seq
+endclass : axi4master_default_seq
 
 
-function busf_default_seq::new(string name = "");
+function axi4master_default_seq::new(string name = "");
   super.new(name);
 endfunction : new
 
 
-task busf_default_seq::body();
+task axi4master_default_seq::body();
   `uvm_info(get_type_name(), "Default sequence starting", UVM_HIGH)
 
   req = axi4_tx::type_id::create("req");
@@ -58,18 +58,18 @@ endtask : body
 
 
 `ifndef UVM_POST_VERSION_1_1
-function uvm_phase busf_default_seq::get_starting_phase();
+function uvm_phase axi4master_default_seq::get_starting_phase();
   return starting_phase;
 endfunction: get_starting_phase
 
 
-function void busf_default_seq::set_starting_phase(uvm_phase phase);
+function void axi4master_default_seq::set_starting_phase(uvm_phase phase);
   starting_phase = phase;
 endfunction: set_starting_phase
 `endif
 
 
-// You can insert code here by setting agent_seq_inc in file busf.tpl
+// You can insert code here by setting agent_seq_inc in file axi4master.tpl
 
-`endif // BUSF_SEQ_LIB_SV
+`endif // AXI4MASTER_SEQ_LIB_SV
 

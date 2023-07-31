@@ -9,8 +9,7 @@ eval $cmd
 
 set tb_name top
 set agent_list {\ 
-    busf \
-    busm \
+    axi4master \
 }
 foreach  ele $agent_list {
   if {$ele != " "} {

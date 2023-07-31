@@ -5,7 +5,7 @@
 //=============================================================================
 // Project  : ../tb/uvm_top
 //
-// File Name: busm_driver.sv
+// File Name: axi4master_driver.sv
 //
 // Author   : Name   : Serdar Sayın
 //            Email  : serdarsayin@pm.me
@@ -13,27 +13,27 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Jul 31 18:05:18 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Jul 31 20:36:58 2023
 //=============================================================================
-// Description: Driver for busm
+// Description: Driver for axi4master
 //=============================================================================
 
-`ifndef BUSM_DRIVER_SV
-`define BUSM_DRIVER_SV
+`ifndef AXI4MASTER_DRIVER_SV
+`define AXI4MASTER_DRIVER_SV
 
-// You can insert code here by setting driver_inc_before_class in file busm.tpl
+// You can insert code here by setting driver_inc_before_class in file axi4master.tpl
 
-class busm_driver extends uvm_driver #(axi4_tx);
+class axi4master_driver extends uvm_driver #(axi4_tx);
 
-  `uvm_component_utils(busm_driver)
+  `uvm_component_utils(axi4master_driver)
 
-  virtual busm_bfm vif;
+  virtual axi4master_bfm vif;
 
-  busm_config     m_config;
+  axi4master_config     m_config;
 
   extern function new(string name, uvm_component parent);
 
-  // Start of inlined include file ../tb/uvm_top/tb/include/bus_driver_inc_inside_class.sv
+  // Start of inlined include file ../tb/uvm_top/tb/include/axi4master_driver_inc_inside_class.sv
   task run_phase(uvm_phase phase);
     forever begin
       axi4_tx_s req_s;
@@ -90,15 +90,15 @@ class busm_driver extends uvm_driver #(axi4_tx);
   endtask : run_phase
   // End of inlined include file
 
-endclass : busm_driver 
+endclass : axi4master_driver 
 
 
-function busm_driver::new(string name, uvm_component parent);
+function axi4master_driver::new(string name, uvm_component parent);
   super.new(name, parent);
 endfunction : new
 
 
-// You can insert code here by setting driver_inc_after_class in file busm.tpl
+// You can insert code here by setting driver_inc_after_class in file axi4master.tpl
 
-`endif // BUSM_DRIVER_SV
+`endif // AXI4MASTER_DRIVER_SV
 

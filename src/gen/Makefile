@@ -1,4 +1,4 @@
-TPLS := busf.tpl busm.tpl
+TPLS := axi4master.tpl
 
 gen: $(TPLS)
 	@echo "Regenerating UVM_TOP"

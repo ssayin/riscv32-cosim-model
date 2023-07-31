@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Jul 31 18:05:18 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Jul 31 20:36:58 2023
 //=============================================================================
 // Description: Configuration for top
 //=============================================================================
@@ -27,8 +27,8 @@ class top_config extends uvm_object;
 
   // Do not register config class with the factory
 
-  rand busf_config  m_busf_config;
-  rand busm_config  m_busm_config;
+  rand axi4master_config  m_axi4master_0_config;
+  rand axi4master_config  m_axi4master_1_config;
 
   // You can insert variables here by setting config_var in file common.tpl
 
@@ -46,15 +46,15 @@ endclass : top_config
 function top_config::new(string name = "");
   super.new(name);
 
-  m_busf_config                 = new("m_busf_config");
-  m_busf_config.is_active       = UVM_ACTIVE;          
-  m_busf_config.checks_enable   = 1;                   
-  m_busf_config.coverage_enable = 1;                   
+  m_axi4master_0_config                 = new("m_axi4master_0_config");
+  m_axi4master_0_config.is_active       = UVM_ACTIVE;                  
+  m_axi4master_0_config.checks_enable   = 1;                           
+  m_axi4master_0_config.coverage_enable = 1;                           
 
-  m_busm_config                 = new("m_busm_config");
-  m_busm_config.is_active       = UVM_ACTIVE;          
-  m_busm_config.checks_enable   = 1;                   
-  m_busm_config.coverage_enable = 1;                   
+  m_axi4master_1_config                 = new("m_axi4master_1_config");
+  m_axi4master_1_config.is_active       = UVM_ACTIVE;                  
+  m_axi4master_1_config.checks_enable   = 1;                           
+  m_axi4master_1_config.coverage_enable = 1;                           
 
   // You can insert code here by setting top_env_config_append_to_new in file common.tpl
 

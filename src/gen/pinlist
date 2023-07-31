@@ -1,4 +1,4 @@
-!busf_if
+!axi4master_if_0
 clk clk
 rst_n rst_n
 axi_awid_f awid
@@ -41,7 +41,7 @@ axi_rlast_f rlast
 axi_rvalid_f rvalid
 axi_rready_f rready
 
-!busm_if
+!axi4master_if_1
 axi_awid_m awid
 axi_awaddr_m awaddr
 axi_awlen_m awlen

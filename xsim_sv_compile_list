@@ -42,18 +42,14 @@
 ./src/tb/riscv_decoder_uvm/top/riscv_decoder_if.sv
 ./src/tb/riscv_decoder_uvm/top/tb_riscv_decoder.sv
 -i ./src/tb/uvm_top/tb/include/
--i ./src/tb/uvm_top/tb/busf/sv
--i ./src/tb/uvm_top/tb/busm/sv
+-i ./src/tb/uvm_top/tb/axi4master/sv
 -i ./src/tb/uvm_top/tb/top/sv
 -i ./src/tb/uvm_top/tb/top_test/sv
 -i ./src/tb/uvm_top/tb/top_tb/sv
 -i ./third_party/syoscb-1.0.2.4/src
-./src/tb/uvm_top/tb/busf/sv/busf_pkg.sv
-./src/tb/uvm_top/tb/busf/sv/busf_if.sv
-./src/tb/uvm_top/tb/busm/sv/busm_pkg.sv
-./src/tb/uvm_top/tb/busm/sv/busm_if.sv
-./src/tb/uvm_top/tb/busf/sv/busf_bfm.sv
-./src/tb/uvm_top/tb/busm/sv/busm_bfm.sv
+./src/tb/uvm_top/tb/axi4master/sv/axi4master_pkg.sv
+./src/tb/uvm_top/tb/axi4master/sv/axi4master_if.sv
+./src/tb/uvm_top/tb/axi4master/sv/axi4master_bfm.sv
 ./third_party/syoscb-1.0.2.4/src/pk_syoscb.sv
 ./src/tb/uvm_top/tb/top/sv/top_pkg.sv
 ./src/tb/uvm_top/tb/top_test/sv/top_test_pkg.sv

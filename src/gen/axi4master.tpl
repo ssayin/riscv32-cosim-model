@@ -1,4 +1,6 @@
-agent_name = busm 
+agent_name = axi4master 
+
+number_of_instances = 2
 
 trans_item = axi4_tx
 
@@ -46,18 +48,10 @@ trans_var = rand logic        rlast;
 trans_var = rand logic        rvalid;
 trans_var = rand logic        rready;
 
-#driver_inc = riscv_core_do_drive.sv  inline
-#monitor_inc = riscv_core_do_mon.sv   inline
-#trans_inc_before_class = riscv_core_inc_before_class.sv inline
-#agent_seq_inc = my_riscv_core_seq.sv inline
-
-#agent_factory_set = riscv_core_default_seq my_riscv_core_seq
-
-
-trans_inc_before_class       = bus_trans_inc_before_class.sv    inline
-driver_inc_inside_class      = bus_driver_inc_inside_class.sv   inline
-monitor_inc_inside_class     = bus_monitor_inc_inside_class.sv  inline
-agent_inc_inside_bfm         = busm_inc_inside_bfm.sv           inline
+trans_inc_before_class       = axi4master_trans_inc_before_class.sv    inline
+driver_inc_inside_class      = axi4master_driver_inc_inside_class.sv   inline
+monitor_inc_inside_class     = axi4master_monitor_inc_inside_class.sv  inline
+agent_inc_inside_bfm         = axi4master_inc_inside_bfm.sv            inline
 
 
 if_port = logic clk;

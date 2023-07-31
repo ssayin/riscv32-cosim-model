@@ -5,7 +5,7 @@
 //=============================================================================
 // Project  : ../tb/uvm_top
 //
-// File Name: busm_seq_item.sv
+// File Name: axi4master_seq_item.sv
 //
 // Author   : Name   : Serdar Sayın
 //            Email  : serdarsayin@pm.me
@@ -13,15 +13,15 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Jul 31 18:05:18 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Jul 31 20:36:58 2023
 //=============================================================================
-// Description: Sequence item for busm_sequencer
+// Description: Sequence item for axi4master_sequencer
 //=============================================================================
 
-`ifndef BUSM_SEQ_ITEM_SV
-`define BUSM_SEQ_ITEM_SV
+`ifndef AXI4MASTER_SEQ_ITEM_SV
+`define AXI4MASTER_SEQ_ITEM_SV
 
-// Start of inlined include file ../tb/uvm_top/tb/include/bus_trans_inc_before_class.sv
+// Start of inlined include file ../tb/uvm_top/tb/include/axi4master_trans_inc_before_class.sv
 typedef struct packed {
   logic        awid;
   logic [31:0] awaddr;
@@ -69,8 +69,8 @@ class axi4_tx extends uvm_sequence_item;
 
   `uvm_object_utils(axi4_tx)
 
-  // To include variables in copy, compare, print, record, pack, unpack, and compare2string, define them using trans_var in file busm.tpl
-  // To exclude variables from compare, pack, and unpack methods, define them using trans_meta in file busm.tpl
+  // To include variables in copy, compare, print, record, pack, unpack, and compare2string, define them using trans_var in file axi4master.tpl
+  // To exclude variables from compare, pack, and unpack methods, define them using trans_meta in file axi4master.tpl
 
   // Transaction variables
   rand logic awid;
@@ -116,7 +116,7 @@ class axi4_tx extends uvm_sequence_item;
 
   extern function new(string name = "");
 
-  // You can remove do_copy/compare/print/record and convert2string method by setting trans_generate_methods_inside_class = no in file busm.tpl
+  // You can remove do_copy/compare/print/record and convert2string method by setting trans_generate_methods_inside_class = no in file axi4master.tpl
   extern function void do_copy(uvm_object rhs);
   extern function bit  do_compare(uvm_object rhs, uvm_comparer comparer);
   extern function void do_print(uvm_printer printer);
@@ -125,7 +125,7 @@ class axi4_tx extends uvm_sequence_item;
   extern function void do_unpack(uvm_packer packer);
   extern function string convert2string();
 
-  // You can insert code here by setting trans_inc_inside_class in file busm.tpl
+  // You can insert code here by setting trans_inc_inside_class in file axi4master.tpl
 
 endclass : axi4_tx 
 
@@ -135,7 +135,7 @@ function axi4_tx::new(string name = "");
 endfunction : new
 
 
-// You can remove do_copy/compare/print/record and convert2string method by setting trans_generate_methods_after_class = no in file busm.tpl
+// You can remove do_copy/compare/print/record and convert2string method by setting trans_generate_methods_after_class = no in file axi4master.tpl
 
 function void axi4_tx::do_copy(uvm_object rhs);
   axi4_tx rhs_;
@@ -422,7 +422,7 @@ function string axi4_tx::convert2string();
 endfunction : convert2string
 
 
-// You can insert code here by setting trans_inc_after_class in file busm.tpl
+// You can insert code here by setting trans_inc_after_class in file axi4master.tpl
 
-`endif // BUSM_SEQ_ITEM_SV
+`endif // AXI4MASTER_SEQ_ITEM_SV
 

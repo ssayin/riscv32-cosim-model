@@ -5,7 +5,7 @@
 //=============================================================================
 // Project  : ../tb/uvm_top
 //
-// File Name: busf_coverage.sv
+// File Name: axi4master_coverage.sv
 //
 // Author   : Name   : Serdar Sayın
 //            Email  : serdarsayin@pm.me
@@ -13,26 +13,26 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Jul 31 18:05:18 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Jul 31 20:36:58 2023
 //=============================================================================
-// Description: Coverage for agent busf
+// Description: Coverage for agent axi4master
 //=============================================================================
 
-`ifndef BUSF_COVERAGE_SV
-`define BUSF_COVERAGE_SV
+`ifndef AXI4MASTER_COVERAGE_SV
+`define AXI4MASTER_COVERAGE_SV
 
-// You can insert code here by setting agent_cover_inc_before_class in file busf.tpl
+// You can insert code here by setting agent_cover_inc_before_class in file axi4master.tpl
 
-class busf_coverage extends uvm_subscriber #(axi4_tx);
+class axi4master_coverage extends uvm_subscriber #(axi4_tx);
 
-  `uvm_component_utils(busf_coverage)
+  `uvm_component_utils(axi4master_coverage)
 
-  busf_config m_config;    
-  bit         m_is_covered;
-  axi4_tx     m_item;
+  axi4master_config m_config;    
+  bit               m_is_covered;
+  axi4_tx           m_item;
      
-  // You can replace covergroup m_cov by setting agent_cover_inc in file busf.tpl
-  // or remove covergroup m_cov by setting agent_cover_generate_methods_inside_class = no in file busf.tpl
+  // You can replace covergroup m_cov by setting agent_cover_inc in file axi4master.tpl
+  // or remove covergroup m_cov by setting agent_cover_generate_methods_inside_class = no in file axi4master.tpl
 
   covergroup m_cov;
     option.per_instance = 1;
@@ -157,28 +157,28 @@ class busf_coverage extends uvm_subscriber #(axi4_tx);
 
   endgroup
 
-  // You can remove new, write, and report_phase by setting agent_cover_generate_methods_inside_class = no in file busf.tpl
+  // You can remove new, write, and report_phase by setting agent_cover_generate_methods_inside_class = no in file axi4master.tpl
 
   extern function new(string name, uvm_component parent);
   extern function void write(input axi4_tx t);
   extern function void build_phase(uvm_phase phase);
   extern function void report_phase(uvm_phase phase);
 
-  // You can insert code here by setting agent_cover_inc_inside_class in file busf.tpl
+  // You can insert code here by setting agent_cover_inc_inside_class in file axi4master.tpl
 
-endclass : busf_coverage 
+endclass : axi4master_coverage 
 
 
-// You can remove new, write, and report_phase by setting agent_cover_generate_methods_after_class = no in file busf.tpl
+// You can remove new, write, and report_phase by setting agent_cover_generate_methods_after_class = no in file axi4master.tpl
 
-function busf_coverage::new(string name, uvm_component parent);
+function axi4master_coverage::new(string name, uvm_component parent);
   super.new(name, parent);
   m_is_covered = 0;
   m_cov = new();
 endfunction : new
 
 
-function void busf_coverage::write(input axi4_tx t);
+function void axi4master_coverage::write(input axi4_tx t);
   if (m_config.coverage_enable)
   begin
     m_item = t;
@@ -189,13 +189,13 @@ function void busf_coverage::write(input axi4_tx t);
 endfunction : write
 
 
-function void busf_coverage::build_phase(uvm_phase phase);
-  if (!uvm_config_db #(busf_config)::get(this, "", "config", m_config))
-    `uvm_error(get_type_name(), "busf config not found")
+function void axi4master_coverage::build_phase(uvm_phase phase);
+  if (!uvm_config_db #(axi4master_config)::get(this, "", "config", m_config))
+    `uvm_error(get_type_name(), "axi4master config not found")
 endfunction : build_phase
 
 
-function void busf_coverage::report_phase(uvm_phase phase);
+function void axi4master_coverage::report_phase(uvm_phase phase);
   if (m_config.coverage_enable)
     `uvm_info(get_type_name(), $sformatf("Coverage score = %3.1f%%", m_cov.get_inst_coverage()), UVM_MEDIUM)
   else
@@ -203,7 +203,7 @@ function void busf_coverage::report_phase(uvm_phase phase);
 endfunction : report_phase
 
 
-// You can insert code here by setting agent_cover_inc_after_class in file busf.tpl
+// You can insert code here by setting agent_cover_inc_after_class in file axi4master.tpl
 
-`endif // BUSF_COVERAGE_SV
+`endif // AXI4MASTER_COVERAGE_SV
 
