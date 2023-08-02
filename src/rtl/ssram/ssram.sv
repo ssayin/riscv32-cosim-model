@@ -20,7 +20,7 @@ module ssram #(
   output logic [  DATA_WIDTH-1:0] doutb
 );
 
-  logic [DATA_WIDTH-1:0] mem_array[1<<ADDR_WIDTH];
+  logic [DATA_WIDTH-1:0] mem_array[0:2**ADDR_WIDTH];
 
   always_ff @(posedge clka or negedge rsta) begin
     if (!rsta) begin

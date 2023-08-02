@@ -11,6 +11,7 @@
 -i ./src/rtl/core/dec
 -i ./src/rtl/core/exu
 -i ./src/rtl/core/mem
+-i ./src/rtl/ssram
 ./src/rtl/include/riscv_opcodes.svh
 ./src/rtl/include/param_defs.sv
 ./src/rtl/include/instr_defs.sv
@@ -30,8 +31,9 @@
 ./src/rtl/core/dec/id1.sv
 ./src/rtl/core/exu/exu.sv
 ./src/rtl/core/mem/mem.sv
-./src/rtl/ssram.sv
-./src/rtl/ssram_ctrl.sv
+./src/rtl/ssram/ssram.sv
+./src/rtl/ssram/ssram_ctrl.sv
+./src/rtl/axi4crossbar.sv
 ./src/rtl/top_level.sv
 ./src/rtl/tb_top_level.sv
 ./src/dpi/svdpi_pkg.sv

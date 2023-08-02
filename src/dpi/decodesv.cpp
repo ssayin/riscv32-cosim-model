@@ -5,6 +5,8 @@
 #include <cstring>
 #include <iostream>
 
+#include "rapidjson/document.h"
+
 /*
 extern "C" void decodesv(const svLogicVecVal *word, svLogicVecVal *out) {
   op dec = decode(word->aval);
@@ -18,6 +20,7 @@ extern "C" void decodesv(const svLogicVecVal *word, svLogicVecVal *out) {
   std::cout << (dec.tgt == target::illegal ? "illegal\n" : "legal\n");
 }
 */
+
 void dpi_decoder_input(const decoder_in_t *in) {}
 
 void dpi_decoder_output(decoder_out_t *out) {}

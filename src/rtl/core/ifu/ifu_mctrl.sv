@@ -14,6 +14,7 @@ module ifu_mctrl (
   output logic        done_fetch,
   output logic [31:0] instr,
   output logic        compressed,
+
   // AXI Channels
   output logic        axi_arid_f,
   output logic [31:0] axi_araddr_f,
