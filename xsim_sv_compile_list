@@ -25,6 +25,7 @@
 ./src/rtl/core/riscv_core.sv
 ./src/rtl/core/exu/alu.sv
 ./src/rtl/core/ifu/ifu.sv
+./src/rtl/core/ifu/ifu_mctrl.sv
 ./src/rtl/core/dec/id0.sv
 ./src/rtl/core/dec/id1.sv
 ./src/rtl/core/exu/exu.sv

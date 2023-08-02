@@ -166,7 +166,6 @@ module riscv_core (
   reg_addr_t                     rs2_addr_r;
 
   logic      [             31:1] pc_in;
-  logic      [             31:1] pc_out;
   logic                          pc_update;
 
   reg_data_t                     rs1_data_e;
@@ -187,7 +186,6 @@ module riscv_core (
     .flush_f      (flush),
     .pc_in        (alu_res_m[31:1]),
     .pc_update    (pc_update),
-    .pc_out       (pc_out),
     .instr_d0     (instr_d0),
     .pc_d0        (pc_d0),
     .compressed_d0(compressed_d0),

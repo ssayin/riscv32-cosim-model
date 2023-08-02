@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Jul 31 20:36:58 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Wed Aug  2 13:55:59 2023
 //=============================================================================
 // Description: Synthesizable BFM for agent axi4master
 //=============================================================================
@@ -46,7 +46,6 @@ interface axi4master_bfm(axi4master_if if_port);
   
     if (if_port.arvalid) if_port.arready = 1;
     else if_port.arready = 0;
-  
     if_port.rid   = req_s.rid;
   
     if_port.rresp = req_s.rresp;

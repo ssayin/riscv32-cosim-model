@@ -17,7 +17,7 @@ backup = no
 
 split_transactors = yes
 
-top_default_seq_count = 15
+top_default_seq_count = 300
 #top_env_inc_before_class = top_env_inc_before_class.sv inline
 
 syosil_scoreboard_src_path = ../../third_party/syoscb-1.0.2.4/src
@@ -30,3 +30,6 @@ syosil_scoreboard_src_path = ../../third_party/syoscb-1.0.2.4/src
 #ref_model_compare_method = reference io
 
 th_generate_clock_and_reset = yes
+
+#regmodel_file = regmodel.sv
+#top_reg_block_type = top_reg_block

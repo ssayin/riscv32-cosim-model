@@ -70,7 +70,7 @@ module mem (
       rd_addr_wb <= 32'h0;
       rd_en_wb   <= 1'b0;
     end else begin
-      //rd_data_wb <= lsu_m ? mem_in : alu_res_m;
+      rd_data_wb <= lsu_m ? 33 : alu_res_m;
       rd_addr_wb <= rd_addr_m;
       rd_en_wb   <= rd_en_m;
     end

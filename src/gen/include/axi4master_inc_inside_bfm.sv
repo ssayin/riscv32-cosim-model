@@ -15,7 +15,6 @@ task drive(axi4_tx_s req_s);
 
   if (if_port.arvalid) if_port.arready = 1;
   else if_port.arready = 0;
-
   if_port.rid   = req_s.rid;
 
   if_port.rresp = req_s.rresp;

@@ -31,8 +31,11 @@ module reg_file #(
       if ((rd_addr != 5'h0) && wr_en) begin
         reg_file[rd_addr] <= rd_data;
       end
-      rs1_data <= reg_file[rs1_addr];
-      rs2_data <= reg_file[rs2_addr];
+      // TODO: Bypass after impl. hazard unit
+      if (rs1_addr == 0) rs1_data <= 0;
+      else rs1_data <= reg_file[rs1_addr];
+      if (rs2_addr == 0) rs2_data <= 0;
+      else rs2_data <= reg_file[rs2_addr];
     end
   end
 endmodule

@@ -103,3 +103,10 @@ if_port = logic        rready;
 
 if_clock = clk
 if_reset = rst_n
+
+#uvm_reg_kind = arid
+#uvm_reg_addr = araddr
+#uvm_reg_data = rdata
+
+#reg_access_mode = WR
+#reg_access_block_type = axi4master_reg_block
