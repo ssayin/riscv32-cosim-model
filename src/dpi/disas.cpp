@@ -1,7 +1,4 @@
-#include "svdpi.h"
-
 #include "riscv-disas.h"
-
 #include "decodesv.h"
 
 #include <iostream>

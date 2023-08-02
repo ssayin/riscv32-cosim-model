@@ -1,6 +1,6 @@
 #include "decodesv.h"
 #include "decoder/decoder.hpp"
-#include "svdpi.h"
+
 #include <bitset>
 #include <cstring>
 #include <iostream>
