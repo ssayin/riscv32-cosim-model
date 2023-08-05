@@ -123,7 +123,7 @@ module ifu_mem_ctrl (
 
   always_ff @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
-      empty_ff <= 0;
+      empty_ff <= 1;
     end else begin
       empty_ff <= empty;
     end

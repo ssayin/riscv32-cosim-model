@@ -207,25 +207,13 @@ module riscv_core (
     .rs2_data(rs2_data_e)
   );
 
-  exu exu_0 (
-    .clk(clk & stall_f),
-    .*
-  );
+  exu exu_0 (.*);
 
-  id0 id0_0 (
-    .clk(clk & stall_f),
-    .*
-  );
+  id0 id0_0 (.*);
 
-  id1 id1_0 (
-    .clk(clk & stall_f),
-    .*
-  );
+  id1 id1_0 (.*);
 
-  mem mem_0 (
-    .clk(clk & stall_f),
-    .*
-  );
+  mem mem_0 (.*);
 
 
   assign stall                      = 'b0;
