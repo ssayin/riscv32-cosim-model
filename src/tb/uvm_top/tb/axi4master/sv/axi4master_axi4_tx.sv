@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Wed Aug  2 14:10:16 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Sat Aug  5 03:57:15 2023
 //=============================================================================
 // Description: Sequence item for axi4master_sequencer
 //=============================================================================
@@ -73,7 +73,7 @@ class axi4_tx extends uvm_sequence_item;
   // To exclude variables from compare, pack, and unpack methods, define them using trans_meta in file axi4master.tpl
 
   // Transaction variables
-  rand logic awid;
+  rand logic [ 1:0] awid;
   rand logic [31:0] awaddr;
   rand logic [ 7:0] awlen;
   rand logic [ 2:0] awsize;
@@ -90,11 +90,11 @@ class axi4_tx extends uvm_sequence_item;
   rand logic        wlast;
   rand logic        wvalid;
   rand logic        wready;
-  rand logic       bid;
+  rand logic [1:0] bid;
   rand logic [1:0] bresp;
   rand logic       bvalid;
   rand logic       bready;
-  rand logic        arid;
+  rand logic [ 1:0] arid;
   rand logic [31:0] araddr;
   rand logic [ 7:0] arlen;
   rand logic [ 2:0] arsize;
@@ -106,7 +106,7 @@ class axi4_tx extends uvm_sequence_item;
   rand logic [ 3:0] arqos;
   rand logic [ 3:0] arregion;
   rand logic        arready;
-  rand logic        rid;
+  rand logic [ 1:0] rid;
   rand logic [63:0] rdata;
   rand logic [ 1:0] rresp;
   rand logic        rlast;

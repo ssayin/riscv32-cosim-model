@@ -15,4 +15,6 @@ package param_defs;
 
   localparam int MemBusWidth = 32;
 
+  localparam int AxiIdWidth = 2;
+
 endpackage

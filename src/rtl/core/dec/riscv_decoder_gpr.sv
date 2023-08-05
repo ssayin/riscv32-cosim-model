@@ -7,29 +7,29 @@ import param_defs::*;
 import instr_defs::*;
 
 module riscv_decoder_gpr (
-  input  logic                    clk,
-  input  logic                    rst_n,
-  input  logic [            31:0] instr,
-  input  logic                    compressed,
-  output logic [RegAddrWidth-1:0] rd_addr,
-  output logic [RegAddrWidth-1:0] rs1_addr,
-  output logic [RegAddrWidth-1:0] rs2_addr
+  input  logic        clk,
+  input  logic        rst_n,
+  input  logic [31:0] instr,
+  input  logic        compressed,
+  output logic [ 4:0] rd_addr,
+  output logic [ 4:0] rs1_addr,
+  output logic [ 4:0] rs2_addr
 );
 
-  localparam logic [RegAddrWidth-1:0] X0 = 5'b00000;
-  localparam logic [RegAddrWidth-1:0] X1 = 5'b00001;
-  localparam logic [RegAddrWidth-1:0] X2 = 5'b00010;
+  localparam logic [4:0] X0 = 5'b00000;
+  localparam logic [4:0] X1 = 5'b00001;
+  localparam logic [4:0] X2 = 5'b00010;
 
   logic [31:0] i;
   assign i[31:0] = instr[31:0];
 
-  logic [RegAddrWidth-1:0] rd_addr_next;
-  logic [RegAddrWidth-1:0] rs1_addr_next;
-  logic [RegAddrWidth-1:0] rs2_addr_next;
+  logic [4:0] rd_addr_next;
+  logic [4:0] rs1_addr_next;
+  logic [4:0] rs2_addr_next;
 
-  logic [             4:0] c_42;
-  logic [             4:0] c_62;
-  logic [             4:0] c_97;
+  logic [4:0] c_42;
+  logic [4:0] c_62;
+  logic [4:0] c_97;
 
 
   assign c_42 = {2'b01, i[9:7]};

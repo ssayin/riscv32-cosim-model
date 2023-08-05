@@ -6,7 +6,7 @@ import instr_defs::*;
 
 // Ensure instructions are aligned to 2 byte boundaries.
 // Buffer size = 64
-module ifu_mctrl (
+module ifu_mem_ctrl (
   input  logic        clk,
   input  logic        rst_n,
   input  logic [31:1] pc,
@@ -16,28 +16,46 @@ module ifu_mctrl (
   output logic        compressed,
 
   // AXI Channels
-  output logic        axi_arid_f,
-  output logic [31:0] axi_araddr_f,
-  output logic [ 7:0] axi_arlen_f,
-  output logic [ 2:0] axi_arsize_f,
-  output logic [ 1:0] axi_arburst_f,
-  output logic        axi_arlock_f,
-  output logic [ 3:0] axi_arcache_f,
-  output logic [ 2:0] axi_arprot_f,
-  output logic        axi_arvalid_f,
-  output logic [ 3:0] axi_arqos_f,
-  output logic [ 3:0] axi_arregion_f,
-  input  logic        axi_arready_f,
-  input  logic        axi_rid_f,
-  input  logic [63:0] axi_rdata_f,
-  input  logic [ 1:0] axi_rresp_f,
-  input  logic        axi_rlast_f,
-  input  logic        axi_rvalid_f,
-  output logic        axi_rready_f
+  output logic [AxiIdWidth-1:0] axi_arid_f,
+  output logic [          31:0] axi_araddr_f,
+  output logic [           7:0] axi_arlen_f,
+  output logic [           2:0] axi_arsize_f,
+  output logic [           1:0] axi_arburst_f,
+  output logic                  axi_arlock_f,
+  output logic [           3:0] axi_arcache_f,
+  output logic [           2:0] axi_arprot_f,
+  output logic                  axi_arvalid_f,
+  output logic [           3:0] axi_arqos_f,
+  output logic [           3:0] axi_arregion_f,
+  input  logic                  axi_arready_f,
+  input  logic [AxiIdWidth-1:0] axi_rid_f,
+  input  logic [          63:0] axi_rdata_f,
+  input  logic [           1:0] axi_rresp_f,
+  input  logic                  axi_rlast_f,
+  input  logic                  axi_rvalid_f,
+  output logic                  axi_rready_f,
+  output logic                  empty
 );
 
-  assign axi_arlen_f   = 8;
-  assign axi_arburst_f = 2'b01;
+  localparam int FifoDepth = 16;
+  assign axi_arlen_f   = FifoDepth;
+  assign axi_arburst_f = INCR;
+
+  // FIFO signals
+  logic        full;
+  logic [63:0] din;
+  logic [63:0] dout;
+  logic        flush;
+  logic        wren;
+  logic        rden;
+  logic        almost_empty;
+
+  sync_fifo #(
+      .RW   (64),
+      .DEPTH(FifoDepth)
+  ) sync_fifo_0 (
+    .*
+  );
 
   typedef enum logic [1:0] {
     IDLE  = 2'b00,
@@ -46,6 +64,9 @@ module ifu_mctrl (
 
   axi_state_t axi_state = IDLE;
   axi_state_t axi_state_next = IDLE;
+
+  assign axi_rready_f = ~full;
+  assign wren         = axi_rready_f && axi_rvalid_f;
 
   always_comb begin
     start_fetch    = 0;
@@ -58,7 +79,7 @@ module ifu_mctrl (
       end
       FETCH: begin
         axi_state_next = IDLE;
-        if (axi_rready_f && axi_rvalid_f) begin
+        if (wren) begin
           if (axi_rlast_f) axi_state_next = IDLE;
           else axi_state_next = FETCH;
         end
@@ -86,7 +107,6 @@ module ifu_mctrl (
     end
   end
 
-
   always_ff @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
       axi_arvalid_f <= 0;
@@ -96,26 +116,21 @@ module ifu_mctrl (
     end
   end
 
+  assign din[63:0] = axi_rdata_f[63:0];
+  assign rden      = 1;
+
   always_ff @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
       instr[31:0] <= 32'h13;
       compressed  <= 0;
     end else begin
-      if (axi_rvalid_f && axi_rready_f) begin
-        instr[31:0] <= axi_rdata_f[31:0];
+      if (wren) begin
+        instr[31:0] <= dout[31:0];
         compressed  <= ~(instr[0] & instr[1]);
       end else begin
         instr[31:0] <= 32'h13;
         compressed  <= 0;
       end
-    end
-  end
-
-  always_ff @(posedge clk or negedge rst_n) begin
-    if (!rst_n) begin
-      axi_rready_f <= 0;
-    end else begin
-      axi_rready_f <= 1'b1;
     end
   end
 

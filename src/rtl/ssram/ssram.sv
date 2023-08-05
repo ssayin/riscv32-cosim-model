@@ -1,5 +1,10 @@
+// SPDX-FileCopyrightText: 2023 Serdar Sayın <https://serdarsayin.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
+import instr_defs::*;
 module ssram #(
-    parameter int ADDR_WIDTH = 10,
+    parameter int ADDR_WIDTH = 32,
     parameter int DATA_WIDTH = 64   // divisible by 8
 ) (
   input  logic                    clka,
@@ -20,7 +25,15 @@ module ssram #(
   output logic [  DATA_WIDTH-1:0] doutb
 );
 
-  logic [DATA_WIDTH-1:0] mem_array[0:2**ADDR_WIDTH];
+  // logic [DATA_WIDTH-1:0] mem_array[0:2**ADDR_WIDTH];
+  logic   [7:0] mem_array[0:2**ADDR_WIDTH];
+
+  integer       i;
+  initial begin
+    for (i = 0; i < 1024; i++) begin
+      mem_array[i] = $urandom;
+    end
+  end
 
   always_ff @(posedge clka or negedge rsta) begin
     if (!rsta) begin
@@ -28,13 +41,15 @@ module ssram #(
       if (!wea) begin
         for (int i = 0; i < DATA_WIDTH / 8; i++) begin
           if (!wea[i]) begin
-            mem_array[addra][8*i+:8] <= dina[8*i+:8];
+            // mem_array[addra][8*i+:8] <= dina[8*i+:8];
+            mem_array[addra+i] <= dina[8*i+:8];
           end
         end
       end
       if (!ena) begin
         for (int i = 0; i < DATA_WIDTH / 8; i++) begin
-          douta[8*i+:8] <= mem_array[addra][8*i+:8];
+          // douta[8*i+:8] <= mem_array[addra][8*i+:8];
+          douta[8*i+:8] <= mem_array[addra+i];
         end
       end
     end
@@ -46,16 +61,29 @@ module ssram #(
       if (!web) begin
         for (int i = 0; i < DATA_WIDTH / 8; i++) begin
           if (!web[i]) begin
-            mem_array[addrb][8*i+:8] <= dinb[8*i+:8];
+            // mem_array[addrb][8*i+:8] <= dinb[8*i+:8];
+            mem_array[addrb+i] <= dinb[8*i+:8];
           end
         end
       end
       if (!enb) begin
         for (int i = 0; i < DATA_WIDTH / 8; i++) begin
-          doutb[8*i+:8] <= mem_array[addrb][8*i+:8];
+          // doutb[8*i+:8] <= mem_array[addrb][8*i+:8];
+          doutb[8*i+:8] <= mem_array[addrb+i];
         end
       end
     end
   end
+
+`ifdef DEBUG_INIT_FILE
+  initial begin
+    $display("Boot file is %s", `DEBUG_INIT_FILE);
+    $readmemh(`DEBUG_INIT_FILE, mem_array);
+    for (i = 0; i < 2 ** ADDR_WIDTH; i++) begin
+      // $display("Data[%d] = %d", i, mem_array[i]);
+      mem_array[i] = 0;
+    end
+  end
+`endif
 
 endmodule

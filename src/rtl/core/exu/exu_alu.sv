@@ -5,7 +5,7 @@
 import instr_defs::*;
 import param_defs::*;
 
-module alu (
+module exu_alu (
   input  logic [ DataWidth-1:0] a,
   input  logic [ DataWidth-1:0] b,
   input  logic [AluOpWidth-1:0] alu_op,

@@ -15,6 +15,7 @@
 ./src/rtl/include/riscv_opcodes.svh
 ./src/rtl/include/param_defs.sv
 ./src/rtl/include/instr_defs.sv
+./src/rtl/core/sync_fifo.sv
 ./src/rtl/core/dec/riscv_decoder.sv
 ./src/rtl/core/dec/riscv_decoder_j.sv
 ./src/rtl/core/dec/riscv_decoder_gpr.sv
@@ -24,9 +25,11 @@
 ./src/rtl/core/dec/riscv_decoder_j_no_rr_imm.sv
 ./src/rtl/core/reg_file.sv
 ./src/rtl/core/riscv_core.sv
-./src/rtl/core/exu/alu.sv
+./src/rtl/core/exu/exu_bru.sv
+./src/rtl/core/exu/exu_alu.sv
+./src/rtl/core/exu/exu.sv
 ./src/rtl/core/ifu/ifu.sv
-./src/rtl/core/ifu/ifu_mctrl.sv
+./src/rtl/core/ifu/ifu_mem_ctrl.sv
 ./src/rtl/core/dec/id0.sv
 ./src/rtl/core/dec/id1.sv
 ./src/rtl/core/exu/exu.sv

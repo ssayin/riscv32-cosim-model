@@ -1,32 +1,36 @@
+// SPDX-FileCopyrightText: 2023 Serdar Sayın <https://serdarsayin.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 module mem (
-  input  logic                       clk,
-  input  logic                       rst_n,
-  input  logic                       compressed_m,
-  input  logic                       rd_en_m,
-  input  reg_data_t                  alu_res_m,
-  input  reg_data_t                  store_data_m,
-  input  logic                       lsu_m,
-  input  logic      [LsuOpWidth-1:0] lsu_op_m,
-  input  logic                       br_taken_m,
-  input  logic                       br_m,
-  input  reg_addr_t                  rd_addr_m,
-  output logic                       rd_en_wb,
-  output reg_addr_t                  rd_addr_wb,
-  output reg_data_t                  rd_data_wb,
+  input  logic                  clk,
+  input  logic                  rst_n,
+  input  logic                  compressed_m,
+  input  logic                  rd_en_m,
+  input  logic [          31:0] alu_res_m,
+  input  logic [          31:0] store_data_m,
+  input  logic                  lsu_m,
+  input  logic [LsuOpWidth-1:0] lsu_op_m,
+  input  logic                  br_taken_m,
+  input  logic                  br_m,
+  input  logic [           4:0] rd_addr_m,
+  output logic                  rd_en_wb,
+  output logic [           4:0] rd_addr_wb,
+  output logic [          31:0] rd_data_wb,
 
   // WA Channel
-  output logic        axi_awid_m,
-  output logic [31:0] axi_awaddr_m,
-  output logic [ 7:0] axi_awlen_m,
-  output logic [ 2:0] axi_awsize_m,
-  output logic [ 1:0] axi_awburst_m,
-  output logic        axi_awlock_m,
-  output logic [ 3:0] axi_awcache_m,
-  output logic [ 2:0] axi_awprot_m,
-  output logic        axi_awvalid_m,
-  output logic [ 3:0] axi_awregion_m,
-  output logic [ 3:0] axi_awqos_m,
-  input  logic        axi_awready_m,
+  output logic [AxiIdWidth-1:0] axi_awid_m,
+  output logic [          31:0] axi_awaddr_m,
+  output logic [           7:0] axi_awlen_m,
+  output logic [           2:0] axi_awsize_m,
+  output logic [           1:0] axi_awburst_m,
+  output logic                  axi_awlock_m,
+  output logic [           3:0] axi_awcache_m,
+  output logic [           2:0] axi_awprot_m,
+  output logic                  axi_awvalid_m,
+  output logic [           3:0] axi_awregion_m,
+  output logic [           3:0] axi_awqos_m,
+  input  logic                  axi_awready_m,
 
   // WD Channel
   output logic [63:0] axi_wdata_m,
@@ -36,32 +40,32 @@ module mem (
   input  logic        axi_wready_m,
 
   // Write Response Channel
-  input  logic       axi_bid_m,
-  input  logic [1:0] axi_bresp_m,
-  input  logic       axi_bvalid_m,
-  output logic       axi_bready_m,
+  input  logic [AxiIdWidth-1:0] axi_bid_m,
+  input  logic [           1:0] axi_bresp_m,
+  input  logic                  axi_bvalid_m,
+  output logic                  axi_bready_m,
 
   // RA Channel
-  output logic        axi_arid_m,
-  output logic [31:0] axi_araddr_m,
-  output logic [ 7:0] axi_arlen_m,
-  output logic [ 2:0] axi_arsize_m,
-  output logic [ 1:0] axi_arburst_m,
-  output logic        axi_arlock_m,
-  output logic [ 3:0] axi_arcache_m,
-  output logic [ 2:0] axi_arprot_m,
-  output logic        axi_arvalid_m,
-  output logic [ 3:0] axi_arqos_m,
-  output logic [ 3:0] axi_arregion_m,
-  input  logic        axi_arready_m,
+  output logic [AxiIdWidth-1:0] axi_arid_m,
+  output logic [          31:0] axi_araddr_m,
+  output logic [           7:0] axi_arlen_m,
+  output logic [           2:0] axi_arsize_m,
+  output logic [           1:0] axi_arburst_m,
+  output logic                  axi_arlock_m,
+  output logic [           3:0] axi_arcache_m,
+  output logic [           2:0] axi_arprot_m,
+  output logic                  axi_arvalid_m,
+  output logic [           3:0] axi_arqos_m,
+  output logic [           3:0] axi_arregion_m,
+  input  logic                  axi_arready_m,
 
   // RD Channel
-  input  logic        axi_rid_m,
-  input  logic [63:0] axi_rdata_m,
-  input  logic [ 1:0] axi_rresp_m,
-  input  logic        axi_rlast_m,
-  input  logic        axi_rvalid_m,
-  output logic        axi_rready_m
+  input  logic [AxiIdWidth-1:0] axi_rid_m,
+  input  logic [          63:0] axi_rdata_m,
+  input  logic [           1:0] axi_rresp_m,
+  input  logic                  axi_rlast_m,
+  input  logic                  axi_rvalid_m,
+  output logic                  axi_rready_m
 );
 
   always_ff @(posedge clk or negedge rst_n) begin
@@ -90,40 +94,40 @@ module mem (
   end
 
 
-  assign axi_awid_m          = 0;
-  assign axi_awlen_m[7:0]    = 0;
-  assign axi_awsize_m[2:0]   = 0;
-  assign axi_awburst_m[1:0]  = 0;
-  assign axi_awlock_m        = 0;
-  assign axi_awcache_m[3:0]  = 0;
-  assign axi_awprot_m[2:0]   = 0;
-  assign axi_awvalid_m       = 0;
-  assign axi_awregion_m[3:0] = 0;
-  assign axi_awqos_m[3:0]    = 0;
+  assign axi_awid_m[AxiIdWidth-1:0] = 0;
+  assign axi_awlen_m[7:0]           = 0;
+  assign axi_awsize_m[2:0]          = 0;
+  assign axi_awburst_m[1:0]         = 0;
+  assign axi_awlock_m               = 0;
+  assign axi_awcache_m[3:0]         = 0;
+  assign axi_awprot_m[2:0]          = 0;
+  assign axi_awvalid_m              = 0;
+  assign axi_awregion_m[3:0]        = 0;
+  assign axi_awqos_m[3:0]           = 0;
   //input  logic        axi_awready_m,
 
-  assign axi_wdata_m[63:0]   = 0;
-  assign axi_wstrb_m[7:0]    = 0;
-  assign axi_wlast_m         = 0;
-  assign axi_wvalid_m        = 0;
+  assign axi_wdata_m[63:0]          = 0;
+  assign axi_wstrb_m[7:0]           = 0;
+  assign axi_wlast_m                = 0;
+  assign axi_wvalid_m               = 0;
   //input  logic        axi_wready_m,
 
   //input  logic       axi_bid_m,
   //input  logic [1:0] axi_bresp_m,
   //input  logic       axi_bvalid_m,
-  assign axi_bready_m        = 0;
+  assign axi_bready_m               = 0;
 
-  assign axi_arid_m          = 0;
-  assign axi_arlen_m[7:0]    = 0;
-  assign axi_arsize_m[2:0]   = 0;
-  assign axi_arburst_m[1:0]  = 0;
+  assign axi_arid_m[AxiIdWidth-1:0] = 0;
+  assign axi_arlen_m[7:0]           = 0;
+  assign axi_arsize_m[2:0]          = 0;
+  assign axi_arburst_m[1:0]         = 0;
 
-  assign axi_arlock_m        = 0;
-  assign axi_arcache_m[3:0]  = 0;
-  assign axi_arprot_m[2:0]   = 0;
-  assign axi_arvalid_m       = 0;
-  assign axi_arqos_m[3:0]    = 0;
-  assign axi_arregion_m[3:0] = 0;
+  assign axi_arlock_m               = 0;
+  assign axi_arcache_m[3:0]         = 0;
+  assign axi_arprot_m[2:0]          = 0;
+  assign axi_arvalid_m              = 0;
+  assign axi_arqos_m[3:0]           = 0;
+  assign axi_arregion_m[3:0]        = 0;
   // input  logic        axi_arready_m,
 
   // RD Channel
@@ -132,7 +136,7 @@ module mem (
   // input  logic [ 1:0] axi_rresp_m,
   // input  logic        axi_rlast_m,
   // input  logic        axi_rvalid_m,
-  assign axi_rready_m        = 0;
+  assign axi_rready_m               = 0;
 
 
 

@@ -94,9 +94,18 @@ package instr_defs;
     logic illegal;
   } ctl_pkt_t;
 
-  typedef logic [RegAddrWidth-1:0] reg_addr_t;
-  typedef logic [MemBusWidth-1:0] mem_data_t;
-  typedef logic [DataWidth-1:0] reg_data_t;
+  typedef enum logic [1:0] {
+    FIXED = 2'b00,
+    INCR  = 2'b01,
+    WRAP  = 2'b10
+  } axi_burst_t;
+
+  typedef enum logic [1:0] {
+    OKAY   = 2'b00,
+    EXOKAY = 2'b01,
+    SLVERR = 2'b10,
+    DECERR = 2'b11
+  } axi_resp_t;
 
 
 

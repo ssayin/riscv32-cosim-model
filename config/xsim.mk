@@ -28,7 +28,7 @@ SOLIB_STDCXX  := $(shell /sbin/ldconfig -p | perl -ne 'if (/stdc\+\+/) { @column
 #synth: tools/vivado.tcl
 #	vivado -mode batch -source tools/vivado.tcl
 
-sim: uvm_top tb_toplevel riscv_decoder
+sim: uvm_top tb_top_level riscv_decoder
 
 #lib_vivado: $(DECODER_SRCS) $(EXPORTER_SRCS) $(DISAS_SRCS)
 #	xsc $(DECODER_SRCS) $(EXPORTER_SRCS) $(DISAS_SRCS) --gcc_compile_options $(DECODER_INC) --gcc_compile_options $(COMMON_INC) --gcc_compile_options $(DISAS_INC) -cppversion 20
@@ -41,9 +41,9 @@ uvm_top: compile
 	xelab top_untimed_tb top_hdl_th -relax -s top_tb
 	xsim top_tb -testplusarg UVM_TESTNAME=top_test -testplusarg UVM_VERBOSITY=UVM_HIGH -R
 
-tb_toplevel: compile
-	xelab tb_top_level -relax -s tb_toplevel
-	xsim tb_toplevel -R
+tb_top_level: compile
+	xelab tb_top_level -relax -s tb_top_level
+	xsim tb_top_level -R
 
 # Compile SystemVerilog files on Xilinx Vivado Suite
 compile: $(INSTR_FEED)

@@ -4,7 +4,7 @@ number_of_instances = 2
 
 trans_item = axi4_tx
 
-trans_var = rand logic awid;
+trans_var = rand logic [ 1:0] awid;
 trans_var = rand logic [31:0] awaddr;
 trans_var = rand logic [ 7:0] awlen;
 trans_var = rand logic [ 2:0] awsize;
@@ -23,12 +23,12 @@ trans_var = rand logic        wlast;
 trans_var = rand logic        wvalid;
 trans_var = rand logic        wready;
 
-trans_var = rand logic       bid;
+trans_var = rand logic [1:0] bid;
 trans_var = rand logic [1:0] bresp;
 trans_var = rand logic       bvalid;
 trans_var = rand logic       bready;
 
-trans_var = rand logic        arid;
+trans_var = rand logic [ 1:0] arid;
 trans_var = rand logic [31:0] araddr;
 trans_var = rand logic [ 7:0] arlen;
 trans_var = rand logic [ 2:0] arsize;
@@ -41,7 +41,7 @@ trans_var = rand logic [ 3:0] arqos;
 trans_var = rand logic [ 3:0] arregion;
 trans_var = rand logic        arready;
 
-trans_var = rand logic        rid;
+trans_var = rand logic [ 1:0] rid;
 trans_var = rand logic [63:0] rdata;
 trans_var = rand logic [ 1:0] rresp;
 trans_var = rand logic        rlast;

@@ -21,6 +21,8 @@ extern "C" void decodesv(const svLogicVecVal *word, svLogicVecVal *out) {
 }
 */
 
+op get_decoded_instr(rapidjson::Document *doc) {}
+
 void dpi_decoder_input(const decoder_in_t *in) {}
 
 void dpi_decoder_output(decoder_out_t *out) {}

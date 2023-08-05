@@ -5,35 +5,35 @@
 import instr_defs::*;
 
 module id1 (
-  input  logic                          clk,
-  input  logic                          rst_n,
-  input  logic                          flush_d1,
-  input  reg_addr_t                     rd_addr_d1,
-  input  logic      [             31:0] instr_d1,
-  input  logic      [             31:1] pc_d1,
-  input  logic                          compressed_d1,
-  input  logic                          br_d1,
-  input  logic                          br_taken_d1,
-  input  logic                          illegal_d1,
-  output logic      [             31:1] pc_e,
-  output logic                          compressed_e,
-  output logic                          br_e,
-  output logic                          br_taken_e,
-  output logic                          use_imm_e,
-  output logic                          use_pc_e,
-  output reg_data_t                     imm_e,
-  output logic                          illegal_e,
-  output logic                          alu_e,
-  output logic      [   AluOpWidth-1:0] alu_op_e,
-  output reg_addr_t                     rd_addr_e,
-  output logic                          lsu_e,
-  output logic      [   LsuOpWidth-1:0] lsu_op_e,
-  output logic      [BranchOpWidth-1:0] br_op_e,
-  output logic                          rd_en_e
+  input  logic                     clk,
+  input  logic                     rst_n,
+  input  logic                     flush_d1,
+  input  logic [              4:0] rd_addr_d1,
+  input  logic [             31:0] instr_d1,
+  input  logic [             31:1] pc_d1,
+  input  logic                     compressed_d1,
+  input  logic                     br_d1,
+  input  logic                     br_taken_d1,
+  input  logic                     illegal_d1,
+  output logic [             31:1] pc_e,
+  output logic                     compressed_e,
+  output logic                     br_e,
+  output logic                     br_taken_e,
+  output logic                     use_imm_e,
+  output logic                     use_pc_e,
+  output logic [             31:0] imm_e,
+  output logic                     illegal_e,
+  output logic                     alu_e,
+  output logic [   AluOpWidth-1:0] alu_op_e,
+  output logic [              4:0] rd_addr_e,
+  output logic                     lsu_e,
+  output logic [   LsuOpWidth-1:0] lsu_op_e,
+  output logic [BranchOpWidth-1:0] br_op_e,
+  output logic                     rd_en_e
 );
 
   // Internal Signal Wires
-  logic     [    DataWidth-1:0] imm_next;
+  logic     [             31:0] imm_next;
   logic                         use_imm_next;
   ctl_pkt_t                     ctl_next;
   logic                         rd_en_next;

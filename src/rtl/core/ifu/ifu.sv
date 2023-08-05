@@ -11,26 +11,26 @@ module ifu (
   output logic stall_f,
 
   // RA Channel
-  output logic        axi_arid_f,
-  output logic [31:0] axi_araddr_f,
-  output logic [ 7:0] axi_arlen_f,
-  output logic [ 2:0] axi_arsize_f,
-  output logic [ 1:0] axi_arburst_f,
-  output logic        axi_arlock_f,
-  output logic [ 3:0] axi_arcache_f,
-  output logic [ 2:0] axi_arprot_f,
-  output logic        axi_arvalid_f,
-  output logic [ 3:0] axi_arqos_f,
-  output logic [ 3:0] axi_arregion_f,
-  input  logic        axi_arready_f,
+  output logic [AxiIdWidth-1:0] axi_arid_f,
+  output logic [          31:0] axi_araddr_f,
+  output logic [           7:0] axi_arlen_f,
+  output logic [           2:0] axi_arsize_f,
+  output logic [           1:0] axi_arburst_f,
+  output logic                  axi_arlock_f,
+  output logic [           3:0] axi_arcache_f,
+  output logic [           2:0] axi_arprot_f,
+  output logic                  axi_arvalid_f,
+  output logic [           3:0] axi_arqos_f,
+  output logic [           3:0] axi_arregion_f,
+  input  logic                  axi_arready_f,
 
   // RD Channel
-  input  logic        axi_rid_f,
-  input  logic [63:0] axi_rdata_f,
-  input  logic [ 1:0] axi_rresp_f,
-  input  logic        axi_rlast_f,
-  input  logic        axi_rvalid_f,
-  output logic        axi_rready_f,
+  input  logic [AxiIdWidth-1:0] axi_rid_f,
+  input  logic [          63:0] axi_rdata_f,
+  input  logic [           1:0] axi_rresp_f,
+  input  logic                  axi_rlast_f,
+  input  logic                  axi_rvalid_f,
+  output logic                  axi_rready_f,
 
   input  logic [31:1] pc_in,
   input  logic        pc_update,
@@ -54,6 +54,10 @@ module ifu (
 
   logic        start_fetch;
   logic        done_fetch;
+
+  logic        pc_incr;
+
+  logic        empty;
 
   assign stall_f = 1;
 
@@ -83,7 +87,7 @@ module ifu (
     if (!rst_n) begin
       pc <= 31'h0;  // boot sector
     end else begin
-      if (!start_fetch) begin
+      if (empty) begin
         $display("IF bubble");
         pc[31:1] <= pc[31:1];
       end else if (pc_update) begin
@@ -119,6 +123,6 @@ module ifu (
   assign br_taken = 'b0;
   assign br_d0    = br;
 
-  ifu_mctrl ctrl (.*);
+  ifu_mem_ctrl ctrl (.*);
 
 endmodule : ifu
