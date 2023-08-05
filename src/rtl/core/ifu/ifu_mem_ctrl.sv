@@ -34,6 +34,7 @@ module ifu_mem_ctrl (
   input  logic                  axi_rlast_f,
   input  logic                  axi_rvalid_f,
   output logic                  axi_rready_f,
+  output logic                  empty_ff,
   output logic                  empty
 );
 
@@ -52,7 +53,7 @@ module ifu_mem_ctrl (
 
   logic        row_flush;
 
-  logic [ 3:0] slicer;
+  assign row_flush = 1;
 
   sync_fifo #(
       .RW   (64),
@@ -120,12 +121,20 @@ module ifu_mem_ctrl (
     end
   end
 
+  always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+      empty_ff <= 0;
+    end else begin
+      empty_ff <= empty;
+    end
+  end
+
 
   assign din[63:0]           = axi_rdata_f[63:0];
   assign rden                = !empty && row_flush;
 
-  assign instr[31:0]         = empty ? 32'h13 : dout[31:0];
-  assign compressed          = empty ? 0 : ~(instr[0] & instr[1]);
+  assign instr[31:0]         = empty_ff ? 32'h13 : dout[31:0];
+  assign compressed          = empty_ff ? 0 : ~(instr[0] & instr[1]);
 
   assign axi_arid_f          = 0;
   assign axi_arlock_f        = 0;

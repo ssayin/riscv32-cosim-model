@@ -57,6 +57,7 @@ module ifu (
 
   logic        pc_incr;
 
+  logic        empty_ff;
   logic        empty;
 
   assign stall_f = 1;

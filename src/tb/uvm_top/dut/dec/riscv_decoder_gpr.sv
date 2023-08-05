@@ -17,7 +17,7 @@ module riscv_decoder_comp_gpr (
   localparam logic [4:0] X1 = 5'b00001;
   localparam logic [4:0] X2 = 5'b00010;
 
-  logic [31:0] i;
+  logic [15:0] i;
 
   logic [ 4:0] c_42;
   logic [ 4:0] c_62;

@@ -108,88 +108,88 @@ module riscv_core (
   output logic                  axi_rready_m
 );
 
-  logic                         flush;
+  logic                     flush;
+  logic                     flush_d0;
+  logic                     flush_d1;
+  // ID0
+  // ID0
+  // ID0
+  logic [             31:0] instr_d0;
+  logic [             31:1] pc_d0;
+  logic                     compressed_d0;
+  logic                     br_d0;
+  logic                     br_taken_d0;
+  logic                     illegal_d0;
+  // ID1
+  // ID1
+  // ID1
+  logic [             31:0] instr_d1;
+  logic [             31:1] pc_d1;
+  logic                     compressed_d1;
+  logic                     br_d1;
+  logic                     br_taken_d1;
+  logic [              4:0] rd_addr_d1;
+  logic                     illegal_d1;
+  // EX
+  // EX
+  // EX
+  logic [             31:1] pc_e;
+  logic                     compressed_e;
+  logic                     br_e;
+  logic                     br_taken_e;
+  logic                     use_imm_e;
+  logic                     use_pc_e;
+  logic [             31:0] imm_e;
+  logic                     illegal_e;
+  logic                     alu_e;
+  logic [   AluOpWidth-1:0] alu_op_e;
+  logic [              4:0] rd_addr_e;
+  logic                     lsu_e;
+  logic [   LsuOpWidth-1:0] lsu_op_e;
+  logic [BranchOpWidth-1:0] br_op_e;
+  logic                     rd_en_e;
+  logic [             31:0] rs1_data_e;
+  logic [             31:0] rs2_data_e;
+  // MEM
+  // MEM
+  // MEM
+  logic                     compressed_m;
+  logic                     rd_en_m;
+  logic [             31:0] alu_res_m;
+  logic [             31:0] store_data_m;
+  logic                     lsu_m;
+  logic [   LsuOpWidth-1:0] lsu_op_m;
+  logic                     br_taken_m;
+  logic                     br_m;
+  logic [              4:0] rd_addr_m;
+  // WB
+  // WB
+  // WB
+  logic                     rd_en_wb;
+  logic [              4:0] rd_addr_wb;
+  logic [             31:0] rd_data_wb;
+  // REG FILE
+  // REG FILE
+  // REG FILE
+  logic [              4:0] rd_addr;
+  logic [              4:0] rs1_addr_r;
+  logic [              4:0] rs2_addr_r;
 
-  logic                         flush_d0;
-  logic                         flush_d1;
-
-  logic     [             31:0] instr_d0;
-  logic     [             31:1] pc_d0;
-  logic                         compressed_d0;
-  logic                         br_d0;
-  logic                         br_taken_d0;
-  logic                         illegal_d0;
-
-  logic     [             31:0] instr_d1;
-  logic     [             31:1] pc_d1;
-  logic                         compressed_d1;
-  logic                         br_d1;
-  logic                         br_taken_d1;
-  logic     [              4:0] rd_addr_d1;
-  logic                         illegal_d1;
-
-  logic     [             31:1] pc_e;
-  logic                         compressed_e;
-  logic                         br_e;
-  logic                         br_taken_e;
-  logic                         use_imm_e;
-  logic                         use_pc_e;
-  logic     [             31:0] imm_e;
-  logic                         illegal_e;
-  logic                         alu_e;
-  logic     [   AluOpWidth-1:0] alu_op_e;
-  logic     [              4:0] rd_addr_e;
-  logic                         lsu_e;
-  logic     [   LsuOpWidth-1:0] lsu_op_e;
-  logic     [BranchOpWidth-1:0] br_op_e;
-  logic                         rd_en_e;
-
-  logic                         compressed_m;
-  logic                         rd_en_m;
-  logic     [             31:0] alu_res_m;
-  logic     [             31:0] store_data_m;
-  logic                         lsu_m;
-  logic     [   LsuOpWidth-1:0] lsu_op_m;
-  logic                         br_taken_m;
-  logic                         br_m;
-  logic     [              4:0] rd_addr_m;
-
-  logic                         rd_en_wb;
-  logic     [              4:0] rd_addr_wb;
-  logic     [             31:0] rd_data_wb;
-
-  ctl_pkt_t                     ctl;
-
-  logic     [              4:0] rd_addr;
-  logic     [              4:0] rs1_addr_r;
-  logic     [              4:0] rs2_addr_r;
-
-  logic     [             31:1] pc_in;
-  logic                         pc_update;
-
-  logic     [             31:0] rs1_data_e;
-  logic     [             31:0] rs2_data_e;
-
-  logic                         should_br;
-  logic                         br_mispredictd;
-
-  logic                         stall;
-  logic                         stall_f;
+  // IF/EX/MEM stuff
+  logic [             31:1] pc_in;
+  logic                     pc_update;
+  logic                     should_br;
+  logic                     br_mispredictd;
+  logic                     stall;
+  logic                     stall_f;
 
   assign flush_d0 = 0;
   assign flush_d1 = 0;
 
+  assign pc_in    = alu_res_m[31:1];
+
   ifu ifu_0 (
-    .clk          (clk),
-    .rst_n        (rst_n),
-    .flush_f      (flush),
-    .pc_in        (alu_res_m[31:1]),
-    .pc_update    (pc_update),
-    .instr_d0     (instr_d0),
-    .pc_d0        (pc_d0),
-    .compressed_d0(compressed_d0),
-    .br_d0        (br_d0),
-    .br_taken_d0  (br_taken_d0),
+    .flush_f(flush),
     .*
   );
 
@@ -232,24 +232,23 @@ module riscv_core (
   assign pc_update                  = should_br || br_mispredictd;
   assign flush                      = br_mispredictd;
 
+
+  // Unused signals
   assign axi_awid_f[AxiIdWidth-1:0] = 0;
   assign axi_awaddr_f[31:0]         = 0;
   assign axi_awlen_f[7:0]           = 0;
   assign axi_awsize_f[2:0]          = 0;
-  assign axi_awburst_f[1:0]         = 2'b01;
+  assign axi_awburst_f[1:0]         = 0;
   assign axi_awlock_f               = 0;
   assign axi_awcache_f[3:0]         = 0;
   assign axi_awprot_f[2:0]          = 0;
   assign axi_awvalid_f              = 0;
   assign axi_awregion_f[3:0]        = 0;
   assign axi_awqos_f[3:0]           = 0;
-
   assign axi_wdata_f[63:0]          = 0;
   assign axi_wstrb_f[7:0]           = 0;
-
   assign axi_wlast_f                = 0;
   assign axi_wvalid_f               = 0;
-
   assign axi_bready_f               = 0;
 
   initial begin
