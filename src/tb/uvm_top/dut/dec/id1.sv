@@ -33,15 +33,18 @@ module id1 (
 );
 
   // Internal Signal Wires
-  logic     [             31:0] imm_next;
-  logic                         use_imm_next;
-  ctl_pkt_t                     ctl_next;
-  logic                         rd_en_next;
-  logic                         use_pc_next;
+  logic [             31:0] imm_next;
+  logic                     use_imm_next;
+  logic                     rd_en_next;
+  logic                     use_pc_next;
 
-  logic     [   AluOpWidth-1:0] alu_op_next;
-  logic     [   LsuOpWidth-1:0] lsu_op_next;
-  logic     [BranchOpWidth-1:0] br_op_next;
+  logic [   AluOpWidth-1:0] alu_op_next;
+  logic [   LsuOpWidth-1:0] lsu_op_next;
+  logic [BranchOpWidth-1:0] br_op_next;
+
+  logic                     lsu_next;
+  logic                     illegal_next;
+  logic                     alu_next;
 
   riscv_decoder_ctl_imm dec_ctl_imm (
     .clk       (clk),
@@ -50,12 +53,14 @@ module id1 (
     .compressed(compressed_d1),
     .imm       (imm_next),
     .rd_en     (rd_en_next),
-    .ctl       (ctl_next),
     .use_imm   (use_imm_next),
     .use_pc    (use_pc_next),
     .alu_op    (alu_op_next),
     .lsu_op    (lsu_op_next),
-    .br_op     (br_op_next)
+    .br_op     (br_op_next),
+    .lsu       (lsu_next),
+    .alu       (alu_next),
+    .illegal   (illegal_next)
   );
 
   always_ff @(posedge clk or negedge rst_n) begin
@@ -84,13 +89,10 @@ module id1 (
       rd_addr_e    <= rd_addr_d1;
       rd_en_e      <= rd_en_next;
       br_op_e      <= br_op_next;
-      lsu_e        <= ctl_next.lsu;
-      alu_e        <= ctl_next.alu;
       br_e         <= br_d1;
       br_taken_e   <= br_taken_d1;
       pc_e         <= pc_d1;
       compressed_e <= compressed_d1;
-      illegal_e    <= ctl_next.illegal;
     end
   end
 

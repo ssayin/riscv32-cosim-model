@@ -19,7 +19,7 @@ typedef struct {
   logic illegal;
 } ctl_pkt_t;
 
-module riscv_decoder_dut (
+module riscv_decoder (
   input  logic                        clk,       // unused
   input  logic                        rst_n,     // unused
   input  logic     [            31:0] instr,
@@ -35,9 +35,7 @@ module riscv_decoder_dut (
   output logic     [  LsuOpWidth-1:0] lsu_op
 );
 
-  logic     compressed;
-
-  ctl_pkt_t ctl;
+  logic compressed;
 
   assign compressed = ~(instr[0] & instr[1]);
 
@@ -61,6 +59,12 @@ module riscv_decoder_dut (
     .alu       (ctl.alu),
     .lsu       (ctl.lsu),
     .br        (ctl.br),
+    .jal       (ctl.jal),
+    .fencei    (ctl.fencei),
+    .fence     (ctl.fence),
+    .illegal   (ctl.illegal),
+    .auipc     (ctl.auipc),
+    .lui       (ctl.lui),
     .use_imm   (use_imm),
     .alu_op    (alu_op),
     .lsu_op    (lsu_op)

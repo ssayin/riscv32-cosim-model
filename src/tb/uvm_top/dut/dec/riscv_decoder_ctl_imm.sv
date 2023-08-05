@@ -4,7 +4,7 @@
 
 import defs_pkg::*;
 
-module riscv_decoder_imm (
+module riscv_decoder_ctl_imm (
   input  logic                     clk,         // unused
   input  logic                     rst_n,       // unused
   input  logic [             31:0] instr,
@@ -18,7 +18,15 @@ module riscv_decoder_imm (
   output logic [BranchOpWidth-1:0] br_op,
   output logic                     br,
   output logic                     alu,
-  output logic                     lsu
+  output logic                     lsu,
+  output logic                     illegal,
+  output logic                     jal,
+  // mainly for debug
+  output logic                     fence,
+  output logic                     fencei,
+  output logic                     auipc,
+  output logic                     lui,
+  output logic                     csr
 );
 
   logic [31:0] i;
@@ -42,7 +50,7 @@ module riscv_decoder_imm (
   logic [DataWidth-1:0] imm_U;
   logic [DataWidth-1:0] imm_J;
 
-  logic [         11:0] csr;
+  logic [         11:0] imm_csr;
 
   // For extracting various C_* fields
   logic [DataWidth-1:0] c_imm_addi4spn;
@@ -66,7 +74,7 @@ module riscv_decoder_imm (
   assign imm_U          = {i[31:12], 12'b0};
   assign imm_J          = {{12{i[31]}}, i[19:12], i[20], i[30:21], 1'b0};
 
-  assign csr            = i[31:20];
+  assign imm_csr        = i[31:20];
 
   assign c_imm_addi4spn = {22'b0, i[10:7], i[12:11], i[5], i[6], 2'b00};
 
@@ -374,32 +382,32 @@ module riscv_decoder_imm (
         //  ╚═╝╚═╝╩╚═
         `CSRRC: begin
           csr = 1'b1;
-          imm = csr;
+          imm = imm_csr;
 
         end
         `CSRRCI: begin
           csr = 1'b1;
-          imm = csr;
+          imm = imm_csr;
 
         end
         `CSRRS: begin
           csr = 1'b1;
-          imm = csr;
+          imm = imm_csr;
 
         end
         `CSRRSI: begin
           csr = 1'b1;
-          imm = csr;
+          imm = imm_csr;
 
         end
         `CSRRW: begin
           csr = 1'b1;
-          imm = csr;
+          imm = imm_csr;
 
         end
         `CSRRWI: begin
           csr = 1'b1;
-          imm = csr;
+          imm = imm_csr;
 
         end
 
