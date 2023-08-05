@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
+// TODO: add multiple clock domains support
 module sync_fifo #(
     parameter int RW    = 64,  // Row width
     parameter int DEPTH = 64   // Fifo Depth
@@ -48,8 +49,8 @@ module sync_fifo #(
     end
   end
 
-  assign full  = (cnt == (DEPTH - 1));
-  assign empty = (cnt == 0);
+  assign full         = (cnt == (DEPTH - 1));
+  assign empty        = (cnt == 0);
   assign almost_empty = (cnt == 1);
 
 endmodule

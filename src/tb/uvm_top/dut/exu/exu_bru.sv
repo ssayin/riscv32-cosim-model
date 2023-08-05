@@ -2,6 +2,8 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
+import defs_pkg::*;
+
 module exu_bru (
   input  logic        en,
   input  logic [ 2:0] br_type,

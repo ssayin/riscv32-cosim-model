@@ -1,6 +1,8 @@
 // AXI4 Full SSRAM Controller Slave
 // TODO: Impl.
-import instr_defs::*;
+
+import defs_pkg::*;
+
 module ssram_ctrl (
   input  logic                  clk,
   input  logic                  rst_n,

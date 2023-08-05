@@ -2,8 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import param_defs::*;
-import instr_defs::*;
+import defs_pkg::*;
 
 module riscv_core (
   input logic clk,

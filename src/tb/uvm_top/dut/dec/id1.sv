@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import instr_defs::*;
+import defs_pkg::*;
 
 module id1 (
   input  logic                     clk,

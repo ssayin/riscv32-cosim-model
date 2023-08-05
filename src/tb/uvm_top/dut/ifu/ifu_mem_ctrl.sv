@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import instr_defs::*;
+import defs_pkg::*;
 
 // Ensure instructions are aligned to 2 byte boundaries.
 // Buffer size = 64
@@ -49,6 +49,10 @@ module ifu_mem_ctrl (
   logic        wren;
   logic        rden;
   logic        almost_empty;
+
+  logic        row_flush;
+
+  logic [ 3:0] slicer;
 
   sync_fifo #(
       .RW   (64),
@@ -116,23 +120,12 @@ module ifu_mem_ctrl (
     end
   end
 
-  assign din[63:0] = axi_rdata_f[63:0];
-  assign rden      = 1;
 
-  always_ff @(posedge clk or negedge rst_n) begin
-    if (!rst_n) begin
-      instr[31:0] <= 32'h13;
-      compressed  <= 0;
-    end else begin
-      if (wren) begin
-        instr[31:0] <= dout[31:0];
-        compressed  <= ~(instr[0] & instr[1]);
-      end else begin
-        instr[31:0] <= 32'h13;
-        compressed  <= 0;
-      end
-    end
-  end
+  assign din[63:0]           = axi_rdata_f[63:0];
+  assign rden                = !empty && row_flush;
+
+  assign instr[31:0]         = empty ? 32'h13 : dout[31:0];
+  assign compressed          = empty ? 0 : ~(instr[0] & instr[1]);
 
   assign axi_arid_f          = 0;
   assign axi_arlock_f        = 0;

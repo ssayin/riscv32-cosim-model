@@ -2,12 +2,24 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-`include "riscv_opcodes.svh"
-import param_defs::*;
-import instr_defs::*;
+import defs_pkg::*;
 
-// This module is used mainly as a DUT for testing other decoder modules..
-module riscv_decoder (
+// This module is used mainly as a DUT for testing other decoder modules.
+
+typedef struct {
+  logic alu;
+  logic lsu;
+  logic lui;
+  logic auipc;
+  logic br;
+  logic jal;
+  logic csr;
+  logic fencei;
+  logic fence;
+  logic illegal;
+} ctl_pkt_t;
+
+module riscv_decoder_dut (
   input  logic                        clk,       // unused
   input  logic                        rst_n,     // unused
   input  logic     [            31:0] instr,
@@ -23,7 +35,9 @@ module riscv_decoder (
   output logic     [  LsuOpWidth-1:0] lsu_op
 );
 
-  logic compressed;
+  logic     compressed;
+
+  ctl_pkt_t ctl;
 
   assign compressed = ~(instr[0] & instr[1]);
 
@@ -44,7 +58,9 @@ module riscv_decoder (
     .compressed(compressed),
     .imm       (imm),
     .rd_en     (rd_en),
-    .ctl       (ctl),
+    .alu       (ctl.alu),
+    .lsu       (ctl.lsu),
+    .br        (ctl.br),
     .use_imm   (use_imm),
     .alu_op    (alu_op),
     .lsu_op    (lsu_op)

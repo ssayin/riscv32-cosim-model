@@ -2,8 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import instr_defs::*;
-import param_defs::*;
+import defs_pkg::*;
 
 module exu_alu (
   input  logic [ DataWidth-1:0] a,

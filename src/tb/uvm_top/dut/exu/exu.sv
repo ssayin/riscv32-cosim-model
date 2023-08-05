@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 module exu
-  import param_defs::*;
+  import defs_pkg::*;
 (
   input  logic                     clk,
   input  logic                     rst_n,

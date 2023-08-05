@@ -2,9 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-`include "riscv_opcodes.svh"
-import param_defs::*;
-import instr_defs::*;
+import defs_pkg::*;
 
 module riscv_decoder_gpr (
   input  logic        clk,

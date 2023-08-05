@@ -2,7 +2,8 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-import instr_defs::*;
+import defs_pkg::*;
+
 module ssram #(
     parameter int ADDR_WIDTH = 32,
     parameter int DATA_WIDTH = 64   // divisible by 8

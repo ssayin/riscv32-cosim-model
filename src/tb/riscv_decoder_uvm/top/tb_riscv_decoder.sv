@@ -10,7 +10,7 @@ module tb_riscv_decoder
   import riscv_decoder_test_list::*;
   import svdpi_pkg::decoder_in_t;
   import svdpi_pkg::decoder_out_t;
-  import instr_defs::*;
+  import defs_pkg::*;
 #(
     `include "uvm_macros.svh"
     `include "riscv_decoder_if.sv"
