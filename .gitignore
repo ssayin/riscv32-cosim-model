@@ -29,3 +29,6 @@ greybox_tmp/
 *.wdb
 *.vcd
 .qsys_edit/
+
+# Vivado IP
+axi_vip_0_ex/

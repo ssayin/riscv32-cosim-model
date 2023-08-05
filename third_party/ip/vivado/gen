@@ -1,0 +1,3 @@
+#!/bin/sh
+
+vivado -mode batch -source axi_vip_0_ex.tcl
