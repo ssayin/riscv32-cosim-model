@@ -71,15 +71,15 @@ module id1 (
       alu_op_e     <= 'h0;
       lsu_op_e     <= 'h0;
       rd_addr_e    <= 'h0;
-      lsu_e        <= 'h0;
+      rd_en_e      <= 'b0;
       alu_e        <= 'h0;
+      lsu_e        <= 'h0;
       br_e         <= 'h0;
       br_taken_e   <= 'h0;
       br_op_e      <= 'b0;
       pc_e         <= 'b0;
       compressed_e <= 'b0;
       illegal_e    <= 'b0;
-      rd_en_e      <= 'b0;
     end else begin
       imm_e        <= imm_next;
       use_imm_e    <= use_imm_next;
@@ -88,11 +88,14 @@ module id1 (
       lsu_op_e     <= lsu_op_next;
       rd_addr_e    <= rd_addr_d1;
       rd_en_e      <= rd_en_next;
-      br_op_e      <= br_op_next;
+      alu_e        <= alu_next;
+      lsu_e        <= lsu_next;
       br_e         <= br_d1;
       br_taken_e   <= br_taken_d1;
+      br_op_e      <= br_op_next;
       pc_e         <= pc_d1;
       compressed_e <= compressed_d1;
+      illegal_e    <= illegal_next;
     end
   end
 

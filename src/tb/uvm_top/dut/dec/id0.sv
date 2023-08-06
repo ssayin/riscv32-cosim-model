@@ -59,9 +59,9 @@ module id0 (
       compressed_d1 <= compressed_d0;
       br_d1         <= br_d0;
       br_taken_d1   <= br_taken_d0;
+      rd_addr_d1    <= rd_addr_next;
       rs1_addr_r    <= rs1_addr_next;
       rs2_addr_r    <= rs2_addr_next;
-      rd_addr_d1    <= rd_addr_next;
       illegal_d1    <= illegal_d0;
     end
   end

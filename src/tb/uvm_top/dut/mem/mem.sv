@@ -71,7 +71,7 @@ module mem (
   always_ff @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
       rd_data_wb <= 32'h0;
-      rd_addr_wb <= 32'h0;
+      rd_addr_wb <= 5'h0;
       rd_en_wb   <= 1'b0;
     end else begin
       rd_data_wb <= lsu_m ? 33 : alu_res_m;
@@ -79,20 +79,6 @@ module mem (
       rd_en_wb   <= rd_en_m;
     end
   end
-
-  always_comb begin
-    axi_awaddr_m = 0;
-    axi_araddr_m = 0;
-
-    if (lsu_m) begin
-      if (lsu_op_m[3]) begin
-        axi_araddr_m = alu_res_m;
-      end else begin
-        axi_awaddr_m = alu_res_m;
-      end
-    end
-  end
-
 
   assign axi_awid_m[AxiIdWidth-1:0] = 0;
   assign axi_awlen_m[7:0]           = 0;
