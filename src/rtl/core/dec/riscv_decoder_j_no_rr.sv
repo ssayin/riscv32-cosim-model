@@ -2,6 +2,8 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
+import defs_pkg::*;
+
 module riscv_decoder_j_no_rr (
   input  logic [15:0] instr,
   output logic        j

@@ -1,4 +1,4 @@
-set project_name "top_level"
+set project_name "fpga_top"
 
 project_open $project_name
 

@@ -3,8 +3,8 @@
 # For synthesizing on Quartus Lite Software
 # Quartus Lite does not support incremental flow,
 # thus I had to run these programs in succession.
-quartus_sh -t tools/top_level.tcl compile top_level rev_1
-quartus_map top_level
-quartus_fit top_level
-quartus_sta -t tools/sta.tcl top_level rev_1
-# quartus_sim top_level
+quartus_sh -t tools/fpga_top.tcl compile fpga_top rev_1
+quartus_map fpga_top 
+quartus_fit fpga_top
+quartus_sta -t tools/sta.tcl fpga_top rev_1
+# quartus_sim fpga_top
