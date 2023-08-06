@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Sat Aug  5 19:06:59 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Sun Aug  6 16:03:22 2023
 //=============================================================================
 // Description: Sequence for top
 //=============================================================================
@@ -26,9 +26,8 @@ class top_default_seq extends uvm_sequence #(uvm_sequence_item);
   `uvm_object_utils(top_default_seq)
 
   top_config        m_config;
-           
-  axi4master_agent  m_axi4master_0_agent;
-  axi4master_agent  m_axi4master_1_agent;
+         
+  axi4master_agent  m_axi4master_agent;
 
   // Number of times to repeat child sequences
   int m_seq_count = 300;
@@ -59,27 +58,16 @@ task top_default_seq::body();
   repeat (m_seq_count)
   begin
     fork
-      if (m_axi4master_0_agent.m_config.is_active == UVM_ACTIVE)
+      if (m_axi4master_agent.m_config.is_active == UVM_ACTIVE)
       begin
         axi4master_default_seq seq;
         seq = axi4master_default_seq::type_id::create("seq");
-        seq.set_item_context(this, m_axi4master_0_agent.m_sequencer);
+        seq.set_item_context(this, m_axi4master_agent.m_sequencer);
         if ( !seq.randomize() )
           `uvm_error(get_type_name(), "Failed to randomize sequence")
-        seq.m_config = m_axi4master_0_agent.m_config;
+        seq.m_config = m_axi4master_agent.m_config;
         seq.set_starting_phase( get_starting_phase() );
-        seq.start(m_axi4master_0_agent.m_sequencer, this);
-      end
-      if (m_axi4master_1_agent.m_config.is_active == UVM_ACTIVE)
-      begin
-        axi4master_default_seq seq;
-        seq = axi4master_default_seq::type_id::create("seq");
-        seq.set_item_context(this, m_axi4master_1_agent.m_sequencer);
-        if ( !seq.randomize() )
-          `uvm_error(get_type_name(), "Failed to randomize sequence")
-        seq.m_config = m_axi4master_1_agent.m_config;
-        seq.set_starting_phase( get_starting_phase() );
-        seq.start(m_axi4master_1_agent.m_sequencer, this);
+        seq.start(m_axi4master_agent.m_sequencer, this);
       end
     join
   end

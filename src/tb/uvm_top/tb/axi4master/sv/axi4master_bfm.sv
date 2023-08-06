@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Sat Aug  5 19:06:59 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Sun Aug  6 16:03:22 2023
 //=============================================================================
 // Description: Synthesizable BFM for agent axi4master
 //=============================================================================
@@ -29,6 +29,17 @@ interface axi4master_bfm(axi4master_if if_port);
   import axi4master_pkg::*;
 
   // Start of inlined include file ../tb/uvm_top/tb/include/axi4master_inc_inside_bfm.sv
+  typedef enum logic [1:0] {
+    IDLE,
+    PREBURST,
+    BURST
+  } axi_state_t;
+  
+  axi_state_t state = IDLE;
+  
+  bit [7:0] arburst_counter = 0;
+  bit [1:0] arburst;
+  
   task drive(axi4_tx_s req_s);
     // only drive input ports
     if_port.awready = req_s.awready;
@@ -36,18 +47,45 @@ interface axi4master_bfm(axi4master_if if_port);
     if_port.bid     = req_s.bid;
     if_port.bresp   = req_s.bresp;
     if_port.bvalid  = req_s.bvalid;
+    if_port.rdata   = 0;
   
-    if (if_port.arvalid && if_port.arready) begin
-      if_port.rdata  = req_s.rdata;
-      if_port.rvalid = 1;
-    end else begin
-      if_port.rvalid = 0;
-    end
+    case (state)
+      IDLE: begin
+        if (if_port.arvalid) begin
+          if_port.arready = 1;
+          arburst_counter = if_port.arlen + 1;
+          arburst         = if_port.arburst;
+          state           = PREBURST;
+        end
+        if_port.rlast = 0;
+      end
+      PREBURST: begin
+        if (if_port.arvalid && if_port.arready) begin
+          state           = BURST;
+          if_port.rdata   = req_s.rdata;
+          if_port.rvalid  = 1;
+          if_port.arready = 0;
+        end
+        if_port.rlast = 0;
+      end
+      BURST: begin
+        if (if_port.rready) begin
+          arburst_counter = arburst_counter - 1;
+          if_port.rdata   = req_s.rdata;
+          if_port.rvalid  = 1;
+          if_port.rlast   = 0;
+        end
+        if (arburst_counter == 0) begin
+          state         = IDLE;
+          if_port.rlast = 1;
+        end
+        if_port.rlast = 0;
+      end
+      default: begin
+      end
+    endcase
   
-    if (if_port.arvalid) if_port.arready = 1;
-    else if_port.arready = 0;
     if_port.rid   = req_s.rid;
-  
     if_port.rresp = req_s.rresp;
     if_port.rlast = req_s.rlast;
     @(posedge if_port.clk);

@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Sat Aug  5 19:06:59 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Sun Aug  6 16:03:22 2023
 //=============================================================================
 // Description: Test Harness
 //=============================================================================
@@ -41,10 +41,8 @@ module top_hdl_th;
   end
 
   assign axi4master_if_0.rst_n = reset;
-  assign axi4master_if_1.rst_n = reset;
 
   assign axi4master_if_0.clk   = clock;
-  assign axi4master_if_1.clk   = clock;
 
   // You can insert code here by setting th_inc_inside_module in file common.tpl
 
@@ -52,11 +50,9 @@ module top_hdl_th;
   // You can remove interface instances by setting generate_interface_instance = no in the interface template file
 
   axi4master_if   axi4master_if_0 ();                
-  axi4master_if   axi4master_if_1 ();                
 
   // BFM interfaces that communicate with proxy transactors in UVM environment
   axi4master_bfm  axi4master_bfm_0 (axi4master_if_0);
-  axi4master_bfm  axi4master_bfm_1 (axi4master_if_1);
 
   riscv_core uut (
     .clk           (axi4master_if_0.clk),
@@ -99,45 +95,7 @@ module top_hdl_th;
     .axi_rresp_f   (axi4master_if_0.rresp),
     .axi_rlast_f   (axi4master_if_0.rlast),
     .axi_rvalid_f  (axi4master_if_0.rvalid),
-    .axi_rready_f  (axi4master_if_0.rready),
-    .axi_awid_m    (axi4master_if_1.awid),
-    .axi_awaddr_m  (axi4master_if_1.awaddr),
-    .axi_awlen_m   (axi4master_if_1.awlen),
-    .axi_awsize_m  (axi4master_if_1.awsize),
-    .axi_awburst_m (axi4master_if_1.awburst),
-    .axi_awlock_m  (axi4master_if_1.awlock),
-    .axi_awcache_m (axi4master_if_1.awcache),
-    .axi_awprot_m  (axi4master_if_1.awprot),
-    .axi_awvalid_m (axi4master_if_1.awvalid),
-    .axi_awregion_m(axi4master_if_1.awregion),
-    .axi_awqos_m   (axi4master_if_1.awqos),
-    .axi_awready_m (axi4master_if_1.awready),
-    .axi_wdata_m   (axi4master_if_1.wdata),
-    .axi_wstrb_m   (axi4master_if_1.wstrb),
-    .axi_wlast_m   (axi4master_if_1.wlast),
-    .axi_wvalid_m  (axi4master_if_1.wvalid),
-    .axi_wready_m  (axi4master_if_1.wready),
-    .axi_bid_m     (axi4master_if_1.bid),
-    .axi_bresp_m   (axi4master_if_1.bresp),
-    .axi_bvalid_m  (axi4master_if_1.bvalid),
-    .axi_bready_m  (axi4master_if_1.bready),
-    .axi_arid_m    (axi4master_if_1.arid),
-    .axi_araddr_m  (axi4master_if_1.araddr),
-    .axi_arlen_m   (axi4master_if_1.arlen),
-    .axi_arsize_m  (axi4master_if_1.arsize),
-    .axi_arburst_m (axi4master_if_1.arburst),
-    .axi_arlock_m  (axi4master_if_1.arlock),
-    .axi_arcache_m (axi4master_if_1.arcache),
-    .axi_arprot_m  (axi4master_if_1.arprot),
-    .axi_arvalid_m (axi4master_if_1.arvalid),
-    .axi_arqos_m   (axi4master_if_1.arqos),
-    .axi_arregion_m(axi4master_if_1.arregion),
-    .axi_arready_m (axi4master_if_1.arready),
-    .axi_rdata_m   (axi4master_if_1.rdata),
-    .axi_rresp_m   (axi4master_if_1.rresp),
-    .axi_rlast_m   (axi4master_if_1.rlast),
-    .axi_rvalid_m  (axi4master_if_1.rvalid),
-    .axi_rready_m  (axi4master_if_1.rready)
+    .axi_rready_f  (axi4master_if_0.rready)
   );
 
 endmodule

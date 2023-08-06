@@ -44,32 +44,32 @@ endclass
 class top_reg_block extends uvm_reg_block;
   `uvm_object_utils(top_reg_block)
 
-  axi4master_reg_block axi4master_0;
-  axi4master_reg_block axi4master_1;
+  axi4master_reg_block axi4master;
+  //axi4master_reg_block axi4master_1;
 
-  uvm_reg_map axi4master_map_0;
-  uvm_reg_map axi4master_map_1;
+  uvm_reg_map axi4master_map;
+  //uvm_reg_map axi4master_map_1;
 
   function new(string name= "");
     super.new(name, UVM_NO_COVERAGE);
   endfunction
 
   virtual function void build();
-    axi4master_0 = axi4master_reg_block::type_id::create("axi4master_0");
-    axi4master_0.configure(this);
-    axi4master_0.build();
+    axi4master = axi4master_reg_block::type_id::create("axi4master");
+    axi4master.configure(this);
+    axi4master.build();
 
-    axi4master_1 = axi4master_reg_block::type_id::create("axi4master_1");
-    axi4master_1.configure(this);
-    axi4master_1.build();
+   // axi4master_1 = axi4master_reg_block::type_id::create("axi4master_1");
+   // axi4master_1.configure(this);
+   // axi4master_1.build();
 
-    axi4master_map_0 = create_map("axi4master_map_0", 'h0, 1, UVM_BIG_ENDIAN);
-    default_map = axi4master_map_0;
-    axi4master_map_0.add_submap(axi4master_0.axi4master_map, 'h0);
+    axi4master_map = create_map("axi4master_map", 'h0, 1, UVM_BIG_ENDIAN);
+    default_map = axi4master_map;
+    axi4master_map.add_submap(axi4master.axi4master_map, 'h0);
 
-    axi4master_map_1 = create_map("axi4master_map_1", 'h0, 1, UVM_BIG_ENDIAN);
-    default_map = axi4master_map_1;
-    axi4master_map_1.add_submap(axi4master_1.axi4master_map, 'h0);
+   // axi4master_map_1 = create_map("axi4master_map_1", 'h0, 1, UVM_BIG_ENDIAN);
+   // default_map = axi4master_map_1;
+   // axi4master_map_1.add_submap(axi4master_1.axi4master_map, 'h0);
 
     lock_model();
   endfunction

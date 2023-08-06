@@ -2,6 +2,8 @@ agent_name = axi4master
 
 number_of_instances = 1
 
+agent_has_env = yes
+
 trans_item = axi4_tx
 
 trans_var = rand logic [ 1:0] awid;
@@ -51,7 +53,7 @@ trans_var = rand logic        rready;
 trans_inc_before_class       = axi4master_trans_inc_before_class.sv    inline
 driver_inc_inside_class      = axi4master_driver_inc_inside_class.sv   inline
 monitor_inc_inside_class     = axi4master_monitor_inc_inside_class.sv  inline
-agent_inc_inside_bfm         = axi4master_inc_inside_bfm.sv            inline
+#agent_inc_inside_bfm         = axi4master_inc_inside_bfm.sv            inline
 
 
 if_port = logic clk;
@@ -104,9 +106,10 @@ if_port = logic        rready;
 if_clock = clk
 if_reset = rst_n
 
-#uvm_reg_kind = arid
-#uvm_reg_addr = araddr
-#uvm_reg_data = rdata
+uvm_reg_kind = awlock
+uvm_reg_addr = bready
+uvm_reg_data = arlen
 
-#reg_access_mode = WR
-#reg_access_block_type = axi4master_reg_block
+reg_access_mode = RO
+reg_access_block_type = axi4master_reg_block
+

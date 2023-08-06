@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Sat Aug  5 19:06:59 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Sun Aug  6 16:03:22 2023
 //=============================================================================
 // Description: Testbench
 //=============================================================================
@@ -46,8 +46,7 @@ module top_untimed_tb;
     if ( !top_env_config.randomize() )
       `uvm_error("top_untimed_tb", "Failed to randomize top-level configuration object" )
 
-    top_env_config.m_axi4master_0_config.vif = top_hdl_th.axi4master_bfm_0;
-    top_env_config.m_axi4master_1_config.vif = top_hdl_th.axi4master_bfm_1;
+    top_env_config.m_axi4master_config.vif = top_hdl_th.axi4master_bfm_0;
 
     uvm_config_db #(top_config)::set(null, "uvm_test_top", "config", top_env_config);
     uvm_config_db #(top_config)::set(null, "uvm_test_top.m_env", "config", top_env_config);
