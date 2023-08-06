@@ -38,6 +38,8 @@ set_global_assignment -name QIP_FILE $cycloneiv_qip_file
 # Set the directory containing your source files
 set source_directories [list ./src/rtl/include ./src/rtl/core/exu ./src/rtl/core/dec ./src/rtl/core/ifu ./src/rtl/core/mem ./src/rtl/core ]
 
+set_global_assignment -name SYSTEMVERILOG_FILE ./src/rtl/sync_fifo.sv
+
 # Iterate over the source directories
 foreach src_dir $source_directories {
     # Use glob to find all SystemVerilog and Verilog files in the current directory

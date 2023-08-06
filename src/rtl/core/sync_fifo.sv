@@ -30,21 +30,29 @@ module sync_fifo #(
   logic [PW-1:0] cnt;
 
   always_ff @(posedge clk or negedge rst_n) begin
-    if (!rst_n || flush) begin
+    if (!rst_n) begin
       // Do not fill with 0s, just reset ptrs and cnt
-      wrptr <= 0;
-      rdptr <= 0;
-      cnt   <= 0;
+      wrptr <= 'h0;
+      rdptr <= 'h0;
+      cnt   <= 'h0;
+      dout  <= 'h0;
     end else begin
-      if (wren && !full) begin
-        mem_array[wrptr] <= din;
-        wrptr            <= wrptr + 1;
-        cnt              <= cnt + 1;
-      end
-      if (rden && !empty) begin
-        dout  <= mem_array[rdptr];
-        rdptr <= rdptr + 1;
-        cnt   <= cnt - 1;
+      if (flush) begin
+        wrptr <= 'h0;
+        rdptr <= 'h0;
+        cnt   <= 'h0;
+        dout  <= 'h0;
+      end else begin
+        if (wren && !full) begin
+          mem_array[wrptr] <= din;
+          wrptr            <= wrptr + 1;
+          cnt              <= cnt + 1;
+        end
+        if (rden && !empty) begin
+          dout  <= mem_array[rdptr];
+          rdptr <= rdptr + 1;
+          cnt   <= cnt - 1;
+        end
       end
     end
   end
