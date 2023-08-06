@@ -70,7 +70,7 @@ module ifu (
   end
 
   always_ff @(posedge clk or negedge rst_n) begin
-    illegal_d0 <= 0;
+    if (clk || !rst_n) illegal_d0 <= 0;
   end
 
   assign instr_d0      = {{instr[31:24], instr[23:16], instr[15:8], instr[7:0]}};
