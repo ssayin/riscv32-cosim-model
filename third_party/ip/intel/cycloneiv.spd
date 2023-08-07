@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <simPackage>
  <file
+   path="simulation/submodules/cycloneiv_mm_interconnect_0_avalon_st_adapter_002_error_adapter_0.sv"
+   type="SYSTEM_VERILOG"
+   library="error_adapter_0" />
+ <file
    path="simulation/submodules/cycloneiv_mm_interconnect_0_avalon_st_adapter_error_adapter_0.sv"
    type="SYSTEM_VERILOG"
    library="error_adapter_0" />
+ <file
+   path="simulation/submodules/cycloneiv_mm_interconnect_0_avalon_st_adapter_002.v"
+   type="VERILOG"
+   library="avalon_st_adapter_002" />
  <file
    path="simulation/submodules/cycloneiv_mm_interconnect_0_avalon_st_adapter.v"
    type="VERILOG"
@@ -21,6 +29,18 @@
    type="VERILOG"
    library="async_fifo" />
  <file
+   path="simulation/submodules/altera_merlin_width_adapter.sv"
+   type="SYSTEM_VERILOG"
+   library="jtag_uart_0_avalon_jtag_slave_rsp_width_adapter" />
+ <file
+   path="simulation/submodules/altera_merlin_address_alignment.sv"
+   type="SYSTEM_VERILOG"
+   library="jtag_uart_0_avalon_jtag_slave_rsp_width_adapter" />
+ <file
+   path="simulation/submodules/altera_merlin_burst_uncompressor.sv"
+   type="SYSTEM_VERILOG"
+   library="jtag_uart_0_avalon_jtag_slave_rsp_width_adapter" />
+ <file
    path="simulation/submodules/cycloneiv_mm_interconnect_0_rsp_mux.sv"
    type="SYSTEM_VERILOG"
    library="rsp_mux" />
@@ -28,6 +48,10 @@
    path="simulation/submodules/altera_merlin_arbitrator.sv"
    type="SYSTEM_VERILOG"
    library="rsp_mux" />
+ <file
+   path="simulation/submodules/cycloneiv_mm_interconnect_0_rsp_demux_001.sv"
+   type="SYSTEM_VERILOG"
+   library="rsp_demux_001" />
  <file
    path="simulation/submodules/cycloneiv_mm_interconnect_0_rsp_demux.sv"
    type="SYSTEM_VERILOG"
@@ -47,43 +71,43 @@
  <file
    path="simulation/submodules/altera_merlin_burst_adapter.sv"
    type="SYSTEM_VERILOG"
-   library="intel_onchip_ssram_drw_s1_burst_adapter" />
+   library="jtag_uart_0_avalon_jtag_slave_burst_adapter" />
  <file
    path="simulation/submodules/altera_merlin_burst_adapter_uncmpr.sv"
    type="SYSTEM_VERILOG"
-   library="intel_onchip_ssram_drw_s1_burst_adapter" />
+   library="jtag_uart_0_avalon_jtag_slave_burst_adapter" />
  <file
    path="simulation/submodules/altera_merlin_burst_adapter_13_1.sv"
    type="SYSTEM_VERILOG"
-   library="intel_onchip_ssram_drw_s1_burst_adapter" />
+   library="jtag_uart_0_avalon_jtag_slave_burst_adapter" />
  <file
    path="simulation/submodules/altera_merlin_burst_adapter_new.sv"
    type="SYSTEM_VERILOG"
-   library="intel_onchip_ssram_drw_s1_burst_adapter" />
+   library="jtag_uart_0_avalon_jtag_slave_burst_adapter" />
  <file
    path="simulation/submodules/altera_incr_burst_converter.sv"
    type="SYSTEM_VERILOG"
-   library="intel_onchip_ssram_drw_s1_burst_adapter" />
+   library="jtag_uart_0_avalon_jtag_slave_burst_adapter" />
  <file
    path="simulation/submodules/altera_wrap_burst_converter.sv"
    type="SYSTEM_VERILOG"
-   library="intel_onchip_ssram_drw_s1_burst_adapter" />
+   library="jtag_uart_0_avalon_jtag_slave_burst_adapter" />
  <file
    path="simulation/submodules/altera_default_burst_converter.sv"
    type="SYSTEM_VERILOG"
-   library="intel_onchip_ssram_drw_s1_burst_adapter" />
+   library="jtag_uart_0_avalon_jtag_slave_burst_adapter" />
  <file
    path="simulation/submodules/altera_merlin_address_alignment.sv"
    type="SYSTEM_VERILOG"
-   library="intel_onchip_ssram_drw_s1_burst_adapter" />
+   library="jtag_uart_0_avalon_jtag_slave_burst_adapter" />
  <file
    path="simulation/submodules/altera_avalon_st_pipeline_stage.sv"
    type="SYSTEM_VERILOG"
-   library="intel_onchip_ssram_drw_s1_burst_adapter" />
+   library="jtag_uart_0_avalon_jtag_slave_burst_adapter" />
  <file
    path="simulation/submodules/altera_avalon_st_pipeline_base.v"
    type="SYSTEM_VERILOG"
-   library="intel_onchip_ssram_drw_s1_burst_adapter" />
+   library="jtag_uart_0_avalon_jtag_slave_burst_adapter" />
  <file
    path="simulation/submodules/altera_merlin_traffic_limiter.sv"
    type="SYSTEM_VERILOG"
@@ -101,6 +125,10 @@
    type="SYSTEM_VERILOG"
    library="axi_bridge_0_m0_wr_limiter" />
  <file
+   path="simulation/submodules/cycloneiv_mm_interconnect_0_router_004.sv"
+   type="SYSTEM_VERILOG"
+   library="router_004" />
+ <file
    path="simulation/submodules/cycloneiv_mm_interconnect_0_router_002.sv"
    type="SYSTEM_VERILOG"
    library="router_002" />
@@ -111,15 +139,15 @@
  <file
    path="simulation/submodules/altera_avalon_sc_fifo.v"
    type="VERILOG"
-   library="intel_onchip_ssram_drw_s1_agent_rsp_fifo" />
+   library="jtag_uart_0_avalon_jtag_slave_agent_rsp_fifo" />
  <file
    path="simulation/submodules/altera_merlin_slave_agent.sv"
    type="SYSTEM_VERILOG"
-   library="intel_onchip_ssram_drw_s1_agent" />
+   library="jtag_uart_0_avalon_jtag_slave_agent" />
  <file
    path="simulation/submodules/altera_merlin_burst_uncompressor.sv"
    type="SYSTEM_VERILOG"
-   library="intel_onchip_ssram_drw_s1_agent" />
+   library="jtag_uart_0_avalon_jtag_slave_agent" />
  <file
    path="simulation/submodules/altera_merlin_axi_master_ni.sv"
    type="SYSTEM_VERILOG"
@@ -131,7 +159,7 @@
  <file
    path="simulation/submodules/altera_merlin_slave_translator.sv"
    type="SYSTEM_VERILOG"
-   library="intel_onchip_ssram_drw_s1_translator" />
+   library="jtag_uart_0_avalon_jtag_slave_translator" />
  <file
    path="simulation/submodules/altera_merlin_axi_translator.sv"
    type="SYSTEM_VERILOG"
@@ -152,6 +180,10 @@
    path="simulation/submodules/cycloneiv_mm_interconnect_0.v"
    type="VERILOG"
    library="mm_interconnect_0" />
+ <file
+   path="simulation/submodules/cycloneiv_jtag_uart_0.v"
+   type="VERILOG"
+   library="jtag_uart_0" />
  <file
    path="simulation/submodules/cycloneiv_intel_onchip_ssram_drw.v"
    type="VERILOG"

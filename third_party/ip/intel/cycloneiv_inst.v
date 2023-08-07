@@ -1,10 +1,6 @@
 	cycloneiv u0 (
+		.altpll_0_c1_clk                (<connected-to-altpll_0_c1_clk>),                //             altpll_0_c1.clk
 		.altpll_0_locked_conduit_export (<connected-to-altpll_0_locked_conduit_export>), // altpll_0_locked_conduit.export
-		.altpll_0_pll_slave_read        (<connected-to-altpll_0_pll_slave_read>),        //      altpll_0_pll_slave.read
-		.altpll_0_pll_slave_write       (<connected-to-altpll_0_pll_slave_write>),       //                        .write
-		.altpll_0_pll_slave_address     (<connected-to-altpll_0_pll_slave_address>),     //                        .address
-		.altpll_0_pll_slave_readdata    (<connected-to-altpll_0_pll_slave_readdata>),    //                        .readdata
-		.altpll_0_pll_slave_writedata   (<connected-to-altpll_0_pll_slave_writedata>),   //                        .writedata
 		.axi_bridge_0_s0_awid           (<connected-to-axi_bridge_0_s0_awid>),           //         axi_bridge_0_s0.awid
 		.axi_bridge_0_s0_awaddr         (<connected-to-axi_bridge_0_s0_awaddr>),         //                        .awaddr
 		.axi_bridge_0_s0_awlen          (<connected-to-axi_bridge_0_s0_awlen>),          //                        .awlen
@@ -47,6 +43,6 @@
 		.clk_clk                        (<connected-to-clk_clk>),                        //                     clk.clk
 		.clock_bridge_0_in_clk_clk      (<connected-to-clock_bridge_0_in_clk_clk>),      //   clock_bridge_0_in_clk.clk
 		.rst_n_reset_n                  (<connected-to-rst_n_reset_n>),                  //                   rst_n.reset_n
-		.altpll_0_c1_clk                (<connected-to-altpll_0_c1_clk>)                 //             altpll_0_c1.clk
+		.jtag_uart_0_irq_irq            (<connected-to-jtag_uart_0_irq_irq>)             //         jtag_uart_0_irq.irq
 	);
 

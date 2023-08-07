@@ -12,7 +12,7 @@
 # or its authorized distributors. Please refer to the applicable 
 # agreement for further details.
 
-# ACDS 22.1 917 linux 2023.08.07.15:09:56
+# ACDS 22.1 917 linux 2023.08.07.21:25:33
 
 # ----------------------------------------
 # xcelium - auto-generated simulation script
@@ -107,7 +107,7 @@
 # within the Quartus project, and generate a unified
 # script which supports all the Altera IP within the design.
 # ----------------------------------------
-# ACDS 22.1 917 linux 2023.08.07.15:09:56
+# ACDS 22.1 917 linux 2023.08.07.21:25:33
 # ----------------------------------------
 # initialize variables
 TOP_LEVEL_NAME="cycloneiv"
@@ -148,23 +148,28 @@ fi
 # create compilation libraries
 mkdir -p ./libraries/work/
 mkdir -p ./libraries/error_adapter_0/
+mkdir -p ./libraries/avalon_st_adapter_002/
 mkdir -p ./libraries/avalon_st_adapter/
 mkdir -p ./libraries/async_fifo/
+mkdir -p ./libraries/jtag_uart_0_avalon_jtag_slave_rsp_width_adapter/
 mkdir -p ./libraries/rsp_mux/
+mkdir -p ./libraries/rsp_demux_001/
 mkdir -p ./libraries/rsp_demux/
 mkdir -p ./libraries/cmd_mux/
 mkdir -p ./libraries/cmd_demux/
-mkdir -p ./libraries/intel_onchip_ssram_drw_s1_burst_adapter/
+mkdir -p ./libraries/jtag_uart_0_avalon_jtag_slave_burst_adapter/
 mkdir -p ./libraries/axi_bridge_0_m0_wr_limiter/
+mkdir -p ./libraries/router_004/
 mkdir -p ./libraries/router_002/
 mkdir -p ./libraries/router/
-mkdir -p ./libraries/intel_onchip_ssram_drw_s1_agent_rsp_fifo/
-mkdir -p ./libraries/intel_onchip_ssram_drw_s1_agent/
+mkdir -p ./libraries/jtag_uart_0_avalon_jtag_slave_agent_rsp_fifo/
+mkdir -p ./libraries/jtag_uart_0_avalon_jtag_slave_agent/
 mkdir -p ./libraries/axi_bridge_0_m0_agent/
-mkdir -p ./libraries/intel_onchip_ssram_drw_s1_translator/
+mkdir -p ./libraries/jtag_uart_0_avalon_jtag_slave_translator/
 mkdir -p ./libraries/axi_bridge_0_m0_translator/
 mkdir -p ./libraries/rst_controller/
 mkdir -p ./libraries/mm_interconnect_0/
+mkdir -p ./libraries/jtag_uart_0/
 mkdir -p ./libraries/intel_onchip_ssram_drw/
 mkdir -p ./libraries/axi_bridge_0/
 mkdir -p ./libraries/altpll_0/
@@ -192,48 +197,56 @@ fi
 # ----------------------------------------
 # compile design files in correct order
 if [ $SKIP_COM -eq 0 ]; then
-  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0_avalon_st_adapter_error_adapter_0.sv" -work error_adapter_0                          -cdslib ./cds_libs/error_adapter_0.cds.lib                         
-  xmvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0_avalon_st_adapter.v"                  -work avalon_st_adapter                        -cdslib ./cds_libs/avalon_st_adapter.cds.lib                       
-  xmvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_avalon_dc_fifo.v"                                          -work async_fifo                               -cdslib ./cds_libs/async_fifo.cds.lib                              
-  xmvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_dcfifo_synchronizer_bundle.v"                              -work async_fifo                               -cdslib ./cds_libs/async_fifo.cds.lib                              
-  xmvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_std_synchronizer_nocut.v"                                  -work async_fifo                               -cdslib ./cds_libs/async_fifo.cds.lib                              
-  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0_rsp_mux.sv"                           -work rsp_mux                                  -cdslib ./cds_libs/rsp_mux.cds.lib                                 
-  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_arbitrator.sv"                                      -work rsp_mux                                  -cdslib ./cds_libs/rsp_mux.cds.lib                                 
-  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0_rsp_demux.sv"                         -work rsp_demux                                -cdslib ./cds_libs/rsp_demux.cds.lib                               
-  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0_cmd_mux.sv"                           -work cmd_mux                                  -cdslib ./cds_libs/cmd_mux.cds.lib                                 
-  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_arbitrator.sv"                                      -work cmd_mux                                  -cdslib ./cds_libs/cmd_mux.cds.lib                                 
-  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0_cmd_demux.sv"                         -work cmd_demux                                -cdslib ./cds_libs/cmd_demux.cds.lib                               
-  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_burst_adapter.sv"                                   -work intel_onchip_ssram_drw_s1_burst_adapter  -cdslib ./cds_libs/intel_onchip_ssram_drw_s1_burst_adapter.cds.lib 
-  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_burst_adapter_uncmpr.sv"                            -work intel_onchip_ssram_drw_s1_burst_adapter  -cdslib ./cds_libs/intel_onchip_ssram_drw_s1_burst_adapter.cds.lib 
-  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_burst_adapter_13_1.sv"                              -work intel_onchip_ssram_drw_s1_burst_adapter  -cdslib ./cds_libs/intel_onchip_ssram_drw_s1_burst_adapter.cds.lib 
-  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_burst_adapter_new.sv"                               -work intel_onchip_ssram_drw_s1_burst_adapter  -cdslib ./cds_libs/intel_onchip_ssram_drw_s1_burst_adapter.cds.lib 
-  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_incr_burst_converter.sv"                                   -work intel_onchip_ssram_drw_s1_burst_adapter  -cdslib ./cds_libs/intel_onchip_ssram_drw_s1_burst_adapter.cds.lib 
-  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_wrap_burst_converter.sv"                                   -work intel_onchip_ssram_drw_s1_burst_adapter  -cdslib ./cds_libs/intel_onchip_ssram_drw_s1_burst_adapter.cds.lib 
-  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_default_burst_converter.sv"                                -work intel_onchip_ssram_drw_s1_burst_adapter  -cdslib ./cds_libs/intel_onchip_ssram_drw_s1_burst_adapter.cds.lib 
-  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_address_alignment.sv"                               -work intel_onchip_ssram_drw_s1_burst_adapter  -cdslib ./cds_libs/intel_onchip_ssram_drw_s1_burst_adapter.cds.lib 
-  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_avalon_st_pipeline_stage.sv"                               -work intel_onchip_ssram_drw_s1_burst_adapter  -cdslib ./cds_libs/intel_onchip_ssram_drw_s1_burst_adapter.cds.lib 
-  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_avalon_st_pipeline_base.v"                                 -work intel_onchip_ssram_drw_s1_burst_adapter  -cdslib ./cds_libs/intel_onchip_ssram_drw_s1_burst_adapter.cds.lib 
-  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_traffic_limiter.sv"                                 -work axi_bridge_0_m0_wr_limiter               -cdslib ./cds_libs/axi_bridge_0_m0_wr_limiter.cds.lib              
-  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_reorder_memory.sv"                                  -work axi_bridge_0_m0_wr_limiter               -cdslib ./cds_libs/axi_bridge_0_m0_wr_limiter.cds.lib              
-  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_avalon_sc_fifo.v"                                          -work axi_bridge_0_m0_wr_limiter               -cdslib ./cds_libs/axi_bridge_0_m0_wr_limiter.cds.lib              
-  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_avalon_st_pipeline_base.v"                                 -work axi_bridge_0_m0_wr_limiter               -cdslib ./cds_libs/axi_bridge_0_m0_wr_limiter.cds.lib              
-  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0_router_002.sv"                        -work router_002                               -cdslib ./cds_libs/router_002.cds.lib                              
-  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0_router.sv"                            -work router                                   -cdslib ./cds_libs/router.cds.lib                                  
-  xmvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_avalon_sc_fifo.v"                                          -work intel_onchip_ssram_drw_s1_agent_rsp_fifo -cdslib ./cds_libs/intel_onchip_ssram_drw_s1_agent_rsp_fifo.cds.lib
-  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_slave_agent.sv"                                     -work intel_onchip_ssram_drw_s1_agent          -cdslib ./cds_libs/intel_onchip_ssram_drw_s1_agent.cds.lib         
-  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_burst_uncompressor.sv"                              -work intel_onchip_ssram_drw_s1_agent          -cdslib ./cds_libs/intel_onchip_ssram_drw_s1_agent.cds.lib         
-  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_axi_master_ni.sv"                                   -work axi_bridge_0_m0_agent                    -cdslib ./cds_libs/axi_bridge_0_m0_agent.cds.lib                   
-  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_address_alignment.sv"                               -work axi_bridge_0_m0_agent                    -cdslib ./cds_libs/axi_bridge_0_m0_agent.cds.lib                   
-  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_slave_translator.sv"                                -work intel_onchip_ssram_drw_s1_translator     -cdslib ./cds_libs/intel_onchip_ssram_drw_s1_translator.cds.lib    
-  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_axi_translator.sv"                                  -work axi_bridge_0_m0_translator               -cdslib ./cds_libs/axi_bridge_0_m0_translator.cds.lib              
-  xmvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_reset_controller.v"                                        -work rst_controller                           -cdslib ./cds_libs/rst_controller.cds.lib                          
-  xmvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_reset_synchronizer.v"                                      -work rst_controller                           -cdslib ./cds_libs/rst_controller.cds.lib                          
-  xmvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0.v"                                    -work mm_interconnect_0                        -cdslib ./cds_libs/mm_interconnect_0.cds.lib                       
-  xmvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/cycloneiv_intel_onchip_ssram_drw.v"                               -work intel_onchip_ssram_drw                   -cdslib ./cds_libs/intel_onchip_ssram_drw.cds.lib                  
-  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_axi_bridge.sv"                                             -work axi_bridge_0                             -cdslib ./cds_libs/axi_bridge_0.cds.lib                            
-  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_avalon_st_pipeline_base.v"                                 -work axi_bridge_0                             -cdslib ./cds_libs/axi_bridge_0.cds.lib                            
-  xmvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/cycloneiv_altpll_0.vo"                                            -work altpll_0                                 -cdslib ./cds_libs/altpll_0.cds.lib                                
-  xmvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/cycloneiv.v"                                                                                                                                                                                   
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0_avalon_st_adapter_002_error_adapter_0.sv" -work error_adapter_0                                 -cdslib ./cds_libs/error_adapter_0.cds.lib                                
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0_avalon_st_adapter_error_adapter_0.sv"     -work error_adapter_0                                 -cdslib ./cds_libs/error_adapter_0.cds.lib                                
+  xmvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0_avalon_st_adapter_002.v"                  -work avalon_st_adapter_002                           -cdslib ./cds_libs/avalon_st_adapter_002.cds.lib                          
+  xmvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0_avalon_st_adapter.v"                      -work avalon_st_adapter                               -cdslib ./cds_libs/avalon_st_adapter.cds.lib                              
+  xmvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_avalon_dc_fifo.v"                                              -work async_fifo                                      -cdslib ./cds_libs/async_fifo.cds.lib                                     
+  xmvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_dcfifo_synchronizer_bundle.v"                                  -work async_fifo                                      -cdslib ./cds_libs/async_fifo.cds.lib                                     
+  xmvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_std_synchronizer_nocut.v"                                      -work async_fifo                                      -cdslib ./cds_libs/async_fifo.cds.lib                                     
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_width_adapter.sv"                                       -work jtag_uart_0_avalon_jtag_slave_rsp_width_adapter -cdslib ./cds_libs/jtag_uart_0_avalon_jtag_slave_rsp_width_adapter.cds.lib
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_address_alignment.sv"                                   -work jtag_uart_0_avalon_jtag_slave_rsp_width_adapter -cdslib ./cds_libs/jtag_uart_0_avalon_jtag_slave_rsp_width_adapter.cds.lib
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_burst_uncompressor.sv"                                  -work jtag_uart_0_avalon_jtag_slave_rsp_width_adapter -cdslib ./cds_libs/jtag_uart_0_avalon_jtag_slave_rsp_width_adapter.cds.lib
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0_rsp_mux.sv"                               -work rsp_mux                                         -cdslib ./cds_libs/rsp_mux.cds.lib                                        
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_arbitrator.sv"                                          -work rsp_mux                                         -cdslib ./cds_libs/rsp_mux.cds.lib                                        
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0_rsp_demux_001.sv"                         -work rsp_demux_001                                   -cdslib ./cds_libs/rsp_demux_001.cds.lib                                  
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0_rsp_demux.sv"                             -work rsp_demux                                       -cdslib ./cds_libs/rsp_demux.cds.lib                                      
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0_cmd_mux.sv"                               -work cmd_mux                                         -cdslib ./cds_libs/cmd_mux.cds.lib                                        
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_arbitrator.sv"                                          -work cmd_mux                                         -cdslib ./cds_libs/cmd_mux.cds.lib                                        
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0_cmd_demux.sv"                             -work cmd_demux                                       -cdslib ./cds_libs/cmd_demux.cds.lib                                      
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_burst_adapter.sv"                                       -work jtag_uart_0_avalon_jtag_slave_burst_adapter     -cdslib ./cds_libs/jtag_uart_0_avalon_jtag_slave_burst_adapter.cds.lib    
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_burst_adapter_uncmpr.sv"                                -work jtag_uart_0_avalon_jtag_slave_burst_adapter     -cdslib ./cds_libs/jtag_uart_0_avalon_jtag_slave_burst_adapter.cds.lib    
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_burst_adapter_13_1.sv"                                  -work jtag_uart_0_avalon_jtag_slave_burst_adapter     -cdslib ./cds_libs/jtag_uart_0_avalon_jtag_slave_burst_adapter.cds.lib    
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_burst_adapter_new.sv"                                   -work jtag_uart_0_avalon_jtag_slave_burst_adapter     -cdslib ./cds_libs/jtag_uart_0_avalon_jtag_slave_burst_adapter.cds.lib    
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_incr_burst_converter.sv"                                       -work jtag_uart_0_avalon_jtag_slave_burst_adapter     -cdslib ./cds_libs/jtag_uart_0_avalon_jtag_slave_burst_adapter.cds.lib    
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_wrap_burst_converter.sv"                                       -work jtag_uart_0_avalon_jtag_slave_burst_adapter     -cdslib ./cds_libs/jtag_uart_0_avalon_jtag_slave_burst_adapter.cds.lib    
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_default_burst_converter.sv"                                    -work jtag_uart_0_avalon_jtag_slave_burst_adapter     -cdslib ./cds_libs/jtag_uart_0_avalon_jtag_slave_burst_adapter.cds.lib    
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_address_alignment.sv"                                   -work jtag_uart_0_avalon_jtag_slave_burst_adapter     -cdslib ./cds_libs/jtag_uart_0_avalon_jtag_slave_burst_adapter.cds.lib    
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_avalon_st_pipeline_stage.sv"                                   -work jtag_uart_0_avalon_jtag_slave_burst_adapter     -cdslib ./cds_libs/jtag_uart_0_avalon_jtag_slave_burst_adapter.cds.lib    
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_avalon_st_pipeline_base.v"                                     -work jtag_uart_0_avalon_jtag_slave_burst_adapter     -cdslib ./cds_libs/jtag_uart_0_avalon_jtag_slave_burst_adapter.cds.lib    
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_traffic_limiter.sv"                                     -work axi_bridge_0_m0_wr_limiter                      -cdslib ./cds_libs/axi_bridge_0_m0_wr_limiter.cds.lib                     
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_reorder_memory.sv"                                      -work axi_bridge_0_m0_wr_limiter                      -cdslib ./cds_libs/axi_bridge_0_m0_wr_limiter.cds.lib                     
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_avalon_sc_fifo.v"                                              -work axi_bridge_0_m0_wr_limiter                      -cdslib ./cds_libs/axi_bridge_0_m0_wr_limiter.cds.lib                     
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_avalon_st_pipeline_base.v"                                     -work axi_bridge_0_m0_wr_limiter                      -cdslib ./cds_libs/axi_bridge_0_m0_wr_limiter.cds.lib                     
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0_router_004.sv"                            -work router_004                                      -cdslib ./cds_libs/router_004.cds.lib                                     
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0_router_002.sv"                            -work router_002                                      -cdslib ./cds_libs/router_002.cds.lib                                     
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0_router.sv"                                -work router                                          -cdslib ./cds_libs/router.cds.lib                                         
+  xmvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_avalon_sc_fifo.v"                                              -work jtag_uart_0_avalon_jtag_slave_agent_rsp_fifo    -cdslib ./cds_libs/jtag_uart_0_avalon_jtag_slave_agent_rsp_fifo.cds.lib   
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_slave_agent.sv"                                         -work jtag_uart_0_avalon_jtag_slave_agent             -cdslib ./cds_libs/jtag_uart_0_avalon_jtag_slave_agent.cds.lib            
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_burst_uncompressor.sv"                                  -work jtag_uart_0_avalon_jtag_slave_agent             -cdslib ./cds_libs/jtag_uart_0_avalon_jtag_slave_agent.cds.lib            
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_axi_master_ni.sv"                                       -work axi_bridge_0_m0_agent                           -cdslib ./cds_libs/axi_bridge_0_m0_agent.cds.lib                          
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_address_alignment.sv"                                   -work axi_bridge_0_m0_agent                           -cdslib ./cds_libs/axi_bridge_0_m0_agent.cds.lib                          
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_slave_translator.sv"                                    -work jtag_uart_0_avalon_jtag_slave_translator        -cdslib ./cds_libs/jtag_uart_0_avalon_jtag_slave_translator.cds.lib       
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_axi_translator.sv"                                      -work axi_bridge_0_m0_translator                      -cdslib ./cds_libs/axi_bridge_0_m0_translator.cds.lib                     
+  xmvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_reset_controller.v"                                            -work rst_controller                                  -cdslib ./cds_libs/rst_controller.cds.lib                                 
+  xmvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_reset_synchronizer.v"                                          -work rst_controller                                  -cdslib ./cds_libs/rst_controller.cds.lib                                 
+  xmvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0.v"                                        -work mm_interconnect_0                               -cdslib ./cds_libs/mm_interconnect_0.cds.lib                              
+  xmvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/cycloneiv_jtag_uart_0.v"                                              -work jtag_uart_0                                     -cdslib ./cds_libs/jtag_uart_0.cds.lib                                    
+  xmvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/cycloneiv_intel_onchip_ssram_drw.v"                                   -work intel_onchip_ssram_drw                          -cdslib ./cds_libs/intel_onchip_ssram_drw.cds.lib                         
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_axi_bridge.sv"                                                 -work axi_bridge_0                                    -cdslib ./cds_libs/axi_bridge_0.cds.lib                                   
+  xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_avalon_st_pipeline_base.v"                                     -work axi_bridge_0                                    -cdslib ./cds_libs/axi_bridge_0.cds.lib                                   
+  xmvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/cycloneiv_altpll_0.vo"                                                -work altpll_0                                        -cdslib ./cds_libs/altpll_0.cds.lib                                       
+  xmvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/cycloneiv.v"                                                                                                                                                                                                     
 fi
 
 # ----------------------------------------

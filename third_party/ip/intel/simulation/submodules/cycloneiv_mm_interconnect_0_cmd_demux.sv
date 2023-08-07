@@ -28,10 +28,10 @@
 // ------------------------------------------
 // Generation parameters:
 //   output_name:         cycloneiv_mm_interconnect_0_cmd_demux
-//   ST_DATA_W:           158
-//   ST_CHANNEL_W:        2
-//   NUM_OUTPUTS:         2
-//   VALID_WIDTH:         2
+//   ST_DATA_W:           160
+//   ST_CHANNEL_W:        4
+//   NUM_OUTPUTS:         4
+//   VALID_WIDTH:         4
 // ------------------------------------------
 
 //------------------------------------------
@@ -45,9 +45,9 @@ module cycloneiv_mm_interconnect_0_cmd_demux
     // -------------------
     // Sink
     // -------------------
-    input  [2-1      : 0]   sink_valid,
-    input  [158-1    : 0]   sink_data, // ST_DATA_W=158
-    input  [2-1 : 0]   sink_channel, // ST_CHANNEL_W=2
+    input  [4-1      : 0]   sink_valid,
+    input  [160-1    : 0]   sink_data, // ST_DATA_W=160
+    input  [4-1 : 0]   sink_channel, // ST_CHANNEL_W=4
     input                         sink_startofpacket,
     input                         sink_endofpacket,
     output                        sink_ready,
@@ -56,18 +56,32 @@ module cycloneiv_mm_interconnect_0_cmd_demux
     // Sources 
     // -------------------
     output reg                      src0_valid,
-    output reg [158-1    : 0] src0_data, // ST_DATA_W=158
-    output reg [2-1 : 0] src0_channel, // ST_CHANNEL_W=2
+    output reg [160-1    : 0] src0_data, // ST_DATA_W=160
+    output reg [4-1 : 0] src0_channel, // ST_CHANNEL_W=4
     output reg                      src0_startofpacket,
     output reg                      src0_endofpacket,
     input                           src0_ready,
 
     output reg                      src1_valid,
-    output reg [158-1    : 0] src1_data, // ST_DATA_W=158
-    output reg [2-1 : 0] src1_channel, // ST_CHANNEL_W=2
+    output reg [160-1    : 0] src1_data, // ST_DATA_W=160
+    output reg [4-1 : 0] src1_channel, // ST_CHANNEL_W=4
     output reg                      src1_startofpacket,
     output reg                      src1_endofpacket,
     input                           src1_ready,
+
+    output reg                      src2_valid,
+    output reg [160-1    : 0] src2_data, // ST_DATA_W=160
+    output reg [4-1 : 0] src2_channel, // ST_CHANNEL_W=4
+    output reg                      src2_startofpacket,
+    output reg                      src2_endofpacket,
+    input                           src2_ready,
+
+    output reg                      src3_valid,
+    output reg [160-1    : 0] src3_data, // ST_DATA_W=160
+    output reg [4-1 : 0] src3_channel, // ST_CHANNEL_W=4
+    output reg                      src3_startofpacket,
+    output reg                      src3_endofpacket,
+    input                           src3_ready,
 
 
     // -------------------
@@ -80,7 +94,7 @@ module cycloneiv_mm_interconnect_0_cmd_demux
 
 );
 
-    localparam NUM_OUTPUTS = 2;
+    localparam NUM_OUTPUTS = 4;
     wire [NUM_OUTPUTS - 1 : 0] ready_vector;
 
     // -------------------
@@ -101,6 +115,20 @@ module cycloneiv_mm_interconnect_0_cmd_demux
 
         src1_valid         = sink_channel[1] && sink_valid[1];
 
+        src2_data          = sink_data;
+        src2_startofpacket = sink_startofpacket;
+        src2_endofpacket   = sink_endofpacket;
+        src2_channel       = sink_channel >> NUM_OUTPUTS;
+
+        src2_valid         = sink_channel[2] && sink_valid[2];
+
+        src3_data          = sink_data;
+        src3_startofpacket = sink_startofpacket;
+        src3_endofpacket   = sink_endofpacket;
+        src3_channel       = sink_channel >> NUM_OUTPUTS;
+
+        src3_valid         = sink_channel[3] && sink_valid[3];
+
     end
 
     // -------------------
@@ -108,6 +136,8 @@ module cycloneiv_mm_interconnect_0_cmd_demux
     // -------------------
     assign ready_vector[0] = src0_ready;
     assign ready_vector[1] = src1_ready;
+    assign ready_vector[2] = src2_ready;
+    assign ready_vector[3] = src3_ready;
 
     assign sink_ready = |(sink_channel & ready_vector);
 

@@ -1,11 +1,7 @@
 
 module cycloneiv (
+	altpll_0_c1_clk,
 	altpll_0_locked_conduit_export,
-	altpll_0_pll_slave_read,
-	altpll_0_pll_slave_write,
-	altpll_0_pll_slave_address,
-	altpll_0_pll_slave_readdata,
-	altpll_0_pll_slave_writedata,
 	axi_bridge_0_s0_awid,
 	axi_bridge_0_s0_awaddr,
 	axi_bridge_0_s0_awlen,
@@ -48,14 +44,10 @@ module cycloneiv (
 	clk_clk,
 	clock_bridge_0_in_clk_clk,
 	rst_n_reset_n,
-	altpll_0_c1_clk);	
+	jtag_uart_0_irq_irq);	
 
+	output		altpll_0_c1_clk;
 	output		altpll_0_locked_conduit_export;
-	input		altpll_0_pll_slave_read;
-	input		altpll_0_pll_slave_write;
-	input	[1:0]	altpll_0_pll_slave_address;
-	output	[31:0]	altpll_0_pll_slave_readdata;
-	input	[31:0]	altpll_0_pll_slave_writedata;
 	input	[1:0]	axi_bridge_0_s0_awid;
 	input	[31:0]	axi_bridge_0_s0_awaddr;
 	input	[7:0]	axi_bridge_0_s0_awlen;
@@ -98,5 +90,5 @@ module cycloneiv (
 	input		clk_clk;
 	input		clock_bridge_0_in_clk_clk;
 	input		rst_n_reset_n;
-	output		altpll_0_c1_clk;
+	output		jtag_uart_0_irq_irq;
 endmodule

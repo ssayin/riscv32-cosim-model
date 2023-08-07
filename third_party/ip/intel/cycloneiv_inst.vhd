@@ -1,11 +1,7 @@
 	component cycloneiv is
 		port (
+			altpll_0_c1_clk                : out std_logic;                                        -- clk
 			altpll_0_locked_conduit_export : out std_logic;                                        -- export
-			altpll_0_pll_slave_read        : in  std_logic                     := 'X';             -- read
-			altpll_0_pll_slave_write       : in  std_logic                     := 'X';             -- write
-			altpll_0_pll_slave_address     : in  std_logic_vector(1 downto 0)  := (others => 'X'); -- address
-			altpll_0_pll_slave_readdata    : out std_logic_vector(31 downto 0);                    -- readdata
-			altpll_0_pll_slave_writedata   : in  std_logic_vector(31 downto 0) := (others => 'X'); -- writedata
 			axi_bridge_0_s0_awid           : in  std_logic_vector(1 downto 0)  := (others => 'X'); -- awid
 			axi_bridge_0_s0_awaddr         : in  std_logic_vector(31 downto 0) := (others => 'X'); -- awaddr
 			axi_bridge_0_s0_awlen          : in  std_logic_vector(7 downto 0)  := (others => 'X'); -- awlen
@@ -48,18 +44,14 @@
 			clk_clk                        : in  std_logic                     := 'X';             -- clk
 			clock_bridge_0_in_clk_clk      : in  std_logic                     := 'X';             -- clk
 			rst_n_reset_n                  : in  std_logic                     := 'X';             -- reset_n
-			altpll_0_c1_clk                : out std_logic                                         -- clk
+			jtag_uart_0_irq_irq            : out std_logic                                         -- irq
 		);
 	end component cycloneiv;
 
 	u0 : component cycloneiv
 		port map (
+			altpll_0_c1_clk                => CONNECTED_TO_altpll_0_c1_clk,                --             altpll_0_c1.clk
 			altpll_0_locked_conduit_export => CONNECTED_TO_altpll_0_locked_conduit_export, -- altpll_0_locked_conduit.export
-			altpll_0_pll_slave_read        => CONNECTED_TO_altpll_0_pll_slave_read,        --      altpll_0_pll_slave.read
-			altpll_0_pll_slave_write       => CONNECTED_TO_altpll_0_pll_slave_write,       --                        .write
-			altpll_0_pll_slave_address     => CONNECTED_TO_altpll_0_pll_slave_address,     --                        .address
-			altpll_0_pll_slave_readdata    => CONNECTED_TO_altpll_0_pll_slave_readdata,    --                        .readdata
-			altpll_0_pll_slave_writedata   => CONNECTED_TO_altpll_0_pll_slave_writedata,   --                        .writedata
 			axi_bridge_0_s0_awid           => CONNECTED_TO_axi_bridge_0_s0_awid,           --         axi_bridge_0_s0.awid
 			axi_bridge_0_s0_awaddr         => CONNECTED_TO_axi_bridge_0_s0_awaddr,         --                        .awaddr
 			axi_bridge_0_s0_awlen          => CONNECTED_TO_axi_bridge_0_s0_awlen,          --                        .awlen
@@ -102,6 +94,6 @@
 			clk_clk                        => CONNECTED_TO_clk_clk,                        --                     clk.clk
 			clock_bridge_0_in_clk_clk      => CONNECTED_TO_clock_bridge_0_in_clk_clk,      --   clock_bridge_0_in_clk.clk
 			rst_n_reset_n                  => CONNECTED_TO_rst_n_reset_n,                  --                   rst_n.reset_n
-			altpll_0_c1_clk                => CONNECTED_TO_altpll_0_c1_clk                 --             altpll_0_c1.clk
+			jtag_uart_0_irq_irq            => CONNECTED_TO_jtag_uart_0_irq_irq             --         jtag_uart_0_irq.irq
 		);
 

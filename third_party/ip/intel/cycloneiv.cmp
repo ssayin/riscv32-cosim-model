@@ -2,11 +2,6 @@
 		port (
 			altpll_0_c1_clk                : out std_logic;                                        -- clk
 			altpll_0_locked_conduit_export : out std_logic;                                        -- export
-			altpll_0_pll_slave_read        : in  std_logic                     := 'X';             -- read
-			altpll_0_pll_slave_write       : in  std_logic                     := 'X';             -- write
-			altpll_0_pll_slave_address     : in  std_logic_vector(1 downto 0)  := (others => 'X'); -- address
-			altpll_0_pll_slave_readdata    : out std_logic_vector(31 downto 0);                    -- readdata
-			altpll_0_pll_slave_writedata   : in  std_logic_vector(31 downto 0) := (others => 'X'); -- writedata
 			axi_bridge_0_s0_awid           : in  std_logic_vector(1 downto 0)  := (others => 'X'); -- awid
 			axi_bridge_0_s0_awaddr         : in  std_logic_vector(31 downto 0) := (others => 'X'); -- awaddr
 			axi_bridge_0_s0_awlen          : in  std_logic_vector(7 downto 0)  := (others => 'X'); -- awlen
@@ -48,6 +43,7 @@
 			axi_bridge_0_s0_rready         : in  std_logic                     := 'X';             -- rready
 			clk_clk                        : in  std_logic                     := 'X';             -- clk
 			clock_bridge_0_in_clk_clk      : in  std_logic                     := 'X';             -- clk
+			jtag_uart_0_irq_irq            : out std_logic;                                        -- irq
 			rst_n_reset_n                  : in  std_logic                     := 'X'              -- reset_n
 		);
 	end component cycloneiv;
