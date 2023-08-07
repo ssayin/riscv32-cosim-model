@@ -9,6 +9,18 @@
    type="VERILOG"
    library="avalon_st_adapter" />
  <file
+   path="simulation/submodules/altera_avalon_dc_fifo.v"
+   type="VERILOG"
+   library="async_fifo" />
+ <file
+   path="simulation/submodules/altera_dcfifo_synchronizer_bundle.v"
+   type="VERILOG"
+   library="async_fifo" />
+ <file
+   path="simulation/submodules/altera_std_synchronizer_nocut.v"
+   type="VERILOG"
+   library="async_fifo" />
+ <file
    path="simulation/submodules/cycloneiv_mm_interconnect_0_rsp_mux.sv"
    type="SYSTEM_VERILOG"
    library="rsp_mux" />
@@ -152,6 +164,10 @@
    path="simulation/submodules/altera_avalon_st_pipeline_base.v"
    type="SYSTEM_VERILOG"
    library="axi_bridge_0" />
+ <file
+   path="simulation/submodules/cycloneiv_altpll_0.vo"
+   type="VERILOG"
+   library="altpll_0" />
  <file path="simulation/cycloneiv.v" type="VERILOG" />
  <topLevel name="cycloneiv" />
  <deviceFamily name="cycloneive" />

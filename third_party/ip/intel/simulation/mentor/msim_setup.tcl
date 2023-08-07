@@ -94,7 +94,7 @@
 # within the Quartus project, and generate a unified
 # script which supports all the Altera IP within the design.
 # ----------------------------------------
-# ACDS 22.1 917 linux 2023.08.06.22:04:39
+# ACDS 22.1 917 linux 2023.08.07.15:09:56
 
 # ----------------------------------------
 # Initialize variables
@@ -168,6 +168,8 @@ ensure_lib                                          ./libraries/error_adapter_0/
 vmap       error_adapter_0                          ./libraries/error_adapter_0/                         
 ensure_lib                                          ./libraries/avalon_st_adapter/                       
 vmap       avalon_st_adapter                        ./libraries/avalon_st_adapter/                       
+ensure_lib                                          ./libraries/async_fifo/                              
+vmap       async_fifo                               ./libraries/async_fifo/                              
 ensure_lib                                          ./libraries/rsp_mux/                                 
 vmap       rsp_mux                                  ./libraries/rsp_mux/                                 
 ensure_lib                                          ./libraries/rsp_demux/                               
@@ -202,6 +204,8 @@ ensure_lib                                          ./libraries/intel_onchip_ssr
 vmap       intel_onchip_ssram_drw                   ./libraries/intel_onchip_ssram_drw/                  
 ensure_lib                                          ./libraries/axi_bridge_0/                            
 vmap       axi_bridge_0                             ./libraries/axi_bridge_0/                            
+ensure_lib                                          ./libraries/altpll_0/                                
+vmap       altpll_0                                 ./libraries/altpll_0/                                
 
 # ----------------------------------------
 # Compile device library files
@@ -223,6 +227,9 @@ alias com {
   echo "\[exec\] com"
   eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0_avalon_st_adapter_error_adapter_0.sv" -work error_adapter_0                         
   eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0_avalon_st_adapter.v"                  -work avalon_st_adapter                       
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_avalon_dc_fifo.v"                                          -work async_fifo                              
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_dcfifo_synchronizer_bundle.v"                              -work async_fifo                              
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_std_synchronizer_nocut.v"                                  -work async_fifo                              
   eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0_rsp_mux.sv"                           -work rsp_mux                                 
   eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_arbitrator.sv"                                      -work rsp_mux                                 
   eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0_rsp_demux.sv"                         -work rsp_demux                               
@@ -258,6 +265,7 @@ alias com {
   eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/cycloneiv_intel_onchip_ssram_drw.v"                               -work intel_onchip_ssram_drw                  
   eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_axi_bridge.sv"                                             -work axi_bridge_0                            
   eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_avalon_st_pipeline_base.v"                                 -work axi_bridge_0                            
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/cycloneiv_altpll_0.vo"                                            -work altpll_0                                
   eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/cycloneiv.v"                                                                                                               
 }
 
@@ -265,14 +273,14 @@ alias com {
 # Elaborate top level design
 alias elab {
   echo "\[exec\] elab"
-  eval vsim -t ps $ELAB_OPTIONS $USER_DEFINED_ELAB_OPTIONS -L work -L work_lib -L error_adapter_0 -L avalon_st_adapter -L rsp_mux -L rsp_demux -L cmd_mux -L cmd_demux -L intel_onchip_ssram_drw_s1_burst_adapter -L axi_bridge_0_m0_wr_limiter -L router_002 -L router -L intel_onchip_ssram_drw_s1_agent_rsp_fifo -L intel_onchip_ssram_drw_s1_agent -L axi_bridge_0_m0_agent -L intel_onchip_ssram_drw_s1_translator -L axi_bridge_0_m0_translator -L rst_controller -L mm_interconnect_0 -L intel_onchip_ssram_drw -L axi_bridge_0 -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cycloneive_ver $TOP_LEVEL_NAME
+  eval vsim -t ps $ELAB_OPTIONS $USER_DEFINED_ELAB_OPTIONS -L work -L work_lib -L error_adapter_0 -L avalon_st_adapter -L async_fifo -L rsp_mux -L rsp_demux -L cmd_mux -L cmd_demux -L intel_onchip_ssram_drw_s1_burst_adapter -L axi_bridge_0_m0_wr_limiter -L router_002 -L router -L intel_onchip_ssram_drw_s1_agent_rsp_fifo -L intel_onchip_ssram_drw_s1_agent -L axi_bridge_0_m0_agent -L intel_onchip_ssram_drw_s1_translator -L axi_bridge_0_m0_translator -L rst_controller -L mm_interconnect_0 -L intel_onchip_ssram_drw -L axi_bridge_0 -L altpll_0 -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cycloneive_ver $TOP_LEVEL_NAME
 }
 
 # ----------------------------------------
 # Elaborate the top level design with -voptargs=+acc option
 alias elab_debug {
   echo "\[exec\] elab_debug"
-  eval vsim -voptargs=+acc -t ps $ELAB_OPTIONS $USER_DEFINED_ELAB_OPTIONS -L work -L work_lib -L error_adapter_0 -L avalon_st_adapter -L rsp_mux -L rsp_demux -L cmd_mux -L cmd_demux -L intel_onchip_ssram_drw_s1_burst_adapter -L axi_bridge_0_m0_wr_limiter -L router_002 -L router -L intel_onchip_ssram_drw_s1_agent_rsp_fifo -L intel_onchip_ssram_drw_s1_agent -L axi_bridge_0_m0_agent -L intel_onchip_ssram_drw_s1_translator -L axi_bridge_0_m0_translator -L rst_controller -L mm_interconnect_0 -L intel_onchip_ssram_drw -L axi_bridge_0 -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cycloneive_ver $TOP_LEVEL_NAME
+  eval vsim -voptargs=+acc -t ps $ELAB_OPTIONS $USER_DEFINED_ELAB_OPTIONS -L work -L work_lib -L error_adapter_0 -L avalon_st_adapter -L async_fifo -L rsp_mux -L rsp_demux -L cmd_mux -L cmd_demux -L intel_onchip_ssram_drw_s1_burst_adapter -L axi_bridge_0_m0_wr_limiter -L router_002 -L router -L intel_onchip_ssram_drw_s1_agent_rsp_fifo -L intel_onchip_ssram_drw_s1_agent -L axi_bridge_0_m0_agent -L intel_onchip_ssram_drw_s1_translator -L axi_bridge_0_m0_translator -L rst_controller -L mm_interconnect_0 -L intel_onchip_ssram_drw -L axi_bridge_0 -L altpll_0 -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cycloneive_ver $TOP_LEVEL_NAME
 }
 
 # ----------------------------------------

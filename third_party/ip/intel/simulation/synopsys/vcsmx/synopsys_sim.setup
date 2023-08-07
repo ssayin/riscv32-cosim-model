@@ -4,6 +4,7 @@ DEFAULT:                                  ./libraries/work/
 work:                                     ./libraries/work/                                    
 error_adapter_0:                          ./libraries/error_adapter_0/                         
 avalon_st_adapter:                        ./libraries/avalon_st_adapter/                       
+async_fifo:                               ./libraries/async_fifo/                              
 rsp_mux:                                  ./libraries/rsp_mux/                                 
 rsp_demux:                                ./libraries/rsp_demux/                               
 cmd_mux:                                  ./libraries/cmd_mux/                                 
@@ -21,6 +22,7 @@ rst_controller:                           ./libraries/rst_controller/
 mm_interconnect_0:                        ./libraries/mm_interconnect_0/                       
 intel_onchip_ssram_drw:                   ./libraries/intel_onchip_ssram_drw/                  
 axi_bridge_0:                             ./libraries/axi_bridge_0/                            
+altpll_0:                                 ./libraries/altpll_0/                                
 altera_ver:                               ./libraries/altera_ver/                              
 lpm_ver:                                  ./libraries/lpm_ver/                                 
 sgate_ver:                                ./libraries/sgate_ver/                               

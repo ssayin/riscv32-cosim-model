@@ -12,7 +12,7 @@
 # or its authorized distributors. Please refer to the applicable 
 # agreement for further details.
 
-# ACDS 22.1 917 linux 2023.08.06.22:04:39
+# ACDS 22.1 917 linux 2023.08.07.15:09:56
 
 # ----------------------------------------
 # vcs - auto-generated simulation script
@@ -94,7 +94,7 @@
 # within the Quartus project, and generate a unified
 # script which supports all the Altera IP within the design.
 # ----------------------------------------
-# ACDS 22.1 917 linux 2023.08.06.22:04:39
+# ACDS 22.1 917 linux 2023.08.07.15:09:56
 # ----------------------------------------
 # initialize variables
 TOP_LEVEL_NAME="cycloneiv"
@@ -139,6 +139,9 @@ vcs -lca -timescale=1ps/1ps -sverilog +verilog2001ext+.v -ntb_opts dtm $ELAB_OPT
   -v $QUARTUS_INSTALL_DIR/eda/sim_lib/cycloneive_atoms.v \
   $QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0_avalon_st_adapter_error_adapter_0.sv \
   $QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0_avalon_st_adapter.v \
+  $QSYS_SIMDIR/submodules/altera_avalon_dc_fifo.v \
+  $QSYS_SIMDIR/submodules/altera_dcfifo_synchronizer_bundle.v \
+  $QSYS_SIMDIR/submodules/altera_std_synchronizer_nocut.v \
   $QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0_rsp_mux.sv \
   $QSYS_SIMDIR/submodules/altera_merlin_arbitrator.sv \
   $QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0_rsp_demux.sv \
@@ -169,6 +172,7 @@ vcs -lca -timescale=1ps/1ps -sverilog +verilog2001ext+.v -ntb_opts dtm $ELAB_OPT
   $QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0.v \
   $QSYS_SIMDIR/submodules/cycloneiv_intel_onchip_ssram_drw.v \
   $QSYS_SIMDIR/submodules/altera_axi_bridge.sv \
+  $QSYS_SIMDIR/submodules/cycloneiv_altpll_0.vo \
   $QSYS_SIMDIR/cycloneiv.v \
   -top $TOP_LEVEL_NAME
 # ----------------------------------------

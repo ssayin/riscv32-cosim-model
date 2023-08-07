@@ -12,7 +12,7 @@
 # or its authorized distributors. Please refer to the applicable 
 # agreement for further details.
 
-# ACDS 22.1 917 linux 2023.08.06.22:04:39
+# ACDS 22.1 917 linux 2023.08.07.15:09:56
 
 # ----------------------------------------
 # vcsmx - auto-generated simulation script
@@ -107,7 +107,7 @@
 # within the Quartus project, and generate a unified
 # script which supports all the Altera IP within the design.
 # ----------------------------------------
-# ACDS 22.1 917 linux 2023.08.06.22:04:39
+# ACDS 22.1 917 linux 2023.08.07.15:09:56
 # ----------------------------------------
 # initialize variables
 TOP_LEVEL_NAME="cycloneiv"
@@ -149,6 +149,7 @@ fi
 mkdir -p ./libraries/work/
 mkdir -p ./libraries/error_adapter_0/
 mkdir -p ./libraries/avalon_st_adapter/
+mkdir -p ./libraries/async_fifo/
 mkdir -p ./libraries/rsp_mux/
 mkdir -p ./libraries/rsp_demux/
 mkdir -p ./libraries/cmd_mux/
@@ -166,6 +167,7 @@ mkdir -p ./libraries/rst_controller/
 mkdir -p ./libraries/mm_interconnect_0/
 mkdir -p ./libraries/intel_onchip_ssram_drw/
 mkdir -p ./libraries/axi_bridge_0/
+mkdir -p ./libraries/altpll_0/
 mkdir -p ./libraries/altera_ver/
 mkdir -p ./libraries/lpm_ver/
 mkdir -p ./libraries/sgate_ver/
@@ -192,6 +194,9 @@ fi
 if [ $SKIP_COM -eq 0 ]; then
   vlogan +v2k -sverilog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0_avalon_st_adapter_error_adapter_0.sv" -work error_adapter_0                         
   vlogan +v2k $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS           "$QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0_avalon_st_adapter.v"                  -work avalon_st_adapter                       
+  vlogan +v2k $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS           "$QSYS_SIMDIR/submodules/altera_avalon_dc_fifo.v"                                          -work async_fifo                              
+  vlogan +v2k $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS           "$QSYS_SIMDIR/submodules/altera_dcfifo_synchronizer_bundle.v"                              -work async_fifo                              
+  vlogan +v2k $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS           "$QSYS_SIMDIR/submodules/altera_std_synchronizer_nocut.v"                                  -work async_fifo                              
   vlogan +v2k -sverilog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0_rsp_mux.sv"                           -work rsp_mux                                 
   vlogan +v2k -sverilog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_arbitrator.sv"                                      -work rsp_mux                                 
   vlogan +v2k -sverilog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/cycloneiv_mm_interconnect_0_rsp_demux.sv"                         -work rsp_demux                               
@@ -227,6 +232,7 @@ if [ $SKIP_COM -eq 0 ]; then
   vlogan +v2k $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS           "$QSYS_SIMDIR/submodules/cycloneiv_intel_onchip_ssram_drw.v"                               -work intel_onchip_ssram_drw                  
   vlogan +v2k -sverilog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_axi_bridge.sv"                                             -work axi_bridge_0                            
   vlogan +v2k -sverilog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_avalon_st_pipeline_base.v"                                 -work axi_bridge_0                            
+  vlogan +v2k $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS           "$QSYS_SIMDIR/submodules/cycloneiv_altpll_0.vo"                                            -work altpll_0                                
   vlogan +v2k $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS           "$QSYS_SIMDIR/cycloneiv.v"                                                                                                               
 fi
 

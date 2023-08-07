@@ -4,49 +4,58 @@
 
 `timescale 1 ps / 1 ps
 module cycloneiv (
-		input  wire [1:0]  axi_bridge_0_s0_awid,     // axi_bridge_0_s0.awid
-		input  wire [31:0] axi_bridge_0_s0_awaddr,   //                .awaddr
-		input  wire [7:0]  axi_bridge_0_s0_awlen,    //                .awlen
-		input  wire [2:0]  axi_bridge_0_s0_awsize,   //                .awsize
-		input  wire [1:0]  axi_bridge_0_s0_awburst,  //                .awburst
-		input  wire [0:0]  axi_bridge_0_s0_awlock,   //                .awlock
-		input  wire [3:0]  axi_bridge_0_s0_awcache,  //                .awcache
-		input  wire [2:0]  axi_bridge_0_s0_awprot,   //                .awprot
-		input  wire [3:0]  axi_bridge_0_s0_awqos,    //                .awqos
-		input  wire [3:0]  axi_bridge_0_s0_awregion, //                .awregion
-		input  wire        axi_bridge_0_s0_awvalid,  //                .awvalid
-		output wire        axi_bridge_0_s0_awready,  //                .awready
-		input  wire [63:0] axi_bridge_0_s0_wdata,    //                .wdata
-		input  wire [7:0]  axi_bridge_0_s0_wstrb,    //                .wstrb
-		input  wire        axi_bridge_0_s0_wlast,    //                .wlast
-		input  wire        axi_bridge_0_s0_wvalid,   //                .wvalid
-		output wire        axi_bridge_0_s0_wready,   //                .wready
-		output wire [1:0]  axi_bridge_0_s0_bid,      //                .bid
-		output wire [1:0]  axi_bridge_0_s0_bresp,    //                .bresp
-		output wire        axi_bridge_0_s0_bvalid,   //                .bvalid
-		input  wire        axi_bridge_0_s0_bready,   //                .bready
-		input  wire [1:0]  axi_bridge_0_s0_arid,     //                .arid
-		input  wire [31:0] axi_bridge_0_s0_araddr,   //                .araddr
-		input  wire [7:0]  axi_bridge_0_s0_arlen,    //                .arlen
-		input  wire [2:0]  axi_bridge_0_s0_arsize,   //                .arsize
-		input  wire [1:0]  axi_bridge_0_s0_arburst,  //                .arburst
-		input  wire [0:0]  axi_bridge_0_s0_arlock,   //                .arlock
-		input  wire [3:0]  axi_bridge_0_s0_arcache,  //                .arcache
-		input  wire [2:0]  axi_bridge_0_s0_arprot,   //                .arprot
-		input  wire [3:0]  axi_bridge_0_s0_arqos,    //                .arqos
-		input  wire [3:0]  axi_bridge_0_s0_arregion, //                .arregion
-		input  wire        axi_bridge_0_s0_arvalid,  //                .arvalid
-		output wire        axi_bridge_0_s0_arready,  //                .arready
-		output wire [1:0]  axi_bridge_0_s0_rid,      //                .rid
-		output wire [63:0] axi_bridge_0_s0_rdata,    //                .rdata
-		output wire [1:0]  axi_bridge_0_s0_rresp,    //                .rresp
-		output wire        axi_bridge_0_s0_rlast,    //                .rlast
-		output wire        axi_bridge_0_s0_rvalid,   //                .rvalid
-		input  wire        axi_bridge_0_s0_rready,   //                .rready
-		input  wire        clk_clk,                  //             clk.clk
-		input  wire        reset_reset_n             //           reset.reset_n
+		output wire        altpll_0_c1_clk,                //             altpll_0_c1.clk
+		output wire        altpll_0_locked_conduit_export, // altpll_0_locked_conduit.export
+		input  wire        altpll_0_pll_slave_read,        //      altpll_0_pll_slave.read
+		input  wire        altpll_0_pll_slave_write,       //                        .write
+		input  wire [1:0]  altpll_0_pll_slave_address,     //                        .address
+		output wire [31:0] altpll_0_pll_slave_readdata,    //                        .readdata
+		input  wire [31:0] altpll_0_pll_slave_writedata,   //                        .writedata
+		input  wire [1:0]  axi_bridge_0_s0_awid,           //         axi_bridge_0_s0.awid
+		input  wire [31:0] axi_bridge_0_s0_awaddr,         //                        .awaddr
+		input  wire [7:0]  axi_bridge_0_s0_awlen,          //                        .awlen
+		input  wire [2:0]  axi_bridge_0_s0_awsize,         //                        .awsize
+		input  wire [1:0]  axi_bridge_0_s0_awburst,        //                        .awburst
+		input  wire [0:0]  axi_bridge_0_s0_awlock,         //                        .awlock
+		input  wire [3:0]  axi_bridge_0_s0_awcache,        //                        .awcache
+		input  wire [2:0]  axi_bridge_0_s0_awprot,         //                        .awprot
+		input  wire [3:0]  axi_bridge_0_s0_awqos,          //                        .awqos
+		input  wire [3:0]  axi_bridge_0_s0_awregion,       //                        .awregion
+		input  wire        axi_bridge_0_s0_awvalid,        //                        .awvalid
+		output wire        axi_bridge_0_s0_awready,        //                        .awready
+		input  wire [63:0] axi_bridge_0_s0_wdata,          //                        .wdata
+		input  wire [7:0]  axi_bridge_0_s0_wstrb,          //                        .wstrb
+		input  wire        axi_bridge_0_s0_wlast,          //                        .wlast
+		input  wire        axi_bridge_0_s0_wvalid,         //                        .wvalid
+		output wire        axi_bridge_0_s0_wready,         //                        .wready
+		output wire [1:0]  axi_bridge_0_s0_bid,            //                        .bid
+		output wire [1:0]  axi_bridge_0_s0_bresp,          //                        .bresp
+		output wire        axi_bridge_0_s0_bvalid,         //                        .bvalid
+		input  wire        axi_bridge_0_s0_bready,         //                        .bready
+		input  wire [1:0]  axi_bridge_0_s0_arid,           //                        .arid
+		input  wire [31:0] axi_bridge_0_s0_araddr,         //                        .araddr
+		input  wire [7:0]  axi_bridge_0_s0_arlen,          //                        .arlen
+		input  wire [2:0]  axi_bridge_0_s0_arsize,         //                        .arsize
+		input  wire [1:0]  axi_bridge_0_s0_arburst,        //                        .arburst
+		input  wire [0:0]  axi_bridge_0_s0_arlock,         //                        .arlock
+		input  wire [3:0]  axi_bridge_0_s0_arcache,        //                        .arcache
+		input  wire [2:0]  axi_bridge_0_s0_arprot,         //                        .arprot
+		input  wire [3:0]  axi_bridge_0_s0_arqos,          //                        .arqos
+		input  wire [3:0]  axi_bridge_0_s0_arregion,       //                        .arregion
+		input  wire        axi_bridge_0_s0_arvalid,        //                        .arvalid
+		output wire        axi_bridge_0_s0_arready,        //                        .arready
+		output wire [1:0]  axi_bridge_0_s0_rid,            //                        .rid
+		output wire [63:0] axi_bridge_0_s0_rdata,          //                        .rdata
+		output wire [1:0]  axi_bridge_0_s0_rresp,          //                        .rresp
+		output wire        axi_bridge_0_s0_rlast,          //                        .rlast
+		output wire        axi_bridge_0_s0_rvalid,         //                        .rvalid
+		input  wire        axi_bridge_0_s0_rready,         //                        .rready
+		input  wire        clk_clk,                        //                     clk.clk
+		input  wire        clock_bridge_0_in_clk_clk,      //   clock_bridge_0_in_clk.clk
+		input  wire        rst_n_reset_n                   //                   rst_n.reset_n
 	);
 
+	wire         altpll_0_c0_clk;                                        // altpll_0:c0 -> [intel_onchip_ssram_drw:clk, intel_onchip_ssram_drw:clk2, mm_interconnect_0:altpll_0_c0_clk, rst_controller_002:clk]
 	wire   [1:0] axi_bridge_0_m0_awburst;                                // axi_bridge_0:m0_awburst -> mm_interconnect_0:axi_bridge_0_m0_awburst
 	wire   [3:0] axi_bridge_0_m0_arregion;                               // axi_bridge_0:m0_arregion -> mm_interconnect_0:axi_bridge_0_m0_arregion
 	wire   [7:0] axi_bridge_0_m0_arlen;                                  // axi_bridge_0:m0_arlen -> mm_interconnect_0:axi_bridge_0_m0_arlen
@@ -100,8 +109,23 @@ module cycloneiv (
 	wire         mm_interconnect_0_intel_onchip_ssram_drw_s2_write;      // mm_interconnect_0:intel_onchip_ssram_drw_s2_write -> intel_onchip_ssram_drw:write2
 	wire  [63:0] mm_interconnect_0_intel_onchip_ssram_drw_s2_writedata;  // mm_interconnect_0:intel_onchip_ssram_drw_s2_writedata -> intel_onchip_ssram_drw:writedata2
 	wire         mm_interconnect_0_intel_onchip_ssram_drw_s2_clken;      // mm_interconnect_0:intel_onchip_ssram_drw_s2_clken -> intel_onchip_ssram_drw:clken2
-	wire         rst_controller_reset_out_reset;                         // rst_controller:reset_out -> [axi_bridge_0:aresetn, intel_onchip_ssram_drw:reset, intel_onchip_ssram_drw:reset2, mm_interconnect_0:axi_bridge_0_clk_reset_reset_bridge_in_reset_reset]
-	wire         rst_controller_reset_out_reset_req;                     // rst_controller:reset_req -> [intel_onchip_ssram_drw:reset_req, intel_onchip_ssram_drw:reset_req2, rst_translator:reset_req_in]
+	wire         rst_controller_reset_out_reset;                         // rst_controller:reset_out -> altpll_0:reset
+	wire         rst_controller_001_reset_out_reset;                     // rst_controller_001:reset_out -> [axi_bridge_0:aresetn, mm_interconnect_0:axi_bridge_0_clk_reset_reset_bridge_in_reset_reset]
+	wire         rst_controller_002_reset_out_reset;                     // rst_controller_002:reset_out -> [intel_onchip_ssram_drw:reset, intel_onchip_ssram_drw:reset2, mm_interconnect_0:intel_onchip_ssram_drw_reset1_reset_bridge_in_reset_reset]
+	wire         rst_controller_002_reset_out_reset_req;                 // rst_controller_002:reset_req -> [intel_onchip_ssram_drw:reset_req, intel_onchip_ssram_drw:reset_req2]
+
+	cycloneiv_altpll_0 altpll_0 (
+		.clk       (clk_clk),                        //       inclk_interface.clk
+		.reset     (rst_controller_reset_out_reset), // inclk_interface_reset.reset
+		.read      (altpll_0_pll_slave_read),        //             pll_slave.read
+		.write     (altpll_0_pll_slave_write),       //                      .write
+		.address   (altpll_0_pll_slave_address),     //                      .address
+		.readdata  (altpll_0_pll_slave_readdata),    //                      .readdata
+		.writedata (altpll_0_pll_slave_writedata),   //                      .writedata
+		.c0        (altpll_0_c0_clk),                //                    c0.clk
+		.c1        (altpll_0_c1_clk),                //                    c1.clk
+		.locked    (altpll_0_locked_conduit_export)  //        locked_conduit.export
+	);
 
 	altera_axi_bridge #(
 		.USE_PIPELINE          (1),
@@ -163,8 +187,8 @@ module cycloneiv (
 		.BURST_LENGTH_WIDTH    (8),
 		.LOCK_WIDTH            (1)
 	) axi_bridge_0 (
-		.aclk        (clk_clk),                                                              //       clk.clk
-		.aresetn     (~rst_controller_reset_out_reset),                                      // clk_reset.reset_n
+		.aclk        (clock_bridge_0_in_clk_clk),                                            //       clk.clk
+		.aresetn     (~rst_controller_001_reset_out_reset),                                  // clk_reset.reset_n
 		.s0_awid     (axi_bridge_0_s0_awid),                                                 //        s0.awid
 		.s0_awaddr   (axi_bridge_0_s0_awaddr),                                               //          .awaddr
 		.s0_awlen    (axi_bridge_0_s0_awlen),                                                //          .awlen
@@ -258,7 +282,7 @@ module cycloneiv (
 	);
 
 	cycloneiv_intel_onchip_ssram_drw intel_onchip_ssram_drw (
-		.clk         (clk_clk),                                                //   clk1.clk
+		.clk         (altpll_0_c0_clk),                                        //   clk1.clk
 		.address     (mm_interconnect_0_intel_onchip_ssram_drw_s1_address),    //     s1.address
 		.clken       (mm_interconnect_0_intel_onchip_ssram_drw_s1_clken),      //       .clken
 		.chipselect  (mm_interconnect_0_intel_onchip_ssram_drw_s1_chipselect), //       .chipselect
@@ -266,8 +290,8 @@ module cycloneiv (
 		.readdata    (mm_interconnect_0_intel_onchip_ssram_drw_s1_readdata),   //       .readdata
 		.writedata   (mm_interconnect_0_intel_onchip_ssram_drw_s1_writedata),  //       .writedata
 		.byteenable  (mm_interconnect_0_intel_onchip_ssram_drw_s1_byteenable), //       .byteenable
-		.reset       (rst_controller_reset_out_reset),                         // reset1.reset
-		.reset_req   (rst_controller_reset_out_reset_req),                     //       .reset_req
+		.reset       (rst_controller_002_reset_out_reset),                     // reset1.reset
+		.reset_req   (rst_controller_002_reset_out_reset_req),                 //       .reset_req
 		.address2    (mm_interconnect_0_intel_onchip_ssram_drw_s2_address),    //     s2.address
 		.chipselect2 (mm_interconnect_0_intel_onchip_ssram_drw_s2_chipselect), //       .chipselect
 		.clken2      (mm_interconnect_0_intel_onchip_ssram_drw_s2_clken),      //       .clken
@@ -275,75 +299,77 @@ module cycloneiv (
 		.readdata2   (mm_interconnect_0_intel_onchip_ssram_drw_s2_readdata),   //       .readdata
 		.writedata2  (mm_interconnect_0_intel_onchip_ssram_drw_s2_writedata),  //       .writedata
 		.byteenable2 (mm_interconnect_0_intel_onchip_ssram_drw_s2_byteenable), //       .byteenable
-		.clk2        (clk_clk),                                                //   clk2.clk
-		.reset2      (rst_controller_reset_out_reset),                         // reset2.reset
-		.reset_req2  (rst_controller_reset_out_reset_req),                     //       .reset_req
+		.clk2        (altpll_0_c0_clk),                                        //   clk2.clk
+		.reset2      (rst_controller_002_reset_out_reset),                     // reset2.reset
+		.reset_req2  (rst_controller_002_reset_out_reset_req),                 //       .reset_req
 		.freeze      (1'b0)                                                    // (terminated)
 	);
 
 	cycloneiv_mm_interconnect_0 mm_interconnect_0 (
-		.axi_bridge_0_m0_awid                               (axi_bridge_0_m0_awid),                                   //                              axi_bridge_0_m0.awid
-		.axi_bridge_0_m0_awaddr                             (axi_bridge_0_m0_awaddr),                                 //                                             .awaddr
-		.axi_bridge_0_m0_awlen                              (axi_bridge_0_m0_awlen),                                  //                                             .awlen
-		.axi_bridge_0_m0_awsize                             (axi_bridge_0_m0_awsize),                                 //                                             .awsize
-		.axi_bridge_0_m0_awburst                            (axi_bridge_0_m0_awburst),                                //                                             .awburst
-		.axi_bridge_0_m0_awlock                             (axi_bridge_0_m0_awlock),                                 //                                             .awlock
-		.axi_bridge_0_m0_awcache                            (axi_bridge_0_m0_awcache),                                //                                             .awcache
-		.axi_bridge_0_m0_awprot                             (axi_bridge_0_m0_awprot),                                 //                                             .awprot
-		.axi_bridge_0_m0_awqos                              (axi_bridge_0_m0_awqos),                                  //                                             .awqos
-		.axi_bridge_0_m0_awregion                           (axi_bridge_0_m0_awregion),                               //                                             .awregion
-		.axi_bridge_0_m0_awvalid                            (axi_bridge_0_m0_awvalid),                                //                                             .awvalid
-		.axi_bridge_0_m0_awready                            (axi_bridge_0_m0_awready),                                //                                             .awready
-		.axi_bridge_0_m0_wdata                              (axi_bridge_0_m0_wdata),                                  //                                             .wdata
-		.axi_bridge_0_m0_wstrb                              (axi_bridge_0_m0_wstrb),                                  //                                             .wstrb
-		.axi_bridge_0_m0_wlast                              (axi_bridge_0_m0_wlast),                                  //                                             .wlast
-		.axi_bridge_0_m0_wvalid                             (axi_bridge_0_m0_wvalid),                                 //                                             .wvalid
-		.axi_bridge_0_m0_wready                             (axi_bridge_0_m0_wready),                                 //                                             .wready
-		.axi_bridge_0_m0_bid                                (axi_bridge_0_m0_bid),                                    //                                             .bid
-		.axi_bridge_0_m0_bresp                              (axi_bridge_0_m0_bresp),                                  //                                             .bresp
-		.axi_bridge_0_m0_bvalid                             (axi_bridge_0_m0_bvalid),                                 //                                             .bvalid
-		.axi_bridge_0_m0_bready                             (axi_bridge_0_m0_bready),                                 //                                             .bready
-		.axi_bridge_0_m0_arid                               (axi_bridge_0_m0_arid),                                   //                                             .arid
-		.axi_bridge_0_m0_araddr                             (axi_bridge_0_m0_araddr),                                 //                                             .araddr
-		.axi_bridge_0_m0_arlen                              (axi_bridge_0_m0_arlen),                                  //                                             .arlen
-		.axi_bridge_0_m0_arsize                             (axi_bridge_0_m0_arsize),                                 //                                             .arsize
-		.axi_bridge_0_m0_arburst                            (axi_bridge_0_m0_arburst),                                //                                             .arburst
-		.axi_bridge_0_m0_arlock                             (axi_bridge_0_m0_arlock),                                 //                                             .arlock
-		.axi_bridge_0_m0_arcache                            (axi_bridge_0_m0_arcache),                                //                                             .arcache
-		.axi_bridge_0_m0_arprot                             (axi_bridge_0_m0_arprot),                                 //                                             .arprot
-		.axi_bridge_0_m0_arqos                              (axi_bridge_0_m0_arqos),                                  //                                             .arqos
-		.axi_bridge_0_m0_arregion                           (axi_bridge_0_m0_arregion),                               //                                             .arregion
-		.axi_bridge_0_m0_arvalid                            (axi_bridge_0_m0_arvalid),                                //                                             .arvalid
-		.axi_bridge_0_m0_arready                            (axi_bridge_0_m0_arready),                                //                                             .arready
-		.axi_bridge_0_m0_rid                                (axi_bridge_0_m0_rid),                                    //                                             .rid
-		.axi_bridge_0_m0_rdata                              (axi_bridge_0_m0_rdata),                                  //                                             .rdata
-		.axi_bridge_0_m0_rresp                              (axi_bridge_0_m0_rresp),                                  //                                             .rresp
-		.axi_bridge_0_m0_rlast                              (axi_bridge_0_m0_rlast),                                  //                                             .rlast
-		.axi_bridge_0_m0_rvalid                             (axi_bridge_0_m0_rvalid),                                 //                                             .rvalid
-		.axi_bridge_0_m0_rready                             (axi_bridge_0_m0_rready),                                 //                                             .rready
-		.clk_0_clk_clk                                      (clk_clk),                                                //                                    clk_0_clk.clk
-		.axi_bridge_0_clk_reset_reset_bridge_in_reset_reset (rst_controller_reset_out_reset),                         // axi_bridge_0_clk_reset_reset_bridge_in_reset.reset
-		.intel_onchip_ssram_drw_s1_address                  (mm_interconnect_0_intel_onchip_ssram_drw_s1_address),    //                    intel_onchip_ssram_drw_s1.address
-		.intel_onchip_ssram_drw_s1_write                    (mm_interconnect_0_intel_onchip_ssram_drw_s1_write),      //                                             .write
-		.intel_onchip_ssram_drw_s1_readdata                 (mm_interconnect_0_intel_onchip_ssram_drw_s1_readdata),   //                                             .readdata
-		.intel_onchip_ssram_drw_s1_writedata                (mm_interconnect_0_intel_onchip_ssram_drw_s1_writedata),  //                                             .writedata
-		.intel_onchip_ssram_drw_s1_byteenable               (mm_interconnect_0_intel_onchip_ssram_drw_s1_byteenable), //                                             .byteenable
-		.intel_onchip_ssram_drw_s1_chipselect               (mm_interconnect_0_intel_onchip_ssram_drw_s1_chipselect), //                                             .chipselect
-		.intel_onchip_ssram_drw_s1_clken                    (mm_interconnect_0_intel_onchip_ssram_drw_s1_clken),      //                                             .clken
-		.intel_onchip_ssram_drw_s2_address                  (mm_interconnect_0_intel_onchip_ssram_drw_s2_address),    //                    intel_onchip_ssram_drw_s2.address
-		.intel_onchip_ssram_drw_s2_write                    (mm_interconnect_0_intel_onchip_ssram_drw_s2_write),      //                                             .write
-		.intel_onchip_ssram_drw_s2_readdata                 (mm_interconnect_0_intel_onchip_ssram_drw_s2_readdata),   //                                             .readdata
-		.intel_onchip_ssram_drw_s2_writedata                (mm_interconnect_0_intel_onchip_ssram_drw_s2_writedata),  //                                             .writedata
-		.intel_onchip_ssram_drw_s2_byteenable               (mm_interconnect_0_intel_onchip_ssram_drw_s2_byteenable), //                                             .byteenable
-		.intel_onchip_ssram_drw_s2_chipselect               (mm_interconnect_0_intel_onchip_ssram_drw_s2_chipselect), //                                             .chipselect
-		.intel_onchip_ssram_drw_s2_clken                    (mm_interconnect_0_intel_onchip_ssram_drw_s2_clken)       //                                             .clken
+		.axi_bridge_0_m0_awid                                      (axi_bridge_0_m0_awid),                                   //                                     axi_bridge_0_m0.awid
+		.axi_bridge_0_m0_awaddr                                    (axi_bridge_0_m0_awaddr),                                 //                                                    .awaddr
+		.axi_bridge_0_m0_awlen                                     (axi_bridge_0_m0_awlen),                                  //                                                    .awlen
+		.axi_bridge_0_m0_awsize                                    (axi_bridge_0_m0_awsize),                                 //                                                    .awsize
+		.axi_bridge_0_m0_awburst                                   (axi_bridge_0_m0_awburst),                                //                                                    .awburst
+		.axi_bridge_0_m0_awlock                                    (axi_bridge_0_m0_awlock),                                 //                                                    .awlock
+		.axi_bridge_0_m0_awcache                                   (axi_bridge_0_m0_awcache),                                //                                                    .awcache
+		.axi_bridge_0_m0_awprot                                    (axi_bridge_0_m0_awprot),                                 //                                                    .awprot
+		.axi_bridge_0_m0_awqos                                     (axi_bridge_0_m0_awqos),                                  //                                                    .awqos
+		.axi_bridge_0_m0_awregion                                  (axi_bridge_0_m0_awregion),                               //                                                    .awregion
+		.axi_bridge_0_m0_awvalid                                   (axi_bridge_0_m0_awvalid),                                //                                                    .awvalid
+		.axi_bridge_0_m0_awready                                   (axi_bridge_0_m0_awready),                                //                                                    .awready
+		.axi_bridge_0_m0_wdata                                     (axi_bridge_0_m0_wdata),                                  //                                                    .wdata
+		.axi_bridge_0_m0_wstrb                                     (axi_bridge_0_m0_wstrb),                                  //                                                    .wstrb
+		.axi_bridge_0_m0_wlast                                     (axi_bridge_0_m0_wlast),                                  //                                                    .wlast
+		.axi_bridge_0_m0_wvalid                                    (axi_bridge_0_m0_wvalid),                                 //                                                    .wvalid
+		.axi_bridge_0_m0_wready                                    (axi_bridge_0_m0_wready),                                 //                                                    .wready
+		.axi_bridge_0_m0_bid                                       (axi_bridge_0_m0_bid),                                    //                                                    .bid
+		.axi_bridge_0_m0_bresp                                     (axi_bridge_0_m0_bresp),                                  //                                                    .bresp
+		.axi_bridge_0_m0_bvalid                                    (axi_bridge_0_m0_bvalid),                                 //                                                    .bvalid
+		.axi_bridge_0_m0_bready                                    (axi_bridge_0_m0_bready),                                 //                                                    .bready
+		.axi_bridge_0_m0_arid                                      (axi_bridge_0_m0_arid),                                   //                                                    .arid
+		.axi_bridge_0_m0_araddr                                    (axi_bridge_0_m0_araddr),                                 //                                                    .araddr
+		.axi_bridge_0_m0_arlen                                     (axi_bridge_0_m0_arlen),                                  //                                                    .arlen
+		.axi_bridge_0_m0_arsize                                    (axi_bridge_0_m0_arsize),                                 //                                                    .arsize
+		.axi_bridge_0_m0_arburst                                   (axi_bridge_0_m0_arburst),                                //                                                    .arburst
+		.axi_bridge_0_m0_arlock                                    (axi_bridge_0_m0_arlock),                                 //                                                    .arlock
+		.axi_bridge_0_m0_arcache                                   (axi_bridge_0_m0_arcache),                                //                                                    .arcache
+		.axi_bridge_0_m0_arprot                                    (axi_bridge_0_m0_arprot),                                 //                                                    .arprot
+		.axi_bridge_0_m0_arqos                                     (axi_bridge_0_m0_arqos),                                  //                                                    .arqos
+		.axi_bridge_0_m0_arregion                                  (axi_bridge_0_m0_arregion),                               //                                                    .arregion
+		.axi_bridge_0_m0_arvalid                                   (axi_bridge_0_m0_arvalid),                                //                                                    .arvalid
+		.axi_bridge_0_m0_arready                                   (axi_bridge_0_m0_arready),                                //                                                    .arready
+		.axi_bridge_0_m0_rid                                       (axi_bridge_0_m0_rid),                                    //                                                    .rid
+		.axi_bridge_0_m0_rdata                                     (axi_bridge_0_m0_rdata),                                  //                                                    .rdata
+		.axi_bridge_0_m0_rresp                                     (axi_bridge_0_m0_rresp),                                  //                                                    .rresp
+		.axi_bridge_0_m0_rlast                                     (axi_bridge_0_m0_rlast),                                  //                                                    .rlast
+		.axi_bridge_0_m0_rvalid                                    (axi_bridge_0_m0_rvalid),                                 //                                                    .rvalid
+		.axi_bridge_0_m0_rready                                    (axi_bridge_0_m0_rready),                                 //                                                    .rready
+		.altpll_0_c0_clk                                           (altpll_0_c0_clk),                                        //                                         altpll_0_c0.clk
+		.clock_bridge_0_out_clk_clk                                (clock_bridge_0_in_clk_clk),                              //                              clock_bridge_0_out_clk.clk
+		.axi_bridge_0_clk_reset_reset_bridge_in_reset_reset        (rst_controller_001_reset_out_reset),                     //        axi_bridge_0_clk_reset_reset_bridge_in_reset.reset
+		.intel_onchip_ssram_drw_reset1_reset_bridge_in_reset_reset (rst_controller_002_reset_out_reset),                     // intel_onchip_ssram_drw_reset1_reset_bridge_in_reset.reset
+		.intel_onchip_ssram_drw_s1_address                         (mm_interconnect_0_intel_onchip_ssram_drw_s1_address),    //                           intel_onchip_ssram_drw_s1.address
+		.intel_onchip_ssram_drw_s1_write                           (mm_interconnect_0_intel_onchip_ssram_drw_s1_write),      //                                                    .write
+		.intel_onchip_ssram_drw_s1_readdata                        (mm_interconnect_0_intel_onchip_ssram_drw_s1_readdata),   //                                                    .readdata
+		.intel_onchip_ssram_drw_s1_writedata                       (mm_interconnect_0_intel_onchip_ssram_drw_s1_writedata),  //                                                    .writedata
+		.intel_onchip_ssram_drw_s1_byteenable                      (mm_interconnect_0_intel_onchip_ssram_drw_s1_byteenable), //                                                    .byteenable
+		.intel_onchip_ssram_drw_s1_chipselect                      (mm_interconnect_0_intel_onchip_ssram_drw_s1_chipselect), //                                                    .chipselect
+		.intel_onchip_ssram_drw_s1_clken                           (mm_interconnect_0_intel_onchip_ssram_drw_s1_clken),      //                                                    .clken
+		.intel_onchip_ssram_drw_s2_address                         (mm_interconnect_0_intel_onchip_ssram_drw_s2_address),    //                           intel_onchip_ssram_drw_s2.address
+		.intel_onchip_ssram_drw_s2_write                           (mm_interconnect_0_intel_onchip_ssram_drw_s2_write),      //                                                    .write
+		.intel_onchip_ssram_drw_s2_readdata                        (mm_interconnect_0_intel_onchip_ssram_drw_s2_readdata),   //                                                    .readdata
+		.intel_onchip_ssram_drw_s2_writedata                       (mm_interconnect_0_intel_onchip_ssram_drw_s2_writedata),  //                                                    .writedata
+		.intel_onchip_ssram_drw_s2_byteenable                      (mm_interconnect_0_intel_onchip_ssram_drw_s2_byteenable), //                                                    .byteenable
+		.intel_onchip_ssram_drw_s2_chipselect                      (mm_interconnect_0_intel_onchip_ssram_drw_s2_chipselect), //                                                    .chipselect
+		.intel_onchip_ssram_drw_s2_clken                           (mm_interconnect_0_intel_onchip_ssram_drw_s2_clken)       //                                                    .clken
 	);
 
 	altera_reset_controller #(
 		.NUM_RESET_INPUTS          (1),
 		.OUTPUT_RESET_SYNC_EDGES   ("deassert"),
 		.SYNC_DEPTH                (2),
-		.RESET_REQUEST_PRESENT     (1),
+		.RESET_REQUEST_PRESENT     (0),
 		.RESET_REQ_WAIT_TIME       (1),
 		.MIN_RST_ASSERTION_TIME    (3),
 		.RESET_REQ_EARLY_DSRT_TIME (1),
@@ -365,10 +391,73 @@ module cycloneiv (
 		.USE_RESET_REQUEST_IN15    (0),
 		.ADAPT_RESET_REQUEST       (0)
 	) rst_controller (
-		.reset_in0      (~reset_reset_n),                     // reset_in0.reset
-		.clk            (clk_clk),                            //       clk.clk
-		.reset_out      (rst_controller_reset_out_reset),     // reset_out.reset
-		.reset_req      (rst_controller_reset_out_reset_req), //          .reset_req
+		.reset_in0      (~rst_n_reset_n),                 // reset_in0.reset
+		.clk            (clk_clk),                        //       clk.clk
+		.reset_out      (rst_controller_reset_out_reset), // reset_out.reset
+		.reset_req      (),                               // (terminated)
+		.reset_req_in0  (1'b0),                           // (terminated)
+		.reset_in1      (1'b0),                           // (terminated)
+		.reset_req_in1  (1'b0),                           // (terminated)
+		.reset_in2      (1'b0),                           // (terminated)
+		.reset_req_in2  (1'b0),                           // (terminated)
+		.reset_in3      (1'b0),                           // (terminated)
+		.reset_req_in3  (1'b0),                           // (terminated)
+		.reset_in4      (1'b0),                           // (terminated)
+		.reset_req_in4  (1'b0),                           // (terminated)
+		.reset_in5      (1'b0),                           // (terminated)
+		.reset_req_in5  (1'b0),                           // (terminated)
+		.reset_in6      (1'b0),                           // (terminated)
+		.reset_req_in6  (1'b0),                           // (terminated)
+		.reset_in7      (1'b0),                           // (terminated)
+		.reset_req_in7  (1'b0),                           // (terminated)
+		.reset_in8      (1'b0),                           // (terminated)
+		.reset_req_in8  (1'b0),                           // (terminated)
+		.reset_in9      (1'b0),                           // (terminated)
+		.reset_req_in9  (1'b0),                           // (terminated)
+		.reset_in10     (1'b0),                           // (terminated)
+		.reset_req_in10 (1'b0),                           // (terminated)
+		.reset_in11     (1'b0),                           // (terminated)
+		.reset_req_in11 (1'b0),                           // (terminated)
+		.reset_in12     (1'b0),                           // (terminated)
+		.reset_req_in12 (1'b0),                           // (terminated)
+		.reset_in13     (1'b0),                           // (terminated)
+		.reset_req_in13 (1'b0),                           // (terminated)
+		.reset_in14     (1'b0),                           // (terminated)
+		.reset_req_in14 (1'b0),                           // (terminated)
+		.reset_in15     (1'b0),                           // (terminated)
+		.reset_req_in15 (1'b0)                            // (terminated)
+	);
+
+	altera_reset_controller #(
+		.NUM_RESET_INPUTS          (1),
+		.OUTPUT_RESET_SYNC_EDGES   ("deassert"),
+		.SYNC_DEPTH                (2),
+		.RESET_REQUEST_PRESENT     (0),
+		.RESET_REQ_WAIT_TIME       (1),
+		.MIN_RST_ASSERTION_TIME    (3),
+		.RESET_REQ_EARLY_DSRT_TIME (1),
+		.USE_RESET_REQUEST_IN0     (0),
+		.USE_RESET_REQUEST_IN1     (0),
+		.USE_RESET_REQUEST_IN2     (0),
+		.USE_RESET_REQUEST_IN3     (0),
+		.USE_RESET_REQUEST_IN4     (0),
+		.USE_RESET_REQUEST_IN5     (0),
+		.USE_RESET_REQUEST_IN6     (0),
+		.USE_RESET_REQUEST_IN7     (0),
+		.USE_RESET_REQUEST_IN8     (0),
+		.USE_RESET_REQUEST_IN9     (0),
+		.USE_RESET_REQUEST_IN10    (0),
+		.USE_RESET_REQUEST_IN11    (0),
+		.USE_RESET_REQUEST_IN12    (0),
+		.USE_RESET_REQUEST_IN13    (0),
+		.USE_RESET_REQUEST_IN14    (0),
+		.USE_RESET_REQUEST_IN15    (0),
+		.ADAPT_RESET_REQUEST       (0)
+	) rst_controller_001 (
+		.reset_in0      (~rst_n_reset_n),                     // reset_in0.reset
+		.clk            (clock_bridge_0_in_clk_clk),          //       clk.clk
+		.reset_out      (rst_controller_001_reset_out_reset), // reset_out.reset
+		.reset_req      (),                                   // (terminated)
 		.reset_req_in0  (1'b0),                               // (terminated)
 		.reset_in1      (1'b0),                               // (terminated)
 		.reset_req_in1  (1'b0),                               // (terminated)
@@ -400,6 +489,69 @@ module cycloneiv (
 		.reset_req_in14 (1'b0),                               // (terminated)
 		.reset_in15     (1'b0),                               // (terminated)
 		.reset_req_in15 (1'b0)                                // (terminated)
+	);
+
+	altera_reset_controller #(
+		.NUM_RESET_INPUTS          (1),
+		.OUTPUT_RESET_SYNC_EDGES   ("deassert"),
+		.SYNC_DEPTH                (2),
+		.RESET_REQUEST_PRESENT     (1),
+		.RESET_REQ_WAIT_TIME       (1),
+		.MIN_RST_ASSERTION_TIME    (3),
+		.RESET_REQ_EARLY_DSRT_TIME (1),
+		.USE_RESET_REQUEST_IN0     (0),
+		.USE_RESET_REQUEST_IN1     (0),
+		.USE_RESET_REQUEST_IN2     (0),
+		.USE_RESET_REQUEST_IN3     (0),
+		.USE_RESET_REQUEST_IN4     (0),
+		.USE_RESET_REQUEST_IN5     (0),
+		.USE_RESET_REQUEST_IN6     (0),
+		.USE_RESET_REQUEST_IN7     (0),
+		.USE_RESET_REQUEST_IN8     (0),
+		.USE_RESET_REQUEST_IN9     (0),
+		.USE_RESET_REQUEST_IN10    (0),
+		.USE_RESET_REQUEST_IN11    (0),
+		.USE_RESET_REQUEST_IN12    (0),
+		.USE_RESET_REQUEST_IN13    (0),
+		.USE_RESET_REQUEST_IN14    (0),
+		.USE_RESET_REQUEST_IN15    (0),
+		.ADAPT_RESET_REQUEST       (0)
+	) rst_controller_002 (
+		.reset_in0      (~rst_n_reset_n),                         // reset_in0.reset
+		.clk            (altpll_0_c0_clk),                        //       clk.clk
+		.reset_out      (rst_controller_002_reset_out_reset),     // reset_out.reset
+		.reset_req      (rst_controller_002_reset_out_reset_req), //          .reset_req
+		.reset_req_in0  (1'b0),                                   // (terminated)
+		.reset_in1      (1'b0),                                   // (terminated)
+		.reset_req_in1  (1'b0),                                   // (terminated)
+		.reset_in2      (1'b0),                                   // (terminated)
+		.reset_req_in2  (1'b0),                                   // (terminated)
+		.reset_in3      (1'b0),                                   // (terminated)
+		.reset_req_in3  (1'b0),                                   // (terminated)
+		.reset_in4      (1'b0),                                   // (terminated)
+		.reset_req_in4  (1'b0),                                   // (terminated)
+		.reset_in5      (1'b0),                                   // (terminated)
+		.reset_req_in5  (1'b0),                                   // (terminated)
+		.reset_in6      (1'b0),                                   // (terminated)
+		.reset_req_in6  (1'b0),                                   // (terminated)
+		.reset_in7      (1'b0),                                   // (terminated)
+		.reset_req_in7  (1'b0),                                   // (terminated)
+		.reset_in8      (1'b0),                                   // (terminated)
+		.reset_req_in8  (1'b0),                                   // (terminated)
+		.reset_in9      (1'b0),                                   // (terminated)
+		.reset_req_in9  (1'b0),                                   // (terminated)
+		.reset_in10     (1'b0),                                   // (terminated)
+		.reset_req_in10 (1'b0),                                   // (terminated)
+		.reset_in11     (1'b0),                                   // (terminated)
+		.reset_req_in11 (1'b0),                                   // (terminated)
+		.reset_in12     (1'b0),                                   // (terminated)
+		.reset_req_in12 (1'b0),                                   // (terminated)
+		.reset_in13     (1'b0),                                   // (terminated)
+		.reset_req_in13 (1'b0),                                   // (terminated)
+		.reset_in14     (1'b0),                                   // (terminated)
+		.reset_req_in14 (1'b0),                                   // (terminated)
+		.reset_in15     (1'b0),                                   // (terminated)
+		.reset_req_in15 (1'b0)                                    // (terminated)
 	);
 
 endmodule

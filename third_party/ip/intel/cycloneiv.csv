@@ -1,15 +1,16 @@
-# system info cycloneiv on 2023.08.06.22:04:39
+# system info cycloneiv on 2023.08.07.15:09:56
 system_info:
 name,value
 DEVICE,EP4CE6E22C8
 DEVICE_FAMILY,Cyclone IV E
-GENERATION_ID,1691348678
+GENERATION_ID,1691410190
 #
 #
-# Files generated for cycloneiv on 2023.08.06.22:04:39
+# Files generated for cycloneiv on 2023.08.07.15:09:56
 files:
 filepath,kind,attributes,module,is_top
 simulation/cycloneiv.v,VERILOG,,cycloneiv,true
+simulation/submodules/cycloneiv_altpll_0.vo,VERILOG,,cycloneiv_altpll_0,false
 simulation/submodules/altera_axi_bridge.sv,SYSTEM_VERILOG,,altera_axi_bridge,false
 simulation/submodules/altera_avalon_st_pipeline_base.v,SYSTEM_VERILOG,,altera_axi_bridge,false
 simulation/submodules/cycloneiv_intel_onchip_ssram_drw.v,VERILOG,,cycloneiv_intel_onchip_ssram_drw,false
@@ -46,12 +47,16 @@ simulation/submodules/altera_merlin_arbitrator.sv,SYSTEM_VERILOG,,cycloneiv_mm_i
 simulation/submodules/cycloneiv_mm_interconnect_0_rsp_demux.sv,SYSTEM_VERILOG,,cycloneiv_mm_interconnect_0_rsp_demux,false
 simulation/submodules/cycloneiv_mm_interconnect_0_rsp_mux.sv,SYSTEM_VERILOG,,cycloneiv_mm_interconnect_0_rsp_mux,false
 simulation/submodules/altera_merlin_arbitrator.sv,SYSTEM_VERILOG,,cycloneiv_mm_interconnect_0_rsp_mux,false
+simulation/submodules/altera_avalon_dc_fifo.v,VERILOG,,altera_avalon_dc_fifo,false
+simulation/submodules/altera_dcfifo_synchronizer_bundle.v,VERILOG,,altera_avalon_dc_fifo,false
+simulation/submodules/altera_std_synchronizer_nocut.v,VERILOG,,altera_avalon_dc_fifo,false
 simulation/submodules/cycloneiv_mm_interconnect_0_avalon_st_adapter.v,VERILOG,,cycloneiv_mm_interconnect_0_avalon_st_adapter,false
 simulation/submodules/cycloneiv_mm_interconnect_0_avalon_st_adapter_error_adapter_0.sv,SYSTEM_VERILOG,,cycloneiv_mm_interconnect_0_avalon_st_adapter_error_adapter_0,false
 #
 # Map from instance-path to kind of module
 instances:
 instancePath,module
+cycloneiv.altpll_0,cycloneiv_altpll_0
 cycloneiv.axi_bridge_0,altera_axi_bridge
 cycloneiv.intel_onchip_ssram_drw,cycloneiv_intel_onchip_ssram_drw
 cycloneiv.mm_interconnect_0,cycloneiv_mm_interconnect_0
@@ -81,8 +86,18 @@ cycloneiv.mm_interconnect_0.rsp_demux,cycloneiv_mm_interconnect_0_rsp_demux
 cycloneiv.mm_interconnect_0.rsp_demux_001,cycloneiv_mm_interconnect_0_rsp_demux
 cycloneiv.mm_interconnect_0.rsp_mux,cycloneiv_mm_interconnect_0_rsp_mux
 cycloneiv.mm_interconnect_0.rsp_mux_001,cycloneiv_mm_interconnect_0_rsp_mux
+cycloneiv.mm_interconnect_0.async_fifo,altera_avalon_dc_fifo
+cycloneiv.mm_interconnect_0.async_fifo_001,altera_avalon_dc_fifo
+cycloneiv.mm_interconnect_0.async_fifo_002,altera_avalon_dc_fifo
+cycloneiv.mm_interconnect_0.async_fifo_003,altera_avalon_dc_fifo
+cycloneiv.mm_interconnect_0.async_fifo_004,altera_avalon_dc_fifo
+cycloneiv.mm_interconnect_0.async_fifo_005,altera_avalon_dc_fifo
+cycloneiv.mm_interconnect_0.async_fifo_006,altera_avalon_dc_fifo
+cycloneiv.mm_interconnect_0.async_fifo_007,altera_avalon_dc_fifo
 cycloneiv.mm_interconnect_0.avalon_st_adapter,cycloneiv_mm_interconnect_0_avalon_st_adapter
 cycloneiv.mm_interconnect_0.avalon_st_adapter.error_adapter_0,cycloneiv_mm_interconnect_0_avalon_st_adapter_error_adapter_0
 cycloneiv.mm_interconnect_0.avalon_st_adapter_001,cycloneiv_mm_interconnect_0_avalon_st_adapter
 cycloneiv.mm_interconnect_0.avalon_st_adapter_001.error_adapter_0,cycloneiv_mm_interconnect_0_avalon_st_adapter_error_adapter_0
 cycloneiv.rst_controller,altera_reset_controller
+cycloneiv.rst_controller_001,altera_reset_controller
+cycloneiv.rst_controller_002,altera_reset_controller
