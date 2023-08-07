@@ -19,6 +19,9 @@ Before you begin, ensure you have met the following requirements:
 - Vivado 20xx.x
 - XSIM
 - C/C++ compiler
+- p7zip or any other software that supports v2.0 DEFLATE can be used. If you decide to use a different software, you will need to adjust [lib.mk](config/lib.mk) accordingly.
+- jq
+- perl
 
 ## Getting Started
 
