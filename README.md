@@ -55,14 +55,11 @@ If you have already cloned the repository, you can fetch the submodules with:
 git submodule update --init --recursive
 ```
 
-
 ## Building and Running
 
+### Simulation
+
 This project uses a Makefile for building and running the co-simulation model. The Makefile provides several targets for different tasks:
-
-- `sim.riscv_decoder`, `sim.top_level`, and `sim.riscv_core`. These targets run the XSIM simulation on different testbenches.
-
-- `quartus_flow`: **(Under Development)** Runs the Quartus flow for synthesis, fitting, and static timing analysis.
 
 - `libdpi.so`: Compile the shared library that exposes [riscv32-decoder](https://github.com/ssayin/riscv32-decoder.git) routines.
 
@@ -78,12 +75,6 @@ To build and run the project, follow these steps:
 
 2. Run the following program:
 
-```sh 
-make
-```
-
-3. To run the simulation:
-
 ```sh
 make sim
 ```
@@ -93,6 +84,8 @@ make sim
 ```sh
 make clean
 ```
+
+### Synthesis
 
 ## Contributing
 
