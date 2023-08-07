@@ -19,9 +19,22 @@ Before you begin, ensure you have met the following requirements:
 - Vivado 20xx.x
 - XSIM
 - C/C++ compiler
+- make
 - p7zip or any other software that supports v2.0 DEFLATE can be used. If you decide to use a different software, you will need to adjust [common.mk](config/common.mk) accordingly.
 - jq
 - perl
+
+### Optional
+
+To use Easier UVM perl script you'll need: 
+- perl>=5.8.0.
+- the following packages, which can be installed either through CPAN or your distribution's package manager:
+
+```perl
+use File::Copy::Recursive qw(dircopy);
+use File::Copy "cp";
+use File::stat;
+```
 
 ## Getting Started
 
