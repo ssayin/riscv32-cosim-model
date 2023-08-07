@@ -22,7 +22,7 @@ module sync_fifo #(
   logic [RW-1:0] mem_array[0:DEPTH-1];
 
   // Pointer Width
-  parameter int PW = $clog2(DEPTH);
+  localparam int PW = $clog2(DEPTH);
 
   // Registers
   logic [PW-1:0] wrptr;

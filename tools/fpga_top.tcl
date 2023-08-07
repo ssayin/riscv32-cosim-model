@@ -21,6 +21,27 @@ set_global_assignment -name SYSTEMVERILOG_FILE $top_level_file
 set_global_assignment -name FAMILY $device_family
 set_global_assignment -name DEVICE $device_part
 
+set_location_assignment PIN_84  -to PIN_84
+set_location_assignment PIN_85  -to PIN_85
+set_location_assignment PIN_86  -to PIN_86
+set_location_assignment PIN_87  -to PIN_87
+set_location_assignment PIN_114 -to PIN_114
+set_location_assignment PIN_115 -to PIN_115
+set_location_assignment PIN_121 -to PIN_121
+set_location_assignment PIN_124 -to PIN_124
+set_location_assignment PIN_125 -to PIN_125
+set_location_assignment PIN_126 -to PIN_126
+set_location_assignment PIN_127 -to PIN_127
+set_location_assignment PIN_128 -to PIN_128
+set_location_assignment PIN_129 -to PIN_129
+set_location_assignment PIN_132 -to PIN_132
+set_location_assignment PIN_133 -to PIN_133
+set_location_assignment PIN_135 -to PIN_135
+set_location_assignment PIN_136 -to PIN_136
+set_location_assignment PIN_137 -to PIN_137
+set_location_assignment PIN_23  -to clk_clk
+set_location_assignment PIN_25  -to rst_n_reset_n
+
 set_global_assignment -name SEARCH_PATH ./src/rtl/include
 
 set qip_path ./third_party/ip/intel
@@ -38,7 +59,7 @@ set_global_assignment -name QIP_FILE $cycloneiv_qip_file
 # Set the directory containing your source files
 set source_directories [list ./src/rtl/include ./src/rtl/core/exu ./src/rtl/core/dec ./src/rtl/core/ifu ./src/rtl/core/mem ./src/rtl/core ]
 
-set_global_assignment -name SYSTEMVERILOG_FILE ./src/rtl/sync_fifo.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ./src/rtl/core/sync_fifo.sv
 
 # Iterate over the source directories
 foreach src_dir $source_directories {

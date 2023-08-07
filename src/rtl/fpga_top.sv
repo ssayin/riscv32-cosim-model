@@ -7,12 +7,46 @@
 module fpga_top (
   clk_clk,
   rst_n_reset_n,
-  altpll_0_locked_conduit_export
-  // altpll_0_pll_slave_read,
-  // altpll_0_pll_slave_write
+  PIN_133,
+  PIN_135,
+  PIN_136,
+  PIN_137,
+  PIN_128,
+  PIN_121,
+  PIN_125,
+  PIN_129,
+  PIN_132,
+  PIN_126,
+  PIN_124,
+  PIN_127,
+  PIN_114,
+  PIN_115,
+  PIN_87,
+  PIN_86,
+  PIN_85,
+  PIN_84
 );
 
-  output logic altpll_0_locked_conduit_export;
+  logic altpll_0_locked_conduit_export;
+
+  output logic PIN_133;
+  output logic PIN_135;
+  output logic PIN_136;
+  output logic PIN_137;
+  output logic PIN_128;
+  output logic PIN_121;
+  output logic PIN_125;
+  output logic PIN_129;
+  output logic PIN_132;
+  output logic PIN_126;
+  output logic PIN_124;
+  output logic PIN_127;
+  output logic PIN_114;
+  output logic PIN_115;
+  output logic PIN_87;
+  output logic PIN_86;
+  output logic PIN_85;
+  output logic PIN_84;
 
   /*input*/logic        altpll_0_pll_slave_read;
   /*input*/logic        altpll_0_pll_slave_write;
