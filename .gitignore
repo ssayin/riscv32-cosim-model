@@ -32,3 +32,5 @@ greybox_tmp/
 
 # Vivado IP
 axi_vip_0_ex/
+
+uart_client

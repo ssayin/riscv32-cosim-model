@@ -8,6 +8,8 @@ TOOLS_DIR    := $(PROJECT_ROOT)tools/
 LIB_DIR      := $(PROJECT_ROOT)
 CONFIG_DIR   := $(PROJECT_ROOT)config/
 
+QUARTUS_ROOT ?= /opt/intelFPGA_lite/22.1std/quartus/
+
 SIM          ?= xsim
 
 ifeq ($(SIM),)
@@ -18,6 +20,8 @@ all:
 else ifeq ($(SIM),xsim)
 	include $(CONFIG_DIR)xsim.mk
 endif
+
+include $(CONFIG_DIR)uart_client.mk
 
 .PHONY clean:
 	${RM} -rf $(BUILD_DIR) 
@@ -45,3 +49,4 @@ endif
 	${RM} *.smsg
 	${RM} *.qws
 	${RM} *.wdb
+	${RM} $(CLIENT)

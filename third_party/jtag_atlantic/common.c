@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "jtag_atlantic.h"
 
-void show_info(struct JTAGATLANTIC *atlantic) {
+extern void show_info(struct JTAGATLANTIC *atlantic) {
     char const *cable;
     int device, instance;
     jtagatlantic_get_info(atlantic, &cable, &device, &instance);
@@ -21,7 +21,7 @@ static const char *err_msgs[] = {
     "Selected UART is not compatible with this version of the library"
 };
 
-void show_err() {
+extern void show_err() {
     char const *progname = NULL;
     int err = jtagatlantic_get_error(&progname);
     if(err >= -9 && err <= 0)

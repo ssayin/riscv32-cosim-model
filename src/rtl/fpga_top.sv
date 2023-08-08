@@ -29,6 +29,8 @@ module fpga_top (
 
   logic altpll_0_locked_conduit_export;
 
+  logic jtag_uart_0_irq_irq;
+
   output logic PIN_133;
   output logic PIN_135;
   output logic PIN_136;
