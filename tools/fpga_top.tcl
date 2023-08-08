@@ -44,15 +44,17 @@ set_location_assignment PIN_25  -to rst_n_reset_n
 
 set_global_assignment -name SEARCH_PATH ./src/rtl/include
 
-set qip_path ./third_party/ip/intel
+set qip_path ./third_party/ip/intel/$device_part
 #set ocram_drw_qip_file $qip_path/intel_ocram_drw_sedge/intel_ocram_drw_sedge.qip
 #set platform_qip_file $qip_path/platform/synthesis/platform.qip
-set cycloneiv_qip_file $qip_path/synthesis/cycloneiv.qip
+set cycloneiv_qip_file $qip_path/cycloneiv/synthesis/cycloneiv.qip
+set jtag_uart_qip_file $qip_path/jtag_uart/synthesis/jtag_uart.qip
 
 # add IP block
 # set_global_assignment -name QIP_FILE $ocram_drw_qip_file
 # set_global_assignment -name QIP_FILE $platform_qip_file
 set_global_assignment -name QIP_FILE $cycloneiv_qip_file
+set_global_assignment -name QIP_FILE $jtag_uart_qip_file
 
 #set_global_assignment -name VERILOG_FILE $ocram_drw_path/intel_ocram_drw_sedge.v
 
