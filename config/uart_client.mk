@@ -2,9 +2,9 @@
 #
 # SPDX-License-Identifier: MIT
 
-CXX                := g++
-CFLAGS             := -O2
-CXX_FLAGS          := $(CFLAGS)
+CXX                ?= g++
+CFLAGS             ?= -O2
+CXX_FLAGS          ?= $(CFLAGS)
 
 JTAG_ATLANTIC      := -ljtag_atlantic -ljtag_client
 JTAG_ATLANTIC_PATH := $(QUARTUS_ROOT)linux64
