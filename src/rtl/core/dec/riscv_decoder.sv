@@ -59,7 +59,7 @@ module riscv_decoder (
     .alu       (ctl.alu),
     .lsu       (ctl.lsu),
     .br        (ctl.br),
-    .jal       (ctl.jal),
+    .jal       (jal2),
     .fencei    (ctl.fencei),
     .fence     (ctl.fence),
     .illegal   (ctl.illegal),
@@ -67,7 +67,16 @@ module riscv_decoder (
     .lui       (ctl.lui),
     .use_imm   (use_imm),
     .alu_op    (alu_op),
-    .lsu_op    (lsu_op)
+    .lsu_op    (lsu_op),
+    .csr(ctl.csr)
   );
+
+  riscv_decoder_j_no_rr jnorr (
+    .instr(instr[15:0]),
+    .j    (jal1)
+  );
+
+
+  assign ctl.jal = jal1 || jal2;
 
 endmodule

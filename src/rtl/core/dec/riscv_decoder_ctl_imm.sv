@@ -21,12 +21,12 @@ module riscv_decoder_ctl_imm (
   output logic                     lsu,
   output logic                     illegal,
   output logic                     jal,
+  output logic                     csr,
   // mainly for debug
   output logic                     fence,
   output logic                     fencei,
   output logic                     auipc,
-  output logic                     lui,
-  output logic                     csr
+  output logic                     lui
 );
 
   logic [31:0] i;

@@ -55,7 +55,7 @@ class riscv_decoder_transaction extends uvm_sequence_item;
     if (rhs_trans.dec_out.lsu != dec_out.lsu) return 0;
     if (rhs_trans.dec_out.csr != dec_out.csr) return 0;
     if (rhs_trans.dec_out.br != dec_out.br) return 0;
-    //if (rhs_trans.dec_out.jal != dec_out.jal) return 0;
+    if (rhs_trans.dec_out.jal != dec_out.jal) return 0;
     //if (rhs_trans.dec_out.auipc != dec_out.auipc) return 0;
     //if (rhs_trans.dec_out.lui != dec_out.lui) return 0;
 

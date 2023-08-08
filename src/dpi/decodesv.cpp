@@ -52,23 +52,11 @@ void dpi_decoder_process(const decoder_in_t *in, decoder_out_t *out) {
   out->br = 0;
   out->illegal = 0;
 
-  switch (dec.tgt) {
-  case target::load:
-    out->lsu = 1;
-    break;
-  case target::store:
-    out->lsu = 1;
-    break;
-  case target::branch:
-    out->br = 1;
-    break;
-  case target::illegal:
-    out->illegal = 1;
-    break;
-  case target::csr:
-    out->csr = 1;
-    break;
-  case target::alu:
+  if (dec.tgt == target::alu) {
+    alu alu0 = std::get<alu>(dec.opt);
+    if ((alu0 == alu::_jal) || (alu0 == alu::_jalr)) {
+      out->jal = 1;
+    }
     out->alu = 1;
     if ((!is_compressed) &&
         ((instr & static_cast<uint32_t>(masks::opcode::auipc)) ==
@@ -86,7 +74,25 @@ void dpi_decoder_process(const decoder_in_t *in, decoder_out_t *out) {
       out->jal = 1;
       // 32'b????????????????011???????????01
     }
+  }
+
+  switch (dec.tgt) {
+  case target::load:
+    out->lsu = 1;
     break;
+  case target::store:
+    out->lsu = 1;
+    break;
+  case target::branch:
+    out->br = 1;
+    break;
+  case target::illegal:
+    out->illegal = 1;
+    break;
+  case target::csr:
+    out->csr = 1;
+    break;
+  case target::alu:
   case target::mret:
   case target::ebreak:
   case target::ecall:
