@@ -1,14 +1,18 @@
 # riscv32-cosim-model
 
 <!--toc:start-->
-- [riscv32-cosim-model](#riscv32-cosim-model)
-  - [Prerequisites](#prerequisites)
-  - [Getting Started](#getting-started)
-  - [Building and Running](#building-and-running)
+- [Prerequisites](#prerequisites)
+    - [Optional](#optional)
+- [Getting Started](#getting-started)
+    - [Building and Running](#building-and-running)
+    - [Simulation](#simulation)
+    - [Synthesis](#synthesis)
+    - [Intel JTAG UART](#intel-jtag-uart)
   - [Contributing](#contributing)
   - [Authors](#authors)
   - [License](#license)
   - [Acknowledgements](#acknowledgements)
+    - [External](#external)
 <!--toc:end-->
 
 A work-in-progress RISC-V 32-bit co-simulation model. It includes RTL of a developing RISC-V core design, UVM testbenches, and SystemVerilog DPI (svdpi) interfaces to communicate with the C++ code from the associated projects [riscv32-decoder](https://github.com/ssayin/riscv32-decoder.git) and [riscv32-sim](https://github.com/ssayin/riscv32-sim.git).
