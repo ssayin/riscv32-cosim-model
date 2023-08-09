@@ -163,7 +163,6 @@ module riscv_core (
   // IF/EX/MEM stuff
   logic [             31:1] pc_in;
   logic                     pc_update;
-  logic                     should_br;
   logic                     br_misp;
   logic                     stall;
   logic                     stall_f;
@@ -180,7 +179,7 @@ module riscv_core (
   id1 id1_0 (.*);
   mem mem_0 (.*);
   assign stall                      = 'b0;
-  assign pc_update                  = should_br || br_misp;
+  assign pc_update                  = br_misp;
   assign flush                      = br_misp;
   // Unused signals
   assign axi_awid_f[AxiIdWidth-1:0] = 0;
