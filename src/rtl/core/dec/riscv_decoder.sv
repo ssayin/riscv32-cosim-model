@@ -1,11 +1,8 @@
 // SPDX-FileCopyrightText: 2023 Serdar Sayın <https://serdarsayin.com>
 //
 // SPDX-License-Identifier: Apache-2.0
-
 import defs_pkg::*;
-
 // This module is used mainly as a DUT for testing other decoder modules.
-
 typedef struct {
   logic alu;
   logic lsu;
@@ -18,7 +15,6 @@ typedef struct {
   logic fence;
   logic illegal;
 } ctl_pkt_t;
-
 module riscv_decoder (
   input  logic                        clk,       // unused
   input  logic                        rst_n,     // unused
@@ -34,22 +30,10 @@ module riscv_decoder (
   output logic     [  AluOpWidth-1:0] alu_op,
   output logic     [  LsuOpWidth-1:0] lsu_op
 );
-
   logic compressed;
-
   assign compressed = ~(instr[0] & instr[1]);
-
-  riscv_decoder_gpr dec_gpr (
-    .clk       (clk),
-    .rst_n     (rst_n),
-    .instr     (instr),
-    .compressed(compressed),
-    .rd_addr   (rd_addr),
-    .rs1_addr  (rs1_addr),
-    .rs2_addr  (rs2_addr)
-  );
-
-  riscv_decoder_ctl_imm dec_ctl_imm (
+  id0_gpr dec_gpr (.*);
+  id1_ctl_imm dec_ctl_imm (
     .clk       (clk),
     .rst_n     (rst_n),
     .instr     (instr),
@@ -68,15 +52,11 @@ module riscv_decoder (
     .use_imm   (use_imm),
     .alu_op    (alu_op),
     .lsu_op    (lsu_op),
-    .csr(ctl.csr)
+    .csr       (ctl.csr)
   );
-
   riscv_decoder_j_no_rr jnorr (
     .instr(instr[15:0]),
     .j    (jal1)
   );
-
-
   assign ctl.jal = jal1 || jal2;
-
 endmodule

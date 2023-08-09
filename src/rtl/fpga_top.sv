@@ -1,8 +1,6 @@
 // SPDX-FileCopyrightText: 2023 Serdar Sayın <https://serdarsayin.com>
 //
 // SPDX-License-Identifier: Apache-2.0
-
-
 // USE AT YOUR OWN RISK
 module fpga_top (
   clk_clk,
@@ -26,11 +24,8 @@ module fpga_top (
   PIN_85,
   PIN_84
 );
-
   logic altpll_0_locked_conduit_export;
-
   logic jtag_uart_0_irq_irq;
-
   output logic PIN_133;
   output logic PIN_135;
   output logic PIN_136;
@@ -49,26 +44,20 @@ module fpga_top (
   output logic PIN_86;
   output logic PIN_85;
   output logic PIN_84;
-
   /*input*/logic        altpll_0_pll_slave_read;
   /*input*/logic        altpll_0_pll_slave_write;
   /*input*/logic [ 1:0] altpll_0_pll_slave_address;
   /*output*/logic [31:0] altpll_0_pll_slave_readdata;
   /*input*/logic [31:0] altpll_0_pll_slave_writedata;
-
   assign altpll_0_pll_slave_read      = 0;
   assign altpll_0_pll_slave_write     = 0;
   assign altpll_0_pll_slave_address   = 2'b00;
   assign altpll_0_pll_slave_writedata = 32'h0;
-
   input logic clk_clk;
   input logic rst_n_reset_n;
-
   logic altpll_0_c1_clk;
   logic clock_bridge_0_in_clk_clk;
-
   assign clock_bridge_0_in_clk_clk = altpll_0_c1_clk;
-
   logic [ 1:0] axi_bridge_0_s0_awid;
   logic [31:0] axi_bridge_0_s0_awaddr;
   logic [ 7:0] axi_bridge_0_s0_awlen;
@@ -108,9 +97,7 @@ module fpga_top (
   logic        axi_bridge_0_s0_rlast;
   logic        axi_bridge_0_s0_rvalid;
   logic        axi_bridge_0_s0_rready;
-
   cycloneiv top (.*);
-
   riscv_core riscv_core_0 (
     .clk           (altpll_0_c1_clk),
     .rst_n         (rst_n_reset_n),
@@ -126,20 +113,17 @@ module fpga_top (
     .axi_awregion_f(axi_bridge_0_s0_awregion),
     .axi_awqos_f   (axi_bridge_0_s0_awqos),
     .axi_awready_f (axi_bridge_0_s0_awready),
-
     // WD Channel
-    .axi_wdata_f (axi_bridge_0_s0_wdata),
-    .axi_wstrb_f (axi_bridge_0_s0_wstrb),
-    .axi_wlast_f (axi_bridge_0_s0_wlast),
-    .axi_wvalid_f(axi_bridge_0_s0_wvalid),
-    .axi_wready_f(axi_bridge_0_s0_wready),
-
+    .axi_wdata_f   (axi_bridge_0_s0_wdata),
+    .axi_wstrb_f   (axi_bridge_0_s0_wstrb),
+    .axi_wlast_f   (axi_bridge_0_s0_wlast),
+    .axi_wvalid_f  (axi_bridge_0_s0_wvalid),
+    .axi_wready_f  (axi_bridge_0_s0_wready),
     // Write Response Channel
-    .axi_bid_f   (axi_bridge_0_s0_bid),
-    .axi_bresp_f (axi_bridge_0_s0_bresp),
-    .axi_bvalid_f(axi_bridge_0_s0_bvalid),
-    .axi_bready_f(axi_bridge_0_s0_bready),
-
+    .axi_bid_f     (axi_bridge_0_s0_bid),
+    .axi_bresp_f   (axi_bridge_0_s0_bresp),
+    .axi_bvalid_f  (axi_bridge_0_s0_bvalid),
+    .axi_bready_f  (axi_bridge_0_s0_bready),
     // RA Channel
     .axi_arid_f    (axi_bridge_0_s0_arid),
     .axi_araddr_f  (axi_bridge_0_s0_araddr),
@@ -153,15 +137,13 @@ module fpga_top (
     .axi_arqos_f   (axi_bridge_0_s0_arqos),
     .axi_arregion_f(axi_bridge_0_s0_arregion),
     .axi_arready_f (axi_bridge_0_s0_arready),
-
     // RD Channel
-    .axi_rid_f   (axi_bridge_0_s0_rid),
-    .axi_rdata_f (axi_bridge_0_s0_rdata),
-    .axi_rresp_f (axi_bridge_0_s0_rresp),
-    .axi_rlast_f (axi_bridge_0_s0_rlast),
-    .axi_rvalid_f(axi_bridge_0_s0_rvalid),
-    .axi_rready_f(axi_bridge_0_s0_rready)
-
+    .axi_rid_f     (axi_bridge_0_s0_rid),
+    .axi_rdata_f   (axi_bridge_0_s0_rdata),
+    .axi_rresp_f   (axi_bridge_0_s0_rresp),
+    .axi_rlast_f   (axi_bridge_0_s0_rlast),
+    .axi_rvalid_f  (axi_bridge_0_s0_rvalid),
+    .axi_rready_f  (axi_bridge_0_s0_rready)
     /*
   // WA Channel
    axi_awid_m,
@@ -176,20 +158,17 @@ module fpga_top (
    axi_awregion_m,
    axi_awqos_m,
    axi_awready_m,
-
   // WD Channel
    axi_wdata_m,
    axi_wstrb_m,
    axi_wlast_m,
    axi_wvalid_m,
    axi_wready_m,
-
   // Write Response Channel
    axi_bid_m,
    axi_bresp_m,
    axi_bvalid_m,
    axi_bready_m,
-
   // RA Channel
    axi_arid_m,
    axi_araddr_m,
@@ -203,7 +182,6 @@ module fpga_top (
    axi_arqos_m,
    axi_arregion_m,
    axi_arready_m,
-
   // RD Channel
    axi_rid_m,
    axi_rdata_m,
@@ -212,8 +190,5 @@ module fpga_top (
    axi_rvalid_m,
    axi_rready_m
    */
-
-
   );
-
 endmodule

@@ -1,9 +1,7 @@
 // SPDX-FileCopyrightText: 2023 Serdar Sayın <https://serdarsayin.com>
 //
 // SPDX-License-Identifier: Apache-2.0
-
 import defs_pkg::*;
-
 module ssram #(
     parameter int ADDR_WIDTH = 32,
     parameter int DATA_WIDTH = 64   // divisible by 8
@@ -25,17 +23,14 @@ module ssram #(
   input  logic [  DATA_WIDTH-1:0] dinb,
   output logic [  DATA_WIDTH-1:0] doutb
 );
-
   // logic [DATA_WIDTH-1:0] mem_array[0:2**ADDR_WIDTH];
   logic   [7:0] mem_array[0:2**ADDR_WIDTH];
-
   integer       i;
   initial begin
     for (i = 0; i < 1024; i++) begin
       mem_array[i] = $urandom;
     end
   end
-
   always_ff @(posedge clka or negedge rsta) begin
     if (!rsta) begin
     end else if (!regcea) begin
@@ -55,7 +50,6 @@ module ssram #(
       end
     end
   end
-
   always_ff @(posedge clkb or negedge rstb) begin
     if (!rstb) begin
     end else if (!regceb) begin
@@ -75,7 +69,6 @@ module ssram #(
       end
     end
   end
-
 `ifdef DEBUG_INIT_FILE
   initial begin
     $display("Boot file is %s", `DEBUG_INIT_FILE);
@@ -86,5 +79,4 @@ module ssram #(
     end
   end
 `endif
-
 endmodule

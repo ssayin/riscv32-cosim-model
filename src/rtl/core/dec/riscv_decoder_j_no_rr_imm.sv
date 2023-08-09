@@ -1,16 +1,12 @@
 // SPDX-FileCopyrightText: 2023 Serdar Sayın <https://serdarsayin.com>
 //
 // SPDX-License-Identifier: Apache-2.0
-
 import defs_pkg::*;
-
 module riscv_decoder_j_no_rr_imm (
   input  logic [31:0] instr,
   output logic [31:0] imm
 );
-  logic [31:0] i;
-  assign i[31:0] = instr[31:0];
-
+  logic [31:0] i = instr[31:0];
   always_comb begin
     casez (instr)
       32'b?????????????????????????1101111: imm = {{12{i[31]}}, i[19:12], i[20], i[30:21], 1'b0};
@@ -18,5 +14,4 @@ module riscv_decoder_j_no_rr_imm (
       default:                              imm = 'h0;
     endcase
   end
-
 endmodule

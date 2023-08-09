@@ -1,17 +1,12 @@
 `timescale 1 ps / 1 ps
-
 module chip (
   aresetn,
-
   aclk
 );
   input aclk;
   input aresetn;
-
-
   logic        aclk;
   logic        aresetn;
-
   logic [ 1:0] S_AXI_0_awid;
   logic [31:0] S_AXI_0_awaddr;
   logic [ 7:0] S_AXI_0_awlen;
@@ -24,18 +19,15 @@ module chip (
   logic [ 3:0] S_AXI_0_awregion;
   logic [ 3:0] S_AXI_0_awqos;
   logic        S_AXI_0_awready;
-
   logic [63:0] S_AXI_0_wdata;
   logic [ 7:0] S_AXI_0_wstrb;
   logic        S_AXI_0_wlast;
   logic        S_AXI_0_wvalid;
   logic        S_AXI_0_wready;
-
   logic [ 1:0] S_AXI_0_bid;
   logic [ 1:0] S_AXI_0_bresp;
   logic        S_AXI_0_bvalid;
   logic        S_AXI_0_bready;
-
   logic [ 1:0] S_AXI_0_arid;
   logic [31:0] S_AXI_0_araddr;
   logic [ 7:0] S_AXI_0_arlen;
@@ -48,14 +40,12 @@ module chip (
   logic [ 3:0] S_AXI_0_arqos;
   logic [ 3:0] S_AXI_0_arregion;
   logic        S_AXI_0_arready;
-
   logic [ 1:0] S_AXI_0_rid;
   logic [63:0] S_AXI_0_rdata;
   logic [ 1:0] S_AXI_0_rresp;
   logic        S_AXI_0_rlast;
   logic        S_AXI_0_rvalid;
   logic        S_AXI_0_rready;
-
   riscv_core riscv_core_0 (
     .clk          (aclk),
     .rst_n        (aresetn),
@@ -91,13 +81,9 @@ module chip (
     .axi_wstrb_f  (S_AXI_0_wstrb),
     .axi_wvalid_f (S_AXI_0_wvalid)
   );
-
-
   ex_sim ex_design (
     .aresetn(aresetn),
     .aclk   (aclk),
     .*
   );
 endmodule
-
-

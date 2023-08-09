@@ -1,14 +1,11 @@
 // SPDX-FileCopyrightText: 2023 Serdar Sayın <https://serdarsayin.com>
 //
 // SPDX-License-Identifier: Apache-2.0
-
 import defs_pkg::*;
-
 module top_level (
   input logic clk,
   input logic rst_n
 );
-
   logic [AxiIdWidth-1:0] axi_awid;
   logic [          31:0] axi_awaddr;
   logic [           7:0] axi_awlen;
@@ -48,7 +45,6 @@ module top_level (
   logic                  axi_rlast;
   logic                  axi_rvalid;
   logic                  axi_rready;
-
   // Internal wires that connect SSRAM
   logic                  clka;
   logic                  rsta;
@@ -66,7 +62,6 @@ module top_level (
   logic [          31:0] addrb;
   logic [          63:0] dinb;
   logic [          63:0] doutb;
-
   logic [AxiIdWidth-1:0] axi_awid_f;
   logic [          31:0] axi_awaddr_f;
   logic [           7:0] axi_awlen_f;
@@ -79,20 +74,17 @@ module top_level (
   logic [           3:0] axi_awregion_f;
   logic [           3:0] axi_awqos_f;
   logic                  axi_awready_f;
-
   // WD Channel
   logic [          63:0] axi_wdata_f;
   logic [           7:0] axi_wstrb_f;
   logic                  axi_wlast_f;
   logic                  axi_wvalid_f;
   logic                  axi_wready_f;
-
   // Write Response Channel
   logic [AxiIdWidth-1:0] axi_bid_f;
   logic [           1:0] axi_bresp_f;
   logic                  axi_bvalid_f;
   logic                  axi_bready_f;
-
   // RA Channel
   logic [AxiIdWidth-1:0] axi_arid_f;
   logic [          31:0] axi_araddr_f;
@@ -106,7 +98,6 @@ module top_level (
   logic [           3:0] axi_arqos_f;
   logic [           3:0] axi_arregion_f;
   logic                  axi_arready_f;
-
   // RD Channel
   logic [AxiIdWidth-1:0] axi_rid_f;
   logic [          63:0] axi_rdata_f;
@@ -114,8 +105,6 @@ module top_level (
   logic                  axi_rlast_f;
   logic                  axi_rvalid_f;
   logic                  axi_rready_f;
-
-
   // WA Channel
   logic [AxiIdWidth-1:0] axi_awid_m;
   logic [          31:0] axi_awaddr_m;
@@ -129,20 +118,17 @@ module top_level (
   logic [           3:0] axi_awregion_m;
   logic [           3:0] axi_awqos_m;
   logic                  axi_awready_m;
-
   // WD Channel
   logic [          63:0] axi_wdata_m;
   logic [           7:0] axi_wstrb_m;
   logic                  axi_wlast_m;
   logic                  axi_wvalid_m;
   logic                  axi_wready_m;
-
   // Write Response Channel
   logic [AxiIdWidth-1:0] axi_bid_m;
   logic [           1:0] axi_bresp_m;
   logic                  axi_bvalid_m;
   logic                  axi_bready_m;
-
   // RA Channel
   logic [AxiIdWidth-1:0] axi_arid_m;
   logic [          31:0] axi_araddr_m;
@@ -156,7 +142,6 @@ module top_level (
   logic [           3:0] axi_arqos_m;
   logic [           3:0] axi_arregion_m;
   logic                  axi_arready_m;
-
   // RD Channel
   logic [AxiIdWidth-1:0] axi_rid_m;
   logic [          63:0] axi_rdata_m;
@@ -164,26 +149,19 @@ module top_level (
   logic                  axi_rlast_m;
   logic                  axi_rvalid_m;
   logic                  axi_rready_m;
-
-
   ssram #(
       .ADDR_WIDTH(32),
       .DATA_WIDTH(64)
   ) ssram_0 (
     .*
   );
-
   assign regcea = 0;
   assign regceb = 0;
-
   assign clka   = clk;
   assign clkb   = clk;
   assign rsta   = rst_n;
   assign rstb   = rst_n;
-
-
   riscv_core core_0 (.*);
-
   ssram_ctrl ssram_ctrl_0 (
     .clk         (clk),
     .rst_n       (rst_n),

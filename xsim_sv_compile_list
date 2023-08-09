@@ -16,8 +16,8 @@
 ./src/rtl/include/defs_pkg.sv
 ./src/rtl/core/sync_fifo.sv
 ./src/rtl/core/dec/riscv_decoder_j.sv
-./src/rtl/core/dec/riscv_decoder_gpr.sv
-./src/rtl/core/dec/riscv_decoder_ctl_imm.sv
+./src/rtl/core/dec/id0_gpr.sv
+./src/rtl/core/dec/id1_ctl_imm.sv
 ./src/rtl/core/dec/riscv_decoder_br.sv
 ./src/rtl/core/dec/riscv_decoder_j_no_rr.sv
 ./src/rtl/core/dec/riscv_decoder_j_no_rr_imm.sv

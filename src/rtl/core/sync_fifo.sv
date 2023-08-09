@@ -1,7 +1,6 @@
 // SPDX-FileCopyrightText: 2023 Serdar Sayın <https://serdarsayin.com>
 //
 // SPDX-License-Identifier: Apache-2.0
-
 // TODO: add multiple clock domains support
 module sync_fifo #(
     parameter int RW    = 64,  // Row width
@@ -18,17 +17,13 @@ module sync_fifo #(
   output logic          almost_empty,
   output logic          full
 );
-
   logic [RW-1:0] mem_array[0:DEPTH-1];
-
   // Pointer Width
   localparam int PW = $clog2(DEPTH);
-
   // Registers
   logic [PW-1:0] wrptr;
   logic [PW-1:0] rdptr;
   logic [PW-1:0] cnt;
-
   always_ff @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
       // Do not fill with 0s, just reset ptrs and cnt
@@ -56,9 +51,7 @@ module sync_fifo #(
       end
     end
   end
-
   assign full         = (cnt == (DEPTH - 1));
   assign empty        = (cnt == 0);
   assign almost_empty = (cnt == 1);
-
 endmodule

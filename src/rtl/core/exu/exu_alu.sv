@@ -1,16 +1,13 @@
 // SPDX-FileCopyrightText: 2023 Serdar Sayın <https://serdarsayin.com>
 //
 // SPDX-License-Identifier: Apache-2.0
-
 import defs_pkg::*;
-
 module exu_alu (
   input  logic [ DataWidth-1:0] a,
   input  logic [ DataWidth-1:0] b,
   input  logic [AluOpWidth-1:0] alu_op,
   output logic [ DataWidth-1:0] res
 );
-
   always_comb begin
     case (alu_op)
       ALU_ADD:  res = a + b;
@@ -31,11 +28,9 @@ module exu_alu (
       //ALU_DIVU:
       //ALU_REM:
       //ALU_REMU:
-
       default: begin
         res = 'h0;
       end
     endcase
   end
-
 endmodule

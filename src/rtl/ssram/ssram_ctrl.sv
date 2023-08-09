@@ -1,8 +1,6 @@
 // AXI4 Full SSRAM Controller Slave
 // TODO: Impl.
-
 import defs_pkg::*;
-
 module ssram_ctrl (
   input  logic                  clk,
   input  logic                  rst_n,
@@ -61,27 +59,21 @@ module ssram_ctrl (
   output logic [          63:0] dinb,
   input  logic [          63:0] doutb
 );
-
   logic [31:0] addr_porta;
   logic [31:0] addr_portb;
-
   assign addra = addr_porta;
   assign addrb = addr_portb;
-
   logic [1:0] aburst;
   logic [1:0] bburst;
-
   typedef enum logic [1:0] {
     IDLE,
     PREBURST,
     BURST
   } axi_state_t;
-
   axi_state_t state_porta = IDLE;
   axi_state_t state_porta_next = IDLE;
   axi_state_t state_portb = IDLE;
   axi_state_t state_portb_next = IDLE;
-
   always_comb begin
     case (state_porta)
       IDLE: begin
@@ -94,7 +86,6 @@ module ssram_ctrl (
       end
     endcase
   end
-
   always_comb begin
     case (state_portb)
       IDLE: begin
@@ -107,22 +98,16 @@ module ssram_ctrl (
       end
     endcase
   end
-
-
   assign axi_rdata[63:0] = douta[63:0];
-
   assign axi_rvalid      = 1;
   assign axi_arready     = 1;
-
   assign ena             = 0;
   assign enb             = 0;
-
   always_ff @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
     end else begin
     end
   end
-
   always_ff @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
       web[7:0]         <= 8'b11111111;
@@ -143,7 +128,6 @@ module ssram_ctrl (
       end
     end
   end
-
   always_ff @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
       axi_rvalid <= 0;
@@ -160,5 +144,4 @@ module ssram_ctrl (
       end
     end
   end
-
 endmodule
