@@ -163,7 +163,7 @@ module riscv_core (
   // IF/EX/MEM stuff
   logic [             31:1] pc_in;
   logic                     pc_update;
-  logic                     br_misp;
+  logic                     br_misp_m;
   logic                     stall;
   logic                     stall_f;
   assign flush_d0 = 0;
@@ -172,15 +172,15 @@ module riscv_core (
   // TODO: Need a skid buffer here
   // ID0 -> ID1 -> EX
   // ADDR -> WAIT -> DATA
-  reg_file #(.DATA_WIDTH(DataWidth)) register_file_inst (.*);
+  reg_file #(.DATA_WIDTH(DataWidth)) reg_file_0 (.*);
   ifu ifu_0 (.*);
   exu exu_0 (.*);
   id0 id0_0 (.*);
   id1 id1_0 (.*);
   mem mem_0 (.*);
   assign stall                      = 'b0;
-  assign pc_update                  = br_misp;
-  assign flush                      = br_misp;
+  assign pc_update                  = br_misp_m;
+  assign flush                      = br_misp_m;
   // Unused signals
   assign axi_awid_f[AxiIdWidth-1:0] = 0;
   assign axi_awaddr_f[31:0]         = 0;

@@ -9,6 +9,8 @@ module ifu (
   output logic                  stall_f,
   input  logic [          31:1] pc_in,
   input  logic                  pc_update,
+  input  logic                  br_misp_m,
+  input  logic                  br_ataken_m,
   output logic [          31:0] instr_d0,
   output logic [          31:1] pc_d0,
   output logic                  comp_d0,
