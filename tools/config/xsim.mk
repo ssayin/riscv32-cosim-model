@@ -45,11 +45,6 @@ uvm_top: compile $(GENERATED_DIR)
 	xelab top_untimed_tb top_hdl_th -relax -s top_tb
 	xsim top_tb -testplusarg UVM_TESTNAME=top_test -testplusarg UVM_VERBOSITY=UVM_HIGH -R
 
-#uvm_top_feed: compile $(GENERATED_DIR)
-#xelab top_untimed_tb top_hdl_th -relax -s top_tb
-#xsim top_tb -testplusarg UVM_TESTNAME=top_test -testplusarg UVM_VERBOSITY=UVM_HIGH -R
-
-
 tb_top_level: compile
 	xelab tb_top_level -relax -s tb_top_level
 	xsim tb_top_level -R
@@ -59,4 +54,5 @@ compile: $(INSTR_FEED)
 	xvlog -sv -f $(RTL_FLIST) -f $(TB_FLIST) -L uvm \
 		-define INSTR_SEQ_FILENAME='"$(INSTR_FEED)"' \
 		-define INSTR_SEQ_LINECOUNT=$(shell cat $(INSTR_FEED) | wc -l) \
-		-define DEBUG_INIT_FILE='"$(shell readlink -f "./src/firmware/boot.hex")"'
+		-define DEBUG_INIT_FILE='"$(shell readlink -f "./src/firmware/boot.hex")"' \
+		-define HEX_FILENAME='"$(shell readlink -f "./src/firmware/boot.hex")"'
