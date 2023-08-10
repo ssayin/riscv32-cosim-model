@@ -1,9 +1,3 @@
--i ./src/tb
--i ./src/tb/riscv_decoder_uvm/uvc
--i ./src/tb/riscv_decoder_uvm/uvc/riscv_decoder_agent
--i ./src/tb/riscv_decoder_uvm/env
--i ./src/tb/riscv_decoder_uvm/tests
--i ./src/tb/riscv_decoder_uvm/sequences
 -i ./src/rtl
 -i ./src/rtl/include
 -i ./src/rtl/core
@@ -38,26 +32,3 @@
 ./src/rtl/axi4crossbar.sv
 ./src/rtl/top_level.sv
 ./src/rtl/tb_top_level.sv
-./src/dpi/svdpi_pkg.sv
-./src/tb/riscv_decoder_uvm/uvc/riscv_decoder_pkg.sv 
-./src/tb/riscv_decoder_uvm/env/riscv_decoder_ref_model_pkg.sv 
-./src/tb/riscv_decoder_uvm/env/riscv_decoder_env_pkg.sv
-./src/tb/riscv_decoder_uvm/sequences/riscv_decoder_seq_list.sv 
-./src/tb/riscv_decoder_uvm/tests/riscv_decoder_test_list.sv 
-./src/tb/riscv_decoder_uvm/top/riscv_decoder_if.sv
-./src/tb/riscv_decoder_uvm/top/tb_riscv_decoder.sv
--i ./src/tb/uvm_top/tb/include/
--i ./src/tb/uvm_top/tb/axi4master/sv
--i ./src/tb/uvm_top/tb/top/sv
--i ./src/tb/uvm_top/tb/top_test/sv
--i ./src/tb/uvm_top/tb/top_tb/sv
--i ./third_party/syoscb-1.0.2.4/src
-./src/tb/uvm_top/tb/axi4master/sv/axi4master_pkg.sv
-./src/tb/uvm_top/tb/axi4master/sv/axi4master_if.sv
-./src/tb/uvm_top/tb/axi4master/sv/axi4master_bfm.sv
-./third_party/syoscb-1.0.2.4/src/pk_syoscb.sv
-./src/tb/uvm_top/tb/top/sv/top_pkg.sv
-./src/tb/uvm_top/tb/top_test/sv/top_test_pkg.sv
-./src/tb/uvm_top/tb/top_test/sv/top_test.sv
-./src/tb/uvm_top/tb/top_tb/sv/top_th.sv
-./src/tb/uvm_top/tb/top_tb/sv/top_tb.sv

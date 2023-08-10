@@ -2,18 +2,21 @@
 #
 # SPDX-License-Identifier: MIT
 
-PROJECT_ROOT := $(CURDIR)/
-BUILD_DIR    := $(PROJECT_ROOT)build/
-TOOLS_DIR    := $(PROJECT_ROOT)tools/
-LIB_DIR      := $(PROJECT_ROOT)
-CONFIG_DIR   := $(TOOLS_DIR)config/
-SRC_DIR      := $(PROJECT_ROOT)/src/
-RTL_DIR      := $(SRC_DIR)/rtl/
-FLIST_DIR    := $(RTL_DIR)
+PROJECT_ROOT   := $(CURDIR)/
+BUILD_DIR      := $(PROJECT_ROOT)build/
+TOOLS_DIR      := $(PROJECT_ROOT)tools/
+LIB_DIR        := $(PROJECT_ROOT)
+CONFIG_DIR     := $(TOOLS_DIR)config/
+SRC_DIR        := $(PROJECT_ROOT)src/
+RTL_DIR        := $(SRC_DIR)rtl/
+TB_DIR         := $(SRC_DIR)tb/
 
-QUARTUS_ROOT ?= /opt/intelFPGA_lite/22.1std/quartus/
+RTL_FLIST_DIR  := $(RTL_DIR)
+TB_FLIST_DIR   := $(TB_DIR)
 
-SIM          ?= xsim
+QUARTUS_ROOT   ?= /opt/intelFPGA_lite/22.1std/quartus/
+
+SIM            ?= xsim
 
 ifeq ($(SIM),)
 all:
