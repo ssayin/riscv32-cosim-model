@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Thu Aug 10 23:43:50 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Fri Aug 11 00:37:33 2023
 //=============================================================================
 // Description: Test class for top (included in package top_test_pkg)
 //=============================================================================
@@ -54,7 +54,6 @@ function void top_test::build_phase(uvm_phase phase);
   // You could modify any test-specific configuration object variables here
 
 
-  axi4master_default_seq::type_id::set_type_override(axi4master_hex_seq::get_type());
 
   m_env = top_env::type_id::create("m_env", this);
 
