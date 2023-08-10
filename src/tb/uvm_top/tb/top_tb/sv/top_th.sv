@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 //=============================================================================
-// Project  : ../../src/tb/uvm_top
+// Project  : src/tb/uvm_top
 //
 // File Name: top_th.sv
 //
@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Thu Aug 10 19:34:56 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Thu Aug 10 21:08:37 2023
 //=============================================================================
 // Description: Test Harness
 //=============================================================================
@@ -24,7 +24,7 @@ module top_hdl_th;
   timeprecision 1ps;
 
 
-  // You can remove clock and reset below by setting th_generate_clock_and_reset = no in file common.tpl
+  // You can remove clock and reset below by setting th_generate_clock_and_reset = no in file tools/gen/common.tpl
 
   // Example clock and reset declarations
   logic clock = 0;
@@ -44,7 +44,7 @@ module top_hdl_th;
 
   assign axi4master_if_0.clk   = clock;
 
-  // You can insert code here by setting th_inc_inside_module in file common.tpl
+  // You can insert code here by setting th_inc_inside_module in file tools/gen/common.tpl
 
   // Pin-level interfaces connected to DUT
   // You can remove interface instances by setting generate_interface_instance = no in the interface template file

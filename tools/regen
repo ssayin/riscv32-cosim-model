@@ -1,6 +1,0 @@
-#!/bin/sh
-
-rm -rf ./src/tb/uvm_top
-./tools/tb_regen.sh
-make clean
-make uvm_top

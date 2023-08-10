@@ -25,7 +25,7 @@ DISAS_SRCS    := $(wildcard $(DISAS_SRC)*.c)
 
 DECODER_OBJS  := $(patsubst $(DECODER_SRC)%.cpp,$(BUILD_DIR)%.o,$(DECODER_SRCS))
 EXPORTER_OBJS := $(patsubst $(EXPORTER_SRC)%.cpp,$(BUILD_DIR)%.o,$(EXPORTER_SRCS))
-DISAS_OBJ     := $(patsubst $(DISAS_SRC)%.cpp,$(BUILD_DIR)%.o,$(DISAS_SRCS))
+DISAS_OBJ     := $(patsubst $(DISAS_SRC)%.c,$(BUILD_DIR)%.o,$(DISAS_SRCS))
 
 OBJS          := $(DECODER_OBJS) $(EXPORTER_OBJS) $(DISAS_OBJ)
 

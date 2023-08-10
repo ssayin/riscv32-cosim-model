@@ -20,7 +20,7 @@ foreach  ele $agent_list {
   }
 }
 
-set cmd  "vlog -sv +incdir+../../../../third_party/syoscb-1.0.2.4/src ../../../../third_party/syoscb-1.0.2.4/src/pk_syoscb.sv"
+set cmd  "vlog -sv +incdir+../../third_party/syoscb-1.0.2.4/src ../../third_party/syoscb-1.0.2.4/src/pk_syoscb.sv"
 eval $cmd
 
 set cmd  "vlog -sv +incdir+../tb/include +incdir+../tb/"

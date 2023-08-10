@@ -1,8 +1,10 @@
 dut_top = riscv_core
 
-project = ../../src/tb/uvm_top
+project = src/tb/uvm_top
 
-dut_source_path = ../../src/rtl/core
+dut_source_path = src/rtl/core
+inc_path        = tools/gen/include
+dut_pfile       = tools/gen/pinlist
 
 name      = Serdar Sayın 
 email     = serdarsayin@pm.me
@@ -20,7 +22,7 @@ split_transactors = yes
 top_default_seq_count = 300
 #top_env_inc_before_class = top_env_inc_before_class.sv inline
 
-syosil_scoreboard_src_path = ../../third_party/syoscb-1.0.2.4/src
+syosil_scoreboard_src_path = third_party/syoscb-1.0.2.4/src
 
 #ref_model_input = reference m_riscv_core_agent
 

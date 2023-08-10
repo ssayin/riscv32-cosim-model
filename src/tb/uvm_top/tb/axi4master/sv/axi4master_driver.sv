@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 //=============================================================================
-// Project  : ../../src/tb/uvm_top
+// Project  : src/tb/uvm_top
 //
 // File Name: axi4master_driver.sv
 //
@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Thu Aug 10 19:34:56 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Thu Aug 10 21:08:37 2023
 //=============================================================================
 // Description: Driver for axi4master
 //=============================================================================
@@ -21,7 +21,7 @@
 `ifndef AXI4MASTER_DRIVER_SV
 `define AXI4MASTER_DRIVER_SV
 
-// You can insert code here by setting driver_inc_before_class in file axi4master.tpl
+// You can insert code here by setting driver_inc_before_class in file tools/gen/axi4master.tpl
 
 class axi4master_driver extends uvm_driver #(axi4_tx);
 
@@ -33,7 +33,7 @@ class axi4master_driver extends uvm_driver #(axi4_tx);
 
   extern function new(string name, uvm_component parent);
 
-  // Start of inlined include file ../../src/tb/uvm_top/tb/include/axi4master_driver_inc_inside_class.sv
+  // Start of inlined include file src/tb/uvm_top/tb/include/axi4master_driver_inc_inside_class.sv
   task run_phase(uvm_phase phase);
     forever begin
       axi4_tx_s req_s;
@@ -98,7 +98,7 @@ function axi4master_driver::new(string name, uvm_component parent);
 endfunction : new
 
 
-// You can insert code here by setting driver_inc_after_class in file axi4master.tpl
+// You can insert code here by setting driver_inc_after_class in file tools/gen/axi4master.tpl
 
 `endif // AXI4MASTER_DRIVER_SV
 

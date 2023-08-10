@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 //=============================================================================
-// Project  : ../../src/tb/uvm_top
+// Project  : src/tb/uvm_top
 //
 // File Name: axi4master_monitor.sv
 //
@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Thu Aug 10 19:34:56 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Thu Aug 10 21:08:37 2023
 //=============================================================================
 // Description: Monitor for axi4master
 //=============================================================================
@@ -21,7 +21,7 @@
 `ifndef AXI4MASTER_MONITOR_SV
 `define AXI4MASTER_MONITOR_SV
 
-// You can insert code here by setting monitor_inc_before_class in file axi4master.tpl
+// You can insert code here by setting monitor_inc_before_class in file tools/gen/axi4master.tpl
 
 class axi4master_monitor extends uvm_monitor;
 
@@ -35,7 +35,7 @@ class axi4master_monitor extends uvm_monitor;
 
   extern function new(string name, uvm_component parent);
 
-  // Start of inlined include file ../../src/tb/uvm_top/tb/include/axi4master_monitor_inc_inside_class.sv
+  // Start of inlined include file src/tb/uvm_top/tb/include/axi4master_monitor_inc_inside_class.sv
   task run_phase(uvm_phase phase);
     vif.proxy_back_ptr = this;
     vif.run();
@@ -100,7 +100,7 @@ function axi4master_monitor::new(string name, uvm_component parent);
 endfunction : new
 
 
-// You can insert code here by setting monitor_inc_after_class in file axi4master.tpl
+// You can insert code here by setting monitor_inc_after_class in file tools/gen/axi4master.tpl
 
 `endif // AXI4MASTER_MONITOR_SV
 

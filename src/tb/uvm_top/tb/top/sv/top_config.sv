@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 //=============================================================================
-// Project  : ../../src/tb/uvm_top
+// Project  : src/tb/uvm_top
 //
 // File Name: top_config.sv
 //
@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Thu Aug 10 19:34:56 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Thu Aug 10 21:08:37 2023
 //=============================================================================
 // Description: Configuration for top
 //=============================================================================
@@ -21,7 +21,7 @@
 `ifndef TOP_CONFIG_SV
 `define TOP_CONFIG_SV
 
-// You can insert code here by setting top_env_config_inc_before_class in file common.tpl
+// You can insert code here by setting top_env_config_inc_before_class in file tools/gen/common.tpl
 
 class top_config extends uvm_object;
 
@@ -29,18 +29,18 @@ class top_config extends uvm_object;
 
   rand axi4master_config  m_axi4master_config;
 
-  // You can insert variables here by setting config_var in file common.tpl
+  // You can insert variables here by setting config_var in file tools/gen/common.tpl
 
-  // You can remove new by setting top_env_config_generate_methods_inside_class = no in file common.tpl
+  // You can remove new by setting top_env_config_generate_methods_inside_class = no in file tools/gen/common.tpl
 
   extern function new(string name = "");
 
-  // You can insert code here by setting top_env_config_inc_inside_class in file common.tpl
+  // You can insert code here by setting top_env_config_inc_inside_class in file tools/gen/common.tpl
 
 endclass : top_config 
 
 
-// You can remove new by setting top_env_config_generate_methods_after_class = no in file common.tpl
+// You can remove new by setting top_env_config_generate_methods_after_class = no in file tools/gen/common.tpl
 
 function top_config::new(string name = "");
   super.new(name);
@@ -50,12 +50,12 @@ function top_config::new(string name = "");
   m_axi4master_config.checks_enable   = 1;                         
   m_axi4master_config.coverage_enable = 1;                         
 
-  // You can insert code here by setting top_env_config_append_to_new in file common.tpl
+  // You can insert code here by setting top_env_config_append_to_new in file tools/gen/common.tpl
 
 endfunction : new
 
 
-// You can insert code here by setting top_env_config_inc_after_class in file common.tpl
+// You can insert code here by setting top_env_config_inc_after_class in file tools/gen/common.tpl
 
 `endif // TOP_CONFIG_SV
 

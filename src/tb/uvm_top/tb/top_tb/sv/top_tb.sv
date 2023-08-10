@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 //=============================================================================
-// Project  : ../../src/tb/uvm_top
+// Project  : src/tb/uvm_top
 //
 // File Name: top_tb.sv
 //
@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Thu Aug 10 19:34:56 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Thu Aug 10 21:08:37 2023
 //=============================================================================
 // Description: Testbench
 //=============================================================================
@@ -33,13 +33,13 @@ module top_untimed_tb;
   // Configuration object for top-level environment
   top_config top_env_config;
 
-  // You can insert code here by setting tb_inc_inside_module in file common.tpl
+  // You can insert code here by setting tb_inc_inside_module in file tools/gen/common.tpl
 
-  // You can remove the initial block below by setting tb_generate_run_test = no in file common.tpl
+  // You can remove the initial block below by setting tb_generate_run_test = no in file tools/gen/common.tpl
 
   initial
   begin
-    // You can insert code here by setting tb_prepend_to_initial in file common.tpl
+    // You can insert code here by setting tb_prepend_to_initial in file tools/gen/common.tpl
 
     // Create and populate top-level configuration object
     top_env_config = new("top_env_config");
@@ -51,7 +51,7 @@ module top_untimed_tb;
     uvm_config_db #(top_config)::set(null, "uvm_test_top", "config", top_env_config);
     uvm_config_db #(top_config)::set(null, "uvm_test_top.m_env", "config", top_env_config);
 
-    // You can insert code here by setting tb_inc_before_run_test in file common.tpl
+    // You can insert code here by setting tb_inc_before_run_test in file tools/gen/common.tpl
 
     run_test();
   end

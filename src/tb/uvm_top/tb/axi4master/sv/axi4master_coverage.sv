@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 //=============================================================================
-// Project  : ../../src/tb/uvm_top
+// Project  : src/tb/uvm_top
 //
 // File Name: axi4master_coverage.sv
 //
@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Thu Aug 10 19:34:56 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Thu Aug 10 21:08:37 2023
 //=============================================================================
 // Description: Coverage for agent axi4master
 //=============================================================================
@@ -21,7 +21,7 @@
 `ifndef AXI4MASTER_COVERAGE_SV
 `define AXI4MASTER_COVERAGE_SV
 
-// You can insert code here by setting agent_cover_inc_before_class in file axi4master.tpl
+// You can insert code here by setting agent_cover_inc_before_class in file tools/gen/axi4master.tpl
 
 class axi4master_coverage extends uvm_subscriber #(axi4_tx);
 
@@ -31,8 +31,8 @@ class axi4master_coverage extends uvm_subscriber #(axi4_tx);
   bit               m_is_covered;
   axi4_tx           m_item;
      
-  // You can replace covergroup m_cov by setting agent_cover_inc in file axi4master.tpl
-  // or remove covergroup m_cov by setting agent_cover_generate_methods_inside_class = no in file axi4master.tpl
+  // You can replace covergroup m_cov by setting agent_cover_inc in file tools/gen/axi4master.tpl
+  // or remove covergroup m_cov by setting agent_cover_generate_methods_inside_class = no in file tools/gen/axi4master.tpl
 
   covergroup m_cov;
     option.per_instance = 1;
@@ -157,19 +157,19 @@ class axi4master_coverage extends uvm_subscriber #(axi4_tx);
 
   endgroup
 
-  // You can remove new, write, and report_phase by setting agent_cover_generate_methods_inside_class = no in file axi4master.tpl
+  // You can remove new, write, and report_phase by setting agent_cover_generate_methods_inside_class = no in file tools/gen/axi4master.tpl
 
   extern function new(string name, uvm_component parent);
   extern function void write(input axi4_tx t);
   extern function void build_phase(uvm_phase phase);
   extern function void report_phase(uvm_phase phase);
 
-  // You can insert code here by setting agent_cover_inc_inside_class in file axi4master.tpl
+  // You can insert code here by setting agent_cover_inc_inside_class in file tools/gen/axi4master.tpl
 
 endclass : axi4master_coverage 
 
 
-// You can remove new, write, and report_phase by setting agent_cover_generate_methods_after_class = no in file axi4master.tpl
+// You can remove new, write, and report_phase by setting agent_cover_generate_methods_after_class = no in file tools/gen/axi4master.tpl
 
 function axi4master_coverage::new(string name, uvm_component parent);
   super.new(name, parent);
@@ -203,7 +203,7 @@ function void axi4master_coverage::report_phase(uvm_phase phase);
 endfunction : report_phase
 
 
-// You can insert code here by setting agent_cover_inc_after_class in file axi4master.tpl
+// You can insert code here by setting agent_cover_inc_after_class in file tools/gen/axi4master.tpl
 
 `endif // AXI4MASTER_COVERAGE_SV
 

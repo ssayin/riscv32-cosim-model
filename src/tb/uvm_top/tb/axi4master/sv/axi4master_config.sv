@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 //=============================================================================
-// Project  : ../../src/tb/uvm_top
+// Project  : src/tb/uvm_top
 //
 // File Name: axi4master_config.sv
 //
@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Thu Aug 10 19:34:56 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Thu Aug 10 21:08:37 2023
 //=============================================================================
 // Description: Configuration for agent axi4master
 //=============================================================================
@@ -21,7 +21,7 @@
 `ifndef AXI4MASTER_CONFIG_SV
 `define AXI4MASTER_CONFIG_SV
 
-// You can insert code here by setting agent_config_inc_before_class in file axi4master.tpl
+// You can insert code here by setting agent_config_inc_before_class in file tools/gen/axi4master.tpl
 
 class axi4master_config extends uvm_object;
 
@@ -33,25 +33,25 @@ class axi4master_config extends uvm_object;
   bit                      coverage_enable;       
   bit                      checks_enable;         
 
-  // You can insert variables here by setting config_var in file axi4master.tpl
+  // You can insert variables here by setting config_var in file tools/gen/axi4master.tpl
 
-  // You can remove new by setting agent_config_generate_methods_inside_class = no in file axi4master.tpl
+  // You can remove new by setting agent_config_generate_methods_inside_class = no in file tools/gen/axi4master.tpl
 
   extern function new(string name = "");
 
-  // You can insert code here by setting agent_config_inc_inside_class in file axi4master.tpl
+  // You can insert code here by setting agent_config_inc_inside_class in file tools/gen/axi4master.tpl
 
 endclass : axi4master_config 
 
 
-// You can remove new by setting agent_config_generate_methods_after_class = no in file axi4master.tpl
+// You can remove new by setting agent_config_generate_methods_after_class = no in file tools/gen/axi4master.tpl
 
 function axi4master_config::new(string name = "");
   super.new(name);
 endfunction : new
 
 
-// You can insert code here by setting agent_config_inc_after_class in file axi4master.tpl
+// You can insert code here by setting agent_config_inc_after_class in file tools/gen/axi4master.tpl
 
 `endif // AXI4MASTER_CONFIG_SV
 

@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 //=============================================================================
-// Project  : ../../src/tb/uvm_top
+// Project  : src/tb/uvm_top
 //
 // File Name: top_env.sv
 //
@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Thu Aug 10 19:34:56 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Thu Aug 10 21:08:37 2023
 //=============================================================================
 // Description: Environment for top
 //=============================================================================
@@ -21,7 +21,7 @@
 `ifndef TOP_ENV_SV
 `define TOP_ENV_SV
 
-// You can insert code here by setting top_env_inc_before_class in file common.tpl
+// You can insert code here by setting top_env_inc_before_class in file tools/gen/common.tpl
 
 class top_env extends uvm_env;
 
@@ -37,14 +37,14 @@ class top_env extends uvm_env;
 
   top_config           m_config;
             
-  // You can remove build/connect/run_phase by setting top_env_generate_methods_inside_class = no in file common.tpl
+  // You can remove build/connect/run_phase by setting top_env_generate_methods_inside_class = no in file tools/gen/common.tpl
 
   extern function void build_phase(uvm_phase phase);
   extern function void connect_phase(uvm_phase phase);
   extern function void end_of_elaboration_phase(uvm_phase phase);
   extern task          run_phase(uvm_phase phase);
 
-  // You can insert code here by setting top_env_inc_inside_class in file common.tpl
+  // You can insert code here by setting top_env_inc_inside_class in file tools/gen/common.tpl
 
 endclass : top_env 
 
@@ -54,19 +54,19 @@ function top_env::new(string name, uvm_component parent);
 endfunction : new
 
 
-// You can remove build/connect/run_phase by setting top_env_generate_methods_after_class = no in file common.tpl
+// You can remove build/connect/run_phase by setting top_env_generate_methods_after_class = no in file tools/gen/common.tpl
 
 function void top_env::build_phase(uvm_phase phase);
   `uvm_info(get_type_name(), "In build_phase", UVM_HIGH)
 
-  // You can insert code here by setting top_env_prepend_to_build_phase in file common.tpl
+  // You can insert code here by setting top_env_prepend_to_build_phase in file tools/gen/common.tpl
 
   if (!uvm_config_db #(top_config)::get(this, "", "config", m_config)) 
     `uvm_error(get_type_name(), "Unable to get top_config")
 
   m_axi4master_config = m_config.m_axi4master_config;
 
-  // You can insert code here by setting agent_copy_config_vars in file axi4master.tpl
+  // You can insert code here by setting agent_copy_config_vars in file tools/gen/axi4master.tpl
 
   uvm_config_db #(axi4master_config)::set(this, "m_axi4master_agent", "config", m_axi4master_config);
   if (m_axi4master_config.is_active == UVM_ACTIVE )
@@ -77,7 +77,7 @@ function void top_env::build_phase(uvm_phase phase);
   m_axi4master_agent    = axi4master_agent   ::type_id::create("m_axi4master_agent", this);
   m_axi4master_coverage = axi4master_coverage::type_id::create("m_axi4master_coverage", this);
 
-  // You can insert code here by setting top_env_append_to_build_phase in file common.tpl
+  // You can insert code here by setting top_env_append_to_build_phase in file tools/gen/common.tpl
 
 endfunction : build_phase
 
@@ -88,12 +88,12 @@ function void top_env::connect_phase(uvm_phase phase);
   m_axi4master_agent.analysis_port.connect(m_axi4master_coverage.analysis_export);
 
 
-  // You can insert code here by setting top_env_append_to_connect_phase in file common.tpl
+  // You can insert code here by setting top_env_append_to_connect_phase in file tools/gen/common.tpl
 
 endfunction : connect_phase
 
 
-// You can remove end_of_elaboration_phase by setting top_env_generate_end_of_elaboration = no in file common.tpl
+// You can remove end_of_elaboration_phase by setting top_env_generate_end_of_elaboration = no in file tools/gen/common.tpl
 
 function void top_env::end_of_elaboration_phase(uvm_phase phase);
   uvm_factory factory = uvm_factory::get();
@@ -104,7 +104,7 @@ function void top_env::end_of_elaboration_phase(uvm_phase phase);
 endfunction : end_of_elaboration_phase
 
 
-// You can remove run_phase by setting top_env_generate_run_phase = no in file common.tpl
+// You can remove run_phase by setting top_env_generate_run_phase = no in file tools/gen/common.tpl
 
 task top_env::run_phase(uvm_phase phase);
   top_default_seq vseq;
@@ -117,12 +117,12 @@ task top_env::run_phase(uvm_phase phase);
   vseq.set_starting_phase(phase);
   vseq.start(null);
 
-  // You can insert code here by setting top_env_append_to_run_phase in file common.tpl
+  // You can insert code here by setting top_env_append_to_run_phase in file tools/gen/common.tpl
 
 endtask : run_phase
 
 
-// You can insert code here by setting top_env_inc_after_class in file common.tpl
+// You can insert code here by setting top_env_inc_after_class in file tools/gen/common.tpl
 
 `endif // TOP_ENV_SV
 

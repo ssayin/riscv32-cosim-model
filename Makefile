@@ -29,18 +29,20 @@ endif
 
 include $(CONFIG_DIR)uart_client.mk
 
-.PHONY clean:
-	${RM} -rf $(BUILD_DIR) 
-	${RM} -rf greybox_tmp/
+.PHONY: clean cleaner
+
+clean:
+	${RM} -r $(BUILD_DIR) 
+	${RM} -r greybox_tmp/
 	${RM} $(LIB)
 	${RM} *.jou
 	${RM} *.log
 	${RM} *.pb
-	${RM} -rf ./xsim.dir
-	${RM} -rf ./xsim.covdb
-	${RM} -rf ./out
-	${RM} -rf ./db/
-	${RM} -rf ./incremental_db/
+	${RM} -r ./xsim.dir
+	${RM} -r ./xsim.covdb
+	${RM} -r ./out
+	${RM} -r ./db/
+	${RM} -r ./incremental_db/
 	${RM} *.rpt
 	${RM} *.summary
 	${RM} *.qpf
@@ -56,3 +58,7 @@ include $(CONFIG_DIR)uart_client.mk
 	${RM} *.qws
 	${RM} *.wdb
 	${RM} $(CLIENT)
+
+cleaner: clean
+	${RM} -r $(GENERATED_DIR)
+

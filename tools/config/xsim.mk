@@ -6,6 +6,7 @@ all: sim
 
 include $(CONFIG_DIR)common.mk
 include $(CONFIG_DIR)lib.mk
+include $(CONFIG_DIR)uvm_gen.mk
 
 RTL_FLIST := $(RTL_FLIST_DIR)flist.xsim
 TB_FLIST  := $(TB_FLIST_DIR)flist.xsim
@@ -40,7 +41,7 @@ riscv_decoder: $(SOLIB_STDCXX) $(LIB) compile
 	LD_PRELOAD=$(SOLIB_STDCXX) xelab tb_riscv_decoder -relax -s decoder -sv_lib $(basename $(notdir $(LIB)))
 	LD_PRELOAD=$(SOLIB_STDCXX) LD_LIBRARY_PATH=$(LIB_DIR) xsim decoder -testplusarg UVM_TESTNAME=riscv_decoder_from_file_test -testplusarg UVM_VERBOSITY=UVM_LOW -R
 
-uvm_top: compile
+uvm_top: compile $(GENERATED_DIR)
 	xelab top_untimed_tb top_hdl_th -relax -s top_tb
 	xsim top_tb -testplusarg UVM_TESTNAME=top_test -testplusarg UVM_VERBOSITY=UVM_HIGH -R
 
