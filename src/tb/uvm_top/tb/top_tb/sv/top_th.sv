@@ -13,18 +13,18 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Fri Aug 11 00:37:33 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Fri Aug 11 03:44:41 2023
 //=============================================================================
 // Description: Test Harness
 //=============================================================================
 
-module top_hdl_th;
+module top_th;
 
   timeunit      1ns;
   timeprecision 1ps;
 
 
-  // You can remove clock and reset below by setting th_generate_clock_and_reset = no in file tools/gen/common.tpl
+  // You can remove clock and reset below by setting th_generate_clock_and_reset = no in file tools/gen/riscv_core/common.tpl
 
   // Example clock and reset declarations
   logic clock = 0;
@@ -40,62 +40,59 @@ module top_hdl_th;
     #75 reset = 1;
   end
 
-  assign axi4master_if_0.rst_n = reset;
+  assign riscv_core_if_0.rst_n = reset;
 
-  assign axi4master_if_0.clk   = clock;
+  assign riscv_core_if_0.clk   = clock;
 
-  // You can insert code here by setting th_inc_inside_module in file tools/gen/common.tpl
+  // You can insert code here by setting th_inc_inside_module in file tools/gen/riscv_core/common.tpl
 
   // Pin-level interfaces connected to DUT
   // You can remove interface instances by setting generate_interface_instance = no in the interface template file
 
-  axi4master_if   axi4master_if_0 ();                
-
-  // BFM interfaces that communicate with proxy transactors in UVM environment
-  axi4master_bfm  axi4master_bfm_0 (axi4master_if_0);
+  riscv_core_if  riscv_core_if_0 ();
 
   riscv_core uut (
-    .clk           (axi4master_if_0.clk),
-    .rst_n         (axi4master_if_0.rst_n),
-    .axi_awid_f    (axi4master_if_0.awid),
-    .axi_awaddr_f  (axi4master_if_0.awaddr),
-    .axi_awlen_f   (axi4master_if_0.awlen),
-    .axi_awsize_f  (axi4master_if_0.awsize),
-    .axi_awburst_f (axi4master_if_0.awburst),
-    .axi_awlock_f  (axi4master_if_0.awlock),
-    .axi_awcache_f (axi4master_if_0.awcache),
-    .axi_awprot_f  (axi4master_if_0.awprot),
-    .axi_awvalid_f (axi4master_if_0.awvalid),
-    .axi_awregion_f(axi4master_if_0.awregion),
-    .axi_awqos_f   (axi4master_if_0.awqos),
-    .axi_awready_f (axi4master_if_0.awready),
-    .axi_wdata_f   (axi4master_if_0.wdata),
-    .axi_wstrb_f   (axi4master_if_0.wstrb),
-    .axi_wlast_f   (axi4master_if_0.wlast),
-    .axi_wvalid_f  (axi4master_if_0.wvalid),
-    .axi_wready_f  (axi4master_if_0.wready),
-    .axi_bid_f     (axi4master_if_0.bid),
-    .axi_bresp_f   (axi4master_if_0.bresp),
-    .axi_bvalid_f  (axi4master_if_0.bvalid),
-    .axi_bready_f  (axi4master_if_0.bready),
-    .axi_arid_f    (axi4master_if_0.arid),
-    .axi_araddr_f  (axi4master_if_0.araddr),
-    .axi_arlen_f   (axi4master_if_0.arlen),
-    .axi_arsize_f  (axi4master_if_0.arsize),
-    .axi_arburst_f (axi4master_if_0.arburst),
-    .axi_arlock_f  (axi4master_if_0.arlock),
-    .axi_arcache_f (axi4master_if_0.arcache),
-    .axi_arprot_f  (axi4master_if_0.arprot),
-    .axi_arvalid_f (axi4master_if_0.arvalid),
-    .axi_arqos_f   (axi4master_if_0.arqos),
-    .axi_arregion_f(axi4master_if_0.arregion),
-    .axi_arready_f (axi4master_if_0.arready),
-    .axi_rid_f     (axi4master_if_0.rid),
-    .axi_rdata_f   (axi4master_if_0.rdata),
-    .axi_rresp_f   (axi4master_if_0.rresp),
-    .axi_rlast_f   (axi4master_if_0.rlast),
-    .axi_rvalid_f  (axi4master_if_0.rvalid),
-    .axi_rready_f  (axi4master_if_0.rready)
+    .clk           (riscv_core_if_0.clk),
+    .rst_n         (riscv_core_if_0.rst_n),
+    .axi_awid_f    (riscv_core_if_0.awid),
+    .axi_awaddr_f  (riscv_core_if_0.awaddr),
+    .axi_awlen_f   (riscv_core_if_0.awlen),
+    .axi_awsize_f  (riscv_core_if_0.awsize),
+    .axi_awburst_f (riscv_core_if_0.awburst),
+    .axi_awlock_f  (riscv_core_if_0.awlock),
+    .axi_awcache_f (riscv_core_if_0.awcache),
+    .axi_awprot_f  (riscv_core_if_0.awprot),
+    .axi_awvalid_f (riscv_core_if_0.awvalid),
+    .axi_awregion_f(riscv_core_if_0.awregion),
+    .axi_awqos_f   (riscv_core_if_0.awqos),
+    .axi_awready_f (riscv_core_if_0.awready),
+    .axi_wdata_f   (riscv_core_if_0.wdata),
+    .axi_wstrb_f   (riscv_core_if_0.wstrb),
+    .axi_wlast_f   (riscv_core_if_0.wlast),
+    .axi_wvalid_f  (riscv_core_if_0.wvalid),
+    .axi_wready_f  (riscv_core_if_0.wready),
+    .axi_bid_f     (riscv_core_if_0.bid),
+    .axi_bresp_f   (riscv_core_if_0.bresp),
+    .axi_bvalid_f  (riscv_core_if_0.bvalid),
+    .axi_bready_f  (riscv_core_if_0.bready),
+    .axi_arid_f    (riscv_core_if_0.arid),
+    .axi_araddr_f  (riscv_core_if_0.araddr),
+    .axi_arlen_f   (riscv_core_if_0.arlen),
+    .axi_arsize_f  (riscv_core_if_0.arsize),
+    .axi_arburst_f (riscv_core_if_0.arburst),
+    .axi_arlock_f  (riscv_core_if_0.arlock),
+    .axi_arcache_f (riscv_core_if_0.arcache),
+    .axi_arprot_f  (riscv_core_if_0.arprot),
+    .axi_arvalid_f (riscv_core_if_0.arvalid),
+    .axi_arqos_f   (riscv_core_if_0.arqos),
+    .axi_arregion_f(riscv_core_if_0.arregion),
+    .axi_arready_f (riscv_core_if_0.arready),
+    .axi_rid_f     (riscv_core_if_0.rid),
+    .axi_rdata_f   (riscv_core_if_0.rdata),
+    .axi_rresp_f   (riscv_core_if_0.rresp),
+    .axi_rlast_f   (riscv_core_if_0.rlast),
+    .axi_rvalid_f  (riscv_core_if_0.rvalid),
+    .axi_rready_f  (riscv_core_if_0.rready)
   );
 
 endmodule

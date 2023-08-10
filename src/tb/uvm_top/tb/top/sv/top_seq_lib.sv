@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Fri Aug 11 00:37:33 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Fri Aug 11 03:44:41 2023
 //=============================================================================
 // Description: Sequence for top
 //=============================================================================
@@ -27,7 +27,7 @@ class top_default_seq extends uvm_sequence #(uvm_sequence_item);
 
   top_config        m_config;
          
-  axi4master_agent  m_axi4master_agent;
+  riscv_core_agent  m_riscv_core_agent;
 
   // Number of times to repeat child sequences
   int m_seq_count = 300;
@@ -58,16 +58,16 @@ task top_default_seq::body();
   repeat (m_seq_count)
   begin
     fork
-      if (m_axi4master_agent.m_config.is_active == UVM_ACTIVE)
+      if (m_riscv_core_agent.m_config.is_active == UVM_ACTIVE)
       begin
-        axi4master_default_seq seq;
-        seq = axi4master_default_seq::type_id::create("seq");
-        seq.set_item_context(this, m_axi4master_agent.m_sequencer);
+        riscv_core_default_seq seq;
+        seq = riscv_core_default_seq::type_id::create("seq");
+        seq.set_item_context(this, m_riscv_core_agent.m_sequencer);
         if ( !seq.randomize() )
           `uvm_error(get_type_name(), "Failed to randomize sequence")
-        seq.m_config = m_axi4master_agent.m_config;
+        seq.m_config = m_riscv_core_agent.m_config;
         seq.set_starting_phase( get_starting_phase() );
-        seq.start(m_axi4master_agent.m_sequencer, this);
+        seq.start(m_riscv_core_agent.m_sequencer, this);
       end
     join
   end
@@ -102,7 +102,7 @@ endfunction: set_starting_phase
 `endif
 
 
-// You can insert code here by setting top_seq_inc in file tools/gen/common.tpl
+// You can insert code here by setting top_seq_inc in file tools/gen/riscv_core/common.tpl
 
 `endif // TOP_SEQ_LIB_SV
 

@@ -11,9 +11,6 @@ SRC_DIR        := $(PROJECT_ROOT)src/
 RTL_DIR        := $(SRC_DIR)rtl/
 TB_DIR         := $(SRC_DIR)tb/
 
-RTL_FLIST_DIR  := $(RTL_DIR)
-TB_FLIST_DIR   := $(TB_DIR)
-
 QUARTUS_ROOT   ?= /opt/intelFPGA_lite/22.1std/quartus/
 
 SIM            ?= xsim
@@ -60,5 +57,6 @@ clean:
 	${RM} $(CLIENT)
 
 cleaner: clean
-	${RM} -r $(GENERATED_DIR)
+	${RM} -r $(UVM_BFM_DIR)
+	${RM} -r $(UVM_TOP_DIR)
 

@@ -40,8 +40,8 @@ proc checkRequiredFiles { origin_dir} {
  "[file normalize "$origin_dir/imports/rtl/core/dec/riscv_decoder_j_no_rr.sv"]"\
  "[file normalize "$origin_dir/imports/rtl/core/dec/riscv_decoder_j.sv"]"\
  "[file normalize "$origin_dir/imports/rtl/core/dec/riscv_decoder_j_no_rr_imm.sv"]"\
- "[file normalize "$origin_dir/imports/rtl/core/dec/riscv_decoder_gpr.sv"]"\
- "[file normalize "$origin_dir/imports/rtl/core/dec/riscv_decoder_ctl_imm.sv"]"\
+ "[file normalize "$origin_dir/imports/rtl/core/dec/id0_gpr.sv"]"\
+ "[file normalize "$origin_dir/imports/rtl/core/dec/id1_ctl_imm.sv"]"\
  "[file normalize "$origin_dir/imports/rtl/core/dec/riscv_decoder_br.sv"]"\
  "[file normalize "$origin_dir/imports/rtl/core/sync_fifo.sv"]"\
  "[file normalize "$origin_dir/imports/rtl/core/dec/id1.sv"]"\
@@ -246,8 +246,8 @@ set files [list \
  "[file normalize "$origin_dir/imports/rtl/core/dec/riscv_decoder_j_no_rr.sv"]"\
  "[file normalize "$origin_dir/imports/rtl/core/dec/riscv_decoder_j.sv"]"\
  "[file normalize "$origin_dir/imports/rtl/core/dec/riscv_decoder_j_no_rr_imm.sv"]"\
- "[file normalize "$origin_dir/imports/rtl/core/dec/riscv_decoder_gpr.sv"]"\
- "[file normalize "$origin_dir/imports/rtl/core/dec/riscv_decoder_ctl_imm.sv"]"\
+ "[file normalize "$origin_dir/imports/rtl/core/dec/id0_gpr.sv"]"\
+ "[file normalize "$origin_dir/imports/rtl/core/dec/id1_ctl_imm.sv"]"\
  "[file normalize "$origin_dir/imports/rtl/core/dec/riscv_decoder_br.sv"]"\
  "[file normalize "$origin_dir/imports/rtl/core/sync_fifo.sv"]"\
  "[file normalize "$origin_dir/imports/rtl/core/dec/id1.sv"]"\

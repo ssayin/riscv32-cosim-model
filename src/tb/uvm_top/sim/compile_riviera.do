@@ -16,12 +16,11 @@ append cmd " +incdir+../tb/include "
 
 # Compile the agents
 set agent_list {\ 
-    axi4master \
+    riscv_core \
 }
 foreach  ele $agent_list {
   if {$ele != " "} {
     append cmd " +incdir+../tb/" $ele "/sv ../tb/" $ele "/sv/" $ele "_pkg.sv ../tb/" $ele "/sv/" $ele "_if.sv"
-    append cmd " ../tb/" $ele "/sv/" $ele "_bfm.sv"
   }
 }
 
@@ -36,6 +35,6 @@ append cmd " ../tb/" $tb_name "_tb/sv/" $tb_name "_th.sv"
 append cmd " ../tb/" $tb_name "_tb/sv/" $tb_name "_tb.sv"
 eval $cmd
 
-asim top_untimed_tb top_hdl_th +UVM_TESTNAME=top_test  -voptargs=+acc -solvefaildebug -uvmcontrol=all -classdebug
+asim top_tb +UVM_TESTNAME=top_test  -voptargs=+acc -solvefaildebug -uvmcontrol=all -classdebug
 run -all
 quit

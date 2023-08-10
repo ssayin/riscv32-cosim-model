@@ -1,0 +1,14 @@
+-i ./src/tb/uvm_top/tb/include/
+-i ./src/tb/uvm_top/tb/riscv_core/sv
+-i ./src/tb/uvm_top/tb/top/sv
+-i ./src/tb/uvm_top/tb/top_test/sv
+-i ./src/tb/uvm_top/tb/top_tb/sv
+-i ./third_party/syoscb-1.0.2.4/src
+./src/tb/uvm_top/tb/riscv_core/sv/riscv_core_pkg.sv
+./src/tb/uvm_top/tb/riscv_core/sv/riscv_core_if.sv
+./third_party/syoscb-1.0.2.4/src/pk_syoscb.sv
+./src/tb/uvm_top/tb/top/sv/top_pkg.sv
+./src/tb/uvm_top/tb/top_test/sv/top_test_pkg.sv
+./src/tb/uvm_top/tb/top_test/sv/top_test.sv
+./src/tb/uvm_top/tb/top_tb/sv/top_th.sv
+./src/tb/uvm_top/tb/top_tb/sv/top_tb.sv

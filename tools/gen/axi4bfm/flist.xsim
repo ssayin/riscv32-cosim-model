@@ -1,0 +1,15 @@
+-i ./src/tb/uvm_bfm/tb/include/
+-i ./src/tb/uvm_bfm/tb/axi4/sv
+-i ./src/tb/uvm_bfm/tb/bfm/sv
+-i ./src/tb/uvm_bfm/tb/bfm_test/sv
+-i ./src/tb/uvm_bfm/tb/bfm_tb/sv
+-i ./third_party/syoscb-1.0.2.4/src
+./src/tb/uvm_bfm/tb/axi4/sv/axi4_pkg.sv
+./src/tb/uvm_bfm/tb/axi4/sv/axi4_if.sv
+./src/tb/uvm_bfm/tb/axi4/sv/axi4_bfm.sv
+./third_party/syoscb-1.0.2.4/src/pk_syoscb.sv
+./src/tb/uvm_bfm/tb/bfm/sv/bfm_pkg.sv
+./src/tb/uvm_bfm/tb/bfm_test/sv/bfm_test_pkg.sv
+./src/tb/uvm_bfm/tb/bfm_test/sv/bfm_test.sv
+./src/tb/uvm_bfm/tb/bfm_tb/sv/bfm_th.sv
+./src/tb/uvm_bfm/tb/bfm_tb/sv/bfm_tb.sv
