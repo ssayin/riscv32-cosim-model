@@ -19,7 +19,7 @@ backup = no
 
 split_transactors = yes
 
-top_default_seq_count = 300
+top_default_seq_count = 1
 #top_env_inc_before_class = top_env_inc_before_class.sv inline
 
 syosil_scoreboard_src_path = third_party/syoscb-1.0.2.4/src

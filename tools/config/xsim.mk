@@ -45,6 +45,11 @@ uvm_top: compile $(GENERATED_DIR)
 	xelab top_untimed_tb top_hdl_th -relax -s top_tb
 	xsim top_tb -testplusarg UVM_TESTNAME=top_test -testplusarg UVM_VERBOSITY=UVM_HIGH -R
 
+#uvm_top_feed: compile $(GENERATED_DIR)
+#xelab top_untimed_tb top_hdl_th -relax -s top_tb
+#xsim top_tb -testplusarg UVM_TESTNAME=top_test -testplusarg UVM_VERBOSITY=UVM_HIGH -R
+
+
 tb_top_level: compile
 	xelab tb_top_level -relax -s tb_top_level
 	xsim tb_top_level -R
