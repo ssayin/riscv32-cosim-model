@@ -109,14 +109,7 @@ module ifu (
       3'b001:  seq_next = 3'b010;
       3'b010:  {seq_next, row_flush_next} = (comp[2] && comp[3]) ? {3'b011, 1'b0} : {3'b000, 1'b1};
       3'b011:  {seq_next, row_flush_next} = {3'b000, 1'b1};
-      3'b111: begin
-        if (empty) begin
-          seq_next       = 3'b111;
-          row_flush_next = 1;
-        end else begin
-          seq_next = 3'b000;
-        end
-      end
+      3'b111:  {seq_next, row_flush_next} = empty ? {3'b111, 1'b1} : {3'b000, 1'b0};
       default: seq_next = seq;
     endcase
   end
