@@ -113,7 +113,6 @@ module ifu_mem_ctrl (
   assign din[63:0]           = axi_rdata_f[63:0];
   assign rden                = !empty && row_flush;
   assign wordline[63:0]      = dout[63:0];
-  assign valid               = !empty;
   assign axi_arid_f          = 0;
   assign axi_arlock_f        = 0;
   assign axi_arsize_f[2:0]   = 0;

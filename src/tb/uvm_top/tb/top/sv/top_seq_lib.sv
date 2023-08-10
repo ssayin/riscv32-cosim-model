@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 //=============================================================================
-// Project  : ../tb/uvm_top
+// Project  : ../../src/tb/uvm_top
 //
 // File Name: top_seq_lib.sv
 //
@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Wed Aug  9 22:00:38 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Thu Aug 10 19:34:56 2023
 //=============================================================================
 // Description: Sequence for top
 //=============================================================================

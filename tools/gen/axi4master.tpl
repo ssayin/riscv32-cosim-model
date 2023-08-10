@@ -53,6 +53,8 @@ driver_inc_inside_class      = axi4master_driver_inc_inside_class.sv   inline
 monitor_inc_inside_class     = axi4master_monitor_inc_inside_class.sv  inline
 agent_inc_inside_bfm         = axi4master_inc_inside_bfm.sv            inline
 
+#agent_seq_inc                = my_axi4master_seq.sv  inline
+#agent_factory_set            = axi4master_default_seq my_axi4master_seq
 
 if_port = logic clk;
 if_port = logic rst_n;

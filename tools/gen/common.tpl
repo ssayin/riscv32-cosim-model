@@ -1,8 +1,8 @@
 dut_top = riscv_core
 
-project = ../tb/uvm_top
+project = ../../src/tb/uvm_top
 
-dut_source_path = ../rtl/core
+dut_source_path = ../../src/rtl/core
 
 name      = Serdar Sayın 
 email     = serdarsayin@pm.me

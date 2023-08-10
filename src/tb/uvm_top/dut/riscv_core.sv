@@ -172,7 +172,7 @@ module riscv_core (
   // TODO: Need a skid buffer here
   // ID0 -> ID1 -> EX
   // ADDR -> WAIT -> DATA
-  reg_file #(.DATA_WIDTH(DataWidth)) register_file_inst (.*);
+  reg_file #(.DATA_WIDTH(DataWidth)) reg_file_0 (.*);
   ifu ifu_0 (.*);
   exu exu_0 (.*);
   id0 id0_0 (.*);

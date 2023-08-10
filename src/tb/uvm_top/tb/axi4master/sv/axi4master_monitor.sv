@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 //=============================================================================
-// Project  : ../tb/uvm_top
+// Project  : ../../src/tb/uvm_top
 //
 // File Name: axi4master_monitor.sv
 //
@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Wed Aug  9 22:00:38 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Thu Aug 10 19:34:56 2023
 //=============================================================================
 // Description: Monitor for axi4master
 //=============================================================================
@@ -35,7 +35,7 @@ class axi4master_monitor extends uvm_monitor;
 
   extern function new(string name, uvm_component parent);
 
-  // Start of inlined include file ../tb/uvm_top/tb/include/axi4master_monitor_inc_inside_class.sv
+  // Start of inlined include file ../../src/tb/uvm_top/tb/include/axi4master_monitor_inc_inside_class.sv
   task run_phase(uvm_phase phase);
     vif.proxy_back_ptr = this;
     vif.run();

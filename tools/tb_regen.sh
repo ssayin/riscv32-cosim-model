@@ -1,3 +1,3 @@
 #!/bin/sh
 
-make -C ./src/gen/
+make -C ./tools/gen/

@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 //=============================================================================
-// Project  : ../tb/uvm_top
+// Project  : ../../src/tb/uvm_top
 //
 // File Name: axi4master_seq_item.sv
 //
@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Wed Aug  9 22:00:38 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Thu Aug 10 19:34:56 2023
 //=============================================================================
 // Description: Sequence item for axi4master_sequencer
 //=============================================================================
@@ -21,9 +21,9 @@
 `ifndef AXI4MASTER_SEQ_ITEM_SV
 `define AXI4MASTER_SEQ_ITEM_SV
 
-// Start of inlined include file ../tb/uvm_top/tb/include/axi4master_trans_inc_before_class.sv
+// Start of inlined include file ../../src/tb/uvm_top/tb/include/axi4master_trans_inc_before_class.sv
 typedef struct packed {
-  logic        awid;
+  logic [1:0]  awid;
   logic [31:0] awaddr;
   logic [7:0]  awlen;
   logic [2:0]  awsize;
@@ -40,11 +40,11 @@ typedef struct packed {
   logic        wlast;
   logic        wvalid;
   logic        wready;
-  logic        bid;
+  logic [1:0]  bid;
   logic [1:0]  bresp;
   logic        bvalid;
   logic        bready;
-  logic        arid;
+  logic [1:0]  arid;
   logic [31:0] araddr;
   logic [7:0]  arlen;
   logic [2:0]  arsize;
@@ -56,7 +56,7 @@ typedef struct packed {
   logic [3:0]  arqos;
   logic [3:0]  arregion;
   logic        arready;
-  logic        rid;
+  logic [1:0]  rid;
   logic [63:0] rdata;
   logic [1:0]  rresp;
   logic        rlast;

@@ -1,5 +1,5 @@
 typedef struct packed {
-  logic        awid;
+  logic [1:0]  awid;
   logic [31:0] awaddr;
   logic [7:0]  awlen;
   logic [2:0]  awsize;
@@ -16,11 +16,11 @@ typedef struct packed {
   logic        wlast;
   logic        wvalid;
   logic        wready;
-  logic        bid;
+  logic [1:0]  bid;
   logic [1:0]  bresp;
   logic        bvalid;
   logic        bready;
-  logic        arid;
+  logic [1:0]  arid;
   logic [31:0] araddr;
   logic [7:0]  arlen;
   logic [2:0]  arsize;
@@ -32,7 +32,7 @@ typedef struct packed {
   logic [3:0]  arqos;
   logic [3:0]  arregion;
   logic        arready;
-  logic        rid;
+  logic [1:0]  rid;
   logic [63:0] rdata;
   logic [1:0]  rresp;
   logic        rlast;
