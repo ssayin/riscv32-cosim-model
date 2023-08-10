@@ -6,7 +6,10 @@ PROJECT_ROOT := $(CURDIR)/
 BUILD_DIR    := $(PROJECT_ROOT)build/
 TOOLS_DIR    := $(PROJECT_ROOT)tools/
 LIB_DIR      := $(PROJECT_ROOT)
-CONFIG_DIR   := $(PROJECT_ROOT)config/
+CONFIG_DIR   := $(TOOLS_DIR)config/
+SRC_DIR      := $(PROJECT_ROOT)/src/
+RTL_DIR      := $(SRC_DIR)/rtl/
+FLIST_DIR    := $(RTL_DIR)
 
 QUARTUS_ROOT ?= /opt/intelFPGA_lite/22.1std/quartus/
 

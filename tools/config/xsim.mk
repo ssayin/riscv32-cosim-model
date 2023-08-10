@@ -7,6 +7,8 @@ all: sim
 include $(CONFIG_DIR)common.mk
 include $(CONFIG_DIR)lib.mk
 
+FLIST := $(FLIST_DIR)flist.xsim
+
 #VIVADO_INC := /opt/Xilinx/Vivado/2022.2/data/xsim/include/
 
 # Set full path to the shared obj that ld links against as default.
@@ -47,7 +49,7 @@ tb_top_level: compile
 
 # Compile SystemVerilog files on Xilinx Vivado Suite
 compile: $(INSTR_FEED)
-	xvlog -sv -f xsim_sv_compile_list -L uvm \
+	xvlog -sv -f $(FLIST) -L uvm \
 		-define INSTR_SEQ_FILENAME='"$(INSTR_FEED)"' \
 		-define INSTR_SEQ_LINECOUNT=$(shell cat $(INSTR_FEED) | wc -l) \
 		-define DEBUG_INIT_FILE='"$(shell readlink -f "./src/firmware/boot.hex")"'
