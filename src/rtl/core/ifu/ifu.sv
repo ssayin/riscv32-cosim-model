@@ -112,6 +112,7 @@ module ifu (
       3'b111:  {seq_next, row_flush_next} = empty ? {3'b111, 1'b1} : {3'b000, 1'b0};
       default: seq_next = seq;
     endcase
+    if ((empty == 1'b1) && (row_flush_next == 1'b1)) {seq_next, row_flush_next} = {3'b111, 1'b1};
   end
   always_ff @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
