@@ -43,6 +43,7 @@ module ifu (
   logic        br_ataken;
   logic        take_jump;
   logic [63:0] wordline;
+  logic        flush;
   logic        row_flush;
   logic        row_flush_next;
   logic        start_fetch;
@@ -84,20 +85,19 @@ module ifu (
   generate
     for (i = 0; i < 4; i++) begin : g_branch_early
       riscv_decoder_br dec_br (
-        .instr(wordline[15:0]),
+        .instr(wordline[(4-i)*16-1:(3-i)*16]),
         .br   (br[i])
       );
 
       riscv_decoder_j_no_rr dec_j_no_rr (
-        .instr(wordline[15:0]),
+        .instr(wordline[(4-i)*16-1:(3-i)*16]),
         .j    (j[i])
       );
 
-      /*riscv_decoder_j_no_rr_imm dec_j_no_rr_imm (
-        .instr(wordline[31:0]),
+      riscv_decoder_j_no_rr_imm dec_j_no_rr_imm (
+        .instr(wordline[(4-i)*16-1:(3-i)*16]),
         .imm  (jimm[i])
       );
-      */
     end
   endgenerate
 
@@ -109,37 +109,75 @@ module ifu (
       3'b001:  seq_next = 3'b010;
       3'b010:  {seq_next, row_flush_next} = (comp[2] && comp[3]) ? {3'b011, 1'b0} : {3'b000, 1'b1};
       3'b011:  {seq_next, row_flush_next} = {3'b000, 1'b1};
-      3'b111:  {seq_next, row_flush_next} = empty ? {3'b111, 1'b1} : {3'b000, 1'b0};
+      3'b111:  {seq_next, row_flush_next} = (flush || empty) ? {3'b111, 1'b1} : {3'b000, 1'b0};
       default: seq_next = seq;
     endcase
-    if ((empty == 1'b1) && (row_flush_next == 1'b1)) {seq_next, row_flush_next} = {3'b111, 1'b1};
+    if ((empty == 1'b1) && (seq_next == 1'b111)) {seq_next, row_flush_next} = {3'b111, 1'b1};
   end
+
+  assign flush = ((seq == 3'b000) && (take_jump_0)) || ((seq == 3'b001) && (take_jump_1)) || ((seq == 3'b010) && (take_jump_2)) || ((seq == 3'b011) && (take_jump_3)) || (pc_update == 1'b1);
+
   always_ff @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
-      pc <= 31'b0;
+      pc  <= 31'b0;
+      seq <= 3'b111;
     end else begin
-      if (pc_update) pc <= pc_in;
-      else if (take_jump) pc[31:1] <= jimm[0][31:1];
-      else begin
+      if (pc_update) begin
+        pc  <= pc_in;
+        seq <= 3'b111;
+      end else begin
         case (seq)
-          3'b000:  pc[31:1] <= pc[31:1] + (comp[0] ? 31'h1 : 31'h2);
-          3'b001:  pc[31:1] <= pc[31:1] + (comp[1] ? 31'h1 : 31'h2);
-          3'b010:  pc[31:1] <= pc[31:1] + (comp[2] ? 31'h1 : 31'h2);
-          3'b011:  pc[31:1] <= pc[31:1] + (comp[3] ? 31'h1 : 31'h2);
-          default: pc <= pc;
+          3'b000: begin
+            if (take_jump_0) begin
+              pc[31:1] <= jimm[0][31:1];
+              seq      <= 3'b111;
+            end else begin
+              pc[31:1] <= pc[31:1] + (comp[0] ? 31'h1 : 31'h2);
+              seq      <= seq_next;
+            end
+          end
+          3'b001: begin
+            if (take_jump_1) begin
+              pc[31:1] <= jimm[1][31:1];
+              seq      <= 3'b111;
+            end else begin
+              pc[31:1] <= pc[31:1] + (comp[1] ? 31'h1 : 31'h2);
+              seq      <= seq_next;
+            end
+          end
+          3'b010: begin
+            if (take_jump_2) begin
+              pc[31:1] <= jimm[2][31:1];
+              seq      <= 3'b111;
+            end else begin
+              pc[31:1] <= pc[31:1] + (comp[2] ? 31'h1 : 31'h2);
+              seq      <= seq_next;
+            end
+          end
+          3'b011: begin
+            if (take_jump_3) begin
+              pc[31:1] <= jimm[3][31:1];
+              seq      <= 3'b111;
+            end else begin
+              pc[31:1] <= pc[31:1] + (comp[3] ? 31'h1 : 31'h2);
+              seq      <= seq_next;
+            end
+          end
+          default: begin
+            pc  <= pc;
+            seq <= seq_next;
+          end
         endcase
       end
     end
   end
   always_ff @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
-      seq       <= 3'b111;
       row_flush <= 1;
       instr_d0  <= 31'h13;
       comp_d0   <= 0;
     end else begin
       row_flush <= row_flush_next;
-      seq       <= seq_next;
       case (seq)
         3'b000:  {instr_d0, comp_d0} <= {wordline[63:32], comp[0]};
         3'b001:  {instr_d0, comp_d0} <= {{16'b0, wordline[63:48]}, comp[1]};
@@ -154,8 +192,11 @@ module ifu (
     if (!rst_n) br_ataken_d0 <= 0;
     else br_ataken_d0 <= br_ataken;
   end
-  assign take_jump = j[0] && !pc_update;  // always prioritize mispredicted branches and exceptions
-  assign br_ataken = 'b0;
-  assign br_d0     = 'b0;
+  assign take_jump_0 = j[0] && !pc_update;  // always prioritize mispredicted branches and exceptions
+  assign take_jump_1 = j[1] && !pc_update;  // always prioritize mispredicted branches and exceptions
+  assign take_jump_2 = j[2] && !pc_update;  // always prioritize mispredicted branches and exceptions
+  assign take_jump_3 = j[3] && !pc_update;  // always prioritize mispredicted branches and exceptions
+  assign br_ataken   = 'b0;
+  assign br_d0       = 'b0;
   ifu_mem_ctrl ctrl (.*);
 endmodule : ifu

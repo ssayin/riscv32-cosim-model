@@ -9,6 +9,7 @@ module ifu_mem_ctrl (
   input  logic                  rst_n,
   input  logic [          31:1] pc,
   input  logic                  row_flush,
+  input  logic                  flush,
   output logic                  start_fetch,
   output logic                  done_fetch,
   output logic [          63:0] wordline,
@@ -42,7 +43,6 @@ module ifu_mem_ctrl (
   logic        full;
   logic [63:0] din;
   logic [63:0] dout;
-  logic        flush;
   logic        wren;
   logic        rden;
   logic        almost_empty;

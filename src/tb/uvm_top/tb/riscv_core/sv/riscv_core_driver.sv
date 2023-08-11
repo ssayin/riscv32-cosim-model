@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Fri Aug 11 03:44:41 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Fri Aug 11 07:29:11 2023
 //=============================================================================
 // Description: Driver for riscv_core
 //=============================================================================
@@ -58,34 +58,34 @@ class riscv_core_driver extends uvm_driver #(riscv_core_tx);
     case (state)
       IDLE: begin
         if (vif.arvalid) begin
-          arburst_counter = vif.arlen + 1;
-          arburst         = vif.arburst;
-          state           = PREBURST;
-          vif.rvalid      = 0;
-          vif.arready     = 1;
+          arburst_counter <= vif.arlen + 1;
+          arburst         <= vif.arburst;
+          state           <= PREBURST;
+          vif.rvalid      <= 0;
+          vif.arready     <= 1;
         end
-        vif.rlast = 0;
+        vif.rlast <= 0;
       end
       PREBURST: begin
         if (vif.arvalid && vif.arready) begin
-          state       = BURST;
-          vif.rdata   = req.rdata;
-          vif.rvalid  = 1;
-          vif.arready = 0;
+          state       <= BURST;
+          vif.rdata   <= req.rdata;
+          vif.rvalid  <= 1;
+          vif.arready <= 0;
         end
-        vif.rlast = 0;
+        vif.rlast <= 0;
       end
       BURST: begin
-        vif.rlast = 0;
+        vif.rlast <= 0;
         if (vif.rvalid && vif.rready) begin
-          arburst_counter = arburst_counter - 1;
-          vif.rdata       = req.rdata;
-          vif.rvalid      = 1;
-          vif.arready     = 0;
+          arburst_counter <= arburst_counter - 1;
+          vif.rdata       <= req.rdata;
+          vif.rvalid      <= 1;
+          vif.arready     <= 0;
         end
         if (arburst_counter == 0) begin
-          state     = IDLE;
-          vif.rlast = 1;
+          state     <= IDLE;
+          vif.rlast <= 1;
         end
       end
       default: begin

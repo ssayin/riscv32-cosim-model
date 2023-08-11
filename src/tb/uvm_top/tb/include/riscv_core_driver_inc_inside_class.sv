@@ -22,34 +22,34 @@ task do_drive();
   case (state)
     IDLE: begin
       if (vif.arvalid) begin
-        arburst_counter = vif.arlen + 1;
-        arburst         = vif.arburst;
-        state           = PREBURST;
-        vif.rvalid      = 0;
-        vif.arready     = 1;
+        arburst_counter <= vif.arlen + 1;
+        arburst         <= vif.arburst;
+        state           <= PREBURST;
+        vif.rvalid      <= 0;
+        vif.arready     <= 1;
       end
-      vif.rlast = 0;
+      vif.rlast <= 0;
     end
     PREBURST: begin
       if (vif.arvalid && vif.arready) begin
-        state       = BURST;
-        vif.rdata   = req.rdata;
-        vif.rvalid  = 1;
-        vif.arready = 0;
+        state       <= BURST;
+        vif.rdata   <= req.rdata;
+        vif.rvalid  <= 1;
+        vif.arready <= 0;
       end
-      vif.rlast = 0;
+      vif.rlast <= 0;
     end
     BURST: begin
-      vif.rlast = 0;
+      vif.rlast <= 0;
       if (vif.rvalid && vif.rready) begin
-        arburst_counter = arburst_counter - 1;
-        vif.rdata       = req.rdata;
-        vif.rvalid      = 1;
-        vif.arready     = 0;
+        arburst_counter <= arburst_counter - 1;
+        vif.rdata       <= req.rdata;
+        vif.rvalid      <= 1;
+        vif.arready     <= 0;
       end
       if (arburst_counter == 0) begin
-        state     = IDLE;
-        vif.rlast = 1;
+        state     <= IDLE;
+        vif.rlast <= 1;
       end
     end
     default: begin

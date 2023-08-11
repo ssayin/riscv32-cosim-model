@@ -9,6 +9,7 @@ trans_var = rand logic [63:0] rdata;
 agent_driver_inc_inside_class = riscv_core_driver_inc_inside_class.sv   inline
 monitor_inc                   = riscv_core_do_mon.sv                    inline
 agent_seq_inc                 = my_riscv_core_seq.sv                    inline
+agent_factory_set             = riscv_core_instr_feed_seq riscv_core_default_seq
 
 if_port = logic clk;
 if_port = logic rst_n;
