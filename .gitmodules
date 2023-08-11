@@ -1,12 +1,3 @@
 [submodule "src/decoder"]
 	path = src/decoder
 	url = https://github.com/ssayin/riscv32-decoder.git
-[submodule "src/common"]
-	path = src/common
-	url = https://github.com/ssayin/riscv32-sim-common.git
-[submodule "third_party/SVA-AXI4-FVIP"]
-	path = third_party/SVA-AXI4-FVIP
-	url = https://github.com/YosysHQ-GmbH/SVA-AXI4-FVIP.git
-[submodule "third_party/riscv-formal"]
-	path = third_party/riscv-formal
-	url = https://github.com/YosysHQ/riscv-formal

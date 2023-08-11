@@ -74,32 +74,70 @@ module ifu (
   logic        j   [0:3];
   logic [31:0] jimm[0:3];
 
-  genvar i;
 
-  generate
-    for (i = 0; i < 4; i++) begin : g_comp
-      assign comp[i] = !(wordline[16*(i+1)-1] && wordline[16*(i+1)-2]);
-    end : g_comp
-  endgenerate
 
-  generate
-    for (i = 0; i < 4; i++) begin : g_branch_early
-      riscv_decoder_br dec_br (
-        .instr(wordline[(4-i)*16-1:(3-i)*16]),
-        .br   (br[i])
-      );
+  assign comp[0] = !(wordline[32] && wordline[33]);
+  assign comp[1] = !(wordline[48] && wordline[49]);
+  assign comp[2] = !(wordline[0] && wordline[1]);
+  assign comp[3] = !(wordline[16] && wordline[17]);
 
-      riscv_decoder_j_no_rr dec_j_no_rr (
-        .instr(wordline[(4-i)*16-1:(3-i)*16]),
-        .j    (j[i])
-      );
+  riscv_decoder_j_no_rr_imm dec_j_no_rr_imm_0 (
+    .instr(wordline[63:32]),
+    .imm  (jimm[0])
+  );
 
-      riscv_decoder_j_no_rr_imm dec_j_no_rr_imm (
-        .instr(wordline[(4-i)*16-1:(3-i)*16]),
-        .imm  (jimm[i])
-      );
-    end
-  endgenerate
+  riscv_decoder_j_no_rr_imm dec_j_no_rr_imm_1 (
+    .instr({16'h0, wordline[63:48]}),
+    .imm  (jimm[1])
+  );
+
+  riscv_decoder_j_no_rr_imm dec_j_no_rr_imm_2 (
+    .instr(wordline[31:0]),
+    .imm  (jimm[2])
+  );
+
+  riscv_decoder_j_no_rr_imm dec_j_no_rr_imm_3 (
+    .instr({16'h0, wordline[31:16]}),
+    .imm  (jimm[3])
+  );
+
+  riscv_decoder_br dec_br_0 (
+    .instr(wordline[47:32]),
+    .br   (br[0])
+  );
+
+  riscv_decoder_j_no_rr dec_j_no_rr_0 (
+    .instr(wordline[47:32]),
+    .j    (j[0])
+  );
+  riscv_decoder_br dec_br_1 (
+    .instr(wordline[63:48]),
+    .br   (br[1])
+  );
+
+  riscv_decoder_j_no_rr dec_j_no_rr_1 (
+    .instr(wordline[63:48]),
+    .j    (j[1])
+  );
+  riscv_decoder_br dec_br_2 (
+    .instr(wordline[15:0]),
+    .br   (br[2])
+  );
+
+  riscv_decoder_j_no_rr dec_j_no_rr_2 (
+    .instr(wordline[15:0]),
+    .j    (j[2])
+  );
+
+  riscv_decoder_br dec_br_3 (
+    .instr(wordline[31:16]),
+    .br   (br[3])
+  );
+
+  riscv_decoder_j_no_rr dec_j_no_rr_3 (
+    .instr(wordline[31:16]),
+    .j    (j[3])
+  );
 
   always_comb begin
     seq_next       = seq;
