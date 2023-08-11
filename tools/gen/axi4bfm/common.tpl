@@ -23,8 +23,6 @@ split_transactors = yes
 top_default_seq_count = 300
 #top_env_inc_before_class = top_env_inc_before_class.sv inline
 
-syosil_scoreboard_src_path = third_party/syoscb-1.0.2.4/src
-
 #ref_model_input = reference m_riscv_core_agent
 
 #ref_model_inc_inside_class = reference reference_inc_inside_class.sv inline
