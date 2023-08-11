@@ -18,18 +18,14 @@ nested_config_objects = yes
 backup = no
 
 top_default_seq_count = 1000
-#top_env_inc_before_class = top_env_inc_before_class.sv inline
 
-syosil_scoreboard_src_path = third_party/syoscb-1.0.2.4/src
-
-#ref_model_input = reference m_riscv_core_agent
-
-#ref_model_inc_inside_class = reference reference_inc_inside_class.sv inline
-#ref_model_inc_after_class = reference reference_inc_after_class.sv inline
-
-#ref_model_compare_method = reference io
-
-th_generate_clock_and_reset = yes
+top_env_append_to_build_phase    = top_env_append_to_build_phase.sv       inline
+top_env_append_to_connect_phase  = top_env_append_to_connect_phase.sv     inline
+top_env_inc_inside_class         = top_env_inc_inside_class.sv            inline
 
 #regmodel_file = regmodel.sv
 #top_reg_block_type = top_reg_block
+
+#th_generate_clock_and_reset = yes
+
+
