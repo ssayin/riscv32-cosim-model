@@ -6,6 +6,7 @@
 -i ./src/rtl/core/exu
 -i ./src/rtl/core/mem
 -i ./src/rtl/ssram
+./src/dpi/svdpi_pkg.sv
 ./src/rtl/include/riscv_opcodes.svh
 ./src/rtl/include/defs_pkg.sv
 ./src/rtl/core/sync_fifo.sv

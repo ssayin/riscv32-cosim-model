@@ -18,10 +18,5 @@ module tb_top_level;
     for (i = 0; i < 100; i++) begin
       #10 clk = ~clk;
     end
-    $finish;
-  end
-  initial begin
-    $dumpfile("tb_top_level.vcd");
-    $dumpvars(0, tb_top_level);
   end
 endmodule

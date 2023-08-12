@@ -13,8 +13,8 @@ THIRD_PARTY    := $(PROJECT_ROOT)third_party/
 
 CC             := gcc
 CXX            := g++
-CFLAGS         += -O2
-CXXFLAGS       += -std=c++20 $(CFLAGS)
+CFLAGS         := -O2
+CXXFLAGS       := -std=gnu++20 $(CFLAGS)
 
 QUARTUS_ROOT   ?= /opt/intelFPGA_lite/22.1std/quartus/
 
@@ -36,6 +36,7 @@ include $(CONFIG_DIR)uart_client.mk
 clean:
 	${RM} $(UART_CLIENT)
 	${RM} $(SVDPI)
+	${RM} $(JSON_TEST)
 	${RM} -r $(BUILD_DIR) 
 	${RM} *.jou *.log *.pb
 	${RM} -r ./xsim.dir ./xsim.covdb ./out ./db/ ./incremental_db/ greybox_tmp/
@@ -45,4 +46,3 @@ clean:
 cleaner: clean
 	${RM} -r $(UVM_BFM_DIR)
 	${RM} -r $(UVM_TOP_DIR)
-

@@ -28,6 +28,9 @@ OBJS          := $(DECODER_OBJS) $(EXPORTER_OBJS) $(DISAS_OBJ)
 
 SVDPI         := libdpi.so
 
+JSON_TEST     := json_test
+
+
 $(SVDPI): $(OBJS)
 	$(CXX) $(CXXFLAGS) -shared -Wl,-soname,$@ -o $@ $^
 
@@ -39,3 +42,6 @@ $(BUILD_DIR)%.o: $(EXPORTER_SRC)%.cpp | $(BUILD_DIR)
 
 $(DISAS_OBJ): $(DISAS_SRCS) | $(BUILD_DIR)
 	$(CXX) -fPIC $(CXXFLAGS) $(DISAS_INC) -I. -c $< -o $@
+
+$(JSON_TEST): $(DPI_ROOT)test.cpp
+	$(CXX) $(RAPIDJSON_INC) -I $(DPI_ROOT)include $^ -o $@

@@ -25,14 +25,13 @@ extern "C" void decodesv(const svLogicVecVal *word, svLogicVecVal *out) {
 }
 */
 
-op get_decoded_instr(rapidjson::Document *doc) {}
-
 void dpi_decoder_input(const decoder_in_t *in) {}
 
 void dpi_decoder_output(decoder_out_t *out) {}
 
 void dpi_decoder_process(const decoder_in_t *in, decoder_out_t *out) {
   memset(out, 0, sizeof(decoder_out_t));
+  printf("HI\n");
 
   uint32_t instr = in->instr.aval;
   bool is_compressed = (instr & 0x3) != 0x3;

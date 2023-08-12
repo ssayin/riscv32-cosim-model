@@ -33,6 +33,19 @@ package svdpi_pkg;
     logic        use_imm;
   } decoder_out_t;
 
+  typedef struct {
+    logic alu;
+    logic lsu;
+    logic lui;
+    logic auipc;
+    logic br;
+    logic jal;
+    logic csr;
+    logic fencei;
+    logic fence;
+    logic illegal;
+  } ctl_pkt_t;
+
   import "DPI-C" function void init();
   import "DPI-C" function void dpi_decoder_input(decoder_in_t io);
   import "DPI-C" function void dpi_decoder_output(decoder_out_t io);

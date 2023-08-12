@@ -3,18 +3,9 @@
 // SPDX-License-Identifier: Apache-2.0
 import defs_pkg::*;
 // This module is used mainly as a DUT for testing other decoder modules.
-typedef struct {
-  logic alu;
-  logic lsu;
-  logic lui;
-  logic auipc;
-  logic br;
-  logic jal;
-  logic csr;
-  logic fencei;
-  logic fence;
-  logic illegal;
-} ctl_pkt_t;
+
+import svdpi_pkg::ctl_pkt_t;
+
 module riscv_decoder (
   input  logic                        clk,       // unused
   input  logic                        rst_n,     // unused
