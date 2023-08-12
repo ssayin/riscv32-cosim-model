@@ -6,7 +6,20 @@
 #define INCLUDE_VISIBLE_H
 
 #include <cstdint>
+#include <ostream>
 #include <vector>
+
+struct CsrStaged;
+struct GprStaged;
+struct DecodedInstr;
+struct PC;
+struct VisibleState;
+
+std::ostream &operator<<(std::ostream &os, const PC &item);
+std::ostream &operator<<(std::ostream &os, const DecodedInstr &item);
+std::ostream &operator<<(std::ostream &os, const CsrStaged &item);
+std::ostream &operator<<(std::ostream &os, const GprStaged &item);
+std::ostream &operator<<(std::ostream &os, const VisibleState &item);
 
 struct CsrStaged {
   uint32_t next;
