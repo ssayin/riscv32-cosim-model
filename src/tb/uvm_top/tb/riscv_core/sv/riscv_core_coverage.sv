@@ -13,15 +13,13 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Sat Aug 12 00:42:54 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Sat Aug 12 03:33:22 2023
 //=============================================================================
 // Description: Coverage for agent riscv_core
 //=============================================================================
 
 `ifndef RISCV_CORE_COVERAGE_SV
 `define RISCV_CORE_COVERAGE_SV
-
-// You can insert code here by setting agent_cover_inc_before_class in file tools/gen/riscv_core/riscv_core.tpl
 
 class riscv_core_coverage extends uvm_subscriber #(riscv_core_tx);
 
@@ -31,9 +29,6 @@ class riscv_core_coverage extends uvm_subscriber #(riscv_core_tx);
   bit               m_is_covered;
   riscv_core_tx     m_item;
      
-  // You can replace covergroup m_cov by setting agent_cover_inc in file tools/gen/riscv_core/riscv_core.tpl
-  // or remove covergroup m_cov by setting agent_cover_generate_methods_inside_class = no in file tools/gen/riscv_core/riscv_core.tpl
-
   covergroup m_cov;
     option.per_instance = 1;
     // You may insert additional coverpoints here ...
@@ -43,19 +38,13 @@ class riscv_core_coverage extends uvm_subscriber #(riscv_core_tx);
 
   endgroup
 
-  // You can remove new, write, and report_phase by setting agent_cover_generate_methods_inside_class = no in file tools/gen/riscv_core/riscv_core.tpl
-
   extern function new(string name, uvm_component parent);
   extern function void write(input riscv_core_tx t);
   extern function void build_phase(uvm_phase phase);
   extern function void report_phase(uvm_phase phase);
 
-  // You can insert code here by setting agent_cover_inc_inside_class in file tools/gen/riscv_core/riscv_core.tpl
-
 endclass : riscv_core_coverage 
 
-
-// You can remove new, write, and report_phase by setting agent_cover_generate_methods_after_class = no in file tools/gen/riscv_core/riscv_core.tpl
 
 function riscv_core_coverage::new(string name, uvm_component parent);
   super.new(name, parent);
@@ -88,8 +77,6 @@ function void riscv_core_coverage::report_phase(uvm_phase phase);
     `uvm_info(get_type_name(), "Coverage disabled for this agent", UVM_MEDIUM)
 endfunction : report_phase
 
-
-// You can insert code here by setting agent_cover_inc_after_class in file tools/gen/riscv_core/riscv_core.tpl
 
 `endif // RISCV_CORE_COVERAGE_SV
 

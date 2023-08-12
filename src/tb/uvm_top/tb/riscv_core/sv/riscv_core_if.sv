@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Sat Aug 12 00:42:54 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Sat Aug 12 03:33:22 2023
 //=============================================================================
 // Description: Signal interface for agent riscv_core
 //=============================================================================
@@ -71,8 +71,6 @@ interface riscv_core_if();
   logic        rready;
 
   // You can insert properties and assertions here
-
-  // You can insert code here by setting if_inc_inside_interface in file tools/gen/riscv_core/riscv_core.tpl
 
 endinterface : riscv_core_if
 

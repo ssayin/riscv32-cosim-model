@@ -2,10 +2,10 @@ dut_top = riscv_core
 
 project = src/tb/uvm_bfm
 
-dut_source_path = src/rtl/core
-inc_path        = tools/gen/axi4bfm/include
-dut_pfile       = tools/gen/axi4bfm/pinlist
-prefix          = bfm
+dut_source_path  = src/rtl/core
+inc_path         = tools/config/uvm/include
+dut_pfile        = tools/config/uvm/tpl/bfm/pinlist
+prefix           = bfm
 
 name      = Serdar Sayın 
 email     = serdarsayin@pm.me
@@ -17,6 +17,7 @@ file_header_inc = header_inc
 nested_config_objects = yes
 
 backup = no
+comments_at_include_locations = no
 
 split_transactors = yes
 

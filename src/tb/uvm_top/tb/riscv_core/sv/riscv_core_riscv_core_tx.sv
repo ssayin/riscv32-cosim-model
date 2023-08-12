@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Sat Aug 12 00:42:54 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Sat Aug 12 03:33:22 2023
 //=============================================================================
 // Description: Sequence item for riscv_core_sequencer
 //=============================================================================
@@ -21,22 +21,18 @@
 `ifndef RISCV_CORE_SEQ_ITEM_SV
 `define RISCV_CORE_SEQ_ITEM_SV
 
-// You can insert code here by setting trans_inc_before_class in file tools/gen/riscv_core/riscv_core.tpl
-
 class riscv_core_tx extends uvm_sequence_item; 
 
   `uvm_object_utils(riscv_core_tx)
 
-  // To include variables in copy, compare, print, record, pack, unpack, and compare2string, define them using trans_var in file tools/gen/riscv_core/riscv_core.tpl
-  // To exclude variables from compare, pack, and unpack methods, define them using trans_meta in file tools/gen/riscv_core/riscv_core.tpl
+  // To include variables in copy, compare, print, record, pack, unpack, and compare2string, define them using trans_var in file tools/config/uvm/tpl/top/riscv_core.tpl
+  // To exclude variables from compare, pack, and unpack methods, define them using trans_meta in file tools/config/uvm/tpl/top/riscv_core.tpl
 
   // Transaction variables
   rand logic [63:0] rdata;
 
 
   extern function new(string name = "");
-
-  // You can remove do_copy/compare/print/record and convert2string method by setting trans_generate_methods_inside_class = no in file tools/gen/riscv_core/riscv_core.tpl
   extern function void do_copy(uvm_object rhs);
   extern function bit  do_compare(uvm_object rhs, uvm_comparer comparer);
   extern function void do_print(uvm_printer printer);
@@ -45,8 +41,6 @@ class riscv_core_tx extends uvm_sequence_item;
   extern function void do_unpack(uvm_packer packer);
   extern function string convert2string();
 
-  // You can insert code here by setting trans_inc_inside_class in file tools/gen/riscv_core/riscv_core.tpl
-
 endclass : riscv_core_tx 
 
 
@@ -54,8 +48,6 @@ function riscv_core_tx::new(string name = "");
   super.new(name);
 endfunction : new
 
-
-// You can remove do_copy/compare/print/record and convert2string method by setting trans_generate_methods_after_class = no in file tools/gen/riscv_core/riscv_core.tpl
 
 function void riscv_core_tx::do_copy(uvm_object rhs);
   riscv_core_tx rhs_;
@@ -113,8 +105,6 @@ function string riscv_core_tx::convert2string();
   return s;
 endfunction : convert2string
 
-
-// You can insert code here by setting trans_inc_after_class in file tools/gen/riscv_core/riscv_core.tpl
 
 `endif // RISCV_CORE_SEQ_ITEM_SV
 

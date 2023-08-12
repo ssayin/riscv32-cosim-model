@@ -1,15 +1,20 @@
 # SPDX-FileCopyrightText: 2023 Serdar Sayın <https://serdarsayin.com>
 #
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 
 PROJECT_ROOT   := $(CURDIR)/
 BUILD_DIR      := $(PROJECT_ROOT)build/
 TOOLS_DIR      := $(PROJECT_ROOT)tools/
-LIB_DIR        := $(PROJECT_ROOT)
 CONFIG_DIR     := $(TOOLS_DIR)config/
 SRC_DIR        := $(PROJECT_ROOT)src/
 RTL_DIR        := $(SRC_DIR)rtl/
 TB_DIR         := $(SRC_DIR)tb/
+THIRD_PARTY    := $(PROJECT_ROOT)third_party/
+
+CC             := gcc
+CXX            := g++
+CFLAGS         += -O2
+CXXFLAGS       += -std=c++20 $(CFLAGS)
 
 QUARTUS_ROOT   ?= /opt/intelFPGA_lite/22.1std/quartus/
 
@@ -21,7 +26,7 @@ all:
 	@echo "Specify the simulator as follows:"
 	@echo "make SIM=<sim>"
 else ifeq ($(SIM),xsim)
-	include $(CONFIG_DIR)xsim.mk
+	include $(CONFIG_DIR)sim/$(SIM).mk
 endif
 
 include $(CONFIG_DIR)uart_client.mk
@@ -29,32 +34,13 @@ include $(CONFIG_DIR)uart_client.mk
 .PHONY: clean cleaner
 
 clean:
+	${RM} $(UART_CLIENT)
+	${RM} $(SVDPI)
 	${RM} -r $(BUILD_DIR) 
-	${RM} -r greybox_tmp/
-	${RM} $(LIB)
-	${RM} *.jou
-	${RM} *.log
-	${RM} *.pb
-	${RM} -r ./xsim.dir
-	${RM} -r ./xsim.covdb
-	${RM} -r ./out
-	${RM} -r ./db/
-	${RM} -r ./incremental_db/
-	${RM} *.rpt
-	${RM} *.summary
-	${RM} *.qpf
-	${RM} *.qsf
-	${RM} *.bak
-	${RM} *.txt
-	${RM} *.done
-	${RM} *.jdi
-	${RM} *.pin
-	${RM} *.sld
-	${RM} *.sof
-	${RM} *.smsg
-	${RM} *.qws
-	${RM} *.wdb
-	${RM} $(CLIENT)
+	${RM} *.jou *.log *.pb
+	${RM} -r ./xsim.dir ./xsim.covdb ./out ./db/ ./incremental_db/ greybox_tmp/
+	${RM} *.rpt *.summary *.qpf *.qsf *.bak *.txt *.done
+	${RM} *.jdi *.pin *.sld *.sof *.smsg *.qws *.wdb
 
 cleaner: clean
 	${RM} -r $(UVM_BFM_DIR)

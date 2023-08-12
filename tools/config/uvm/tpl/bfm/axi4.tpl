@@ -48,12 +48,11 @@ trans_var = rand logic        rlast;
 trans_var = rand logic        rvalid;
 trans_var = rand logic        rready;
 
-trans_inc_before_class       = axi4_trans_inc_before_class.sv    inline
-driver_inc_inside_class      = axi4_driver_inc_inside_class.sv   inline
-monitor_inc_inside_class     = axi4_monitor_inc_inside_class.sv  inline
-agent_inc_inside_bfm         = axi4_inc_inside_bfm.sv            inline
-
-agent_seq_inc                = my_axi4_seq.sv  inline
+trans_inc_before_class       = axi4/axi4_trans_inc_before_class.sv    inline
+driver_inc_inside_class      = axi4/axi4_driver_inc_inside_class.sv   inline
+monitor_inc_inside_class     = axi4/axi4_monitor_inc_inside_class.sv  inline
+agent_inc_inside_bfm         = axi4/axi4_inc_inside_bfm.sv            inline
+agent_seq_inc                = axi4/my_axi4_seq.sv                    inline
 
 if_port = logic clk;
 if_port = logic rst_n;

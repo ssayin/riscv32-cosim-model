@@ -13,15 +13,13 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Sat Aug 12 00:42:54 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Sat Aug 12 03:33:22 2023
 //=============================================================================
 // Description: Environment for bfm
 //=============================================================================
 
 `ifndef BFM_ENV_SV
 `define BFM_ENV_SV
-
-// You can insert code here by setting top_env_inc_before_class in file tools/gen/axi4bfm/common.tpl
 
 class bfm_env extends uvm_env;
 
@@ -37,14 +35,10 @@ class bfm_env extends uvm_env;
 
   bfm_config     m_config;
       
-  // You can remove build/connect/run_phase by setting top_env_generate_methods_inside_class = no in file tools/gen/axi4bfm/common.tpl
-
   extern function void build_phase(uvm_phase phase);
   extern function void connect_phase(uvm_phase phase);
   extern function void end_of_elaboration_phase(uvm_phase phase);
   extern task          run_phase(uvm_phase phase);
-
-  // You can insert code here by setting top_env_inc_inside_class in file tools/gen/axi4bfm/common.tpl
 
 endclass : bfm_env 
 
@@ -54,19 +48,13 @@ function bfm_env::new(string name, uvm_component parent);
 endfunction : new
 
 
-// You can remove build/connect/run_phase by setting top_env_generate_methods_after_class = no in file tools/gen/axi4bfm/common.tpl
-
 function void bfm_env::build_phase(uvm_phase phase);
   `uvm_info(get_type_name(), "In build_phase", UVM_HIGH)
-
-  // You can insert code here by setting top_env_prepend_to_build_phase in file tools/gen/axi4bfm/common.tpl
 
   if (!uvm_config_db #(bfm_config)::get(this, "", "config", m_config)) 
     `uvm_error(get_type_name(), "Unable to get bfm_config")
 
   m_axi4_config = m_config.m_axi4_config;
-
-  // You can insert code here by setting agent_copy_config_vars in file tools/gen/axi4bfm/axi4.tpl
 
   uvm_config_db #(axi4_config)::set(this, "m_axi4_agent", "config", m_axi4_config);
   if (m_axi4_config.is_active == UVM_ACTIVE )
@@ -77,8 +65,6 @@ function void bfm_env::build_phase(uvm_phase phase);
   m_axi4_agent    = axi4_agent   ::type_id::create("m_axi4_agent", this);
   m_axi4_coverage = axi4_coverage::type_id::create("m_axi4_coverage", this);
 
-  // You can insert code here by setting top_env_append_to_build_phase in file tools/gen/axi4bfm/common.tpl
-
 endfunction : build_phase
 
 
@@ -88,12 +74,8 @@ function void bfm_env::connect_phase(uvm_phase phase);
   m_axi4_agent.analysis_port.connect(m_axi4_coverage.analysis_export);
 
 
-  // You can insert code here by setting top_env_append_to_connect_phase in file tools/gen/axi4bfm/common.tpl
-
 endfunction : connect_phase
 
-
-// You can remove end_of_elaboration_phase by setting top_env_generate_end_of_elaboration = no in file tools/gen/axi4bfm/common.tpl
 
 function void bfm_env::end_of_elaboration_phase(uvm_phase phase);
   uvm_factory factory = uvm_factory::get();
@@ -103,8 +85,6 @@ function void bfm_env::end_of_elaboration_phase(uvm_phase phase);
   factory.print();
 endfunction : end_of_elaboration_phase
 
-
-// You can remove run_phase by setting top_env_generate_run_phase = no in file tools/gen/axi4bfm/common.tpl
 
 task bfm_env::run_phase(uvm_phase phase);
   bfm_default_seq vseq;
@@ -117,12 +97,8 @@ task bfm_env::run_phase(uvm_phase phase);
   vseq.set_starting_phase(phase);
   vseq.start(null);
 
-  // You can insert code here by setting top_env_append_to_run_phase in file tools/gen/axi4bfm/common.tpl
-
 endtask : run_phase
 
-
-// You can insert code here by setting top_env_inc_after_class in file tools/gen/axi4bfm/common.tpl
 
 `endif // BFM_ENV_SV
 

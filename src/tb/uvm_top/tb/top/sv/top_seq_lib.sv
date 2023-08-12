@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Sat Aug 12 00:42:54 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Sat Aug 12 03:33:22 2023
 //=============================================================================
 // Description: Sequence for top
 //=============================================================================
@@ -101,8 +101,6 @@ function void top_default_seq::set_starting_phase(uvm_phase phase);
 endfunction: set_starting_phase
 `endif
 
-
-// You can insert code here by setting top_seq_inc in file tools/gen/riscv_core/common.tpl
 
 `endif // TOP_SEQ_LIB_SV
 

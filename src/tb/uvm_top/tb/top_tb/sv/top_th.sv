@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Sat Aug 12 00:42:54 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Sat Aug 12 03:33:22 2023
 //=============================================================================
 // Description: Test Harness
 //=============================================================================
@@ -23,8 +23,6 @@ module top_th;
   timeunit      1ns;
   timeprecision 1ps;
 
-
-  // You can remove clock and reset below by setting th_generate_clock_and_reset = no in file tools/gen/riscv_core/common.tpl
 
   // Example clock and reset declarations
   logic clock = 0;
@@ -44,11 +42,7 @@ module top_th;
 
   assign riscv_core_if_0.clk   = clock;
 
-  // You can insert code here by setting th_inc_inside_module in file tools/gen/riscv_core/common.tpl
-
   // Pin-level interfaces connected to DUT
-  // You can remove interface instances by setting generate_interface_instance = no in the interface template file
-
   riscv_core_if  riscv_core_if_0 ();
 
   riscv_core uut (

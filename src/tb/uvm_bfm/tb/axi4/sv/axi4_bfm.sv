@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Sat Aug 12 00:42:54 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Sat Aug 12 03:33:22 2023
 //=============================================================================
 // Description: Synthesizable BFM for agent axi4
 //=============================================================================
@@ -28,7 +28,7 @@ interface axi4_bfm(axi4_if if_port);
 
   import axi4_pkg::*;
 
-  // Start of inlined include file src/tb/uvm_bfm/tb/include/axi4_inc_inside_bfm.sv
+  // Start of inlined include file src/tb/uvm_bfm/tb/include/axi4/axi4_inc_inside_bfm.sv
   task drive(axi4_tx_s req_s);
     if_port.awid     <= req_s.awid;
     if_port.awaddr   <= req_s.awaddr;

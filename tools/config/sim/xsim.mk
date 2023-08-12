@@ -1,17 +1,19 @@
 # SPDX-FileCopyrightText: 2023 Serdar Sayın <https://serdarsayin.com>
 #
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 
-all: sim
+all: sim $(CLIENT)
 
-include $(CONFIG_DIR)common.mk
-include $(CONFIG_DIR)lib.mk
-include $(CONFIG_DIR)uvm_gen.mk
+include $(CONFIG_DIR)data.mk
+include $(CONFIG_DIR)svdpi.mk
+include $(CONFIG_DIR)uvm/config.mk
 
-RTL_FLIST            := $(RTL_FLIST_DIR)flist.xsim
-TB_FLIST             := $(TB_FLIST_DIR)flist.xsim
-UVM_BFM_FLIST        := $(UVM_BFM_FLIST_DIR)flist.xsim
-UVM_TOP_FLIST        := $(UVM_TOP_FLIST_DIR)flist.xsim
+RTL_FLIST_DIR         := $(RTL_DIR)
+TB_FLIST_DIR          := $(TB_DIR)
+UVM_BFM_FLIST_DIR     := $(TOOLS_DIR)gen/axi4bfm/
+UVM_TOP_FLIST_DIR     := $(TOOLS_DIR)gen/riscv_core/
+RTL_FLIST             := $(RTL_FLIST_DIR)flist.xsim
+TB_FLIST              := $(TB_FLIST_DIR)flist.xsim
 
 #VIVADO_INC := /opt/Xilinx/Vivado/2022.2/data/xsim/include/
 
@@ -44,9 +46,9 @@ sim: uvm_top uvm_bfm tb_top_level riscv_decoder
 #lib_vivado: $(DECODER_SRCS) $(EXPORTER_SRCS) $(DISAS_SRCS)
 #	xsc $(DECODER_SRCS) $(EXPORTER_SRCS) $(DISAS_SRCS) --gcc_compile_options $(DECODER_INC) --gcc_compile_options $(COMMON_INC) --gcc_compile_options $(DISAS_INC) -cppversion 20
 
-riscv_decoder: $(SOLIB_STDCXX) $(LIB) compile
-	LD_PRELOAD=$(SOLIB_STDCXX) xelab tb_riscv_decoder -relax -s decoder -sv_lib $(basename $(notdir $(LIB)))
-	LD_PRELOAD=$(SOLIB_STDCXX) LD_LIBRARY_PATH=$(LIB_DIR) xsim decoder -testplusarg UVM_TESTNAME=riscv_decoder_from_file_test -testplusarg UVM_VERBOSITY=UVM_LOW -R
+riscv_decoder: $(SOLIB_STDCXX) $(SVDPI) compile
+	LD_PRELOAD=$(SOLIB_STDCXX) xelab tb_riscv_decoder -relax -s decoder -sv_lib $(basename $(notdir $(SVDPI)))
+	LD_PRELOAD=$(SOLIB_STDCXX) LD_LIBRARY_PATH=. xsim decoder -testplusarg UVM_TESTNAME=riscv_decoder_from_file_test -testplusarg UVM_VERBOSITY=UVM_LOW -R
 
 uvm_bfm: compile
 	xelab bfm_untimed_tb bfm_hdl_th -relax -s bfm_tb
@@ -61,5 +63,5 @@ tb_top_level: compile
 	xsim tb_top_level -R
 
 # Compile SystemVerilog files on Xilinx Vivado Suite
-compile: $(UVM_BFM_DIR) $(UVM_TOP_DIR) $(INSTR_FEED)
+compile: $(GEN_UVM_BFM_DIR) $(GEN_UVM_TOP_DIR) $(INSTR_FEED)
 	xvlog -sv -f $(RTL_FLIST) -f $(TB_FLIST) -f $(UVM_BFM_FLIST) -f $(UVM_TOP_FLIST) -L uvm $(COMPILE_OPTIONS)

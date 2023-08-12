@@ -4,9 +4,6 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "jtag_atlantic.h"
-#include "common.h"
-
 #define BUF_SIZE 64
 
 static char buf[BUF_SIZE];
@@ -22,7 +19,7 @@ int main(int argc, char **argv) {
     return 1;
   }
 
-  JTAGATLANTIC *atlantic =
+  struct JTAGATLANTIC *atlantic =
       jtagatlantic_open(cable_name, device, instance, argv[0]);
   if (!atlantic) {
     show_err();

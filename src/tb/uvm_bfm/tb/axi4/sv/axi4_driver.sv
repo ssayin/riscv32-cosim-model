@@ -13,15 +13,13 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Sat Aug 12 00:42:54 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Sat Aug 12 03:33:22 2023
 //=============================================================================
 // Description: Driver for axi4
 //=============================================================================
 
 `ifndef AXI4_DRIVER_SV
 `define AXI4_DRIVER_SV
-
-// You can insert code here by setting driver_inc_before_class in file tools/gen/axi4bfm/axi4.tpl
 
 class axi4_driver extends uvm_driver #(axi4_tx);
 
@@ -33,7 +31,7 @@ class axi4_driver extends uvm_driver #(axi4_tx);
 
   extern function new(string name, uvm_component parent);
 
-  // Start of inlined include file src/tb/uvm_bfm/tb/include/axi4_driver_inc_inside_class.sv
+  // Start of inlined include file src/tb/uvm_bfm/tb/include/axi4/axi4_driver_inc_inside_class.sv
   task run_phase(uvm_phase phase);
     forever begin
       axi4_tx_s req_s;
@@ -97,8 +95,6 @@ function axi4_driver::new(string name, uvm_component parent);
   super.new(name, parent);
 endfunction : new
 
-
-// You can insert code here by setting driver_inc_after_class in file tools/gen/axi4bfm/axi4.tpl
 
 `endif // AXI4_DRIVER_SV
 

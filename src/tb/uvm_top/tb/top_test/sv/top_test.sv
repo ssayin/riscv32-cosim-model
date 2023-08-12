@@ -13,15 +13,13 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Sat Aug 12 00:42:54 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Sat Aug 12 03:33:22 2023
 //=============================================================================
 // Description: Test class for top (included in package top_test_pkg)
 //=============================================================================
 
 `ifndef TOP_TEST_SV
 `define TOP_TEST_SV
-
-// You can insert code here by setting test_inc_before_class in file tools/gen/riscv_core/common.tpl
 
 class top_test extends uvm_test;
 
@@ -31,11 +29,7 @@ class top_test extends uvm_test;
 
   extern function new(string name, uvm_component parent);
 
-  // You can remove build_phase method by setting test_generate_methods_inside_class = no in file tools/gen/riscv_core/common.tpl
-
   extern function void build_phase(uvm_phase phase);
-
-  // You can insert code here by setting test_inc_inside_class in file tools/gen/riscv_core/common.tpl
 
 endclass : top_test
 
@@ -45,11 +39,7 @@ function top_test::new(string name, uvm_component parent);
 endfunction : new
 
 
-// You can remove build_phase method by setting test_generate_methods_after_class = no in file tools/gen/riscv_core/common.tpl
-
 function void top_test::build_phase(uvm_phase phase);
-
-  // You can insert code here by setting test_prepend_to_build_phase in file tools/gen/riscv_core/common.tpl
 
   // You could modify any test-specific configuration object variables here
 
@@ -58,12 +48,8 @@ function void top_test::build_phase(uvm_phase phase);
 
   m_env = top_env::type_id::create("m_env", this);
 
-  // You can insert code here by setting test_append_to_build_phase in file tools/gen/riscv_core/common.tpl
-
 endfunction : build_phase
 
-
-// You can insert code here by setting test_inc_after_class in file tools/gen/riscv_core/common.tpl
 
 `endif // TOP_TEST_SV
 

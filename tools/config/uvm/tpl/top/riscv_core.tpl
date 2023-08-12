@@ -6,14 +6,14 @@ trans_item = riscv_core_tx
 
 trans_var = rand logic [63:0] rdata;
 
-agent_inc_after_class     = riscv_core_inc_after_class.sv           inline
+agent_inc_after_class     = riscv_core/riscv_core_inc_after_class.sv           inline
 
-driver_inc_before_class   = riscv_core_driver_inc_before_class.sv   inline
-driver_inc_inside_class   = riscv_core_driver_inc_inside_class.sv   inline
-driver_inc                = riscv_core_do_drive.sv                  inline
-monitor_inc               = riscv_core_do_mon.sv                    inline
+driver_inc_before_class   = riscv_core/riscv_core_driver_inc_before_class.sv   inline
+driver_inc_inside_class   = riscv_core/riscv_core_driver_inc_inside_class.sv   inline
+driver_inc                = riscv_core/riscv_core_do_drive.sv                  inline
+monitor_inc               = riscv_core/riscv_core_do_mon.sv                    inline
 
-agent_seq_inc             = my_riscv_core_seq.sv                    inline
+agent_seq_inc             = riscv_core/my_riscv_core_seq.sv                    inline
 
 agent_factory_set         = riscv_core_instr_feed_seq riscv_core_default_seq
 

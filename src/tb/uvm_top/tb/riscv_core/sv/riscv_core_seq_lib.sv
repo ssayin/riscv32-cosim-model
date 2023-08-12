@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Sat Aug 12 00:42:54 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Sat Aug 12 03:33:22 2023
 //=============================================================================
 // Description: Sequence for agent riscv_core
 //=============================================================================
@@ -69,7 +69,7 @@ endfunction: set_starting_phase
 `endif
 
 
-// Start of inlined include file src/tb/uvm_top/tb/include/my_riscv_core_seq.sv
+// Start of inlined include file src/tb/uvm_top/tb/include/riscv_core/my_riscv_core_seq.sv
 `ifndef MY_RISCV_CORE_SEQ_SV
 `define MY_RISCV_CORE_SEQ_SV
 
