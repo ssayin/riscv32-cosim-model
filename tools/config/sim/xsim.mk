@@ -8,13 +8,15 @@ include $(CONFIG_DIR)data.mk
 include $(CONFIG_DIR)svdpi.mk
 include $(CONFIG_DIR)uvm/config.mk
 
-RTL_FLIST_DIR         := $(RTL_DIR)
-TB_FLIST_DIR          := $(TB_DIR)
+RTL_FLIST_DIR                    := $(RTL_DIR)
+RISCV_DECODER_DIR                := $(TB_DIR)
 
-RTL_FLIST             := $(RTL_FLIST_DIR)flist.xsim
-TB_FLIST              := $(TB_FLIST_DIR)flist.xsim
-UVM_BFM_FLIST         := $(BFM_CONFIG_ROOT)flist.xsim
-UVM_TOP_FLIST         := $(TOP_CONFIG_ROOT)flist.xsim
+RTL_FLIST                        := $(RTL_FLIST_DIR)flist.xsim
+RISCV_DECODER_FLIST              := $(RISCV_DECODER_DIR)flist.xsim
+UVM_BFM_FLIST                    := $(BFM_CONFIG_ROOT)flist.xsim
+UVM_TOP_FLIST                    := $(TOP_CONFIG_ROOT)flist.xsim
+
+UVM_TARGETS                      := RISCV_DECODER UVM_TOP UVM_BFM
 
 #VIVADO_INC := /opt/Xilinx/Vivado/2022.2/data/xsim/include/
 
@@ -37,42 +39,39 @@ SOLIB_STDCXX  := $(shell /sbin/ldconfig -p | perl -ne 'if (/stdc\+\+/) { @column
 #synth: tools/vivado.tcl
 #	vivado -mode batch -source tools/vivado.tcl
 
-COMPILE_OPTIONS := -define DEBUG_INIT_FILE='"$(shell readlink -f "./src/firmware/boot.hex")"' \
-									 -define HEX_FILENAME='"$(shell readlink -f "./src/firmware/boot.hex")"'
-
 sim: uvm_top uvm_bfm tb_top_level riscv_decoder
 
 #lib_vivado: $(DECODER_SRCS) $(EXPORTER_SRCS) $(DISAS_SRCS)
 #	xsc $(DECODER_SRCS) $(EXPORTER_SRCS) $(DISAS_SRCS) --gcc_compile_options $(DECODER_INC) --gcc_compile_options $(COMMON_INC) --gcc_compile_options $(DISAS_INC) -cppversion 20
 
-riscv_decoder: $(SOLIB_STDCXX) $(SVDPI) compile_riscv_decoder
+riscv_decoder: $(SOLIB_STDCXX) $(SVDPI) COMPILE_RISCV_DECODER 
 	LD_PRELOAD=$(SOLIB_STDCXX) xelab tb_riscv_decoder -relax -s decoder -sv_lib $(basename $(notdir $(SVDPI)))
 	LD_PRELOAD=$(SOLIB_STDCXX) LD_LIBRARY_PATH=$(PROJECT_ROOT) xsim decoder -testplusarg UVM_TESTNAME=riscv_decoder_from_file_test -testplusarg UVM_VERBOSITY=UVM_LOW -R
 
-uvm_bfm: compile_bfm
+uvm_bfm: COMPILE_UVM_BFM
 	xelab bfm_untimed_tb bfm_hdl_th -relax -s bfm_tb
 	xsim bfm_tb -testplusarg UVM_TESTNAME=bfm_test -testplusarg UVM_VERBOSITY=UVM_HIGH -R
 
-uvm_top: compile_top
+uvm_top: COMPILE_UVM_TOP
 	xelab top_tb top_th -relax -s top_tb
 	xsim top_tb -testplusarg UVM_TESTNAME=top_test -testplusarg UVM_VERBOSITY=UVM_HIGH -R
 
-tb_top_level: compile_rtl
+tb_top_level: COMPILE_RTL
 	xelab tb_top_level -relax -s tb_top_level
 	xsim tb_top_level -R
 
 # Compile SystemVerilog files on Xilinx Vivado Suite
 
-compile_rtl: $(RTL_FLIST)
+COMPILE_RTL: $(RTL_FLIST)
 	xvlog -sv -f $^ -L uvm
 
-compile_riscv_decoder: compile_rtl $(TB_FLIST) $(INSTR_FEED)
-	xvlog -sv -f $(TB_FLIST) -L uvm -define INSTR_SEQ_FILENAME='"$(INSTR_FEED)"' -define INSTR_SEQ_LINECOUNT=$(shell cat $(INSTR_FEED) | wc -l)
+define compile_uvm_template
+COMPILE_$(1): COMPILE_RTL $($(1)_FLIST) $($(1)_DIR) $(INSTR_FEED)
+	xvlog -sv -f $($(1)_FLIST) -L uvm \
+		-define INSTR_SEQ_FILENAME='"$(INSTR_FEED)"' \
+		-define INSTR_SEQ_LINECOUNT=$(shell cat $(INSTR_FEED) | wc -l) \
+		-define DEBUG_INIT_FILE='"$(shell readlink -f "./src/firmware/boot.hex")"' \
+		-define HEX_FILENAME='"$(shell readlink -f "./src/firmware/boot.hex")"'
+endef
 
-compile_bfm: compile_rtl $(UVM_BFM_FLIST) $(UVM_BFM_DIR)
-	xvlog -sv -f $(UVM_BFM_FLIST) -L uvm $(COMPILE_OPTIONS) -define INSTR_SEQ_FILENAME='"$(INSTR_FEED)"' -define INSTR_SEQ_LINECOUNT=$(shell cat $(INSTR_FEED) | wc -l)
-
-
-compile_top: compile_rtl $(UVM_TOP_FLIST) $(UVM_TOP_DIR)
-	xvlog -sv -f $(UVM_TOP_FLIST) -L uvm $(COMPILE_OPTIONS) -define INSTR_SEQ_FILENAME='"$(INSTR_FEED)"' -define INSTR_SEQ_LINECOUNT=$(shell cat $(INSTR_FEED) | wc -l)
-
+$(foreach target,$(UVM_TARGETS),$(eval $(call compile_uvm_template,$(target))))
