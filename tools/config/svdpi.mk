@@ -19,7 +19,7 @@ EXPORTER_INC  := -I$(EXPORTER_SRC)include/
 RAPIDJSON_INC := -I$(THIRD_PARTY)rapidjson/
 
 INC           := $(DECODER_INC) $(COMMON_INC) $(DISAS_INC) \
-								 $(EXPORTER_INC) $(RAPIDJSON_INC) \
+								 $(EXPORTER_INC) $(RAPIDJSON_INC) -I$(DPI_ROOT) \
 								 -I$(DPI_ROOT)include -I$(DPI_ROOT)visible
 
 DECODER_SRCS  := $(wildcard $(DECODER_SRC)*.cpp)
@@ -34,7 +34,7 @@ VISIBLE_OBJS  := $(patsubst $(VISIBLE_SRC)%.cpp,$(BUILD_DIR)%.o, $(VISIBLE_SRCS)
 DISAS_OBJ     := $(patsubst $(DISAS_SRC)%.c,$(BUILD_DIR)%.o,$(DISAS_SRCS))
 TEST_OBJ      := $(patsubst $(TEST_SRC)%.cpp,$(BUILD_DIR)%.o,$(TEST_SRCS))
 
-OBJS          := $(DECODER_OBJS) $(EXPORTER_OBJS) $(DISAS_OBJ)
+OBJS          := $(DECODER_OBJS) $(EXPORTER_OBJS) $(DISAS_OBJ) $(VISIBLE_OBJS)
 
 SVDPI         := libdpi.so
 
@@ -54,10 +54,10 @@ $(DISAS_OBJ): $(DISAS_SRCS) | $(BUILD_DIR)
 	$(CXX) -fPIC $(CXXFLAGS) $(INC) -I. -c $< -o $@
 
 $(JSON_TEST): $(VISIBLE_OBJS) $(TEST_OBJ)
-	$(CXX) $(CXXFLAGS) $(INC) - $^ -o $@
+	$(CXX) $(CXXFLAGS) $(INC) $^ -o $@
 
 $(BUILD_DIR)%.o: $(TEST_SRC)%.cpp | $(BUILD_DIR)
 	$(CXX) $(CXXFLAGS) $(INC) -c $< -o $@
 
 $(BUILD_DIR)%.o: $(VISIBLE_SRC)%.cpp | $(BUILD_DIR)
-	$(CXX) $(CXXFLAGS) $(INC) -c $< -o $@
+	$(CXX) -fPIC $(CXXFLAGS) $(INC) -c $< -o $@
