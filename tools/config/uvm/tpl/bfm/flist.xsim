@@ -1,11 +1,27 @@
 -i ./src/tb/uvm_bfm/tb/include/
--i ./src/tb/uvm_bfm/tb/axi4/sv
+-i ./src/tb/uvm_bfm/tb/axi4ar/sv
+-i ./src/tb/uvm_bfm/tb/axi4aw/sv
+-i ./src/tb/uvm_bfm/tb/axi4b/sv
+-i ./src/tb/uvm_bfm/tb/axi4r/sv
+-i ./src/tb/uvm_bfm/tb/axi4w/sv
 -i ./src/tb/uvm_bfm/tb/bfm/sv
 -i ./src/tb/uvm_bfm/tb/bfm_test/sv
 -i ./src/tb/uvm_bfm/tb/bfm_tb/sv
-./src/tb/uvm_bfm/tb/axi4/sv/axi4_pkg.sv
-./src/tb/uvm_bfm/tb/axi4/sv/axi4_if.sv
-./src/tb/uvm_bfm/tb/axi4/sv/axi4_bfm.sv
+./src/tb/uvm_bfm/tb/axi4ar/sv/axi4ar_pkg.sv
+./src/tb/uvm_bfm/tb/axi4ar/sv/axi4ar_if.sv
+./src/tb/uvm_bfm/tb/axi4ar/sv/axi4ar_bfm.sv
+./src/tb/uvm_bfm/tb/axi4aw/sv/axi4aw_pkg.sv
+./src/tb/uvm_bfm/tb/axi4aw/sv/axi4aw_if.sv
+./src/tb/uvm_bfm/tb/axi4aw/sv/axi4aw_bfm.sv
+./src/tb/uvm_bfm/tb/axi4b/sv/axi4b_pkg.sv
+./src/tb/uvm_bfm/tb/axi4b/sv/axi4b_if.sv
+./src/tb/uvm_bfm/tb/axi4b/sv/axi4b_bfm.sv
+./src/tb/uvm_bfm/tb/axi4r/sv/axi4r_pkg.sv
+./src/tb/uvm_bfm/tb/axi4r/sv/axi4r_if.sv
+./src/tb/uvm_bfm/tb/axi4r/sv/axi4r_bfm.sv
+./src/tb/uvm_bfm/tb/axi4w/sv/axi4w_pkg.sv
+./src/tb/uvm_bfm/tb/axi4w/sv/axi4w_if.sv
+./src/tb/uvm_bfm/tb/axi4w/sv/axi4w_bfm.sv
 ./src/tb/uvm_bfm/tb/bfm/sv/bfm_pkg.sv
 ./src/tb/uvm_bfm/tb/bfm_test/sv/bfm_test_pkg.sv
 ./src/tb/uvm_bfm/tb/bfm_test/sv/bfm_test.sv

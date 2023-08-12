@@ -1,6 +1,4 @@
-!axi4_if
-clk clk
-rst_n rst_n
+!axi4aw_if
 axi_awid_f awid
 axi_awaddr_f awaddr
 axi_awlen_f awlen
@@ -13,15 +11,21 @@ axi_awvalid_f awvalid
 axi_awregion_f awregion
 axi_awqos_f awqos
 axi_awready_f awready
+
+!axi4w_if
 axi_wdata_f wdata
 axi_wstrb_f wstrb
 axi_wlast_f wlast
 axi_wvalid_f wvalid
 axi_wready_f wready
+
+!axi4b_if
 axi_bid_f bid
 axi_bresp_f bresp
 axi_bvalid_f bvalid
 axi_bready_f bready
+
+!axi4ar_if
 axi_arid_f arid
 axi_araddr_f araddr
 axi_arlen_f arlen
@@ -34,6 +38,8 @@ axi_arvalid_f arvalid
 axi_arqos_f arqos
 axi_arregion_f arregion
 axi_arready_f arready
+
+!axi4r_if
 axi_rid_f rid
 axi_rdata_f rdata
 axi_rresp_f rresp
