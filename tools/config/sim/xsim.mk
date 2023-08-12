@@ -9,7 +9,7 @@ include $(CONFIG_DIR)svdpi.mk
 include $(CONFIG_DIR)uvm/config.mk
 
 RTL_FLIST_DIR                    := $(RTL_DIR)
-RISCV_DECODER_DIR                := $(TB_DIR)
+RISCV_DECODER_DIR                := $(TB_DIR)/riscv_decoder_uvm/
 
 RTL_FLIST                        := $(RTL_FLIST_DIR)flist.xsim
 RISCV_DECODER_FLIST              := $(RISCV_DECODER_DIR)flist.xsim
