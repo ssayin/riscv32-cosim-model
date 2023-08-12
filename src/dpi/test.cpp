@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
+#include "include/visible.h"
 #include "rapidjson/document.h"
 #include "visible.h"
 #include <fstream>
@@ -9,7 +10,6 @@
 #include <vector>
 
 using namespace rapidjson;
-
 
 std::ostream &operator<<(std::ostream &os, const PC &item) {
 
@@ -68,6 +68,66 @@ std::ostream &operator<<(std::ostream &os, const VisibleState &item) {
   return os;
 }
 
+void get_next_reentrant(int i, rapidjson::Document &doc) {
+  const Value &item = doc[i];
+  VisibleState parsedItem;
+  if (item.IsObject()) {
+    const Value &csrStagedArray = item["csr_staged"];
+    if (csrStagedArray.IsArray()) {
+      for (SizeType j = 0; j < csrStagedArray.Size(); ++j) {
+        const Value &csrItem = csrStagedArray[j];
+        if (csrItem.IsObject()) {
+          CsrStaged staged;
+          staged.index = csrItem["index"].GetUint();
+          staged.next = csrItem["next"].GetUint();
+          staged.prev = csrItem["prev"].GetUint();
+          parsedItem.csr_staged.push_back(staged);
+        }
+      }
+    }
+
+    const Value &gprStagedArray = item["gpr_staged"];
+    if (gprStagedArray.IsArray()) {
+      for (SizeType j = 0; j < gprStagedArray.Size(); ++j) {
+        const Value &gprItem = gprStagedArray[j];
+        if (gprItem.IsObject()) {
+          GprStaged staged;
+          staged.index = gprItem["index"].GetUint();
+          staged.next = gprItem["next"].GetUint();
+          staged.prev = gprItem["prev"].GetUint();
+          parsedItem.gpr_staged.push_back(staged);
+        }
+      }
+    }
+
+    const Value &dec = item["dec"];
+    if (dec.IsObject()) {
+      parsedItem.dec.has_imm = dec["has_imm"].GetBool();
+      parsedItem.dec.imm = dec["imm"].GetUint();
+      parsedItem.dec.is_compressed = dec["is_compressed"].GetBool();
+      parsedItem.dec.opt = dec["opt"].GetUint();
+      parsedItem.dec.rd = dec["rd"].GetUint();
+      parsedItem.dec.rs1 = dec["rs1"].GetUint();
+      parsedItem.dec.rs2 = dec["rs2"].GetUint();
+      parsedItem.dec.tgt = dec["tgt"].GetUint();
+      parsedItem.dec.use_pc = dec["use_pc"].GetBool();
+    }
+
+    const Value &pc = item["pc"];
+    if (pc.IsObject()) {
+      parsedItem.pc.pc = pc["pc"].GetUint();
+      parsedItem.pc.pc_next = pc["pc_next"].GetUint();
+    }
+
+    const Value &instr = item["instr"];
+    if (instr.IsObject()) {
+      parsedItem.instr = instr.GetUint();
+    }
+
+    std::cout << parsedItem << "\n";
+  }
+}
+
 int main(int argc, char *argv[]) {
   std::ifstream inputFile(argv[1]);
   std::string json((std::istreambuf_iterator<char>(inputFile)),
@@ -80,68 +140,7 @@ int main(int argc, char *argv[]) {
     std::vector<VisibleState> items;
 
     for (SizeType i = 0; i < doc.Size(); ++i) {
-      const Value &item = doc[i];
-      if (item.IsObject()) {
-        VisibleState parsedItem;
-
-        const Value &csrStagedArray = item["csr_staged"];
-        if (csrStagedArray.IsArray()) {
-          for (SizeType j = 0; j < csrStagedArray.Size(); ++j) {
-            const Value &csrItem = csrStagedArray[j];
-            if (csrItem.IsObject()) {
-              CsrStaged staged;
-              staged.index = csrItem["index"].GetUint();
-              staged.next = csrItem["next"].GetUint();
-              staged.prev = csrItem["prev"].GetUint();
-              parsedItem.csr_staged.push_back(staged);
-            }
-          }
-        }
-
-        const Value &gprStagedArray = item["gpr_staged"];
-        if (gprStagedArray.IsArray()) {
-          for (SizeType j = 0; j < gprStagedArray.Size(); ++j) {
-            const Value &gprItem = gprStagedArray[j];
-            if (gprItem.IsObject()) {
-              GprStaged staged;
-              staged.index = gprItem["index"].GetUint();
-              staged.next = gprItem["next"].GetUint();
-              staged.prev = gprItem["prev"].GetUint();
-              parsedItem.gpr_staged.push_back(staged);
-            }
-          }
-        }
-
-        const Value &dec = item["dec"];
-        if (dec.IsObject()) {
-          parsedItem.dec.has_imm = dec["has_imm"].GetBool();
-          parsedItem.dec.imm = dec["imm"].GetUint();
-          parsedItem.dec.is_compressed = dec["is_compressed"].GetBool();
-          parsedItem.dec.opt = dec["opt"].GetUint();
-          parsedItem.dec.rd = dec["rd"].GetUint();
-          parsedItem.dec.rs1 = dec["rs1"].GetUint();
-          parsedItem.dec.rs2 = dec["rs2"].GetUint();
-          parsedItem.dec.tgt = dec["tgt"].GetUint();
-          parsedItem.dec.use_pc = dec["use_pc"].GetBool();
-        }
-
-        const Value &pc = item["pc"];
-        if (pc.IsObject()) {
-          parsedItem.pc.pc = pc["pc"].GetUint();
-          parsedItem.pc.pc_next = pc["pc_next"].GetUint();
-        }
-
-        const Value &instr = item["instr"];
-        if (instr.IsObject()) {
-          parsedItem.instr = instr.GetUint();
-        }
-
-        items.push_back(parsedItem);
-      }
-    }
-
-    for (const auto &item : items) {
-      std::cout << item << "\n";
+      get_next_reentrant(i, doc);
     }
   }
   return 0;
