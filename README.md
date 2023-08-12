@@ -24,7 +24,7 @@ Before you begin, ensure you have met the following requirements:
 - XSIM
 - C/C++ compiler
 - make
-- p7zip or any other software that supports v2.0 DEFLATE can be used. If you decide to use a different software, you will need to adjust [common.mk](config/common.mk) accordingly.
+- p7zip or any other software that supports v2.0 DEFLATE can be used. If you decide to use a different software, you will need to adjust [data.mk](config/data.mk) accordingly.
 - jq
 - perl
 
