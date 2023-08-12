@@ -27,6 +27,7 @@ all:
 	@echo "make SIM=<sim>"
 else ifeq ($(SIM),xsim)
 	include $(CONFIG_DIR)sim/$(SIM).mk
+else
 endif
 
 include $(CONFIG_DIR)uart_client.mk
