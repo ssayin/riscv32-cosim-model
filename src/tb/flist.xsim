@@ -4,7 +4,7 @@
 -i ./src/tb/riscv_decoder_uvm/env
 -i ./src/tb/riscv_decoder_uvm/tests
 -i ./src/tb/riscv_decoder_uvm/sequences
-./src/dpi/svdpi_pkg.sv
+./src/svdpi/svdpi_pkg.sv
 ./src/tb/riscv_decoder_uvm/top/riscv_decoder.sv
 ./src/tb/riscv_decoder_uvm/uvc/riscv_decoder_pkg.sv 
 ./src/tb/riscv_decoder_uvm/env/riscv_decoder_ref_model_pkg.sv 
