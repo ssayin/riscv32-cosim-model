@@ -148,6 +148,7 @@ module riscv_core (
   logic                     br_ataken_m;
   logic                     br_m;
   logic [              4:0] rd_addr_m;
+  logic [             31:1] pc_m;
   // WB
   // WB
   // WB
@@ -157,18 +158,16 @@ module riscv_core (
   // REG FILE
   // REG FILE
   // REG FILE
-  logic [              4:0] rd_addr;
   logic [              4:0] rs1_addr_r;
   logic [              4:0] rs2_addr_r;
   // IF/EX/MEM stuff
-  logic [             31:1] pc_in;
-  logic                     pc_update;
   logic                     br_misp_m;
   logic                     stall;
   logic                     stall_f;
   assign flush_d0 = 0;
   assign flush_d1 = 0;
-  assign pc_in    = alu_res_m[31:1];
+
+  assign stall    = 'b0;
   // TODO: Need a skid buffer here
   // ID0 -> ID1 -> EX
   // ADDR -> WAIT -> DATA
@@ -178,9 +177,6 @@ module riscv_core (
   id0 id0_0 (.*);
   id1 id1_0 (.*);
   mem mem_0 (.*);
-  assign stall                      = 'b0;
-  assign pc_update                  = br_misp_m;
-  assign flush                      = br_misp_m;
   // Unused signals
   assign axi_awid_f[AxiIdWidth-1:0] = 0;
   assign axi_awaddr_f[31:0]         = 0;

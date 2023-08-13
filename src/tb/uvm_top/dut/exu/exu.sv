@@ -25,6 +25,7 @@ module exu
   input  logic [BranchOpWidth-1:0] br_op_e,
   input  logic                     rd_en_e,
   output logic                     comp_m,
+  output logic [             31:1] pc_m,
   output logic                     rd_en_m,
   output logic [             31:0] alu_res_m,
   output logic [             31:0] store_data_m,
@@ -35,10 +36,30 @@ module exu
   output logic [              4:0] rd_addr_m
 );
 
-  logic [31:0] res_next;
   logic [31:0] alu_out;
+  logic [31:0] mul_out;
+  logic [31:0] div_out;
   logic        bru_out;
   logic        br_misp_next;
+
+  logic [ 1:0] alu_op_prepend;
+  logic        alu_op_base_en;
+  logic        alu_op_mul_en;
+  logic        alu_op_div_en;
+
+  assign alu_op_prepend = alu_op_e[AluOpWidth-1:AluOpWidth-2];
+
+  always_comb begin
+    case (alu_op_prepend)
+      AluBasePrepend, AluSubSraPrepend: {alu_op_base_en, alu_op_mul_en, alu_op_div_en} = 3'b100;
+      AluMulPrepend: begin
+        if (alu_op_e[2]) {alu_op_base_en, alu_op_mul_en, alu_op_div_en} = 3'b010;
+        else {alu_op_base_en, alu_op_mul_en, alu_op_div_en} = 3'b001;
+      end
+      default:                          {alu_op_base_en, alu_op_mul_en, alu_op_div_en} = 3'b100;
+    endcase
+  end
+
 
   exu_bru exu_bru_0 (
     .en     (br_e),
@@ -49,20 +70,46 @@ module exu
   );
 
   exu_alu alu_0 (
+    .en    (alu_op_base_en),
     .a     (use_pc_e ? pc_e : rs1_data_e),
     .b     (use_imm_e ? imm_e : rs2_data_e),
     .alu_op(alu_op_e),
     .res   (alu_out)
   );
 
-  always_comb begin
-    if (br_misp_next && br_ataken_m) res_next = comp_e ? pc_e + 2 : pc_e + 4;
-    else res_next = alu_out;
+  exu_mul mul_0 (
+    .en    (alu_op_mul_en),
+    .a     (rs1_data_e),
+    .b     (rs2_data_e),
+    .alu_op(alu_op_e),
+    .res   (mul_out)
+  );
+
+  exu_div div_0 (
+    .en    (alu_op_div_en),
+    .a     (rs1_data_e),
+    .b     (rs2_data_e),
+    .alu_op(alu_op_e),
+    .res   (div_out)
+  );
+
+  always_ff @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+      alu_res_m <= 32'h0;
+    end else begin
+      case ({
+        alu_op_base_en, alu_op_mul_en, alu_op_div_en
+      })
+        3'b100:  alu_res_m <= alu_out;
+        3'b010:  alu_res_m <= mul_out;
+        3'b001:  alu_res_m <= div_out;
+        default: alu_res_m <= 32'h0;
+      endcase
+    end
   end
 
   always_ff @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
-      alu_res_m    <= 'b0;
       br_misp_m    <= 'b0;
       br_ataken_m  <= 'b0;
       br_m         <= 'b0;
@@ -72,8 +119,8 @@ module exu
       rd_addr_m    <= 'h0;
       rd_en_m      <= 'b0;
       store_data_m <= 'h0;
+      pc_m[31:1]   <= 31'h0;
     end else begin
-      alu_res_m    <= res_next;
       br_misp_m    <= br_misp_next;
       br_ataken_m  <= br_ataken_e;
       br_m         <= br_e;
@@ -83,9 +130,10 @@ module exu
       rd_addr_m    <= rd_addr_e;
       rd_en_m      <= rd_en_e;
       store_data_m <= rs2_data_e;
+      pc_m[31:1]   <= pc_e[31:1];
     end
   end
 
-  assign br_misp_next = (!bru_out && br_ataken_e) || (!br_ataken_e && bru_out);
+  assign br_misp_next = (!bru_out && br_ataken_e) || (bru_out && !br_ataken_e);
 
 endmodule : exu

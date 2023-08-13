@@ -21,6 +21,8 @@
 ./src/rtl/core/exu/exu_alu.sv
 ./src/rtl/core/exu/exu.sv
 ./src/rtl/core/ifu/ifu.sv
+./src/rtl/core/ifu/ifu_br.sv
+./src/rtl/core/ifu/ifu_aln.sv
 ./src/rtl/core/ifu/ifu_mem_ctrl.sv
 ./src/rtl/core/dec/id0.sv
 ./src/rtl/core/dec/id1.sv

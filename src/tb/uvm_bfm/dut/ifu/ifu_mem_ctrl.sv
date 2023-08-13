@@ -111,7 +111,13 @@ module ifu_mem_ctrl (
   assign axi_rready_f        = ~full;
   assign wren                = axi_rready_f && axi_rvalid_f;
   assign din[63:0]           = axi_rdata_f[63:0];
+
+  // TODO: Since a burst cannot be terminated early. FIFO will be filled with
+  // useless instructions when flush is asserted and taking jump/branch. Keep
+  // it asserted as long as rlast is 0. Add signals to introduce stall logic.
+
   assign rden                = !empty && row_flush;
+
   assign wordline[63:0]      = dout[63:0];
   assign axi_arid_f          = 0;
   assign axi_arlock_f        = 0;
