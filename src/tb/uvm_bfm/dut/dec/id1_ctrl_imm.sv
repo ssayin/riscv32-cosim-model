@@ -1,8 +1,10 @@
 // SPDX-FileCopyrightText: 2023 Serdar Sayın <https://serdarsayin.com>
 //
 // SPDX-License-Identifier: Apache-2.0
+
 import defs_pkg::*;
-module id1_ctl_imm (
+
+module id1_ctrl_imm (
   input  logic                     clk,         // unused
   input  logic                     rst_n,       // unused
   input  logic [             31:0] instr,
@@ -26,13 +28,17 @@ module id1_ctl_imm (
   output logic                     auipc,
   output logic                     lui
 );
+
   logic [31:0] i;
   logic [15:0] in16;
+
   assign i[31:0]    = instr[31:0];
   assign in16[15:0] = instr[15:0];
+
   // Zero-extended RS2
   // TODO: Remove
   logic [DataWidth-1:0] ze_rs2;
+
   logic [          4:0] c_rd_rs1;
   logic [          4:0] c_rs2;
   logic [DataWidth-1:0] imm_I;
@@ -41,8 +47,10 @@ module id1_ctl_imm (
   logic [DataWidth-1:0] imm_U;
   logic [DataWidth-1:0] imm_J;
   logic [         11:0] imm_csr;
+
   // For extracting various C_* fields
   logic [DataWidth-1:0] c_imm_addi4spn;
+
   // logic [   DataWidth-1:0] c_uimm5;
   logic [DataWidth-1:0] c_imm6;
   logic [DataWidth-1:0] c_imm_j;
@@ -53,8 +61,10 @@ module id1_ctl_imm (
   logic [DataWidth-1:0] c_imm_swsp;
   logic [DataWidth-1:0] c_imm_b;
   logic [DataWidth-1:0] c_uimm6;
+
   // TODO: Remove
   assign ze_rs2         = {27'b0, i[24:20]};
+
   assign imm_I          = {{20{i[31]}}, i[31:20]};
   assign imm_S          = {{20{i[31]}}, i[31:25], i[11:7]};
   assign imm_B          = {{20{i[31]}}, i[7], i[30:25], i[11:8], 1'b0};
@@ -73,6 +83,7 @@ module id1_ctl_imm (
   assign c_imm_lwsw     = {21'b0, i[5], i[12:10], i[6], 2'b00};
   assign c_imm_lwsp     = {24'b0, i[3:2], i[12], i[6:4], 2'b00};
   assign c_imm_swsp     = {24'b0, i[8:7], i[12:9], 2'b0};
+
   always_comb begin
     use_imm = 1'b0;
     use_pc  = 1'b0;
@@ -333,12 +344,10 @@ module id1_ctl_imm (
       endcase
     end
   end
-  riscv_decoder_br comb_br (
-    .instr(in16),
-    .br   (br)
-  );
-  riscv_decoder_j comb_j (
+
+  decode_jalr comb_jalr_0 (
     .instr(in16),
     .j    (jal)
   );
+
 endmodule

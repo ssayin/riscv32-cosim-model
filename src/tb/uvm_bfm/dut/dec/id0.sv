@@ -1,7 +1,9 @@
 // SPDX-FileCopyrightText: 2023 Serdar Sayın <https://serdarsayin.com>
 //
 // SPDX-License-Identifier: Apache-2.0
+
 import defs_pkg::*;
+
 module id0 (
   input  logic        clk,
   input  logic        rst_n,
@@ -22,10 +24,12 @@ module id0 (
   output logic        br_ataken_d1,
   output logic        illegal_d1
 );
+
   // Internal Signal Wires
   logic [4:0] rs1_addr_next;
   logic [4:0] rs2_addr_next;
   logic [4:0] rd_addr_next;
+
   id0_gpr dec_gpr (
     .clk       (clk),
     .rst_n     (rst_n),
@@ -35,6 +39,7 @@ module id0 (
     .rs1_addr  (rs1_addr_next),
     .rs2_addr  (rs2_addr_next)
   );
+
   always_ff @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
       instr_d1     <= 32'h13;
@@ -42,9 +47,9 @@ module id0 (
       comp_d1      <= 0;
       br_d1        <= 0;
       br_ataken_d1 <= 0;
-      rd_addr_d1   <= 'h0;
-      rs1_addr_r   <= 'h0;
-      rs2_addr_r   <= 'h0;
+      rd_addr_d1   <= 5'h0;
+      rs1_addr_r   <= 5'h0;
+      rs2_addr_r   <= 5'h0;
       illegal_d1   <= 0;
     end else begin
       instr_d1     <= instr_d0;
@@ -58,4 +63,5 @@ module id0 (
       illegal_d1   <= illegal_d0;
     end
   end
+
 endmodule : id0

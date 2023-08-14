@@ -1,8 +1,10 @@
 // SPDX-FileCopyrightText: 2023 Serdar Sayın <https://serdarsayin.com>
 //
 // SPDX-License-Identifier: Apache-2.0
+
 import defs_pkg::*;
-module riscv_decoder_br (
+
+module decode_br (
   input  logic [15:0] instr,
   output logic        br
 );

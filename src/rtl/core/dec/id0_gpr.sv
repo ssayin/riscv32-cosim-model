@@ -1,25 +1,31 @@
 // SPDX-FileCopyrightText: 2023 Serdar Sayın <https://serdarsayin.com>
 //
 // SPDX-License-Identifier: Apache-2.0
+
 import defs_pkg::*;
-module riscv_decoder_comp_gpr (
+
+module id0_comp_gpr (
   input  logic        en,
   input  logic [15:0] instr,
   output logic [ 4:0] rd_addr,
   output logic [ 4:0] rs1_addr,
   output logic [ 4:0] rs2_addr
 );
+
   localparam logic [4:0] X0 = 5'b00000;
   localparam logic [4:0] X1 = 5'b00001;
   localparam logic [4:0] X2 = 5'b00010;
+
   logic [15:0] i;
   logic [ 4:0] c_42;
   logic [ 4:0] c_62;
   logic [ 4:0] c_97;
+
   assign i[15:0] = instr[15:0];
   assign c_42    = {2'b01, i[9:7]};
   assign c_62    = i[6:2];
   assign c_97    = {2'b01, i[4:2]};
+
   always_comb begin
     // TODO: explicitly assign when appropriate later for debug
     rd_addr  = i[11:7];
@@ -101,7 +107,9 @@ module riscv_decoder_comp_gpr (
       endcase
     end
   end
+
 endmodule
+
 module id0_gpr (
   input  logic        clk,
   input  logic        rst_n,
@@ -114,14 +122,17 @@ module id0_gpr (
   logic [4:0] rd_addr_next;
   logic [4:0] rs1_addr_next;
   logic [4:0] rs2_addr_next;
-  riscv_decoder_comp_gpr comp_gpr_0 (
+
+  id0_comp_gpr comp_gpr_0 (
     .en      (compressed),
     .instr   (instr[15:0]),
     .rd_addr (rd_addr_next),
     .rs1_addr(rs1_addr_next),
     .rs2_addr(rs2_addr_next)
   );
+
   assign rd_addr  = compressed ? rd_addr_next : instr[11:7];
   assign rs1_addr = compressed ? rs1_addr_next : instr[19:15];
   assign rs2_addr = compressed ? rs2_addr_next : instr[24:20];
+
 endmodule

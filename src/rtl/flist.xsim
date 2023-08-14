@@ -9,12 +9,12 @@
 ./src/rtl/include/riscv_opcodes.svh
 ./src/rtl/include/defs_pkg.sv
 ./src/rtl/core/sync_fifo.sv
-./src/rtl/core/dec/riscv_decoder_j.sv
+./src/rtl/core/dec/decode_br.sv
+./src/rtl/core/dec/decode_jal.sv
+./src/rtl/core/dec/decode_jal_imm.sv
+./src/rtl/core/dec/decode_jalr.sv
 ./src/rtl/core/dec/id0_gpr.sv
-./src/rtl/core/dec/id1_ctl_imm.sv
-./src/rtl/core/dec/riscv_decoder_br.sv
-./src/rtl/core/dec/riscv_decoder_j_no_rr.sv
-./src/rtl/core/dec/riscv_decoder_j_no_rr_imm.sv
+./src/rtl/core/dec/id1_ctrl_imm.sv
 ./src/rtl/core/reg_file.sv
 ./src/rtl/core/riscv_core.sv
 ./src/rtl/core/exu/exu_bru.sv

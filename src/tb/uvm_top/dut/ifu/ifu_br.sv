@@ -35,60 +35,60 @@ module ifu_br (
 
   logic        br_ataken;
 
-  riscv_decoder_j_no_rr_imm dec_j_no_rr_imm_0 (
+  decode_jal_imm dec_jal_imm_0 (
     .instr(wordline[63:32]),
     .imm  (jimm_0)
   );
 
-  riscv_decoder_j_no_rr_imm dec_j_no_rr_imm_1 (
+  decode_jal_imm dec_jal_imm_1 (
     .instr({16'h0, wordline[63:48]}),
     .imm  (jimm_1)
   );
 
-  riscv_decoder_j_no_rr_imm dec_j_no_rr_imm_2 (
+  decode_jal_imm dec_jal_imm_2 (
     .instr(wordline[31:0]),
     .imm  (jimm_2)
   );
 
-  riscv_decoder_j_no_rr_imm dec_j_no_rr_imm_3 (
+  decode_jal_imm dec_jal_imm_3 (
     .instr({16'h0, wordline[31:16]}),
     .imm  (jimm_3)
   );
 
-  riscv_decoder_br dec_br_0 (
+  decode_br dec_br_0 (
     .instr(wordline[47:32]),
     .br   (br_0)
   );
 
-  riscv_decoder_j_no_rr dec_j_no_rr_0 (
+  decode_jal dec_jal_0 (
     .instr(wordline[47:32]),
     .j    (j_0)
   );
-  riscv_decoder_br dec_br_1 (
+  decode_br dec_br_1 (
     .instr(wordline[63:48]),
     .br   (br_1)
   );
 
-  riscv_decoder_j_no_rr dec_j_no_rr_1 (
+  decode_jal dec_jal_1 (
     .instr(wordline[63:48]),
     .j    (j_1)
   );
-  riscv_decoder_br dec_br_2 (
+  decode_br dec_br_2 (
     .instr(wordline[15:0]),
     .br   (br_2)
   );
 
-  riscv_decoder_j_no_rr dec_j_no_rr_2 (
+  decode_jal dec_jal_2 (
     .instr(wordline[15:0]),
     .j    (j_2)
   );
 
-  riscv_decoder_br dec_br_3 (
+  decode_br dec_br_3 (
     .instr(wordline[31:16]),
     .br   (br_3)
   );
 
-  riscv_decoder_j_no_rr dec_j_no_rr_3 (
+  decode_jal dec_jal_3 (
     .instr(wordline[31:16]),
     .j    (j_3)
   );

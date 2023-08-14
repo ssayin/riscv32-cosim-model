@@ -21,10 +21,14 @@ module riscv_decoder (
   output logic     [  AluOpWidth-1:0] alu_op,
   output logic     [  LsuOpWidth-1:0] lsu_op
 );
+
   logic compressed;
+
   assign compressed = ~(instr[0] & instr[1]);
+
   id0_gpr dec_gpr (.*);
-  id1_ctl_imm dec_ctl_imm (
+
+  id1_ctrl_imm dec_ctrl_imm (
     .clk       (clk),
     .rst_n     (rst_n),
     .instr     (instr),
@@ -45,9 +49,11 @@ module riscv_decoder (
     .lsu_op    (lsu_op),
     .csr       (ctl.csr)
   );
-  riscv_decoder_j_no_rr jnorr (
+
+  decode_jal dec_jal_0 (
     .instr(instr[15:0]),
     .j    (jal1)
   );
+
   assign ctl.jal = jal1 || jal2;
 endmodule
