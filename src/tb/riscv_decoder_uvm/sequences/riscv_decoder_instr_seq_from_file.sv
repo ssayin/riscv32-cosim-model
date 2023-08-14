@@ -10,10 +10,11 @@ class riscv_decoder_instr_seq_from_file extends uvm_sequence #(riscv_decoder_tra
   `uvm_object_utils(riscv_decoder_instr_seq_from_file)
 
   int fd;
+  string filename = "build/data/amalgamated.txt";
 
   function new(string name = "riscv_decoder_instr_seq_from_file");
     super.new(name);
-    fd = $fopen(`INSTR_SEQ_FILENAME, "r");
+    fd = $fopen(filename, "r");
   endfunction : new
 
   virtual task body();

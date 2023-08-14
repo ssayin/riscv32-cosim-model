@@ -7,9 +7,11 @@ class axi4w_hex_seq extends axi4w_default_seq;
 
   bit [7:0] data[1024];
 
+  string hex_filename = "./src/firmware/boot.hex";
+
   function new(string name = "axi4w_hex_seq");
     super.new(name);
-    $readmemh(`HEX_FILENAME, data);
+    $readmemh(hex_filename, data);
   endfunction : new
 
   task body();
@@ -38,9 +40,11 @@ class axi4w_instr_feed_seq extends axi4w_default_seq;
   int          fd;
   logic [31:0] data[2];
 
+  string seq_filename = "./build/data/amalgamated.txt";
+
   function new(string name = "axi4w_instr_feed_seq");
     super.new(name);
-    fd = $fopen(`INSTR_SEQ_FILENAME, "r");
+    fd = $fopen(seq_filename, "r");
   endfunction : new
 
   task body();

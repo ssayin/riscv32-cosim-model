@@ -31,6 +31,24 @@ UVM_TOP_FLIST                    := $(TOP_CONFIG_ROOT)flist.$(SIM)
 UVM_TARGETS                      := RISCV_DECODER UVM_TOP UVM_BFM
 SIM_TARGETS                      := uvm_top uvm_bfm riscv_decoder tb_top_level
 
+UVM_GENERATOR    := $(THIRD_PARTY)easier_uvm_gen.pl
+
+GEN_DIR          := tools/config/uvm/
+TPL_DIR          := $(GEN_DIR)tpl/
+
+TB_DIR           := $(PROJECT_ROOT)src/tb/
+UVM_BFM_DIR      := $(TB_DIR)uvm_bfm/
+UVM_TOP_DIR      := $(TB_DIR)uvm_top/
+
+BFM_CONFIG_ROOT  := $(TPL_DIR)bfm/
+TOP_CONFIG_ROOT  := $(TPL_DIR)top/
+
+UVM_BFM_FLIST    := $(BFM_CONFIG_ROOT)flist.xsim
+UVM_TOP_FLIST    := $(TOP_CONFIG_ROOT)flist.xsim
+
+DATA_DIR              := $(PROJECT_ROOT)data/
+DATA_EXTRACT_DIR      := $(BUILD_DIR)data/
+
 ifeq ($(SIM),)
 all:
 	@echo "Simulator is not specified. Cannot proceed."

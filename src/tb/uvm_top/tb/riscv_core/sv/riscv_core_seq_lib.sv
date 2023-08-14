@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Aug 14 07:56:24 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Aug 14 18:56:08 2023
 //=============================================================================
 // Description: Sequence for agent riscv_core
 //=============================================================================
@@ -79,9 +79,11 @@ class riscv_core_hex_seq extends riscv_core_default_seq;
 
   bit [7:0] data[1024];
 
+  string hex_filename = "./src/firmware/boot.hex";
+
   function new(string name = "riscv_core_hex_seq");
     super.new(name);
-    $readmemh(`HEX_FILENAME, data);
+    $readmemh(hex_filename, data);
   endfunction : new
 
   task body();
@@ -110,9 +112,11 @@ class riscv_core_instr_feed_seq extends riscv_core_default_seq;
   int          fd;
   logic [31:0] data[2];
 
+  string seq_filename = "./build/data/amalgamated.txt";
+
   function new(string name = "riscv_core_instr_feed_seq");
     super.new(name);
-    fd = $fopen(`INSTR_SEQ_FILENAME, "r");
+    fd = $fopen(seq_filename, "r");
   endfunction : new
 
   task body();

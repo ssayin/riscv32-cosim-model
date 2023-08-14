@@ -2,8 +2,6 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-DATA_DIR              := $(PROJECT_ROOT)data/
-DATA_EXTRACT_DIR      := $(BUILD_DIR)data/
 INSTR_FEED            := $(DATA_EXTRACT_DIR)amalgamated.txt
 
 $(INSTR_FEED): $(DATA_EXTRACT_DIR)
