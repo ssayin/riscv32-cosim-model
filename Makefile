@@ -2,52 +2,55 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-PROJECT_ROOT   := $(CURDIR)/
-BUILD_DIR      := $(PROJECT_ROOT)build/
-TOOLS_DIR      := $(PROJECT_ROOT)tools/
-CONFIG_DIR     := $(TOOLS_DIR)config/
-SRC_DIR        := $(PROJECT_ROOT)src/
-RTL_DIR        := $(SRC_DIR)rtl/
-TB_DIR         := $(SRC_DIR)tb/
-THIRD_PARTY    := $(PROJECT_ROOT)third_party/
+PROJECT_ROOT            := $(CURDIR)/
+BUILD_DIR               := $(PROJECT_ROOT)build/
+TOOLS_DIR               := $(PROJECT_ROOT)tools/
+CONFIG_DIR              := $(TOOLS_DIR)config/
+SRC_DIR                 := $(PROJECT_ROOT)src/
+RTL_DIR                 := $(SRC_DIR)rtl/
+TB_DIR                  := $(SRC_DIR)tb/
+THIRD_PARTY             := $(PROJECT_ROOT)third_party/
 
-CC             := gcc
-CXX            := g++
-CFLAGS         := -O2
-CXXFLAGS       := -std=gnu++20 $(CFLAGS)
+CC                      := gcc
+CXX                     := g++
+CFLAGS                  := -O2
+CXXFLAGS                := -std=gnu++20 $(CFLAGS)
 
-QUARTUS_ROOT   ?= /opt/intelFPGA_lite/22.1std/quartus/
+QUARTUS_ROOT            ?= /opt/intelFPGA_lite/22.1std/quartus/
+VIVADO_ROOT             ?= /opt/Xilinx/Vivado/2022.2/
 
-SIM            ?= xsim
+VIVADO_INC              := $(VIVADO_ROOT)data/xsim/include/
 
-RTL_FLIST_DIR                    := $(RTL_DIR)
-RISCV_DECODER_DIR                := $(TB_DIR)/riscv_decoder_uvm/
+SIM                     ?= xsim
 
-RTL_FLIST                        := $(RTL_FLIST_DIR)flist.$(SIM)
-RISCV_DECODER_FLIST              := $(RISCV_DECODER_DIR)flist.$(SIM)
-UVM_BFM_FLIST                    := $(BFM_CONFIG_ROOT)flist.$(SIM)
-UVM_TOP_FLIST                    := $(TOP_CONFIG_ROOT)flist.$(SIM)
+RTL_FLIST_DIR           := $(RTL_DIR)
+RISCV_DECODER_DIR       := $(TB_DIR)/riscv_decoder_uvm/
 
-UVM_TARGETS                      := RISCV_DECODER UVM_TOP UVM_BFM
-SIM_TARGETS                      := uvm_top uvm_bfm riscv_decoder tb_top_level
+RTL_FLIST               := $(RTL_FLIST_DIR)flist.$(SIM)
+RISCV_DECODER_FLIST     := $(RISCV_DECODER_DIR)flist.$(SIM)
+UVM_BFM_FLIST           := $(BFM_CONFIG_ROOT)flist.$(SIM)
+UVM_TOP_FLIST           := $(TOP_CONFIG_ROOT)flist.$(SIM)
 
-UVM_GENERATOR    := $(THIRD_PARTY)easier_uvm_gen.pl
+UVM_TARGETS             := RISCV_DECODER UVM_TOP UVM_BFM
+SIM_TARGETS             := uvm_top uvm_bfm riscv_decoder
 
-GEN_DIR          := tools/config/uvm/
-TPL_DIR          := $(GEN_DIR)tpl/
+UVM_GENERATOR           := $(THIRD_PARTY)easier_uvm_gen.pl
 
-TB_DIR           := $(PROJECT_ROOT)src/tb/
-UVM_BFM_DIR      := $(TB_DIR)uvm_bfm/
-UVM_TOP_DIR      := $(TB_DIR)uvm_top/
+GEN_DIR                 := $(patsubst $(abspath %),%,$(CONFIG_DIR)/uvm/)
+TPL_DIR                 := $(GEN_DIR)tpl/
 
-BFM_CONFIG_ROOT  := $(TPL_DIR)bfm/
-TOP_CONFIG_ROOT  := $(TPL_DIR)top/
+TB_DIR                  := $(PROJECT_ROOT)src/tb/
+UVM_BFM_DIR             := $(TB_DIR)uvm_bfm/
+UVM_TOP_DIR             := $(TB_DIR)uvm_top/
 
-UVM_BFM_FLIST    := $(BFM_CONFIG_ROOT)flist.xsim
-UVM_TOP_FLIST    := $(TOP_CONFIG_ROOT)flist.xsim
+BFM_CONFIG_ROOT         := $(TPL_DIR)bfm/
+TOP_CONFIG_ROOT         := $(TPL_DIR)top/
 
-DATA_DIR              := $(PROJECT_ROOT)data/
-DATA_EXTRACT_DIR      := $(BUILD_DIR)data/
+UVM_BFM_FLIST           := $(BFM_CONFIG_ROOT)flist.xsim
+UVM_TOP_FLIST           := $(TOP_CONFIG_ROOT)flist.xsim
+
+DATA_DIR                := $(PROJECT_ROOT)data/
+DATA_EXTRACT_DIR        := $(BUILD_DIR)data/
 
 ifeq ($(SIM),)
 all:

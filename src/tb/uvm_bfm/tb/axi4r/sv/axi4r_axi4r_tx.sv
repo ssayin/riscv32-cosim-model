@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Aug 14 18:56:08 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Aug 14 20:27:19 2023
 //=============================================================================
 // Description: Sequence item for axi4r_sequencer
 //=============================================================================
@@ -36,8 +36,8 @@ class axi4r_tx extends uvm_sequence_item;
 
   `uvm_object_utils(axi4r_tx)
 
-  // To include variables in copy, compare, print, record, pack, unpack, and compare2string, define them using trans_var in file tools/config/uvm/tpl/bfm/axi4r.tpl
-  // To exclude variables from compare, pack, and unpack methods, define them using trans_meta in file tools/config/uvm/tpl/bfm/axi4r.tpl
+  // To include variables in copy, compare, print, record, pack, unpack, and compare2string, define them using trans_var in file tools/config//uvm/tpl/bfm/axi4r.tpl
+  // To exclude variables from compare, pack, and unpack methods, define them using trans_meta in file tools/config//uvm/tpl/bfm/axi4r.tpl
 
   // Transaction variables
   rand logic [ 1:0] rid;

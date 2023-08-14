@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Aug 14 18:56:08 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Aug 14 20:27:19 2023
 //=============================================================================
 // Description: Configuration for agent axi4r
 //=============================================================================
@@ -31,7 +31,7 @@ class axi4r_config extends uvm_object;
   bit                      coverage_enable;       
   bit                      checks_enable;         
 
-  // You can insert variables here by setting config_var in file tools/config/uvm/tpl/bfm/axi4r.tpl
+  // You can insert variables here by setting config_var in file tools/config//uvm/tpl/bfm/axi4r.tpl
 
   extern function new(string name = "");
 

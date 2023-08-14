@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Aug 14 18:56:08 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Aug 14 20:27:19 2023
 //=============================================================================
 // Description: Sequence item for riscv_core_sequencer
 //=============================================================================
@@ -25,8 +25,8 @@ class riscv_core_tx extends uvm_sequence_item;
 
   `uvm_object_utils(riscv_core_tx)
 
-  // To include variables in copy, compare, print, record, pack, unpack, and compare2string, define them using trans_var in file tools/config/uvm/tpl/top/riscv_core.tpl
-  // To exclude variables from compare, pack, and unpack methods, define them using trans_meta in file tools/config/uvm/tpl/top/riscv_core.tpl
+  // To include variables in copy, compare, print, record, pack, unpack, and compare2string, define them using trans_var in file tools/config//uvm/tpl/top/riscv_core.tpl
+  // To exclude variables from compare, pack, and unpack methods, define them using trans_meta in file tools/config//uvm/tpl/top/riscv_core.tpl
 
   // Transaction variables
   rand logic [63:0] rdata;
