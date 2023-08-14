@@ -34,3 +34,7 @@ greybox_tmp/
 axi_vip_0_ex/
 
 uart_client
+riscv_decoder
+tb_top_level
+uvm_bfm
+uvm_top

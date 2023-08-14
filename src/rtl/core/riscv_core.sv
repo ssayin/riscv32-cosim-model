@@ -194,8 +194,5 @@ module riscv_core (
   assign axi_wlast_f                = 0;
   assign axi_wvalid_f               = 0;
   assign axi_bready_f               = 0;
-  initial begin
-    $dumpfile("top.vcd");
-    $dumpvars(0, riscv_core);
-  end
+
 endmodule : riscv_core
