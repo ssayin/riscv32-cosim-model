@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Aug 14 03:07:16 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Aug 14 04:22:47 2023
 //=============================================================================
 // Description: Sequence for agent riscv_core
 //=============================================================================
@@ -117,7 +117,10 @@ class riscv_core_instr_feed_seq extends riscv_core_default_seq;
 
   task body();
 
-    for (int i = 0; i < `INSTR_SEQ_LINECOUNT; i = i + 2) begin
+    int i = 0;
+    while (!$feof(
+        fd
+    )) begin
       `uvm_info(get_type_name(), "riscv_core_instr_feed_seq sequence starting", UVM_HIGH)
       req = riscv_core_tx::type_id::create("req");
 
@@ -137,7 +140,9 @@ class riscv_core_instr_feed_seq extends riscv_core_default_seq;
 
       finish_item(req);
       `uvm_info(get_type_name(), "riscv_core_instr_feed_seq sequence completed", UVM_HIGH)
+      i = i + 2;
     end
+
 
     $fclose(fd);
   endtask : body

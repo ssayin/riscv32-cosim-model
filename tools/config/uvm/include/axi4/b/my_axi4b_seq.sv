@@ -44,8 +44,10 @@ class axi4b_instr_feed_seq extends axi4b_default_seq;
   endfunction : new
 
   task body();
-
-    for (int i = 0; i < `INSTR_SEQ_LINECOUNT; i = i + 2) begin
+    int i = 0;
+    while (!$feof(
+        fd
+    )) begin
       `uvm_info(get_type_name(), "axi4b_instr_feed_seq sequence starting", UVM_HIGH)
       req = axi4b_tx::type_id::create("req");
 
@@ -65,6 +67,7 @@ class axi4b_instr_feed_seq extends axi4b_default_seq;
 
       finish_item(req);
       `uvm_info(get_type_name(), "axi4b_instr_feed_seq sequence completed", UVM_HIGH)
+      i = i + 2;
     end
 
     $fclose(fd);

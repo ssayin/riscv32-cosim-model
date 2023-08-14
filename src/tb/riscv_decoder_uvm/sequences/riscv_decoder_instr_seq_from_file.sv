@@ -17,7 +17,10 @@ class riscv_decoder_instr_seq_from_file extends uvm_sequence #(riscv_decoder_tra
   endfunction : new
 
   virtual task body();
-    for (int i = 0; i < `INSTR_SEQ_LINECOUNT; ++i) begin
+    int i = 0;
+    while (!$feof(
+        fd
+    )) begin
       logic [31:0] instr;
       $fscanf(fd, "%d", instr);
       req = riscv_decoder_transaction::type_id::create("req");
@@ -26,6 +29,7 @@ class riscv_decoder_instr_seq_from_file extends uvm_sequence #(riscv_decoder_tra
       req.dec_in.pc_in = 0;  // set 0 for this seq
       finish_item(req);
       get_response(rsp);
+      i = i + 1;
     end
     $fclose(fd);
   endtask : body

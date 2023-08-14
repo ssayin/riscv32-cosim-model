@@ -62,6 +62,7 @@ tb_top_level: COMPILE_RTL
 
 # Compile SystemVerilog files on Xilinx Vivado Suite
 
+
 COMPILE_RTL: $(RTL_FLIST)
 	xvlog -sv -f $^ -L uvm
 
@@ -69,7 +70,6 @@ define compile_uvm_template
 COMPILE_$(1): COMPILE_RTL $($(1)_FLIST) $($(1)_DIR) $(INSTR_FEED)
 	xvlog -sv -f $($(1)_FLIST) -L uvm \
 		-define INSTR_SEQ_FILENAME='"$(INSTR_FEED)"' \
-		-define INSTR_SEQ_LINECOUNT=$(shell cat $(INSTR_FEED) | wc -l) \
 		-define DEBUG_INIT_FILE='"$(shell readlink -f "./src/firmware/boot.hex")"' \
 		-define HEX_FILENAME='"$(shell readlink -f "./src/firmware/boot.hex")"'
 endef
