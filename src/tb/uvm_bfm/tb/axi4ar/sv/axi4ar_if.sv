@@ -13,7 +13,7 @@
 //
 // Version:   0.1
 //
-// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Aug 14 20:27:19 2023
+// Code created by Easier UVM Code Generator version 2017-01-19 on Mon Jan 15 11:27:06 2024
 //=============================================================================
 // Description: Signal interface for agent axi4ar
 //=============================================================================
@@ -30,7 +30,7 @@ interface axi4ar_if();
 
   logic        clk;
   logic        rst_n;
-  logic        arid;
+  logic [ 1:0] arid;
   logic [31:0] araddr;
   logic [ 7:0] arlen;
   logic [ 2:0] arsize;

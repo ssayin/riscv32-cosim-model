@@ -1,35 +1,50 @@
--i ./src/rtl
--i ./src/rtl/include
--i ./src/rtl/core
--i ./src/rtl/core/ifu
--i ./src/rtl/core/dec
--i ./src/rtl/core/exu
--i ./src/rtl/core/mem
--i ./src/rtl/ssram
+# INCLUDE
 ./src/rtl/include/riscv_opcodes.svh
 ./src/rtl/include/defs_pkg.sv
-./src/rtl/core/sync_fifo.sv
-./src/rtl/core/dec/decode_br.sv
-./src/rtl/core/dec/decode_jal.sv
-./src/rtl/core/dec/decode_jal_imm.sv
-./src/rtl/core/dec/decode_jalr.sv
-./src/rtl/core/dec/id0_gpr.sv
-./src/rtl/core/dec/id1_ctrl_imm.sv
-./src/rtl/core/reg_file.sv
-./src/rtl/core/riscv_core.sv
-./src/rtl/core/exu/exu_bru.sv
-./src/rtl/core/exu/exu_alu.sv
-./src/rtl/core/exu/exu.sv
-./src/rtl/core/ifu/ifu.sv
-./src/rtl/core/ifu/ifu_br.sv
-./src/rtl/core/ifu/ifu_aln.sv
-./src/rtl/core/ifu/ifu_mem_ctrl.sv
-./src/rtl/core/dec/id0.sv
-./src/rtl/core/dec/id1.sv
-./src/rtl/core/exu/exu.sv
-./src/rtl/core/mem/mem.sv
-./src/rtl/ssram/ssram.sv
-./src/rtl/ssram/ssram_ctrl.sv
-./src/rtl/axi4crossbar.sv
+# LIB
+./src/rtl/lib/mydff.sv
+
+./third_party/skidbuf.sv
+./third_party/axiburst.sv
+./third_party/addrdecode.sv
+./third_party/axixbar.sv
+./third_party/demofull.sv
+
+# Used for testing rest of the pipeline.
+./third_party/lsu_dcache.sv
+./third_party/ifu_icache.sv
+
+
+./src/rtl/lib/axi2apb.sv
+./src/rtl/lib/syncfifo.sv
+./src/rtl/lib/ssram_ctrl.sv
+./src/rtl/lib/ssram.sv
+#./src/rtl/lib/uart_apb.sv
+# CORE
+./src/rtl/dec/pipe_haz_ctrl.sv
+./src/rtl/dec/decode_br.sv
+./src/rtl/dec/decode_jal.sv
+./src/rtl/dec/decode_jal_imm.sv
+./src/rtl/dec/decode_jalr.sv
+./src/rtl/dec/decode_gpr.sv
+./src/rtl/dec/decode_ctrl_imm.sv
+./src/rtl/reg_file.sv
+./src/rtl/exu/exu_bru.sv
+./src/rtl/exu/exu_alu.sv
+./src/rtl/exu/exu_mul.sv
+./src/rtl/exu/exu_div.sv
+./src/rtl/ifu/ifu_fetch_buf.sv
+./src/rtl/ifu/ifu_algn.sv
+./src/rtl/ifu/ifu_bpu.sv
+./src/rtl/ifu/ifu_dec.sv
+./src/rtl/ifu/ifu_mem_ctrl.sv
+./src/rtl/ifu/ifu.sv
+./src/rtl/dec/dec.sv
+./src/rtl/exu/exu.sv
+./src/rtl/lsu/lsu_mem_ctrl.sv
+./src/rtl/lsu/lsu.sv
+./src/rtl/riscv_core.sv
+
+# TOP
 ./src/rtl/top_level.sv
-./src/rtl/tb_top_level.sv
+./src/rtl/fpga_top.sv

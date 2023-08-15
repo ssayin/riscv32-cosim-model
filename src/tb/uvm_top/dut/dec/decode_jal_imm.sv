@@ -15,9 +15,10 @@ module decode_jal_imm (
 
   always_comb begin
     casez (instr)
-      32'b?????????????????????????1101111: imm = {{12{i[31]}}, i[19:12], i[20], i[30:21], 1'b0};
-      32'b?????????????????01???????????01: imm = {{21{i[12]}}, i[8], i[10:9], i[6], i[7], i[2], i[10], i[5:3], 1'b0};
-      default:                              imm = 'h0;
+      JAL: imm = {{12{i[31]}}, i[19:12], i[20], i[30:21], 1'b0};
+      C_J, C_JAL:
+      imm = {{21{i[12]}}, i[8], i[10:9], i[6], i[7], i[2], i[11], i[5:4], i[3], 1'b0};
+      default: imm = 'h0;
     endcase
   end
 endmodule

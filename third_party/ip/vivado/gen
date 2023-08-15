@@ -1,4 +1,0 @@
-#!/bin/sh
-
-# S_AXI external variation
-vivado -mode batch -source m_axi_vip_0_ex.tcl

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+<testsuite timestamp="2023-08-29T21:41:39" hostname="solace" package="uart_apb" id="0" name="default" tests="0" errors="0" failures="0" time="0" skipped="0">
+<properties>
+<property name="os" value="Linux"/>
+<property name="expect" value="PASS"/>
+<property name="status" value="PASS"/>
+</properties>
+<testcase classname="default" name="build execution" time="0">
+</testcase>
+<system-out>SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] Removing directory '/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb'.
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] Copy '/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart.sv' to '/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb/src/uart.sv'.
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] Copy '/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/rtl/lib/uart_apb.sv' to '/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb/src/uart_apb.sv'.
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] engine_0: smtbmc
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] base: starting process &quot;cd /home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb/src; yosys -ql ../model/design.log ../model/design.ys&quot;
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] base: finished (returncode=0)
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] prep: starting process &quot;cd /home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb/model; yosys -ql design_prep.log design_prep.ys&quot;
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] prep: finished (returncode=0)
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] smt2: starting process &quot;cd /home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb/model; yosys -ql design_smt2.log design_smt2.ys&quot;
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] smt2: finished (returncode=0)
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] engine_0: starting process &quot;cd /home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb; yosys-smtbmc --presat --unroll --noprogress -t 9  --append 0 --dump-vcd engine_0/trace.vcd --dump-yw engine_0/trace.yw --dump-vlogtb engine_0/trace_tb.v --dump-smtc engine_0/trace.smtc model/design_smt2.smt2&quot;
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] engine_0: ##   0:00:00  Solver: yices
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] engine_0: ##   0:00:00  Checking assumptions in step 0..
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] engine_0: ##   0:00:00  Checking assertions in step 0..
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] engine_0: ##   0:00:00  Checking assumptions in step 1..
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] engine_0: ##   0:00:00  Checking assertions in step 1..
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] engine_0: ##   0:00:00  Checking assumptions in step 2..
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] engine_0: ##   0:00:00  Checking assertions in step 2..
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] engine_0: ##   0:00:00  Checking assumptions in step 3..
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] engine_0: ##   0:00:00  Checking assertions in step 3..
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] engine_0: ##   0:00:00  Checking assumptions in step 4..
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] engine_0: ##   0:00:00  Checking assertions in step 4..
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] engine_0: ##   0:00:00  Checking assumptions in step 5..
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] engine_0: ##   0:00:00  Checking assertions in step 5..
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] engine_0: ##   0:00:00  Checking assumptions in step 6..
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] engine_0: ##   0:00:00  Checking assertions in step 6..
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] engine_0: ##   0:00:00  Checking assumptions in step 7..
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] engine_0: ##   0:00:00  Checking assertions in step 7..
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] engine_0: ##   0:00:00  Checking assumptions in step 8..
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] engine_0: ##   0:00:00  Checking assertions in step 8..
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] engine_0: ##   0:00:00  Status: passed
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] engine_0: finished (returncode=0)
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] engine_0: Status returned by engine: pass
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] summary: Elapsed clock time [H:MM:SS (secs)]: 0:00:00 (0)
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] summary: Elapsed process time [H:MM:SS (secs)]: 0:00:00 (0)
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] summary: engine_0 (smtbmc) returned pass
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] summary: engine_0 did not produce any traces
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb] DONE (PASS, rc=0)
+</system-out>
+<system-err>
+</system-err>
+</testsuite>
+</testsuites>

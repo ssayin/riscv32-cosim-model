@@ -1,0 +1,11 @@
+# running in /home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/uart_apb/src/
+plugin -i systemverilog
+
+read -formal uart.sv
+read -formal uart_apb.sv
+
+prep -top uart_apb
+
+hierarchy -smtcheck
+write_jny -no-connections ../model/design.json
+write_rtlil ../model/design.il

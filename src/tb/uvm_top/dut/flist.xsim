@@ -1,0 +1,48 @@
+# INCLUDE
+./src/rtl/include/riscv_opcodes.svh
+./src/rtl/include/defs_pkg.sv
+# LIB
+./src/rtl/lib/mydff.sv
+
+./third_party/skidbuf.sv
+./third_party/axiburst.sv
+./third_party/addrdecode.sv
+./third_party/axixbar.sv
+./third_party/demofull.sv
+
+
+./src/rtl/lib/axi2apb.sv
+./src/rtl/lib/syncfifo.sv
+./src/rtl/lib/ssram_ctrl.sv
+./src/rtl/lib/ssram.sv
+#./src/rtl/lib/uart_apb.sv
+# CORE
+./src/rtl/dec/pipe_haz_ctrl.sv
+./src/rtl/dec/decode_br.sv
+./src/rtl/dec/decode_jal.sv
+./src/rtl/dec/decode_jal_imm.sv
+./src/rtl/dec/decode_jalr.sv
+./src/rtl/dec/decode_gpr.sv
+./src/rtl/dec/decode_ctrl_imm.sv
+./src/rtl/reg_file.sv
+./src/rtl/exu/exu_bru.sv
+./src/rtl/exu/exu_alu.sv
+./src/rtl/exu/exu_mul.sv
+./src/rtl/exu/exu_div.sv
+./src/rtl/ifu/ifu_fetch_buf.sv
+./src/rtl/ifu/ifu_algn.sv
+./src/rtl/ifu/ifu_bpu.sv
+./src/rtl/ifu/ifu_icache.sv
+./src/rtl/ifu/ifu_dec.sv
+./src/rtl/ifu/ifu_mem_ctrl.sv
+./src/rtl/ifu/ifu.sv
+./src/rtl/dec/dec.sv
+./src/rtl/exu/exu.sv
+./src/rtl/lsu/lsu_dcache.sv
+./src/rtl/lsu/lsu_mem_ctrl.sv
+./src/rtl/lsu/lsu.sv
+./src/rtl/riscv_core.sv
+
+# TOP
+./src/rtl/top_level.sv
+./src/rtl/fpga_top.sv

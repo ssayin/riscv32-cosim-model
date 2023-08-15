@@ -4,29 +4,29 @@
 
 `timescale 1 ps / 1 ps
 module jtag_uart (
-		input  wire        jtag_uart_avalon_jtag_slave_chipselect,  // jtag_uart_avalon_jtag_slave.chipselect
-		input  wire        jtag_uart_avalon_jtag_slave_address,     //                            .address
-		input  wire        jtag_uart_avalon_jtag_slave_read_n,      //                            .read_n
-		output wire [31:0] jtag_uart_avalon_jtag_slave_readdata,    //                            .readdata
-		input  wire        jtag_uart_avalon_jtag_slave_write_n,     //                            .write_n
-		input  wire [31:0] jtag_uart_avalon_jtag_slave_writedata,   //                            .writedata
-		output wire        jtag_uart_avalon_jtag_slave_waitrequest, //                            .waitrequest
-		input  wire        jtag_uart_clk_clk,                       //               jtag_uart_clk.clk
-		output wire        jtag_uart_irq_irq,                       //               jtag_uart_irq.irq
-		input  wire        jtag_uart_reset_reset_n                  //             jtag_uart_reset.reset_n
+		input  wire        avn_slave_chipselect,  //     avn_slave.chipselect
+		input  wire        avn_slave_address,     //              .address
+		input  wire        avn_slave_read_n,      //              .read_n
+		output wire [31:0] avn_slave_readdata,    //              .readdata
+		input  wire        avn_slave_write_n,     //              .write_n
+		input  wire [31:0] avn_slave_writedata,   //              .writedata
+		output wire        avn_slave_waitrequest, //              .waitrequest
+		input  wire        clk_clk,               //           clk.clk
+		output wire        jtag_uart_irq_irq,     // jtag_uart_irq.irq
+		input  wire        rst_n_reset_n          //         rst_n.reset_n
 	);
 
 	jtag_uart_jtag_uart jtag_uart (
-		.clk            (jtag_uart_clk_clk),                       //               clk.clk
-		.rst_n          (jtag_uart_reset_reset_n),                 //             reset.reset_n
-		.av_chipselect  (jtag_uart_avalon_jtag_slave_chipselect),  // avalon_jtag_slave.chipselect
-		.av_address     (jtag_uart_avalon_jtag_slave_address),     //                  .address
-		.av_read_n      (jtag_uart_avalon_jtag_slave_read_n),      //                  .read_n
-		.av_readdata    (jtag_uart_avalon_jtag_slave_readdata),    //                  .readdata
-		.av_write_n     (jtag_uart_avalon_jtag_slave_write_n),     //                  .write_n
-		.av_writedata   (jtag_uart_avalon_jtag_slave_writedata),   //                  .writedata
-		.av_waitrequest (jtag_uart_avalon_jtag_slave_waitrequest), //                  .waitrequest
-		.av_irq         (jtag_uart_irq_irq)                        //               irq.irq
+		.clk            (clk_clk),               //               clk.clk
+		.rst_n          (rst_n_reset_n),         //             reset.reset_n
+		.av_chipselect  (avn_slave_chipselect),  // avalon_jtag_slave.chipselect
+		.av_address     (avn_slave_address),     //                  .address
+		.av_read_n      (avn_slave_read_n),      //                  .read_n
+		.av_readdata    (avn_slave_readdata),    //                  .readdata
+		.av_write_n     (avn_slave_write_n),     //                  .write_n
+		.av_writedata   (avn_slave_writedata),   //                  .writedata
+		.av_waitrequest (avn_slave_waitrequest), //                  .waitrequest
+		.av_irq         (jtag_uart_irq_irq)      //               irq.irq
 	);
 
 endmodule

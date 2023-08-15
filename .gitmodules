@@ -1,3 +1,12 @@
-[submodule "src/decoder"]
-	path = src/decoder
+[submodule "decoder"]
+	path = decoder
 	url = https://github.com/ssayin/riscv32-decoder.git
+[submodule "third_party/riscv-tests"]
+	path = third_party/riscv-tests
+	url = https://github.com/riscv/riscv-tests
+[submodule "third_party/riscv-arch-test"]
+	path = third_party/riscv-arch-test
+	url = https://github.com/riscv-non-isa/riscv-arch-test.git
+[submodule "third_party/coremark"]
+	path = third_party/coremark
+	url = https://github.com/eembc/coremark

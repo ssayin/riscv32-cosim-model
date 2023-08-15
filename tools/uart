@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# SPDX-FileCopyrightText: 2023 Serdar Sayın <https://serdarsayin.com>
+#
+# SPDX-License-Identifier: Apache-2.0
+
 QUARTUS_ROOT=/opt/intelFPGA_lite/22.1std/quartus/
 
 LD_LIBRARY_PATH=${QUARTUS_ROOT}linux64 ./uart_client $@

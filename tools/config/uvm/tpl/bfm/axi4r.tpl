@@ -19,7 +19,7 @@ agent_inc_inside_bfm         = axi4/r/axi4r_inc_inside_bfm.sv            inline
 
 if_port = logic        clk;
 if_port = logic        rst_n;
-if_port = logic        rid;
+if_port = logic [ 1:0] rid;
 if_port = logic [63:0] rdata;
 if_port = logic [ 1:0] rresp;
 if_port = logic        rlast;

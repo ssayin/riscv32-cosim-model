@@ -1,0 +1,10 @@
+# running in /home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/axixbar/src/
+plugin -i systemverilog
+
+read -formal axixbar.sv
+
+prep -top axixbar
+
+hierarchy -smtcheck
+write_jny -no-connections ../model/design.json
+write_rtlil ../model/design.il

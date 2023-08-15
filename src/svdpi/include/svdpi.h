@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 Serdar Sayın <https://serdarsayin.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
  * Source:
  * https://stuff.mit.edu/afs/sipb/user/mkgray/bar/afs/athena/course/6/6.111/modeltech_6.2/include/svdpi.h

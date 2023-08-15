@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+<testsuite timestamp="2023-08-29T21:41:39" hostname="solace" package="axixbar" id="0" name="default" tests="1" errors="1" failures="0" time="0" skipped="0">
+<properties>
+<property name="os" value="Linux"/>
+<property name="expect" value="PASS"/>
+<property name="status" value="ERROR"/>
+</properties>
+<testcase classname="default" name="default" time="0">
+<error type="ERROR"/>
+</testcase>
+<system-out>SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/axixbar] Removing directory '/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/axixbar'.
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/axixbar] Copy '/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/rtl/lib/axixbar.sv' to '/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/axixbar/src/axixbar.sv'.
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/axixbar] engine_0: smtbmc
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/axixbar] base: starting process &quot;cd /home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/axixbar/src; yosys -ql ../model/design.log ../model/design.ys&quot;
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/axixbar] base: axixbar.sv:2442: ERROR: Condition for generate if is not constant!
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/axixbar] base: finished (returncode=1)
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/axixbar] base: task failed. ERROR.
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/axixbar] summary: Elapsed clock time [H:MM:SS (secs)]: 0:00:00 (0)
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/axixbar] summary: Elapsed process time [H:MM:SS (secs)]: 0:00:00 (0)
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/axixbar] summary: engine_0 (smtbmc) did not return a status
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/axixbar] summary: engine_0 did not produce any traces
+SBY 21:41:39 [/home/ssayin/.repos/riscv/my/riscv32-cosim-model/src/tb/formal/axixbar] DONE (ERROR, rc=16)
+</system-out>
+<system-err>
+</system-err>
+</testsuite>
+</testsuites>

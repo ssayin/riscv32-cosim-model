@@ -25,7 +25,7 @@ agent_inc_inside_bfm         = axi4/ar/axi4ar_inc_inside_bfm.sv            inlin
 
 if_port  = logic        clk;
 if_port  = logic        rst_n;
-if_port  = logic        arid;
+if_port  = logic [ 1:0] arid;
 if_port  = logic [31:0] araddr;
 if_port  = logic [ 7:0] arlen;
 if_port  = logic [ 2:0] arsize;

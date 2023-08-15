@@ -1,4 +1,0 @@
-#!/bin/sh
-
-rm -f *.jou *.log
-rm -rf axi_vip_0_ex/

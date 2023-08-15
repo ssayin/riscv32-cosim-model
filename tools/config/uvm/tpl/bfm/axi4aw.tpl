@@ -25,7 +25,7 @@ agent_inc_inside_bfm         = axi4/aw/axi4aw_inc_inside_bfm.sv            inlin
 
 if_port = logic        clk;
 if_port = logic        rst_n;
-if_port = logic        awid;
+if_port = logic  [1:0] awid;
 if_port = logic [31:0] awaddr;
 if_port = logic [ 7:0] awlen;
 if_port = logic [ 2:0] awsize;

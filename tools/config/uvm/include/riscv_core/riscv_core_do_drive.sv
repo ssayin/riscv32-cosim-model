@@ -16,6 +16,7 @@ task riscv_core_driver::do_drive();
         vif.rdata          <= req.rdata;
         vif.rvalid         <= 1;
         vif.arready        <= 0;
+        vif.rresp          <= 2'b00;
       end
       vif.rlast <= 0;
     end
@@ -26,6 +27,7 @@ task riscv_core_driver::do_drive();
         vif.rdata                    <= req.rdata;
         vif.rvalid                   <= 1;
         vif.arready                  <= 0;
+        vif.rresp                    <= 2'b00;
       end
       if (m_axi4_logic.arburst_counter == 0) begin
         m_axi4_logic.state <= IDLE;

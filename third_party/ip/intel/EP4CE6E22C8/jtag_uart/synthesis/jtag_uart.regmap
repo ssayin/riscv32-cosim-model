@@ -3,7 +3,7 @@
 <name>jtag_uart</name>
 <peripherals>
 <peripheral>
-      <name>jtag_uart_jtag_uart_avalon_jtag_slave_altera_avalon_jtag_uart</name><baseAddress>0x00000000</baseAddress> 
+      <name>jtag_uart_avn_slave_altera_avalon_jtag_uart</name><baseAddress>0x00000000</baseAddress> 
       <addressBlock>
         <offset>0x0</offset>
         <size>8</size>

@@ -1,29 +1,29 @@
-!axi4aw_if
-axi_awid_f awid
-axi_awaddr_f awaddr
-axi_awlen_f awlen
-axi_awsize_f awsize
-axi_awburst_f awburst
-axi_awlock_f awlock
-axi_awcache_f awcache
-axi_awprot_f awprot
-axi_awvalid_f awvalid
-axi_awregion_f awregion
-axi_awqos_f awqos
-axi_awready_f awready
+#!axi4aw_if
+#axi_awid_f awid
+#axi_awaddr_f awaddr
+#axi_awlen_f awlen
+#axi_awsize_f awsize
+#axi_awburst_f awburst
+#axi_awlock_f awlock
+#axi_awcache_f awcache
+#axi_awprot_f awprot
+#axi_awvalid_f awvalid
+#axi_awregion_f awregion
+#axi_awqos_f awqos
+#axi_awready_f awready
 
-!axi4w_if
-axi_wdata_f wdata
-axi_wstrb_f wstrb
-axi_wlast_f wlast
-axi_wvalid_f wvalid
-axi_wready_f wready
+#!axi4w_if
+#axi_wdata_f wdata
+#axi_wstrb_f wstrb
+#axi_wlast_f wlast
+#axi_wvalid_f wvalid
+#axi_wready_f wready
 
-!axi4b_if
-axi_bid_f bid
-axi_bresp_f bresp
-axi_bvalid_f bvalid
-axi_bready_f bready
+#!axi4b_if
+#axi_bid_f bid
+#axi_bresp_f bresp
+#axi_bvalid_f bvalid
+#axi_bready_f bready
 
 !axi4ar_if
 axi_arid_f arid

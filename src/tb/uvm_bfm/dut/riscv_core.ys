@@ -1,0 +1,64 @@
+plugin -i systemverilog
+
+read_systemverilog -defer ./src/rtl/include/defs_pkg.sv 
+
+read_systemverilog -defer ./third_party/skidbuf.sv
+read_systemverilog -defer ./third_party/addrdecode.sv
+read_systemverilog -defer ./third_party/axiburst.sv
+read_systemverilog -defer ./third_party/axixbar.sv
+
+read_systemverilog -defer ./src/rtl/lib/mydff.sv 
+read_systemverilog -defer ./src/rtl/lib/syncfifo.sv
+
+read_systemverilog -defer ./src/rtl/dec/dec.sv 
+read_systemverilog -defer ./src/rtl/dec/decode_br.sv 
+read_systemverilog -defer ./src/rtl/dec/decode_jal.sv 
+read_systemverilog -defer ./src/rtl/dec/decode_jal_imm.sv 
+read_systemverilog -defer ./src/rtl/dec/decode_jalr.sv 
+read_systemverilog -defer ./src/rtl/dec/decode_gpr.sv 
+read_systemverilog -defer ./src/rtl/dec/decode_ctrl_imm.sv 
+
+read_systemverilog -defer ./src/rtl/reg_file.sv 
+
+read_systemverilog -defer ./src/rtl/exu/exu_bru.sv 
+read_systemverilog -defer ./src/rtl/exu/exu_alu.sv 
+read_systemverilog -defer ./src/rtl/exu/exu_mul.sv 
+read_systemverilog -defer ./src/rtl/exu/exu_div.sv 
+read_systemverilog -defer ./src/rtl/exu/exu.sv 
+
+read_systemverilog -defer ./src/rtl/ifu/ifu.sv 
+read_systemverilog -defer ./src/rtl/ifu/ifu_algn.sv 
+read_systemverilog -defer ./src/rtl/ifu/ifu_bpu.sv 
+read_systemverilog -defer ./src/rtl/ifu/ifu_dec.sv 
+read_systemverilog -defer ./src/rtl/ifu/ifu_icache.sv 
+read_systemverilog -defer ./src/rtl/ifu/ifu_mem_ctrl.sv 
+read_systemverilog -defer ./src/rtl/ifu/ifu_fetch_buf.sv 
+read_systemverilog -defer ./src/rtl/dec/pipe_haz_ctrl.sv
+
+read_systemverilog -defer ./src/rtl/lsu/lsu.sv 
+read_systemverilog -defer ./src/rtl/lsu/lsu_dcache.sv 
+read_systemverilog -defer ./src/rtl/lsu/lsu_mem_ctrl.sv 
+
+read_systemverilog -defer ./src/rtl/riscv_core.sv 
+
+# read_systemverilog -defer ./src/rtl/top_level.sv
+
+read_systemverilog -link
+
+hierarchy -check -top riscv_core
+
+prep -top riscv_core -flatten
+
+proc
+
+#show -prefix schematic -notitle -colors 2 -width -format dot
+
+write_json schematic.json
+
+#synth
+
+#stat
+
+#synth_intel
+
+#stat

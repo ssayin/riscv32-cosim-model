@@ -6,13 +6,14 @@ import defs_pkg::*;
 
 module decode_jalr (
   input  logic [15:0] instr,
-  output logic        j
+  output logic        jalr
 );
   always_comb begin
-    casez (instr)
-      16'b?000?????110?111: j = 1;
-      16'b100??????0000010: j = 1;
-      default:              j = 0;
+    casez ({
+      16'h0, instr
+    })
+      C_JALR, C_JR, JALR: jalr = 1;
+      default:            jalr = 0;
     endcase
   end
 endmodule

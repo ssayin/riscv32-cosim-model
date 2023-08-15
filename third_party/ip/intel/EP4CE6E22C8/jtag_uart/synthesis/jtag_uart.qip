@@ -1,8 +1,8 @@
 set_global_assignment -entity "jtag_uart" -library "jtag_uart" -name IP_TOOL_NAME "Qsys"
 set_global_assignment -entity "jtag_uart" -library "jtag_uart" -name IP_TOOL_VERSION "22.1"
 set_global_assignment -entity "jtag_uart" -library "jtag_uart" -name IP_TOOL_ENV "Qsys"
-set_global_assignment -library "jtag_uart" -name SOPCINFO_FILE [file join $::quartus(qip_path) "../../../../../../jtag_uart.sopcinfo"]
-set_global_assignment -entity "jtag_uart" -library "jtag_uart" -name SLD_INFO "QSYS_NAME jtag_uart HAS_SOPCINFO 1 GENERATION_ID 1691496519"
+set_global_assignment -library "jtag_uart" -name SOPCINFO_FILE [file join $::quartus(qip_path) "../jtag_uart.sopcinfo"]
+set_global_assignment -entity "jtag_uart" -library "jtag_uart" -name SLD_INFO "QSYS_NAME jtag_uart HAS_SOPCINFO 1 GENERATION_ID 1692047584"
 set_global_assignment -library "jtag_uart" -name MISC_FILE [file join $::quartus(qip_path) "../jtag_uart.cmp"]
 set_global_assignment -library "jtag_uart" -name SLD_FILE [file join $::quartus(qip_path) "jtag_uart.regmap"]
 set_global_assignment -library "jtag_uart" -name SLD_FILE [file join $::quartus(qip_path) "jtag_uart.debuginfo"]
@@ -10,19 +10,19 @@ set_global_assignment -entity "jtag_uart" -library "jtag_uart" -name IP_TARGETED
 set_global_assignment -entity "jtag_uart" -library "jtag_uart" -name IP_GENERATED_DEVICE_FAMILY "{Cyclone IV E}"
 set_global_assignment -entity "jtag_uart" -library "jtag_uart" -name IP_QSYS_MODE "SYSTEM"
 set_global_assignment -name SYNTHESIS_ONLY_QIP ON
-set_global_assignment -library "jtag_uart" -name MISC_FILE [file join $::quartus(qip_path) "../../../../../../jtag_uart.qsys"]
+set_global_assignment -library "jtag_uart" -name MISC_FILE [file join $::quartus(qip_path) "../jtag_uart.qsys"]
 set_global_assignment -entity "jtag_uart" -library "jtag_uart" -name IP_COMPONENT_NAME "anRhZ191YXJ0"
 set_global_assignment -entity "jtag_uart" -library "jtag_uart" -name IP_COMPONENT_DISPLAY_NAME "anRhZ191YXJ0"
 set_global_assignment -entity "jtag_uart" -library "jtag_uart" -name IP_COMPONENT_REPORT_HIERARCHY "On"
 set_global_assignment -entity "jtag_uart" -library "jtag_uart" -name IP_COMPONENT_INTERNAL "Off"
 set_global_assignment -entity "jtag_uart" -library "jtag_uart" -name IP_COMPONENT_VERSION "MS4w"
-set_global_assignment -entity "jtag_uart" -library "jtag_uart" -name IP_COMPONENT_PARAMETER "QVVUT19HRU5FUkFUSU9OX0lE::MTY5MTQ5NjUxOQ==::QXV0byBHRU5FUkFUSU9OX0lE"
+set_global_assignment -entity "jtag_uart" -library "jtag_uart" -name IP_COMPONENT_PARAMETER "QVVUT19HRU5FUkFUSU9OX0lE::MTY5MjA0NzU4NA==::QXV0byBHRU5FUkFUSU9OX0lE"
 set_global_assignment -entity "jtag_uart" -library "jtag_uart" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0VfRkFNSUxZ::Q3ljbG9uZSBJViBF::QXV0byBERVZJQ0VfRkFNSUxZ"
 set_global_assignment -entity "jtag_uart" -library "jtag_uart" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0U=::RVA0Q0U2RTIyQzg=::QXV0byBERVZJQ0U="
 set_global_assignment -entity "jtag_uart" -library "jtag_uart" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0VfU1BFRURHUkFERQ==::OA==::QXV0byBERVZJQ0VfU1BFRURHUkFERQ=="
-set_global_assignment -entity "jtag_uart" -library "jtag_uart" -name IP_COMPONENT_PARAMETER "QVVUT19KVEFHX1VBUlRfQ0xLX0NMT0NLX1JBVEU=::LTE=::QXV0byBDTE9DS19SQVRF"
-set_global_assignment -entity "jtag_uart" -library "jtag_uart" -name IP_COMPONENT_PARAMETER "QVVUT19KVEFHX1VBUlRfQ0xLX0NMT0NLX0RPTUFJTg==::LTE=::QXV0byBDTE9DS19ET01BSU4="
-set_global_assignment -entity "jtag_uart" -library "jtag_uart" -name IP_COMPONENT_PARAMETER "QVVUT19KVEFHX1VBUlRfQ0xLX1JFU0VUX0RPTUFJTg==::LTE=::QXV0byBSRVNFVF9ET01BSU4="
+set_global_assignment -entity "jtag_uart" -library "jtag_uart" -name IP_COMPONENT_PARAMETER "QVVUT19DTEtfQ0xPQ0tfUkFURQ==::LTE=::QXV0byBDTE9DS19SQVRF"
+set_global_assignment -entity "jtag_uart" -library "jtag_uart" -name IP_COMPONENT_PARAMETER "QVVUT19DTEtfQ0xPQ0tfRE9NQUlO::LTE=::QXV0byBDTE9DS19ET01BSU4="
+set_global_assignment -entity "jtag_uart" -library "jtag_uart" -name IP_COMPONENT_PARAMETER "QVVUT19DTEtfUkVTRVRfRE9NQUlO::LTE=::QXV0byBSRVNFVF9ET01BSU4="
 set_global_assignment -entity "jtag_uart_jtag_uart" -library "jtag_uart" -name IP_COMPONENT_NAME "anRhZ191YXJ0X2p0YWdfdWFydA=="
 set_global_assignment -entity "jtag_uart_jtag_uart" -library "jtag_uart" -name IP_COMPONENT_DISPLAY_NAME "SlRBRyBVQVJUIEludGVsIEZQR0EgSVA="
 set_global_assignment -entity "jtag_uart_jtag_uart" -library "jtag_uart" -name IP_COMPONENT_REPORT_HIERARCHY "Off"

@@ -1,0 +1,18 @@
+[options]
+mode bmc
+depth 9
+
+[engines]
+smtbmc
+
+[script]
+plugin -i systemverilog
+
+read -formal uart.sv
+read -formal uart_apb.sv
+
+prep -top uart_apb
+
+[files]
+./src/tb/formal/uart.sv
+./src/rtl/lib/uart_apb.sv

@@ -2,11 +2,11 @@ set project_name "fpga_top"
 
 project_open $project_name
 
-create_timing_netlist -model fast
+create_timing_netlist
 
-create_clock -name "clk" -period 10ns [get_ports {clk}]
-derive_pll_clocks
-derive_clock_uncertainty
+read_sdc ./tools/fpga_top.sdc
+
+read_sdc -hdl
 
 update_timing_netlist
 

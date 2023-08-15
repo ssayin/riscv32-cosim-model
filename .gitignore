@@ -1,8 +1,8 @@
 # Vivado
+.Xil/
 xsim.dir/
 xsim.covdb/
 out/
-build/
 *.jou
 *.log
 *.pb
@@ -27,14 +27,29 @@ greybox_tmp/
 *.smsg
 *.qws
 *.wdb
-*.vcd
 .qsys_edit/
 
 # Vivado IP
 axi_vip_0_ex/
 
-uart_client
-riscv_decoder
-tb_top_level
-uvm_bfm
-uvm_top
+# Project
+build/
+bin/
+slpp_all/
+
+# Yosys
+synth.v
+
+*.map
+*.elf
+
+scripts/
+
+# Verilator
+obj_dir/
+
+# VCD
+*.vcd
+
+# Vim session
+Session.vim
