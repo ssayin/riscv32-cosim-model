@@ -108,7 +108,7 @@ export QUARTUS_ROOT=/opt/intelFPGA_lite/22.1std/quartus/
 ```sh 
 make QUARTUS_ROOT=$QUARTUS_ROOT uart_client
 ```
-**Important**: Whenever you open a new shell session to work with the UART tool, remember to reset the LD\_LIBRARY\_PATH using the previously defined QUARTUS\_ROOT value. Exporting this variable in a file sourced by your shell i.e. your .bashrc can save you a big time.
+**Important**: Whenever you open a new shell session to work with the UART tool, remember to reset the LD\_LIBRARY\_PATH using the previously defined QUARTUS\_ROOT value. Exporting this variable in a file sourced by your shell i.e. your .bashrc can save you time.
 
 3. Edit the [./tools/uart](./tools/uart) file and adjust the LD\_LIBRARY\_PATH variable to include $QUARTUS\_ROOT:
 ```sh 
@@ -119,9 +119,14 @@ LD_LIBRARY_PATH=$QUARTUS_ROOT uart_client $@
 ```sh 
 ./tools/uart Hi
 ```
-Replace "Hi" with whichever message you want to transmit. 
 
-I might consider incorporating support for pipes or reading from stdin at a later point.
+Replace "Hi" with whichever message you want to transmit. 
+If no argument string is provided, the program reads from stdin.
+
+
+```sh 
+echo "Hi" | ./tools/uart
+```
 
 ## Contributing
 
