@@ -4,15 +4,15 @@
 # LIB
 ./src/rtl/lib/mydff.sv
 
-./third_party/skidbuf.sv
-./third_party/axiburst.sv
-./third_party/addrdecode.sv
-./third_party/axixbar.sv
-./third_party/demofull.sv
+./third_party/ip/skidbuffer.sv
+./third_party/ip/axiburst.sv
+./third_party/ip/addrdecode.sv
+./third_party/ip/axixbar.sv
+./third_party/ip/demofull.sv
 
 # Used for testing rest of the pipeline.
-./third_party/lsu_dcache.sv
-./third_party/ifu_icache.sv
+./third_party/ip/dcache.sv
+./third_party/ip/axiicache.sv
 
 
 ./src/rtl/lib/axi2apb.sv

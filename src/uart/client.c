@@ -8,8 +8,8 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "jtag_atlantic.h"
 #include "common.h"
+#include "jtag_atlantic.h"
 
 #define BUF_SIZE 64
 
@@ -20,10 +20,19 @@ int main(int argc, char **argv) {
   char *cable_name = NULL;
   int device = -1;
   int instance = -1;
+  char buf[256];
+  int len;
 
   if (argc < 2) {
-    fprintf(stderr, "Usage: ./uart_client <text>\n");
-    return 1;
+    if (fgets(buf, 256, stdin) != NULL) {
+      len = 0;
+      while (buf[len] != '\0' && buf[len] != '\n') {
+        len++;
+      }
+    } else {
+      fprintf(stderr, "Error input");
+      return 1;
+    }
   }
 
   struct JTAGATLANTIC *atlantic =

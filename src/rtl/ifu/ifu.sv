@@ -76,9 +76,9 @@ module ifu #(
   logic [63:0] qw;
   logic        qwvalid;
 
-  logic        ifu_mrf_full;
-  logic        ifu_mrf_empty;
-  logic [95:0] ifu_mrf_pkt;
+
+  logic        clr;
+
 
   ////////////////////////////////////////////////////////
   //
@@ -101,37 +101,18 @@ module ifu #(
   // verilog_format: on
 
 
+  logic        ifu_mrf_clr;
+  logic [95:0] ifu_mrf_pkt;
+  logic        ifu_mrf_empty;
+  logic        ifu_mrf_full;
+
+  logic [31:0] ifu_ftf_deq;
+  logic        ifu_ftf_empty;
 
 
-  syncfifo #(
-      .WIDTH(95),
-      .DEPTH(IFU_MRF_DEPTH)
-  ) ifu_mrf (
-    .*,
-    .clr  (ifu_mrf_clr),
-    .wren (ic_valid && ic_ready),
-    .rden (qwvalid),
-    .wr   ({ic_rd[63:0], ifu_fetch_pc[31:1]}),
-    .rd   (ifu_mrf_pkt),
-    .empty(ifu_mrf_empty),
-    .full (ifu_mrf_full)
-  );
 
-  syncfifo #(
-      .WIDTH(32),
-      .DEPTH(IFU_FTF_DEPTH)
-  ) ifu_ftf (
-    .*,
-    .clr  (ifu_ftf_clr),
-    .wren (ifu_ftf_wren),
-    .rden (ifu_ftf_rden),
-    .wr   (ifu_ftf_enq),
-    .rd   (ifu_ftf_deq),
-    .empty(ifu_ftf_empty),
-    .full (ifu_ftf_full)
-  );
-
-  assign ifu_ftf_rden = 1;
+  logic [31:0] rd_data;
+  logic [ 7:0] rd_fullness;
 
 
   ////////////////////////////////////////////////////////
@@ -162,7 +143,6 @@ module ifu #(
   logic [  3:0] wren;
   logic         empty;
   logic         full;
-  logic         clr;
 
 
 
@@ -207,11 +187,19 @@ module ifu #(
   mydff  exu_pc_redir_en_ff (.*, .din(exu_pc_redir_en), .dout(exu_pc_redir_en_q0));
 
   ifu_bpu ifu_bpu_0 (.*);
-  ifu_algn ifu_algn_0 (.qw(ifu_mrf_pkt[94:31]), .ifu_fetch_pc(ifu_mrf_pkt[30:0]), .*);
+ 
 
 
   ifu_fetch_buf #(.DEPTH(FETCH_BUF_DEPTH)) fetch_buf (.*);
   // verilog_format: on
+
+  ifu_algn ifu_algn_0 (
+    .qw          (ifu_mrf_pkt[94:31]),
+    .ifu_fetch_pc(ifu_mrf_pkt[30:0]),
+    .qwready     (1),
+    .qwvalid     (1),
+    .*
+  );
 
   assign ifu_algn_part_in       = ifu_algn_part_out;
 
@@ -243,20 +231,6 @@ module ifu #(
 
   assign op_in = ins_nop ? {Nop, 21'h1} : {instr, comp, br, rd_addr, rs1_addr, rs2_addr,
                                            jalr, jal, br_ataken, 1'b1};
-  //
-  // assign op_in = {
-  //   instr_d,
-  //   comp_d,
-  //   br_d,
-  //  rd_addr_d,
-  //  rs1_addr_r,
-  //  rs2_addr_r,
-  //  jalr_d,
-  //  jal_d,
-  //  br_ataken_d,
-  //  valid_d
-  //};
-
   mydff #(
       .W     (53),
       .RSTVAL({Nop, 21'h1})
@@ -290,9 +264,9 @@ module ifu #(
 
   assign ifu_ftf_enq  = jal_target[31:1];
   assign ifu_ftf_wren = jal_en;
-  // assign ifu_fetch_pc_d[31:1]   = ifu_ftf_deq[31:1];
 
   always_comb begin
+    ifu_fetch_pc_d[31:1] = ifu_ftf_deq[31:1];
     if (reset_sync) ifu_fetch_pc_d[31:1] = 31'h0;
     else if (jal_en) ifu_fetch_pc_d[31:1] = jal_target[31:1];
     else if (!ifu_algn_valid) ifu_fetch_pc_d[31:1] = ifu_fetch_pc[31:1];

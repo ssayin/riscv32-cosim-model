@@ -30,7 +30,7 @@ int main(int argc, char **argv, char **env) {
   const std::unique_ptr<Vfpga_top> cont{new Vfpga_top{contextp.get(), "top"}};
 
   VerilatedVcdC *m_trace = new VerilatedVcdC;
-  cont->trace(m_trace, 5000);
+  cont->trace(m_trace, 50000);
   m_trace->open("top_level_verilator.vcd");
 
   contextp->internalsDump();
@@ -41,7 +41,7 @@ int main(int argc, char **argv, char **env) {
   cont->rst_n = 0;
   cont->eval();
 
-  int imax = atoi(argv[1]);
+  int imax = argc == 1 ? 300 : atoi(argv[1]);
 
   for (std::size_t i = 0; i < imax; i++) {
     contextp->timeInc(1);

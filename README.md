@@ -121,11 +121,6 @@ LD_LIBRARY_PATH=$QUARTUS_ROOT uart_client $@
 ```
 Replace "Hi" with whichever message you want to transmit. 
 
-**Important**: 
-1. Your string should not contain escaped 0's (\0), i.e. NULL terminators. This is due to my reliance on strlen(...) to determine string length.
-
-2. Your string should not contain space characters as the shell will treat your argument as many arguments. For that reason, enclosing your text in double quotes will not work either.
-
 I might consider incorporating support for pipes or reading from stdin at a later point.
 
 ## Contributing

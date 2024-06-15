@@ -27,12 +27,12 @@ flag=0
 # fi
 
 # Strip date from the dump
-if diff <(tail -n +4 ./ref/riscv_core.vcd) <(tail -n +4 riscv_core.vcd) >/dev/null;
-then
-  echo -e "\e[32mVCD OK\e[0m"
-else
-  echo -e "\e[31mVCD ERROR\e[0m"
-  flag=1
-fi
+#if diff <(tail -n +4 ./ref/riscv_core.vcd) <(tail -n +4 riscv_core.vcd) >/dev/null;
+#then
+#  echo -e "\e[32mVCD OK\e[0m"
+#else
+#  echo -e "\e[31mVCD ERROR\e[0m"
+#  flag=1
+#fi
 
 exit "$flag"

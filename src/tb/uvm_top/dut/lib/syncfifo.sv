@@ -3,50 +3,61 @@
 // SPDX-License-Identifier: Apache-2.0
 
 module syncfifo #(
-    parameter int WIDTH = 1,
-    parameter int DEPTH = 16
+    parameter  int WIDTH = 1,
+    parameter  int DEPTH = 16,
+    localparam int PW    = $clog2(DEPTH)
 ) (
-  input  logic             clk,
-  input  logic             clr,
-  input  logic             rst_n,
-  input  logic             wren,
-  input  logic             rden,
-  input  logic [WIDTH-1:0] wr,
-  output logic [WIDTH-1:0] rd,
-  output logic             empty,
-  output logic             full
+  input logic clk,
+  input logic rst_n,
+
+  input logic [WIDTH-1:0] wr_data,
+  input logic             wr_valid,
+
+  output logic [WIDTH-1:0] rd_data,
+  output logic             rd_valid,
+  output logic [   PW-1:0] rd_fullness
 );
 
   logic [WIDTH-1:0] mem[DEPTH];
 
-  // Pointer Width
-  localparam int PW = $clog2(DEPTH);
+  logic             wr;
+  logic             rd;
 
-  // Registers
+  always_comb wr = (wr_valid && !(&rd_fullness));
+  always_comb rd = (rd_valid && |rd_fullness);
+
   logic [PW-1:0] wrptr;
   logic [PW-1:0] rdptr;
 
   always_ff @(posedge clk or negedge rst_n) begin
-    if (!rst_n) wrptr <= 0;
-    else if (clr) wrptr <= 0;
-    else if (~full & wren) wrptr <= wrptr + 1;
-  end
-
-  always_ff @(posedge clk) if (~full & wren) mem[wrptr] <= wr;
-
-  always_ff @(posedge clk or negedge rst_n) begin
-    if (!rst_n) rdptr <= 0;
-    else if (clr) rdptr <= 0;
-    else if (!empty && rden) rdptr <= rdptr + 1;
+    if (!rst_n) rd_fullness <= 0;
+    else
+      case ({
+        wr, rd
+      })
+        2'b01:   rd_fullness <= rd_fullness - 1;
+        2'b10:   rd_fullness <= rd_fullness + 1;
+        default: rd_fullness <= wrptr - rdptr;
+      endcase
   end
 
   always_ff @(posedge clk or negedge rst_n) begin
-    if (!rst_n) rd <= 0;
-    else if (clr) rd <= 0;
-    else if (!empty && rden) rd <= mem[rdptr];
+    if (rst_n) wrptr <= 0;
+    else if (wr) wrptr <= wrptr + 1'b1;
   end
 
-  assign full  = ((wrptr + 1) == rdptr);
-  assign empty = (wrptr == rdptr);
+  always_ff @(posedge clk or negedge rst_n) begin
+    if (rst_n) rdptr <= 0;
+    else if (rd) rdptr <= rdptr + 1'b1;
+  end
+
+  always_ff @(posedge clk or negedge rst_n) begin
+    if (wr) mem[wrptr] <= wr_data;
+  end
+
+  assign rd_data = mem[rdptr];
+
+
+
 
 endmodule

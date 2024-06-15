@@ -1,5 +1,8 @@
 import defs_pkg::*;
 
+// Stalling instruction fetches for now.
+// DO NOT ROAST ME
+
 module pipe_haz_ctrl (
   input  logic       valid_d,
   input  logic       valid_e,

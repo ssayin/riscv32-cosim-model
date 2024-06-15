@@ -6,4 +6,4 @@
 
 QUARTUS_ROOT=/opt/intelFPGA_lite/22.1std/quartus/
 
-LD_LIBRARY_PATH=${QUARTUS_ROOT}linux64 ./uart_client $@
+LD_LIBRARY_PATH=${QUARTUS_ROOT}linux64 ./bin/uart_client $@
